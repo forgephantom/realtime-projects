@@ -1,5 +1,13 @@
 # realtime-projects
 
+[![12,000 projects](https://img.shields.io/badge/projects-12%2C000-blue)](PROJECT_INDEX.md)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-green)](https://www.python.org/)
+[![No dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)](#run-any-project-in-30-seconds)
+[![100% original](https://img.shields.io/badge/content-100%25%20original-orange)](COPYRIGHT.md)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
+
+**12,000 real, runnable mini-projects** — each with working Python code, full documentation, system design (HLD + LLD), a live demo runbook, and a resume/presentation guide. Pick any project, run it, present it, put it on your resume.
+
 A library of **12,000 real, runnable, documented projects** written in Python. Every project is a complete working program: it runs with the standard library alone, ships with a seeded demo that reproduces byte-for-byte, and is documented the way a professional team documents software — README, high-level design, low-level design, runbook, and presentation guide. No stubs, no placeholders, no "exercise left to the reader."
 
 ## Domain coverage

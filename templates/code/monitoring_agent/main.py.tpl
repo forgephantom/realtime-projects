@@ -85,9 +85,9 @@ def main():
     args = parser.parse_args()
     random.seed(args.seed)
 
-    thresholds = PARAMS.get("thresholds",
-                            {"cpu": 85.0, "memory": 90.0,
-                             "latency_ms": 500.0})
+    _th = PARAMS.get("thresholds")
+    thresholds = (_th if isinstance(_th, dict) else
+                  {"cpu": 85.0, "memory": 90.0, "latency_ms": 500.0})
     print("@@TOPIC_NAME@@ monitor (thresholds: {})".format(thresholds))
     Monitor(args.seed, thresholds).run(args.cycles, args.interval)
 

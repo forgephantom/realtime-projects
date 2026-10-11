@@ -18,9 +18,25 @@ PARAMS = {'shift_range': 'max translation in pixels', 'rotation_range': 'max rot
 SHADES = " .:-=+*#%@"
 
 
+def _num(value, fallback):
+    """Coerce a descriptive-text PARAMS value to a number, else fallback."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return fallback
+
+
 def _param(key, default):
-    """Read a project param defensively (PARAMS may be an empty dict)."""
-    return PARAMS.get(key, default) if isinstance(PARAMS, dict) else default
+    """Read a project param defensively; coerce descriptive text to the default's type."""
+    v = PARAMS.get(key, default) if isinstance(PARAMS, dict) else default
+    if isinstance(default, bool):
+        return v if isinstance(v, bool) else default
+    if isinstance(default, (int, float)) and not isinstance(v, (int, float)):
+        return _num(v, default)
+    return v
 
 
 def generate_scan(seed: int, size: int = 24) -> tuple:

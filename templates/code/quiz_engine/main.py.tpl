@@ -12,6 +12,16 @@ import random
 SLUG = "@@PROJECT_SLUG@@"
 PARAMS = @@TOPIC_PARAMS@@
 
+def _num(value, fallback):
+    """Coerce a descriptive-text PARAMS value to a number, else fallback."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return fallback
+
 
 class Question:
     """One multiple-choice question: prompt, options, and the correct index."""
@@ -181,7 +191,7 @@ def main(argv=None) -> int:
     rng = random.Random(args.seed)
 
     questions = build_questions(rng)
-    num = args.num_questions or int(PARAMS.get("num_questions", len(questions)))
+    num = args.num_questions or _num(PARAMS.get("num_questions", len(questions)), len(questions))
     quiz = Quiz("@@PROJECT_TITLE@@", questions[:num])
 
     if args.interactive:

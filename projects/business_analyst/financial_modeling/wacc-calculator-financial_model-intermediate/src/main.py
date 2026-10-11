@@ -13,9 +13,25 @@ SLUG = "financial-model"
 PARAMS = {'beta': 'equity beta to the market', 'debt_ratio': 'share of debt in capital structure', 'risk_free_rate': 'risk-free rate', 'tax_rate': 'corporate tax rate'}
 
 
+def _num(value, fallback):
+    """Coerce a descriptive-text PARAMS value to a number, else fallback."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return fallback
+
+
 def _param(key, default):
-    """Read a project param defensively (PARAMS may be an empty dict)."""
-    return PARAMS.get(key, default) if isinstance(PARAMS, dict) else default
+    """Read a project param defensively; coerce descriptive text to the default's type."""
+    v = PARAMS.get(key, default) if isinstance(PARAMS, dict) else default
+    if isinstance(default, bool):
+        return v if isinstance(v, bool) else default
+    if isinstance(default, (int, float)) and not isinstance(v, (int, float)):
+        return _num(v, default)
+    return v
 
 
 def npv(rate: float, cashflows: list) -> float:

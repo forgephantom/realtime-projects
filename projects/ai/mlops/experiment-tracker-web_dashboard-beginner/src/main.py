@@ -18,6 +18,16 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PARAMS = {'grid_size': 'hyperparameter combinations', 'metrics': 'metrics logged per run', 'num_runs': 'runs tracked'}
 
+def _num(value, fallback):
+    """Coerce a descriptive-text PARAMS value to a number, else fallback."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return fallback
+
 
 def metric_rows(seed, count):
     """Generate `count` deterministic synthetic metric rows."""
@@ -128,7 +138,7 @@ def main():
     parser.add_argument("--port", type=int, default=0,
                         help="port to bind (0 = ephemeral)")
     parser.add_argument("--metrics", type=int,
-                        default=PARAMS.get("metrics", 8),
+                        default=_num(PARAMS.get("metrics", 8), 8),
                         help="number of metric rows on the dashboard")
     parser.add_argument("--serve", action="store_true",
                         help="keep the server running instead of self-testing")

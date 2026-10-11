@@ -8,6 +8,25 @@
 
 **12,000 real, runnable mini-projects** — each with working Python code, full documentation, system design (HLD + LLD), a live demo runbook, and a resume/presentation guide. Pick any project, run it, present it, put it on your resume.
 
+## Start here — featured projects
+
+Twelve of the strongest projects to try first. Every one runs with zero setup (`python3 main.py`):
+
+| Project | What it is |
+|---|---|
+| [Decision Tree classifier](projects/computer_science/machine_learning/decision-tree-gini-decision_tree-intermediate) | Gini-split decision tree built from scratch, trained and evaluated in the demo |
+| [DBSCAN clustering](projects/computer_science/machine_learning/dbscan-density-clustering-kmeans_clustering-intermediate) | Density-based clustering from scratch on generated data |
+| [Multi-client chat server](projects/computer_science/computer_networks/chat-server-select-chat_server-intermediate) | Real socket server handling concurrent clients |
+| [Web dashboard](projects/computer_science/web_development/activity-feed-aggregator-web_dashboard-intermediate) | Live dashboard served by stdlib `http.server`, no frameworks |
+| [Encryption-at-rest auditor](projects/computer_science/cybersecurity/encryption-at-rest-auditor-cli_tool-beginner) | CLI that audits files for encryption coverage |
+| [Monitoring agent](projects/computer_science/devops_sre/alert-deduplicator-monitoring_agent-intermediate) | Alert deduplication engine, SRE-style |
+| [Market-basket pipeline](projects/computer_science/data_science/apriori-market-basket-data_pipeline-intermediate) | End-to-end data pipeline running the Apriori algorithm |
+| [Idempotency key store](projects/computer_science/software_engineering/idempotency-key-store-lru_cache-advanced) | LRU-backed idempotency store for APIs |
+| [SIR epidemic simulator](projects/biology/ecology/sir-epidemic-simulator-simulation-intermediate) | Epidemiological model with tunable parameters |
+| [Coupled pendulums](projects/physics/physics/coupled-pendulums-normal-modes-simulation-intermediate) | Normal-modes physics simulation |
+| [BMI trend tracker](projects/healthcare/health_informatics/bmi-trend-tracker-web_dashboard-beginner) | Health dashboard with trend analysis |
+| [Air-sensor calibrator](projects/environmental_science/environmental_science/air-sensor-calibrator-linear_regression-intermediate) | Linear regression calibrating sensor readings |
+
 A library of **12,000 real, runnable, documented projects** written in Python. Every project is a complete working program: it runs with the standard library alone, ships with a seeded demo that reproduces byte-for-byte, and is documented the way a professional team documents software — README, high-level design, low-level design, runbook, and presentation guide. No stubs, no placeholders, no "exercise left to the reader."
 
 ## Domain coverage

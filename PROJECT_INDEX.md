@@ -1,13 +1,15 @@
-# Project Index — 12,000 real, runnable Python projects
+# Project Index — 14,800 real, runnable Python projects
 
 ## Domains
 
+- [ai](indexes/ai.md) — 1,200 projects
 - [biology](indexes/biology.md) — 1,000 projects
+- [business_analyst](indexes/business_analyst.md) — 800 projects
 - [chemistry](indexes/chemistry.md) — 800 projects
 - [computer_science](indexes/computer_science.md) — 6,600 projects
 - [electronics_engineering](indexes/electronics_engineering.md) — 700 projects
 - [environmental_science](indexes/environmental_science.md) — 600 projects
-- [healthcare](indexes/healthcare.md) — 800 projects
+- [healthcare](indexes/healthcare.md) — 1,600 projects
 - [mathematics](indexes/mathematics.md) — 700 projects
 - [physics](indexes/physics.md) — 800 projects
 
@@ -15,15 +17,17 @@
 
 | Domain | Subdomains | Projects |
 |---|---|---|
+| ai | 10 | 1,200 |
 | biology | 4 | 1,000 |
+| business_analyst | 7 | 800 |
 | chemistry | 1 | 800 |
 | computer_science | 14 | 6,600 |
 | electronics_engineering | 1 | 700 |
 | environmental_science | 1 | 600 |
-| healthcare | 3 | 800 |
+| healthcare | 9 | 1,600 |
 | mathematics | 1 | 700 |
 | physics | 1 | 800 |
-| **Total** | **26** | **12,000** |
+| **Total** | **49** | **14,800** |
 
 ## Projects by subdomain
 
@@ -55,3 +59,26 @@
 | clinical_tools | healthcare | 250 |
 | electronics_engineering | electronics_engineering | 700 |
 | environmental_science | environmental_science | 600 |
+| llm_applications | ai | 150 |
+| ai_agents | ai | 150 |
+| rag_systems | ai | 150 |
+| prompt_engineering | ai | 120 |
+| vector_databases | ai | 120 |
+| model_evaluation | ai | 120 |
+| generative_ai | ai | 120 |
+| mlops | ai | 90 |
+| ai_safety_redteaming | ai | 90 |
+| mcp_integrations | ai | 90 |
+| medical_imaging | healthcare | 150 |
+| drug_discovery | healthcare | 150 |
+| genomics | healthcare | 150 |
+| telemedicine | healthcare | 120 |
+| hospital_operations | healthcare | 120 |
+| mental_health_tech | healthcare | 110 |
+| kpi_dashboards | business_analyst | 150 |
+| financial_modeling | business_analyst | 150 |
+| data_visualization | business_analyst | 120 |
+| requirements_management | business_analyst | 120 |
+| process_modeling | business_analyst | 100 |
+| market_research | business_analyst | 80 |
+| stakeholder_reporting | business_analyst | 80 |

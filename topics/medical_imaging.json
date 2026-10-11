@@ -1,0 +1,576 @@
+{
+  "domain": "healthcare",
+  "subdomain": "medical_imaging",
+  "topics": [
+    {
+      "slug_base": "synthetic-mri-slice-generator",
+      "name": "Synthetic MRI Slice Generator",
+      "concept": "Synthetic MRI slices are built from geometric phantoms, such as a head model made of overlapping ellipses, each assigned a tissue-like intensity. This mirrors how real scanners translate proton density and relaxation properties into grayscale values. Seeded generation gives developers a ground truth for testing segmentation and detection code with no patient data involved.",
+      "key_params": {
+        "slice_size": "pixel dimensions of each generated slice",
+        "phantom_count": "number of ellipse phantoms per slice",
+        "seed": "random seed for reproducible phantoms",
+        "intensity_noise": "noise added to tissue intensities"
+      },
+      "data_idea": "Generates seeded ellipse-phantom slices at configurable resolution and saves the matching tissue-label masks as ground truth.",
+      "real_world_use": "Algorithm teams use phantom data to unit-test reconstruction and segmentation pipelines.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ct-slice-phantom-sim",
+      "name": "CT Slice Phantom Simulator",
+      "concept": "CT images encode X-ray attenuation on the Hounsfield scale, where air sits near -1000 and dense bone near +1000. A software phantom assigns each material region a representative attenuation value and renders a slice, optionally adding noise. Comparing algorithm output against the known phantom reveals exactly where a pipeline drifts.",
+      "key_params": {
+        "matrix_size": "pixel dimensions of the phantom",
+        "materials": "list of material names with Hounsfield values",
+        "noise_sd": "standard deviation of added noise",
+        "seed": "random seed for reproducibility"
+      },
+      "data_idea": "Builds seeded attenuation maps with material masks labeled by Hounsfield-style values.",
+      "real_world_use": "Quality teams scan physical phantoms to calibrate CT scanners; software phantoms serve the same role for code.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "tumor-blob-detector",
+      "name": "Tumor Blob Detector",
+      "concept": "Blob detection finds compact bright or dark regions using filters like the Laplacian of Gaussian, which responds strongly to circular structures at a matching scale. Scanning across scales catches blobs of different sizes, and connected-component labeling turns the response map into discrete detections. Precision and recall against seeded ground truth quantify performance.",
+      "key_params": {
+        "blob_radius_range": "min and max tumor blob radius in pixels",
+        "count": "number of blobs per scan",
+        "image_size": "pixel dimensions of the synthetic scan",
+        "noise": "background noise level"
+      },
+      "data_idea": "Creates synthetic scans with seeded tumor-like bright blobs at known coordinates and scores detections against them.",
+      "real_world_use": "Blob detection underlies nodule-finding assists used in lung CT screening.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dicom-header-parser",
+      "name": "DICOM-Style Header Parser",
+      "concept": "Medical image headers store metadata as tag pairs of group and element numbers in hexadecimal, each with a value representation and a value. A parser reads these records, validates required fields such as patient ID and modality, and can anonymize identifiers for research use. Handling malformed or missing tags gracefully is the core robustness challenge.",
+      "key_params": {
+        "tag_count": "number of synthetic tags per header",
+        "modality": "imaging modality label to embed",
+        "seed": "random seed for tag generation",
+        "strict_mode": "whether missing required tags raise errors"
+      },
+      "data_idea": "Generates synthetic header records with randomized but well-formed tags for parsing and anonymization drills.",
+      "real_world_use": "Imaging administrators parse headers to route studies and strip identifiers before research sharing.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "file_organizer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "scan-noise-simulator",
+      "name": "Scan Noise Simulator",
+      "concept": "Different modalities carry different noise: magnitude MRI follows a Rician distribution while CT photon counts are closer to Poisson. Simulating these noise models on a clean phantom shows how each degrades contrast and edges. Measuring signal-to-noise ratio before and after denoising gives an objective benchmark for filter comparison.",
+      "key_params": {
+        "snr_db": "target signal-to-noise ratio in decibels",
+        "noise_model": "Rician, Poisson, or Gaussian noise",
+        "image_size": "pixel dimensions of the phantom",
+        "seed": "random seed for noise generation"
+      },
+      "data_idea": "Corrupts clean phantoms with selectable noise models at a set SNR for denoising benchmarks.",
+      "real_world_use": "Denoising researchers benchmark filters against known-noise phantoms before touching clinical data.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "contrast-windowing-lab",
+      "name": "Contrast Windowing Lab",
+      "concept": "Windowing maps a slice of the Hounsfield scale onto display grayscale: the window level sets the center and the window width sets the range. A narrow lung window reveals subtle nodules while a wide bone window shows dense structures. Experimenting with presets builds intuition for why one image can look so different under different windows.",
+      "key_params": {
+        "window_width": "width of the displayed intensity range",
+        "window_level": "center of the displayed intensity range",
+        "modality": "CT or MRI-style intensity mapping",
+        "slice_count": "number of slices to window"
+      },
+      "data_idea": "Produces seeded CT-style slices rendered under adjustable window presets.",
+      "real_world_use": "Radiologists switch between lung, bone, and soft-tissue windows to reveal different anatomy.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "slice-threshold-segmenter",
+      "name": "Slice Threshold Segmenter",
+      "concept": "Otsu's method picks the threshold that maximizes between-class variance, effectively splitting a bimodal histogram into foreground and background with no manual tuning. Multi-level variants extend this to several tissue classes. It works best when tissue intensities form distinct peaks and struggles when they overlap heavily.",
+      "key_params": {
+        "class_count": "number of intensity classes to separate",
+        "slice_size": "pixel dimensions of the phantom",
+        "noise": "noise added to tissue intensities",
+        "seed": "random seed for phantom generation"
+      },
+      "data_idea": "Builds two-tissue phantoms with known masks and scores threshold accuracy against them.",
+      "real_world_use": "Thresholding segments bone from soft tissue in orthopedic planning tools.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "histogram-equalization-lab",
+      "name": "Histogram Equalization Lab",
+      "concept": "Histogram equalization redistributes intensities so the output histogram is roughly flat, stretching contrast in crowded regions of the range. Global equalization can amplify noise in uniform areas, which is why contrast-limited adaptive variants process small tiles separately. Comparing methods side by side shows the trade-off between contrast gain and artifact introduction.",
+      "key_params": {
+        "clip_limit": "contrast limit for adaptive equalization",
+        "tile_grid": "tile grid dimensions for local processing",
+        "slice_size": "pixel dimensions of the phantom",
+        "seed": "random seed for phantom generation"
+      },
+      "data_idea": "Generates low-contrast phantoms and records histograms before and after equalization.",
+      "real_world_use": "Equalization improves visibility in low-dose X-ray images.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "slice-overlay-annotator",
+      "name": "Slice Overlay Annotator",
+      "concept": "Annotation overlays draw masks, contours, and measurement markers on top of grayscale slices with adjustable transparency. A good annotator supports multiple label classes, zoom-to-region inspection, and export of annotations alongside the image. These overlays are the raw material for training segmentation models.",
+      "key_params": {
+        "overlay_alpha": "transparency of annotation overlays",
+        "contour_count": "number of seeded contours per slice",
+        "slice_size": "pixel dimensions of the slice",
+        "seed": "random seed for annotation generation"
+      },
+      "data_idea": "Renders slices with seeded annotation layers in multiple label classes for overlay tooling practice.",
+      "real_world_use": "Annotation tools prepare the labeled data that segmentation models train on.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "mask-iou-evaluator",
+      "name": "Mask IoU Evaluator",
+      "concept": "Intersection over Union and the Dice coefficient are the standard ways to compare a predicted segmentation mask against ground truth, ranging from zero for no overlap to one for perfect agreement. Per-class scores reveal which structures a model segments well and which it misses. Tracking these metrics across experiments is how segmentation quality is actually managed.",
+      "key_params": {
+        "mask_count": "number of mask pairs to evaluate",
+        "class_count": "number of label classes",
+        "noise": "boundary noise added to predicted masks",
+        "seed": "random seed for mask generation"
+      },
+      "data_idea": "Creates paired masks with controlled overlap levels and computes IoU and Dice scores.",
+      "real_world_use": "Dice score is the standard metric reported in medical segmentation challenges.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "region-growing-segmenter",
+      "name": "Region Growing Segmenter",
+      "concept": "Region growing starts from a seed point and iteratively absorbs neighboring pixels whose intensity falls within a tolerance, stopping when no similar neighbors remain. The choice of seed and tolerance dominates the result: too strict leaves holes, too loose leaks into neighboring tissue. Connectivity rules and iteration caps keep the growth well-behaved.",
+      "key_params": {
+        "seed_point": "starting pixel coordinates for growth",
+        "tolerance": "allowed intensity difference from the region mean",
+        "max_iterations": "cap on growth iterations",
+        "connectivity": "4- or 8-neighbor connectivity"
+      },
+      "data_idea": "Provides seeded phantoms with marked seed points and ground-truth regions to grow into.",
+      "real_world_use": "Semi-automated tools let clinicians seed a tumor and grow the contour interactively.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "kmeans-scan-segmentation",
+      "name": "K-Means Scan Segmentation",
+      "concept": "K-means clustering groups pixels by intensity, optionally including spatial coordinates, into a fixed number of tissue classes. Random initialization makes results vary, so multiple restarts with the best inertia are standard practice. Cluster purity against known phantom labels shows how well the unsupervised split matches real tissue boundaries.",
+      "key_params": {
+        "k": "number of tissue clusters",
+        "image_size": "pixel dimensions of the phantom",
+        "features": "intensity only or intensity plus spatial coordinates",
+        "seed": "random seed for initialization"
+      },
+      "data_idea": "Builds multi-tissue phantoms with known class maps and scores cluster purity.",
+      "real_world_use": "Clustering segments white and gray matter in brain MRI research pipelines.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "kmeans_clustering",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "edge-detector-comparison",
+      "name": "Edge Detector Comparison",
+      "concept": "Sobel and Prewitt use small gradient kernels while Canny chains Gaussian smoothing, gradient computation, non-maximum suppression, and hysteresis thresholding into cleaner edges. Each detector trades sensitivity against false positives differently under noise. Benchmarking precision and recall on phantoms with annotated true edges makes the trade-off concrete.",
+      "key_params": {
+        "detector_list": "which detectors to compare",
+        "noise_level": "noise added to the phantom",
+        "edge_count": "number of true edges in the phantom",
+        "seed": "random seed for phantom generation"
+      },
+      "data_idea": "Generates phantoms with annotated true edges for detector benchmarking.",
+      "real_world_use": "Edge maps feed boundary refinement steps in organ segmentation workflows.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "motion-artifact-simulator",
+      "name": "Motion Artifact Simulator",
+      "concept": "Patient motion during a scan corrupts the acquired signal, producing ghosting and blurring that follow the motion pattern. Simulating displacement fields of known amplitude on a clean phantom reproduces these artifacts faithfully. Motion-correction methods can then be validated by how well they recover the original image.",
+      "key_params": {
+        "motion_amplitude": "maximum displacement in pixels",
+        "ghost_count": "number of ghost replicas",
+        "slice_size": "pixel dimensions of the phantom",
+        "seed": "random seed for motion fields"
+      },
+      "data_idea": "Injects synthetic ghosting artifacts of known severity into clean phantoms.",
+      "real_world_use": "Motion-correction algorithms are validated on artifact-injected data before clinical trials.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "image-registration-sim",
+      "name": "Image Registration Simulator",
+      "concept": "Rigid registration aligns a moving image to a reference by optimizing translation and rotation parameters against a similarity metric such as sum of squared differences or mutual information. The optimizer must avoid local minima, which is why multi-resolution pyramids start coarse and refine. Recovery error against the known applied transform measures success.",
+      "key_params": {
+        "shift_range": "max translation in pixels",
+        "rotation_range": "max rotation in degrees",
+        "metric": "similarity metric for optimization",
+        "seed": "random seed for transform generation"
+      },
+      "data_idea": "Creates phantom pairs with known rigid transforms and scores the recovered alignment.",
+      "real_world_use": "Registration aligns pre- and post-treatment scans so changes can be compared.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lesion-growth-tracker",
+      "name": "Lesion Growth Tracker",
+      "concept": "Response criteria measure the longest diameter of target lesions across timepoints and compute percent change from baseline. Consistent measurement geometry matters more than sub-pixel precision, since the clinical decision thresholds are coarse. Tracking growth rates across a synthetic series exercises the full longitudinal measurement pipeline.",
+      "key_params": {
+        "timepoints": "number of scan visits in the series",
+        "growth_rate": "lesion diameter change per timepoint",
+        "initial_size": "starting lesion diameter in pixels",
+        "seed": "random seed for measurement noise"
+      },
+      "data_idea": "Generates synthetic lesion series with known diameters per visit for tracking drills.",
+      "real_world_use": "Oncologists track tumor response to therapy across scan series in clinical trials.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "texture-feature-extractor",
+      "name": "Texture Feature Extractor",
+      "concept": "Gray-level co-occurrence matrices count how often intensity pairs appear at given offsets, and statistics like contrast, homogeneity, and energy summarize the texture. These features capture heterogeneity that simple intensity means miss. Distinct synthetic textures with known co-occurrence signatures make a clean test bed.",
+      "key_params": {
+        "distances": "pixel offsets for co-occurrence",
+        "angles": "directions for co-occurrence",
+        "levels": "number of quantized gray levels",
+        "seed": "random seed for texture generation"
+      },
+      "data_idea": "Builds synthetic textures with distinct co-occurrence signatures for feature extraction.",
+      "real_world_use": "Texture features help distinguish benign from malignant lesions in radiomics research.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ultrasound-speckle-simulator",
+      "name": "Ultrasound Speckle Simulator",
+      "concept": "Ultrasound speckle arises from coherent wave interference among sub-resolution scatterers, giving the envelope a Rayleigh distribution. This granular texture is noise-like but carries tissue information, which is why naive smoothing destroys diagnostic detail. Simulating speckle over known tissue maps lets filter designers test what their method preserves.",
+      "key_params": {
+        "speckle_density": "scatterer density per resolution cell",
+        "image_size": "pixel dimensions of the frame",
+        "transducer_freq": "simulated transducer frequency in MHz",
+        "seed": "random seed for scatterer placement"
+      },
+      "data_idea": "Renders synthetic ultrasound frames with Rayleigh speckle over known tissue maps.",
+      "real_world_use": "Speckle-reduction filters are tested on simulated frames before clinical evaluation.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "beam-hardening-artifact-sim",
+      "name": "Beam Hardening Artifact Simulator",
+      "concept": "A polychromatic X-ray beam loses low-energy photons first as it passes through tissue, so the beam hardens and the measured attenuation drops along thick paths. The result is cupping artifacts and dark bands near dense bone. Simulating mono- versus poly-energetic projections shows the artifact, and linearization correction shows the fix.",
+      "key_params": {
+        "material_thickness": "phantom thickness in pixels",
+        "energies": "number of energy bins in the spectrum",
+        "correction_on": "whether to apply linearization correction",
+        "seed": "random seed for phantom generation"
+      },
+      "data_idea": "Produces phantom scans with and without cupping artifacts for correction experiments.",
+      "real_world_use": "CT vendors correct beam hardening to avoid dark bands adjacent to bone.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "scan-dose-estimator",
+      "name": "Scan Dose Estimator",
+      "concept": "CT dose indices combine tube voltage, tube current-time product, pitch, and scan length into estimates of patient exposure. Lowering dose reduces image quality, so protocols balance diagnostic need against the ALARA principle of keeping exposure as low as reasonably achievable. An estimator lets protocol designers explore that trade-off numerically.",
+      "key_params": {
+        "kvp": "tube voltage in kilovolts",
+        "mas": "tube current-time product",
+        "pitch": "table travel per rotation relative to beam width",
+        "scan_length": "scan length in centimeters"
+      },
+      "data_idea": "Computes dose estimates across synthetic scan protocols with varying parameters.",
+      "real_world_use": "Dose tracking keeps patient exposure within diagnostic reference levels.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "volumetric-reconstruction-sim",
+      "name": "Volumetric Reconstruction Simulator",
+      "concept": "Stacking two-dimensional slices with known spacing builds a three-dimensional volume, and surface extraction turns thresholded voxels into renderable meshes. Slice spacing and partial-volume effects limit the fidelity of thin structures. Measuring reconstructed volume against the known phantom volume quantifies the geometric error.",
+      "key_params": {
+        "slice_count": "number of slices in the stack",
+        "spacing": "distance between slices in millimeters",
+        "threshold": "isovalue for surface extraction",
+        "seed": "random seed for phantom generation"
+      },
+      "data_idea": "Builds seeded 3D phantoms from slice stacks with known true volumes.",
+      "real_world_use": "Three-dimensional reconstruction powers surgical planning from CT stacks.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "reconstruction-from-projections",
+      "name": "Reconstruction from Projections",
+      "concept": "The Radon transform turns an image into its line-integral projections, the sinogram, and filtered back-projection inverts that process using a ramp filter to counteract blurring. Too few projection angles produce streak artifacts, which is why angular sampling matters. Reconstructing a known phantom and measuring the error closes the loop on the theory.",
+      "key_params": {
+        "projection_angles": "number of projection angles",
+        "image_size": "pixel dimensions of the phantom",
+        "filter_type": "reconstruction filter such as ramp or Hann",
+        "seed": "random seed for phantom generation"
+      },
+      "data_idea": "Generates phantom sinograms from known angles, reconstructs, and measures error.",
+      "real_world_use": "Filtered back-projection is the classic algorithm behind CT image reconstruction.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "radiomic-feature-lab",
+      "name": "Radiomic Feature Lab",
+      "concept": "Radiomics extracts hundreds of quantitative features, first-order statistics, shape descriptors, and texture measures, from segmented regions. With more features than patients, stability testing and redundancy pruning are essential before any modeling. Perturbing segmentations and checking feature repeatability separates robust biomarkers from noise.",
+      "key_params": {
+        "feature_set": "which feature families to compute",
+        "perturbation_level": "segmentation perturbation magnitude",
+        "slice_size": "pixel dimensions of the phantom",
+        "seed": "random seed for phantom generation"
+      },
+      "data_idea": "Creates phantom lesion sets with perturbed copies for feature stability testing.",
+      "real_world_use": "Radiomics studies mine quantitative image features to predict treatment outcomes.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "perfusion-time-curve-analyzer",
+      "name": "Perfusion Time-Curve Analyzer",
+      "concept": "Perfusion imaging tracks contrast bolus passage over time: arrival time, time to peak, peak height, and washout slope each carry physiological meaning. The area under the curve relates to blood volume and the mean transit time to flow. Fitting these curves on synthetic data with known kinetic parameters validates the analysis code.",
+      "key_params": {
+        "timepoints": "number of time samples in the curve",
+        "bolus_peak_time": "time of contrast peak",
+        "noise": "noise added to the curve",
+        "seed": "random seed for curve generation"
+      },
+      "data_idea": "Synthesizes perfusion curves with known kinetic parameters for fitting drills.",
+      "real_world_use": "Perfusion imaging maps blood flow during acute stroke assessment.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "diffusion-tensor-simulator",
+      "name": "Diffusion Tensor Simulator",
+      "concept": "Diffusion tensor imaging models water diffusion as a symmetric 3x3 matrix per voxel; its eigenvectors give fiber direction and eigenvalues yield fractional anisotropy and mean diffusivity. Simulating fiber bundles with known orientations produces tensor fields with ground-truth directions. Tractography algorithms can then be scored on how faithfully they follow the planted fibers.",
+      "key_params": {
+        "fiber_count": "number of synthetic fiber bundles",
+        "fa_value": "target fractional anisotropy",
+        "b_value": "diffusion weighting factor",
+        "seed": "random seed for fiber placement"
+      },
+      "data_idea": "Generates seeded tensor fields with known principal diffusion directions.",
+      "real_world_use": "Diffusion tensor imaging maps white-matter tracts in the brain.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "synthetic-vessel-tree-generator",
+      "name": "Synthetic Vessel Tree Generator",
+      "concept": "Vascular trees grow by recursive branching where daughter radii follow Murray's law, keeping the cube of the parent radius equal to the sum of the daughters' cubes. Branching angles and length ratios control how natural the tree looks. The generated topology, with every bifurcation known, is ideal ground truth for vessel-tracing benchmarks.",
+      "key_params": {
+        "branch_depth": "levels of recursive branching",
+        "branching_angle": "mean angle between daughter branches",
+        "radius_ratio": "daughter-to-parent radius ratio",
+        "seed": "random seed for tree growth"
+      },
+      "data_idea": "Grows 3D vessel trees with fully known topology for tracing benchmarks.",
+      "real_world_use": "Vessel models test the angiography analysis software used in cardiology.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "centerline-extraction-sim",
+      "name": "Centerline Extraction Simulator",
+      "concept": "Vessel centerlines are extracted by thinning a binary mask to its skeleton or by tracing ridges of the distance transform, then converting the result into a graph of branches and junctions. Pruning removes spurious twigs caused by boundary noise. Comparing the extracted graph against the known synthetic topology measures both geometric and topological accuracy.",
+      "key_params": {
+        "tree_depth": "depth of the synthetic vessel tree",
+        "thinning_method": "skeletonization algorithm variant",
+        "noise": "boundary noise on the vessel mask",
+        "seed": "random seed for tree generation"
+      },
+      "data_idea": "Provides vessel masks with ground-truth centerline graphs for extraction scoring.",
+      "real_world_use": "Centerlines are used to measure vessel stenosis in cardiac imaging.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "multi-phase-contrast-tracker",
+      "name": "Multi-Phase Contrast Tracker",
+      "concept": "Multi-phase CT captures arterial, venous, and delayed images after contrast injection, and lesions are characterized by their wash-in and wash-out pattern across phases. Timing matters: a mistimed arterial phase can hide a hypervascular lesion entirely. Tracking enhancement curves on synthetic multi-phase series exercises the temporal analysis pipeline.",
+      "key_params": {
+        "phases": "number of contrast phases",
+        "enhancement_rate": "lesion enhancement speed",
+        "lesion_count": "number of synthetic lesions",
+        "seed": "random seed for curve generation"
+      },
+      "data_idea": "Simulates multi-phase series with known lesion enhancement patterns.",
+      "real_world_use": "Multi-phase CT characterizes liver lesions by their wash-in and wash-out behavior.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "mri-kspace-simulator",
+      "name": "MRI k-Space Simulator",
+      "concept": "K-space is the two-dimensional Fourier transform of the image, and MRI scanners sample it directly along trajectories like Cartesian lines or spirals. Undersampling accelerates scans but causes aliasing artifacts, while zero-filling trades resolution for speed. Simulating sampling patterns on a known phantom shows exactly how each choice degrades the image.",
+      "key_params": {
+        "acceleration_factor": "undersampling acceleration factor",
+        "sampling_pattern": "Cartesian, radial, or spiral sampling",
+        "matrix_size": "k-space matrix dimensions",
+        "seed": "random seed for phantom generation"
+      },
+      "data_idea": "Simulates undersampled k-space and the resulting aliased images from known phantoms.",
+      "real_world_use": "Compressed sensing research starts with simulated k-space sampling patterns.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "anomaly-heatmap-visualizer",
+      "name": "Anomaly Heatmap Visualizer",
+      "concept": "Anomaly detectors output a per-pixel score map that is overlaid on the scan as a heatmap, and a threshold turns scores into binary findings. Calibrating that threshold trades sensitivity against false alarms, which is visualized directly on the overlay. Seeded anomalies with known locations let developers measure localization accuracy, not just image-level classification.",
+      "key_params": {
+        "anomaly_rate": "fraction of pixels that are anomalous",
+        "heatmap_colormap": "color mapping for score overlay",
+        "slice_size": "pixel dimensions of the scan",
+        "seed": "random seed for anomaly placement"
+      },
+      "data_idea": "Creates scans with seeded anomalies and matching score maps for visualization.",
+      "real_world_use": "Heatmaps help explain AI findings to radiologists reviewing cases.",
+      "suggested_types": [
+        "imaging_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

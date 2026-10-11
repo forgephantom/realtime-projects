@@ -1,0 +1,462 @@
+{
+  "domain": "healthcare",
+  "subdomain": "telemedicine",
+  "topics": [
+    {
+      "slug_base": "virtual-visit-scheduler",
+      "name": "Virtual Visit Scheduler",
+      "concept": "Virtual visit scheduling matches patients with clinicians across time zones, visit types, and buffer rules, while enforcing licensing constraints on where a clinician may practice. Double-booking protection and waitlist promotion keep the calendar consistent. Seeded schedules with known conflicts let developers verify the constraint logic.",
+      "key_params": {
+        "provider_count": "number of clinicians scheduled",
+        "slot_minutes": "appointment slot length",
+        "days_ahead": "scheduling horizon in days",
+        "seed": "random seed for demand generation"
+      },
+      "data_idea": "Generates seeded patient demand and clinician availability with known conflicts.",
+      "real_world_use": "Telehealth platforms schedule millions of video visits with these constraints.",
+      "suggested_types": [
+        "scheduler",
+        "rest_api",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "remote-triage-questionnaire",
+      "name": "Remote Triage Questionnaire",
+      "concept": "Remote triage questionnaires use branching logic: answers about symptoms, duration, and severity route patients to self-care, routine visits, or urgent care. Red-flag answers must always escalate regardless of the path taken. Synthetic patient journeys with known correct dispositions verify the branching.",
+      "key_params": {
+        "question_count": "questions in the questionnaire",
+        "red_flags": "list of red-flag symptom triggers",
+        "path_count": "distinct triage paths",
+        "seed": "random seed for journey generation"
+      },
+      "data_idea": "Simulates patient journeys with known correct triage dispositions.",
+      "real_world_use": "Triage questionnaires route patients safely before any clinician is involved.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "chatbot"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "symptom-checker-flow",
+      "name": "Symptom Checker Flow",
+      "concept": "Symptom checkers map reported symptoms to possible conditions using probabilistic reasoning, then recommend a care setting rather than a diagnosis. The flow must handle vague inputs gracefully and always offer an escalation path. Synthetic symptom sets with known intended routing validate the flow logic.",
+      "key_params": {
+        "symptom_count": "symptoms in the knowledge base",
+        "condition_count": "conditions covered",
+        "seed": "random seed for case generation",
+        "escalation_rules": "rules forcing urgent routing"
+      },
+      "data_idea": "Builds synthetic symptom cases with known intended care routing.",
+      "real_world_use": "Symptom checkers guide patients to the right care setting.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "eprescription-refill-tracker",
+      "name": "E-Prescription Refill Tracker",
+      "concept": "Refill tracking monitors days of supply remaining, refill windows, and prescriber authorization status for each medication. Alerts fire before the supply runs out, accounting for weekends and pharmacy hours. Synthetic medication histories with known refill dates verify the alert timing.",
+      "key_params": {
+        "medication_count": "medications tracked per patient",
+        "supply_days": "days of supply per fill",
+        "seed": "random seed for history generation",
+        "alert_lead_days": "days before depletion to alert"
+      },
+      "data_idea": "Generates synthetic medication histories with known refill dates.",
+      "real_world_use": "Refill trackers prevent therapy gaps for chronic medications.",
+      "suggested_types": [
+        "scheduler",
+        "monitoring_agent",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "video-visit-tech-check",
+      "name": "Video Visit Tech Check",
+      "concept": "Pre-visit tech checks test camera, microphone, speaker, and bandwidth, guiding patients through fixes before the appointment starts. A readiness score summarizes whether the visit can proceed smoothly. Synthetic device profiles with known failures let developers verify the diagnostics.",
+      "key_params": {
+        "device_count": "synthetic device profiles",
+        "bandwidth_mbps": "minimum acceptable bandwidth",
+        "seed": "random seed for profile generation",
+        "check_items": "hardware and network checks run"
+      },
+      "data_idea": "Creates synthetic device profiles with known hardware failures for check drills.",
+      "real_world_use": "Tech checks cut no-show and delay rates for video visits.",
+      "suggested_types": [
+        "monitoring_agent",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "telehealth-consent-tracker",
+      "name": "Consent Form Manager",
+      "concept": "Telehealth consent forms capture agreement to virtual care, data use, and recording policies, with versioned documents and audit trails of who signed what when. Expiry rules trigger re-consent after policy changes. Synthetic patient rosters with known consent states verify the tracking logic.",
+      "key_params": {
+        "patient_count": "patients in the roster",
+        "form_version": "consent document version",
+        "seed": "random seed for roster generation",
+        "expiry_days": "days until consent expires"
+      },
+      "data_idea": "Builds synthetic patient rosters with known consent states for tracking drills.",
+      "real_world_use": "Consent managers keep virtual care compliant with privacy regulations.",
+      "suggested_types": [
+        "file_organizer",
+        "rest_api",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "digital-intake-form-builder",
+      "name": "Digital Intake Form Builder",
+      "concept": "Intake form builders let clinics compose adaptive questionnaires with field types, validation rules, and conditional sections that appear based on earlier answers. Responses feed directly into the visit record. Synthetic form definitions with known validation behavior verify the builder output.",
+      "key_params": {
+        "field_count": "fields per generated form",
+        "section_count": "conditional sections",
+        "seed": "random seed for form generation",
+        "validation_rules": "field validation rules applied"
+      },
+      "data_idea": "Generates synthetic form definitions with known validation behavior.",
+      "real_world_use": "Digital intake replaces paper clipboards in modern clinics.",
+      "suggested_types": [
+        "config_manager",
+        "rest_api",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "visit-satisfaction-analyzer",
+      "name": "Satisfaction Survey Analyzer",
+      "concept": "Post-visit surveys use Likert scales and free-text comments to measure patient experience, aggregated into scores by provider, clinic, and visit type. Trend analysis spots declining satisfaction before it becomes a reputation problem. Synthetic responses with known sentiment let developers verify the aggregation.",
+      "key_params": {
+        "response_count": "survey responses analyzed",
+        "question_count": "questions per survey",
+        "seed": "random seed for response generation",
+        "scale_points": "Likert scale size"
+      },
+      "data_idea": "Synthesizes survey responses with known sentiment distributions.",
+      "real_world_use": "Survey analytics drive quality improvement in telehealth programs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vital-sign-trend-monitor",
+      "name": "Vital Sign Trend Monitor",
+      "concept": "Remote monitoring streams vitals like heart rate, blood pressure, and oxygen saturation, flagging readings outside personalized thresholds. Trend detection matters more than single readings: a slow drift can precede an acute event. Synthetic vital streams with planted deteriorations verify the alerting logic.",
+      "key_params": {
+        "patient_count": "patients monitored",
+        "reading_interval_min": "minutes between readings",
+        "seed": "random seed for stream generation",
+        "threshold_rules": "alert threshold definitions"
+      },
+      "data_idea": "Streams synthetic vitals with planted deteriorations for alerting drills.",
+      "real_world_use": "Trend monitors catch patient decline between virtual visits.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "bp-trend-analyzer",
+      "name": "Blood Pressure Trend Analyzer",
+      "concept": "Blood pressure analysis looks beyond single readings to weekly averages, morning-evening differences, and variability, which predict cardiovascular risk better than spot checks. Classification follows guideline thresholds for normal, elevated, and hypertensive ranges. Synthetic logs with known patterns verify the classification.",
+      "key_params": {
+        "reading_count": "blood pressure readings analyzed",
+        "weeks": "weeks of readings covered",
+        "seed": "random seed for log generation",
+        "guideline": "hypertension guideline thresholds used"
+      },
+      "data_idea": "Generates synthetic BP logs with known trend patterns for analysis drills.",
+      "real_world_use": "Trend analysis supports hypertension management in virtual care.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "glucose-log-monitor",
+      "name": "Glucose Log Monitor",
+      "concept": "Glucose monitoring tracks fasting and post-meal readings against target ranges, computing time-in-range as the headline metric. Pattern detection flags recurring lows that suggest medication or meal-timing issues. Synthetic logs with planted patterns let developers verify detection accuracy.",
+      "key_params": {
+        "reading_count": "glucose readings analyzed",
+        "target_range": "target glucose range mg/dL",
+        "seed": "random seed for log generation",
+        "meal_tags": "meal context tags per reading"
+      },
+      "data_idea": "Synthesizes glucose logs with planted hypo and hyper patterns.",
+      "real_world_use": "Glucose monitors support diabetes care between telehealth visits.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "medication-adherence-tracker",
+      "name": "Medication Adherence Tracker",
+      "concept": "Adherence is measured by proportion of days covered: days with medication on hand divided by days in the period. Gaps reveal missed refills while overlaps suggest stockpiling. Synthetic fill histories with known adherence levels verify the calculation, which underpins quality measures for chronic care.",
+      "key_params": {
+        "patient_count": "patients tracked",
+        "medication_count": "medications per patient",
+        "seed": "random seed for history generation",
+        "period_days": "measurement period in days"
+      },
+      "data_idea": "Builds synthetic fill histories with known adherence levels.",
+      "real_world_use": "Adherence tracking underpins chronic-disease quality programs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "kpi_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "follow-up-reminder-engine",
+      "name": "Follow-Up Reminder Engine",
+      "concept": "Follow-up engines schedule reminders based on visit type, risk level, and patient preferences for channel and timing. Escalation rules nudge non-responders and alert staff when follow-ups go overdue. Synthetic care plans with known due dates verify the scheduling and escalation logic.",
+      "key_params": {
+        "patient_count": "patients with follow-ups",
+        "reminder_channels": "SMS, email, or app push",
+        "seed": "random seed for plan generation",
+        "escalation_days": "days before staff escalation"
+      },
+      "data_idea": "Creates synthetic care plans with known follow-up due dates.",
+      "real_world_use": "Reminder engines close the loop after virtual visits.",
+      "suggested_types": [
+        "scheduler",
+        "monitoring_agent",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "language-access-coordinator",
+      "name": "Language Access Coordinator",
+      "concept": "Coordinating interpreters means matching patient language needs with interpreter availability across video visits, respecting certification requirements for medical interpreting. Lead-time rules differ by language rarity. Synthetic visit rosters with known language needs verify the matching logic.",
+      "key_params": {
+        "visit_count": "visits needing interpretation",
+        "language_count": "languages covered",
+        "seed": "random seed for roster generation",
+        "lead_time_hours": "booking lead time required"
+      },
+      "data_idea": "Generates synthetic visit rosters with known interpreter needs.",
+      "real_world_use": "Language access is a legal and quality requirement in US healthcare.",
+      "suggested_types": [
+        "scheduler",
+        "rest_api",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "after-visit-summary-generator",
+      "name": "After-Visit Summary Generator",
+      "concept": "After-visit summaries translate the clinical encounter into plain language: what was discussed, medication changes, and next steps with dates. Readability matters as much as completeness, since patients act on these documents. Synthetic visit records with known key points verify the summarization.",
+      "key_params": {
+        "visit_count": "visits summarized",
+        "reading_level": "target reading grade level",
+        "seed": "random seed for record generation",
+        "section_count": "summary sections included"
+      },
+      "data_idea": "Builds synthetic visit records with known key points for summary drills.",
+      "real_world_use": "Clear summaries improve patient follow-through on care plans.",
+      "suggested_types": [
+        "report_generator",
+        "rest_api",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "coverage-eligibility-checker",
+      "name": "Insurance Eligibility Checker",
+      "concept": "Eligibility checks verify coverage, copay, deductible status, and telehealth benefits before a visit, preventing surprise bills. Benefit details vary by plan and change frequently, so checks run close to the appointment. Synthetic member records with known coverage states verify the parsing logic.",
+      "key_params": {
+        "member_count": "members checked",
+        "plan_count": "distinct plan types",
+        "seed": "random seed for record generation",
+        "check_window_days": "days before visit to check"
+      },
+      "data_idea": "Creates synthetic member records with known coverage states.",
+      "real_world_use": "Eligibility checks prevent billing surprises for virtual visits.",
+      "suggested_types": [
+        "api_client_sim",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "appointment-no-show-predictor",
+      "name": "Appointment No-Show Predictor",
+      "concept": "No-show prediction models estimate the chance a patient misses a visit from history, lead time, and appointment characteristics, so staff can double-book or over-remind strategically. Calibration matters: predicted probabilities must match observed rates. Synthetic appointment histories with known no-show drivers let developers validate the model.",
+      "key_params": {
+        "appointment_count": "appointments in the training set",
+        "feature_count": "predictor features used",
+        "seed": "random seed for history generation",
+        "calibration_bins": "bins for calibration checking"
+      },
+      "data_idea": "Generates synthetic appointment histories with known no-show drivers.",
+      "real_world_use": "No-show prediction lets clinics protect schedules without punishing patients.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "kpi_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "waitlist-backfill-optimizer",
+      "name": "Waitlist Backfill Optimizer",
+      "concept": "When cancellations open slots, backfill optimization matches waitlisted patients by urgency, visit-type compatibility, and how quickly they can arrive. Fairness constraints prevent the same patients from always losing out. Synthetic waitlists with known optimal assignments verify the matching algorithm.",
+      "key_params": {
+        "waitlist_size": "patients on the waitlist",
+        "slot_count": "open slots to fill",
+        "seed": "random seed for waitlist generation",
+        "fairness_rule": "fairness constraint applied"
+      },
+      "data_idea": "Builds synthetic waitlists with known optimal slot assignments.",
+      "real_world_use": "Backfill optimization recovers revenue lost to last-minute cancellations.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "care-plan-progress-tracker",
+      "name": "Care Plan Progress Tracker",
+      "concept": "Care plan tracking measures completion of goals, tasks, and milestones across chronic conditions, rolling them into progress scores per patient and per cohort. Stalled plans trigger outreach before the next visit. Synthetic plans with known completion trajectories verify the scoring.",
+      "key_params": {
+        "patient_count": "patients with care plans",
+        "goal_count": "goals per care plan",
+        "seed": "random seed for plan generation",
+        "stall_threshold_days": "days of inactivity triggering outreach"
+      },
+      "data_idea": "Creates synthetic care plans with known completion trajectories.",
+      "real_world_use": "Progress tracking keeps chronic-care programs accountable.",
+      "suggested_types": [
+        "kpi_dashboard",
+        "monitoring_agent",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "remote-patient-monitoring-alerts",
+      "name": "Remote Patient Monitoring Alerts",
+      "concept": "RPM alerting fuses multiple vital streams with trend and threshold rules, suppressing duplicate alerts while escalating sustained deteriorations. Alert fatigue is the enemy: too many false alarms and clinicians stop looking. Synthetic multi-stream data with planted events lets developers tune sensitivity against fatigue.",
+      "key_params": {
+        "patient_count": "patients monitored",
+        "stream_count": "vital streams per patient",
+        "seed": "random seed for stream generation",
+        "suppression_window_min": "duplicate alert suppression window"
+      },
+      "data_idea": "Streams synthetic multi-vital data with planted deterioration events.",
+      "real_world_use": "RPM programs manage chronic patients at home between visits.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "chronic-care-scorecard",
+      "name": "Chronic Care Scorecard",
+      "concept": "Chronic care scorecards aggregate quality measures, control rates, screening completion, and utilization into program-level dashboards with risk stratification. Drill-downs connect population metrics to individual patients needing outreach. Synthetic patient panels with known risk tiers verify the stratification.",
+      "key_params": {
+        "patient_count": "patients in the panel",
+        "measure_count": "quality measures tracked",
+        "seed": "random seed for panel generation",
+        "risk_tiers": "risk stratification levels"
+      },
+      "data_idea": "Builds synthetic patient panels with known risk tiers for scorecard drills.",
+      "real_world_use": "Scorecards guide population-health management in value-based care.",
+      "suggested_types": [
+        "kpi_dashboard",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "telehealth-utilization-dashboard",
+      "name": "Telehealth Utilization Dashboard",
+      "concept": "Utilization dashboards track visit volumes, modality mix, no-show rates, and provider productivity, forecasting demand for capacity planning. Comparing virtual against in-person trends reveals substitution patterns. Synthetic visit records with known seasonal patterns verify the analytics.",
+      "key_params": {
+        "visit_count": "visits in the dataset",
+        "months": "months of history covered",
+        "seed": "random seed for record generation",
+        "forecast_horizon": "months forecasted ahead"
+      },
+      "data_idea": "Generates synthetic visit records with known seasonal patterns.",
+      "real_world_use": "Utilization analytics inform telehealth staffing and investment decisions.",
+      "suggested_types": [
+        "kpi_dashboard",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "secure-message-router",
+      "name": "Secure Message Router",
+      "concept": "Patient message routing classifies incoming messages by urgency and topic, sending prescription refills, clinical questions, and administrative requests down different workflows. Priority scoring ensures urgent symptoms reach clinicians fast. Synthetic message sets with known correct routes verify the classifier.",
+      "key_params": {
+        "message_count": "messages routed",
+        "category_count": "routing categories",
+        "seed": "random seed for message generation",
+        "sla_hours": "response time targets per category"
+      },
+      "data_idea": "Creates synthetic patient messages with known correct routing.",
+      "real_world_use": "Message routing keeps portal inboxes from overwhelming care teams.",
+      "suggested_types": [
+        "naive_bayes",
+        "task_queue",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "triage-escalation-monitor",
+      "name": "Triage Escalation Monitor",
+      "concept": "Escalation monitoring watches triage queues for patients whose severity, wait time, or deteriorating inputs cross escalation thresholds, re-prioritizing them automatically. Audit trails record every escalation decision for review. Synthetic triage streams with planted escalation events verify the monitor.",
+      "key_params": {
+        "patient_count": "patients in the triage queue",
+        "seed": "random seed for stream generation",
+        "escalation_rules": "threshold rules triggering escalation",
+        "review_window_min": "minutes of history reviewed"
+      },
+      "data_idea": "Simulates triage streams with planted escalation events for monitor drills.",
+      "real_world_use": "Escalation monitors keep remote triage queues safe under load.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

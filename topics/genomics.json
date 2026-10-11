@@ -1,0 +1,576 @@
+{
+  "domain": "healthcare",
+  "subdomain": "genomics",
+  "topics": [
+    {
+      "slug_base": "gc-content-analyzer",
+      "name": "GC Content Analyzer",
+      "concept": "GC content, the fraction of guanine and cytosine bases, influences melting temperature, sequencing bias, and gene density. Sliding windows reveal regional variation such as CpG islands near gene promoters. Seeded sequences with known GC profiles let developers verify windowed calculations exactly.",
+      "key_params": {
+        "sequence_length": "length of each synthetic sequence",
+        "window_size": "sliding window width in bases",
+        "sequence_count": "number of sequences analyzed",
+        "seed": "random seed for sequence generation"
+      },
+      "data_idea": "Generates seeded random DNA with regional GC variation for windowed analysis.",
+      "real_world_use": "GC analysis flags biased regions in sequencing datasets.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "kmer-frequency-counter",
+      "name": "K-mer Counter",
+      "concept": "K-mers are all substrings of length k, and their frequency spectrum underlies genome assembly, error correction, and metagenomic classification. Canonical k-mers merge a sequence with its reverse complement to avoid double counting. Synthetic reads with known k-mer spectra make counting implementations verifiable.",
+      "key_params": {
+        "k": "k-mer length",
+        "sequence_length": "length of each sequence",
+        "sequence_count": "number of sequences",
+        "seed": "random seed for sequence generation"
+      },
+      "data_idea": "Creates synthetic reads with known k-mer spectra for counter validation.",
+      "real_world_use": "K-mer counting powers genome assembly and metagenomic classification.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "reverse-complement-tool",
+      "name": "Reverse Complement Tool",
+      "concept": "DNA is double-stranded, so a read may match either strand; the reverse complement applies Watson-Crick pairing then reverses the string. Ambiguity codes like N expand the pairing rules. Verifying the tool on seeded sequences with known complements catches off-by-one and pairing errors.",
+      "key_params": {
+        "sequence_count": "number of sequences processed",
+        "max_length": "maximum sequence length",
+        "seed": "random seed for generation",
+        "include_ambiguity": "whether ambiguity codes appear"
+      },
+      "data_idea": "Generates seeded sequences with verified reverse complements for tool testing.",
+      "real_world_use": "Aligners reverse-complement reads to match either DNA strand.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "codon-bias-analyzer",
+      "name": "Codon Usage Analyzer",
+      "concept": "Most amino acids are encoded by several synonymous codons, and organisms prefer some over others, a bias called codon usage. Metrics like the codon adaptation index summarize how well a gene matches a host's preferences. Analyzing synthetic genes with known bias teaches the statistics behind codon optimization.",
+      "key_params": {
+        "gene_count": "number of synthetic genes",
+        "codon_table": "codon preference table used",
+        "seed": "random seed for gene generation",
+        "min_length": "minimum gene length in codons"
+      },
+      "data_idea": "Builds synthetic coding sequences with known codon bias for analysis drills.",
+      "real_world_use": "Codon optimization improves recombinant protein expression yields.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "orf-scanner",
+      "name": "ORF Finder",
+      "concept": "An open reading frame runs from a start codon to an in-frame stop codon, and six-frame translation scans both strands in all three frames. The longest ORF is often, but not always, the real gene. Planted ORFs in synthetic sequences give the finder known answers to recover.",
+      "key_params": {
+        "sequence_length": "length of each sequence",
+        "min_orf_length": "minimum ORF length reported",
+        "frames": "reading frames scanned",
+        "seed": "random seed for sequence generation"
+      },
+      "data_idea": "Generates synthetic sequences with planted ORFs for finder validation.",
+      "real_world_use": "ORF finding annotates protein-coding genes in newly sequenced genomes.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "read-alignment-scorer",
+      "name": "Read Alignment Scorer",
+      "concept": "Alignment scoring rewards matches and penalizes mismatches and gaps, with affine gap penalties charging more to open a gap than to extend it. CIGAR-style strings compactly record the resulting alignment operations. Scoring synthetic reads against known true alignments separates scoring bugs from search bugs.",
+      "key_params": {
+        "read_length": "length of each synthetic read",
+        "error_rate": "substitution and indel error rate",
+        "scoring_scheme": "match, mismatch, and gap scores",
+        "seed": "random seed for read generation"
+      },
+      "data_idea": "Creates synthetic reads with known true alignments for scorer validation.",
+      "real_world_use": "Alignment scoring ranks where each sequencing read belongs in a genome.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vcf-style-parser",
+      "name": "VCF-Style Parser",
+      "concept": "Variant call format records variants with fixed columns for chromosome, position, reference and alternate alleles, quality, and filter status, plus a flexible INFO field and per-sample genotype columns. Parsing must handle multi-allelic sites and missing data gracefully. Synthetic records with valid structure exercise the parser thoroughly.",
+      "key_params": {
+        "variant_count": "number of variant records",
+        "sample_count": "number of samples per record",
+        "seed": "random seed for record generation",
+        "version": "format version to emulate"
+      },
+      "data_idea": "Generates synthetic variant records with valid structure for parser drills.",
+      "real_world_use": "Parsers ingest variant calls produced by any analysis pipeline.",
+      "suggested_types": [
+        "file_organizer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "primer-tm-estimator",
+      "name": "Primer Tm Estimator",
+      "concept": "Melting temperature predicts when a PCR primer anneals: the Wallace rule gives a quick estimate while nearest-neighbor thermodynamics accounts for stacking interactions and salt concentration. Matched Tm values across primer pairs keep them annealing together. Synthetic primers with computed values let developers compare methods.",
+      "key_params": {
+        "primer_count": "number of primers estimated",
+        "method": "Wallace rule or nearest-neighbor",
+        "salt_conc": "sodium concentration in millimolar",
+        "seed": "random seed for primer generation"
+      },
+      "data_idea": "Generates synthetic primers with computed Tm values for method comparison.",
+      "real_world_use": "Tm matching keeps PCR primer pairs annealing at the same temperature.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "restriction-site-mapper",
+      "name": "Restriction Site Mapper",
+      "concept": "Restriction enzymes cut DNA at specific, often palindromic, recognition sequences, and mapping those sites predicts fragment sizes for a digest. Multi-enzyme digests combine site sets for finer planning. Synthetic plasmids with known cut sites give the mapper verifiable answers.",
+      "key_params": {
+        "enzyme_count": "number of enzymes in the digest",
+        "sequence_length": "plasmid length in base pairs",
+        "seed": "random seed for sequence generation",
+        "digest_type": "single or double digest"
+      },
+      "data_idea": "Builds synthetic plasmids with known cut sites for mapper validation.",
+      "real_world_use": "Digest maps plan molecular cloning experiments.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "splice-junction-counter",
+      "name": "Splice Junction Counter",
+      "concept": "RNA sequencing reads that span exon-exon junctions reveal alternative splicing, summarized per event as percent spliced in, or PSI. Counting junction-spanning reads separately from exonic reads is the core operation. Synthetic transcripts with known splice patterns make the counting verifiable.",
+      "key_params": {
+        "gene_count": "number of synthetic genes",
+        "junction_count": "splice junctions per gene",
+        "psi_true": "true percent-spliced-in values",
+        "seed": "random seed for read generation"
+      },
+      "data_idea": "Generates synthetic RNA reads with known splice junctions for counting drills.",
+      "real_world_use": "Junction counting quantifies alternative splicing in transcriptome studies.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "smith-waterman-demo",
+      "name": "Smith-Waterman Local Alignment",
+      "concept": "Smith-Waterman finds the best local alignment with dynamic programming: the score matrix allows restarts at zero so weak flanks are trimmed, and traceback recovers the optimal segment. Affine gap penalties need three matrices instead of one. Known homologous pairs let developers verify the traceback logic.",
+      "key_params": {
+        "seq_length": "length of each sequence",
+        "match_score": "reward per matching base",
+        "gap_open": "penalty for opening a gap",
+        "seed": "random seed for sequence generation"
+      },
+      "data_idea": "Creates sequence pairs with known local homology for alignment drills.",
+      "real_world_use": "Local alignment finds conserved domains in protein sequences.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "needleman-wunsch-demo",
+      "name": "Needleman-Wunsch Global Alignment",
+      "concept": "Needleman-Wunsch aligns two sequences end to end with dynamic programming, forcing every base into the alignment with gaps where needed. Substitution matrices encode biological similarity beyond simple match and mismatch. Verifying against known global alignments confirms the recurrence and traceback.",
+      "key_params": {
+        "seq_length": "length of each sequence",
+        "scoring_matrix": "substitution matrix used",
+        "gap_penalty": "linear gap penalty",
+        "seed": "random seed for sequence generation"
+      },
+      "data_idea": "Generates homologous pairs with known global alignments for algorithm drills.",
+      "real_world_use": "Global alignment compares full-length gene sequences across species.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "variant-annotator",
+      "name": "Variant Annotation Simulator",
+      "concept": "Annotation predicts a variant's consequence: synonymous changes leave the protein unchanged while missense, nonsense, and frameshift variants alter it. Overlapping transcripts and population frequency add context for prioritization. Synthetic variants with known consequence classes let developers test classification logic.",
+      "key_params": {
+        "variant_count": "number of variants annotated",
+        "gene_count": "genes in the synthetic annotation set",
+        "seed": "random seed for variant generation",
+        "consequence_set": "consequence classes covered"
+      },
+      "data_idea": "Creates synthetic variants with known consequence classes for annotator drills.",
+      "real_world_use": "Annotation prioritizes variants found in clinical sequencing.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "phylogenetic-distance-matrix",
+      "name": "Phylogenetic Distance Matrix",
+      "concept": "Pairwise evolutionary distances start from raw sequence differences and apply corrections like Jukes-Cantor for multiple substitutions at the same site. The resulting matrix is the input to distance-based tree builders. Evolving synthetic sequences along a known tree gives true distances to compare against.",
+      "key_params": {
+        "taxa_count": "number of taxa compared",
+        "seq_length": "sequence length evolved",
+        "mutation_rate": "substitutions per site",
+        "seed": "random seed for evolution"
+      },
+      "data_idea": "Evolves synthetic sequences along known trees for distance verification.",
+      "real_world_use": "Distance matrices seed evolutionary tree building in phylogenetics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "upgma-phylogeny-builder",
+      "name": "UPGMA Tree Builder",
+      "concept": "UPGMA builds a tree by repeatedly joining the closest pair of clusters and recomputing average distances, assuming a molecular clock so all tips sit at equal depth. The result is exported in Newick format for visualization. Clock-like synthetic evolution with a known tree verifies the clustering.",
+      "key_params": {
+        "taxa_count": "number of taxa in the tree",
+        "seq_length": "sequence length evolved",
+        "seed": "random seed for evolution",
+        "clock_like": "whether evolution follows a strict clock"
+      },
+      "data_idea": "Evolves clock-like sequences with a known true tree for builder validation.",
+      "real_world_use": "UPGMA builds quick guide trees used in outbreak epidemiology.",
+      "suggested_types": [
+        "decision_tree",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sequence-motif-finder",
+      "name": "Sequence Motif Finder",
+      "concept": "Motifs are modeled as position weight matrices scoring each base per position, with log-odds against a background model highlighting enriched patterns. Scanning sequences for high-scoring windows recovers planted binding sites. Synthetic sequences with motifs at known positions make the finder testable.",
+      "key_params": {
+        "motif_length": "length of the planted motif",
+        "sequence_count": "number of sequences scanned",
+        "background_model": "background base frequencies",
+        "seed": "random seed for sequence generation"
+      },
+      "data_idea": "Plants motifs at known positions in synthetic sequences for finder drills.",
+      "real_world_use": "Motif finding locates transcription-factor binding sites in DNA.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "read-quality-trimmer",
+      "name": "FASTQ Quality Trimmer",
+      "concept": "Sequencing reads carry per-base Phred quality scores, and quality typically decays toward read ends. Sliding-window trimming cuts low-quality tails, while adapter clipping removes leftover sequencing adapters. Synthetic reads with known quality decay let developers verify that trimming keeps the good bases and drops the bad.",
+      "key_params": {
+        "read_count": "number of synthetic reads",
+        "read_length": "length of each read",
+        "error_profile": "quality decay profile",
+        "seed": "random seed for read generation"
+      },
+      "data_idea": "Generates synthetic reads with known quality decay for trimmer validation.",
+      "real_world_use": "Trimming cleans raw sequencing reads before alignment.",
+      "suggested_types": [
+        "data_pipeline",
+        "file_organizer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "coverage-depth-profiler",
+      "name": "Coverage Depth Profiler",
+      "concept": "Coverage depth counts how many reads cover each genome position, and under uniform sampling it follows a Poisson-like distribution around the mean. Systematic dips flag deletions or capture bias. Synthetic alignments with a known depth profile let developers verify windowing and outlier detection.",
+      "key_params": {
+        "genome_size": "synthetic genome length",
+        "read_count": "number of simulated reads",
+        "read_length": "length of each read",
+        "seed": "random seed for read placement"
+      },
+      "data_idea": "Simulates alignments with a known depth profile for profiler validation.",
+      "real_world_use": "Coverage plots reveal deletions and capture bias in sequencing data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gene-expression-simulator",
+      "name": "Gene Expression Simulator",
+      "concept": "RNA-seq counts are overdispersed relative to Poisson, so the negative binomial with per-gene dispersion is the standard model. Library size factors normalize sequencing depth across samples before comparison. Simulating counts with known fold changes gives differential-expression methods a verifiable benchmark.",
+      "key_params": {
+        "gene_count": "number of genes simulated",
+        "sample_count": "number of samples",
+        "dispersion": "negative binomial dispersion",
+        "seed": "random seed for count generation"
+      },
+      "data_idea": "Generates synthetic count matrices with known fold changes for benchmarking.",
+      "real_world_use": "Simulators benchmark the RNA-seq analysis tools used in genomics labs.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pca-on-expression-data",
+      "name": "PCA on Expression Data",
+      "concept": "Principal component analysis on log-transformed counts reveals sample structure: replicates cluster, outliers stand out, and batch effects appear as unwanted axes. The variance explained per component guides how many to inspect. Synthetic data with planted batch structure makes the diagnostic patterns unmistakable.",
+      "key_params": {
+        "gene_count": "number of genes",
+        "sample_count": "number of samples",
+        "batch_effect": "strength of planted batch effect",
+        "seed": "random seed for data generation"
+      },
+      "data_idea": "Creates expression data with known batch structure for PCA diagnostics.",
+      "real_world_use": "PCA quality control checks RNA-seq experiments for outliers and batch effects.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "population-structure-viewer",
+      "name": "Population Structure Viewer",
+      "concept": "Population structure analysis decomposes genomes into ancestry proportions, revealing admixture and stratification that confound association studies. PCA of genotypes shows the same structure geometrically. Synthetic genotypes with known ancestry fractions let developers verify the decomposition.",
+      "key_params": {
+        "population_count": "number of ancestral populations",
+        "sample_count": "number of samples",
+        "snp_count": "SNPs genotyped per sample",
+        "seed": "random seed for genotype generation"
+      },
+      "data_idea": "Generates synthetic genotypes with known ancestry fractions for viewer drills.",
+      "real_world_use": "Structure analysis controls for ancestry confounding in genetic association studies.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sequence-logo-generator",
+      "name": "Sequence Logo Generator",
+      "concept": "A sequence logo stacks letters at each motif position with heights proportional to information content, making conserved positions visually obvious. Bits measure how far the observed distribution departs from background. Aligned motif instances with a known consensus give the generator verifiable input.",
+      "key_params": {
+        "motif_length": "length of the motif",
+        "sequence_count": "aligned instances",
+        "seed": "random seed for instance generation",
+        "background": "background base frequencies"
+      },
+      "data_idea": "Builds aligned motif instances with a known consensus for logo rendering.",
+      "real_world_use": "Logos visualize binding-site preferences for biologists.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "snp-caller-simulator",
+      "name": "SNP Caller Simulator",
+      "concept": "SNP calling examines the pileup of reads at each position, computing genotype likelihoods from base qualities and expected error rates. Distinguishing true variants from sequencing errors is the central statistical challenge. Synthetic pileups with planted SNPs give the caller known answers to recover.",
+      "key_params": {
+        "depth": "mean read depth at each position",
+        "true_snp_count": "number of planted SNPs",
+        "error_rate": "per-base sequencing error rate",
+        "seed": "random seed for pileup generation"
+      },
+      "data_idea": "Synthesizes pileups with planted SNPs for caller validation.",
+      "real_world_use": "Variant callers turn read alignments into lists of genetic variants.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "indel-realigner-demo",
+      "name": "Indel Realignment Demo",
+      "concept": "Reads spanning insertions or deletions often misalign, creating clusters of false SNPs near the indel. Local realignment reconsiders all reads in a window jointly, testing candidate haplotypes to find the consistent explanation. Synthetic reads over known indels let developers measure artifact reduction.",
+      "key_params": {
+        "indel_count": "number of planted indels",
+        "window_size": "realignment window in bases",
+        "read_length": "length of each read",
+        "seed": "random seed for read generation"
+      },
+      "data_idea": "Generates reads spanning known indels for realignment drills.",
+      "real_world_use": "Realignment cleans false SNP calls near insertions and deletions.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "copy-number-estimator",
+      "name": "Copy Number Estimator",
+      "concept": "Copy number estimation compares read depth in windows against a baseline, converting log2 ratios into integer copy states, then segments the genome into constant-copy regions. GC bias and mappability must be normalized first. Synthetic depth profiles with planted gains and losses make the estimator testable.",
+      "key_params": {
+        "segment_count": "number of copy-number segments",
+        "cnv_size": "size of planted CNVs",
+        "noise": "depth noise level",
+        "seed": "random seed for profile generation"
+      },
+      "data_idea": "Builds synthetic depth profiles with planted copy-number variants.",
+      "real_world_use": "CNV calling detects cancer deletions and duplications from sequencing data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "differential-expression-tester",
+      "name": "Differential Expression Tester",
+      "concept": "Differential expression testing fits per-gene models and reports fold changes with p-values, then corrects for multiple testing with methods like Benjamini-Hochberg. Volcano plots display significance against effect size for quick interpretation. Count matrices with planted differentially expressed genes give the tester known positives.",
+      "key_params": {
+        "gene_count": "number of genes tested",
+        "de_fraction": "fraction of truly DE genes",
+        "replicates": "replicates per condition",
+        "seed": "random seed for count generation"
+      },
+      "data_idea": "Generates count matrices with planted differentially expressed genes.",
+      "real_world_use": "DE analysis finds genes responding to a treatment or condition.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "linkage-disequilibrium-calc",
+      "name": "Linkage Disequilibrium Calculator",
+      "concept": "Linkage disequilibrium measures non-random association between nearby variants, quantified by D prime and the squared correlation r-squared. Recombination breaks LD down over distance, creating block-like structure. Synthetic haplotypes with known recombination histories let developers verify the LD computation.",
+      "key_params": {
+        "snp_count": "number of SNPs analyzed",
+        "sample_count": "number of haplotypes",
+        "recombination_rate": "recombination probability per interval",
+        "seed": "random seed for haplotype generation"
+      },
+      "data_idea": "Simulates haplotypes with known LD decay for calculator validation.",
+      "real_world_use": "LD maps guide tag-SNP selection for genotyping arrays.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "gwas-manhattan-plotter",
+      "name": "GWAS Manhattan Plotter",
+      "concept": "Genome-wide association studies test millions of variants for trait association, plotting negative log p-values by genomic position in a Manhattan plot. The genome-wide significance line near 5e-8 marks findings that survive multiple testing. Synthetic summary statistics with planted causal signals make the plotter verifiable.",
+      "key_params": {
+        "snp_count": "number of SNPs in the study",
+        "causal_count": "number of planted causal variants",
+        "effect_size": "effect size of causal variants",
+        "seed": "random seed for statistics generation"
+      },
+      "data_idea": "Generates synthetic GWAS summary statistics with planted signals.",
+      "real_world_use": "Manhattan plots visualize trait-associated loci for geneticists.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "haplotype-block-finder",
+      "name": "Haplotype Block Finder",
+      "concept": "Haplotype blocks partition the genome into regions of high LD separated by recombination hotspots, simplifying imputation and association analysis. Block boundaries are defined by LD thresholds between consecutive markers. Synthetic haplotypes with known block structure give the finder verifiable answers.",
+      "key_params": {
+        "snp_count": "number of SNPs analyzed",
+        "block_count": "number of planted blocks",
+        "sample_count": "number of haplotypes",
+        "seed": "random seed for haplotype generation"
+      },
+      "data_idea": "Creates haplotypes with known block structure for finder validation.",
+      "real_world_use": "Blocks simplify the imputation reference panels used in genomics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "crispr-guide-scorer",
+      "name": "CRISPR Guide Scorer",
+      "concept": "Guide RNA design balances on-target efficiency, predicted from sequence features around the cut site, against off-target risk from near matches elsewhere in the genome. Specificity scores aggregate mismatch-tolerant off-target counts. Synthetic guides with known off-target profiles let developers verify the scoring.",
+      "key_params": {
+        "guide_count": "number of guides scored",
+        "genome_size": "synthetic genome length",
+        "mismatch_tolerance": "mismatches allowed for off-targets",
+        "seed": "random seed for guide generation"
+      },
+      "data_idea": "Generates synthetic guides with known off-target counts for scorer validation.",
+      "real_world_use": "Guide scoring picks safe and effective CRISPR targets.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

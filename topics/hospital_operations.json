@@ -1,0 +1,462 @@
+{
+  "domain": "healthcare",
+  "subdomain": "hospital_operations",
+  "topics": [
+    {
+      "slug_base": "supply-inventory-tracker",
+      "name": "Supply Inventory Tracker",
+      "concept": "Hospital supply tracking monitors stock levels, expiration dates, and par levels across storerooms, flagging items below reorder points. Lot tracking supports recalls when a defective batch is identified. Synthetic inventories with known stock movements verify the tracking and alerting logic.",
+      "key_params": {
+        "sku_count": "supply items tracked",
+        "location_count": "storerooms tracked",
+        "seed": "random seed for inventory generation",
+        "par_level_rule": "reorder point calculation rule"
+      },
+      "data_idea": "Generates synthetic inventories with known stock movements for tracking drills.",
+      "real_world_use": "Inventory tracking prevents stockouts of critical medical supplies.",
+      "suggested_types": [
+        "monitoring_agent",
+        "rest_api",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "reorder-point-calculator",
+      "name": "Reorder Point Calculator",
+      "concept": "Reorder points balance carrying cost against stockout risk: demand during lead time plus safety stock sets the trigger level. Service-level targets determine how much safety stock to hold. Synthetic demand histories with known lead times let developers verify the calculation.",
+      "key_params": {
+        "sku_count": "items calculated for",
+        "lead_time_days": "supplier lead time",
+        "seed": "random seed for demand generation",
+        "service_level": "target fill rate"
+      },
+      "data_idea": "Synthesizes demand histories with known lead times for calculator drills.",
+      "real_world_use": "Reorder math keeps hospital storerooms stocked without overbuying.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "admission-source-analyzer",
+      "name": "Admission Source Analyzer",
+      "concept": "Admission source analysis breaks down where patients come from, emergency department, transfers, elective procedures, and direct admits, to plan capacity and staffing. Source mix shifts with seasons and service-line changes. Synthetic admission records with known source distributions verify the analytics.",
+      "key_params": {
+        "admission_count": "admissions analyzed",
+        "source_count": "distinct admission sources",
+        "seed": "random seed for record generation",
+        "period_days": "days covered"
+      },
+      "data_idea": "Creates synthetic admission records with known source distributions.",
+      "real_world_use": "Source analysis informs hospital capacity and staffing plans.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "kpi_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "equipment-maintenance-log",
+      "name": "Equipment Maintenance Log",
+      "concept": "Medical equipment maintenance logs track preventive schedules, work orders, downtime, and compliance with inspection intervals. Overdue maintenance flags create accountability before failures affect patients. Synthetic equipment fleets with known maintenance histories verify the scheduling logic.",
+      "key_params": {
+        "equipment_count": "devices tracked",
+        "interval_days": "preventive maintenance interval",
+        "seed": "random seed for history generation",
+        "compliance_rule": "inspection compliance rule"
+      },
+      "data_idea": "Builds synthetic equipment histories with known maintenance due dates.",
+      "real_world_use": "Maintenance logs keep clinical equipment safe and compliant.",
+      "suggested_types": [
+        "scheduler",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sterilization-cycle-tracker",
+      "name": "Sterilization Cycle Tracker",
+      "concept": "Sterile processing tracks instrument sets through washing, sterilization, and storage, verifying cycle parameters like temperature and exposure time. Biological indicators confirm sterilization efficacy. Synthetic cycle logs with known failures let developers verify the compliance checks.",
+      "key_params": {
+        "set_count": "instrument sets tracked",
+        "cycle_count": "sterilization cycles logged",
+        "seed": "random seed for log generation",
+        "param_limits": "acceptable cycle parameter ranges"
+      },
+      "data_idea": "Generates synthetic sterilization logs with known cycle failures.",
+      "real_world_use": "Cycle tracking prevents surgical site infections from bad sterilization.",
+      "suggested_types": [
+        "monitoring_agent",
+        "file_organizer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pharmacy-stock-alerts",
+      "name": "Pharmacy Stock Alerts",
+      "concept": "Pharmacy inventory alerts watch critical medications for low stock, expirations, and shortage substitutions, prioritizing by clinical criticality. Controlled substances add reconciliation requirements. Synthetic pharmacy inventories with known shortages verify the alert prioritization.",
+      "key_params": {
+        "medication_count": "medications tracked",
+        "critical_list": "critical medication designations",
+        "seed": "random seed for inventory generation",
+        "alert_thresholds": "stock alert thresholds"
+      },
+      "data_idea": "Creates synthetic pharmacy inventories with known shortage events.",
+      "real_world_use": "Stock alerts keep critical medications available for patients.",
+      "suggested_types": [
+        "monitoring_agent",
+        "rest_api",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ward-round-checklist",
+      "name": "Ward Round Checklist",
+      "concept": "Ward round checklists standardize bedside reviews: vitals, medications, lines and drains, nutrition, and discharge planning get explicit attention. Completion tracking shows which items teams consistently skip. Synthetic patient rosters with known checklist states verify the tracking.",
+      "key_params": {
+        "patient_count": "patients on the ward",
+        "checklist_items": "items per patient review",
+        "seed": "random seed for roster generation",
+        "round_count": "rounds tracked"
+      },
+      "data_idea": "Builds synthetic ward rosters with known checklist completion states.",
+      "real_world_use": "Checklists reduce missed care during busy ward rounds.",
+      "suggested_types": [
+        "task_queue",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hand-hygiene-audit-tool",
+      "name": "Hand Hygiene Audit Tool",
+      "concept": "Hand hygiene audits record observed opportunities and compliance across units, shifts, and roles, turning observations into compliance rates. Feedback loops share results with units to drive improvement. Synthetic audit observations with known compliance rates verify the rate calculations.",
+      "key_params": {
+        "observation_count": "audit observations recorded",
+        "unit_count": "hospital units audited",
+        "seed": "random seed for observation generation",
+        "opportunity_types": "hand hygiene moment types"
+      },
+      "data_idea": "Generates synthetic audit observations with known compliance rates.",
+      "real_world_use": "Hygiene auditing is a cornerstone of hospital infection prevention.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "kpi_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "er-queue-simulator",
+      "name": "ER Queue Simulator",
+      "concept": "Emergency departments behave like multi-server queues: arrivals follow roughly Poisson patterns while service times vary by acuity. Queueing theory predicts how waiting times explode as utilization nears capacity, which is why small staffing changes have outsized effects. Simulating with known arrival and service rates verifies the model against theory.",
+      "key_params": {
+        "arrival_rate": "patients per hour arriving",
+        "servers": "treatment bays or clinicians",
+        "seed": "random seed for simulation",
+        "sim_hours": "hours simulated"
+      },
+      "data_idea": "Simulates ER arrivals and service with known rates for queueing validation.",
+      "real_world_use": "Queue models guide emergency department staffing decisions.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "bed-turnover-tracker",
+      "name": "Bed Turnover Tracker",
+      "concept": "Bed turnover measures the time from discharge to the next admission, spanning cleaning, bed assignment, and transport. Breaking the interval into stages reveals which step bottlenecks throughput. Synthetic patient-flow records with known stage durations verify the bottleneck analysis.",
+      "key_params": {
+        "bed_count": "beds tracked",
+        "stage_count": "turnover stages measured",
+        "seed": "random seed for record generation",
+        "target_minutes": "target turnover time"
+      },
+      "data_idea": "Creates synthetic flow records with known stage durations for analysis.",
+      "real_world_use": "Turnover analysis frees inpatient capacity without adding beds.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "kpi_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "staff-shift-scheduler",
+      "name": "Staff Shift Scheduler",
+      "concept": "Shift scheduling assigns clinicians to shifts while respecting maximum hours, required rest between shifts, skill mix per unit, and individual preferences. Constraint violations create unsafe or illegal schedules, so validation is as important as assignment. Synthetic rosters with known feasible solutions verify the scheduler.",
+      "key_params": {
+        "staff_count": "clinicians scheduled",
+        "shift_count": "shifts in the horizon",
+        "seed": "random seed for demand generation",
+        "max_hours": "maximum hours per week"
+      },
+      "data_idea": "Generates staffing demand with known feasible roster solutions.",
+      "real_world_use": "Shift schedulers keep units safely staffed around the clock.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "patient-flow-dashboard",
+      "name": "Patient Flow Dashboard",
+      "concept": "Patient flow dashboards visualize movement from arrival through triage, treatment, and discharge or admission, highlighting boarding patients and bottlenecks in real time. Flow metrics like door-to-provider time summarize performance. Synthetic flow events with known bottlenecks verify the dashboard logic.",
+      "key_params": {
+        "patient_count": "patients in the flow",
+        "stage_count": "care stages tracked",
+        "seed": "random seed for event generation",
+        "refresh_seconds": "dashboard refresh interval"
+      },
+      "data_idea": "Streams synthetic flow events with known bottlenecks for dashboard drills.",
+      "real_world_use": "Flow dashboards help hospitals spot and clear throughput jams.",
+      "suggested_types": [
+        "web_dashboard",
+        "kpi_dashboard",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "discharge-planning-board",
+      "name": "Discharge Planning Board",
+      "concept": "Discharge planning boards track each patient's readiness: pending tests, consults, prescriptions, and post-discharge placement. Delays in any item push discharge later, blocking the bed for incoming patients. Synthetic patient records with known pending items verify the readiness logic.",
+      "key_params": {
+        "patient_count": "patients on the board",
+        "checklist_count": "discharge criteria tracked",
+        "seed": "random seed for record generation",
+        "target_discharge_hour": "target discharge time of day"
+      },
+      "data_idea": "Builds synthetic patient records with known discharge blockers.",
+      "real_world_use": "Discharge boards accelerate safe discharges and free beds sooner.",
+      "suggested_types": [
+        "task_queue",
+        "web_dashboard",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "triage-acuity-board",
+      "name": "Triage Acuity Board",
+      "concept": "Triage boards organize arriving patients by acuity level, ensuring the sickest are seen first regardless of arrival order. Acuity scoring combines vital signs, chief complaint, and risk factors into a priority rank. Synthetic arrivals with known acuity levels verify the prioritization.",
+      "key_params": {
+        "patient_count": "patients triaged",
+        "acuity_levels": "triage acuity scale levels",
+        "seed": "random seed for arrival generation",
+        "reassess_minutes": "reassessment interval"
+      },
+      "data_idea": "Generates synthetic arrivals with known acuity levels for board drills.",
+      "real_world_use": "Acuity boards keep emergency departments prioritizing the sickest first.",
+      "suggested_types": [
+        "monitoring_agent",
+        "web_dashboard",
+        "decision_tree"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "census-capacity-planner",
+      "name": "Census Capacity Planner",
+      "concept": "Census planning forecasts occupied beds by unit from admission patterns, length-of-stay distributions, and scheduled procedures. Comparing forecasted census against staffed capacity flags days needing flex staffing or diversion. Synthetic census histories with known patterns verify the forecast.",
+      "key_params": {
+        "bed_count": "beds in the forecast",
+        "history_days": "days of history used",
+        "seed": "random seed for history generation",
+        "forecast_days": "days forecasted ahead"
+      },
+      "data_idea": "Creates synthetic census histories with known occupancy patterns.",
+      "real_world_use": "Census forecasts drive daily hospital staffing decisions.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "kpi_dashboard",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lab-result-turnaround-monitor",
+      "name": "Lab Result Turnaround Monitor",
+      "concept": "Turnaround time measures order to result-reporting, broken into collection, transport, analysis, and verification stages. Outliers often point to specific stage failures rather than overall slowness. Synthetic lab orders with known stage delays verify the bottleneck detection.",
+      "key_params": {
+        "order_count": "lab orders monitored",
+        "stage_count": "process stages tracked",
+        "seed": "random seed for order generation",
+        "target_minutes": "target turnaround time"
+      },
+      "data_idea": "Generates synthetic lab orders with known stage delays.",
+      "real_world_use": "Turnaround monitoring speeds diagnoses that depend on lab results.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "kpi_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nurse-roster-optimizer",
+      "name": "Nurse Roster Optimizer",
+      "concept": "Roster optimization goes beyond feasible scheduling to minimize cost, balance workload fairly, and honor preferences, a combinatorial problem solved with heuristics or integer programming. Skill-mix constraints ensure each shift has the right experience blend. Synthetic demand with known optimal rosters verifies the optimizer.",
+      "key_params": {
+        "nurse_count": "nurses rostered",
+        "shift_count": "shifts in the horizon",
+        "seed": "random seed for demand generation",
+        "objective": "cost, fairness, or preference objective"
+      },
+      "data_idea": "Builds staffing demand with known optimal roster solutions.",
+      "real_world_use": "Optimized rosters cut premium labor costs while keeping units safe.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bed-occupancy-forecaster",
+      "name": "Bed Occupancy Forecaster",
+      "concept": "Occupancy forecasting predicts bed demand from admission trends, seasonal patterns, and scheduled procedures, so capacity plans stay ahead of surges. Probabilistic forecasts with prediction intervals beat point estimates for staffing decisions. Synthetic occupancy series with known seasonality verify the forecast accuracy.",
+      "key_params": {
+        "bed_count": "beds forecasted",
+        "history_days": "days of history used",
+        "seed": "random seed for series generation",
+        "horizon_days": "forecast horizon in days"
+      },
+      "data_idea": "Synthesizes occupancy series with known seasonal patterns for forecast drills.",
+      "real_world_use": "Occupancy forecasts let hospitals staff up before demand surges.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "kpi_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "surgery-schedule-optimizer",
+      "name": "OR Schedule Optimizer",
+      "concept": "Operating room scheduling packs cases into rooms and surgeon blocks while respecting turnover times, equipment needs, and staff availability. Block scheduling reserves time for services while open time absorbs overflow. Synthetic case lists with known optimal schedules verify the packing algorithm.",
+      "key_params": {
+        "room_count": "operating rooms scheduled",
+        "case_count": "surgical cases to place",
+        "seed": "random seed for case generation",
+        "turnover_minutes": "turnover time between cases"
+      },
+      "data_idea": "Creates synthetic case lists with known optimal room assignments.",
+      "real_world_use": "OR optimization increases surgical throughput without new rooms.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "kpi_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "length-of-stay-predictor",
+      "name": "Length of Stay Predictor",
+      "concept": "Length-of-stay models predict discharge timing from diagnosis, procedures, age, and comorbidities, helping case managers plan beds and post-acute placement. Since stays are skewed, models often predict log-days or use survival-style approaches. Synthetic admissions with known stay drivers let developers validate the model.",
+      "key_params": {
+        "admission_count": "admissions in the training set",
+        "feature_count": "predictor features used",
+        "seed": "random seed for admission generation",
+        "los_cap_days": "maximum stay modeled"
+      },
+      "data_idea": "Generates synthetic admissions with known length-of-stay drivers.",
+      "real_world_use": "Stay predictions help hospitals plan beds and discharges.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "kpi_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "readmission-risk-model",
+      "name": "Readmission Risk Scorer",
+      "concept": "Readmission risk scoring estimates the chance a discharged patient returns within 30 days, targeting interventions like follow-up calls and home visits at high-risk patients. Calibration and fairness across patient groups matter as much as discrimination. Synthetic discharges with known risk factors verify the scorer.",
+      "key_params": {
+        "discharge_count": "discharges scored",
+        "feature_count": "risk features used",
+        "seed": "random seed for discharge generation",
+        "window_days": "readmission window in days"
+      },
+      "data_idea": "Builds synthetic discharges with known readmission risk factors.",
+      "real_world_use": "Risk scoring targets interventions that prevent avoidable readmissions.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "kpi_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "ambulance-dispatch-simulator",
+      "name": "Ambulance Dispatch Simulator",
+      "concept": "Ambulance dispatch assigns the closest appropriate unit while considering hospital diversion status, traffic, and unit capabilities like advanced life support. System-status management repositions idle units to cover gaps. Synthetic call streams with known optimal dispatches verify the routing logic.",
+      "key_params": {
+        "call_count": "emergency calls simulated",
+        "unit_count": "ambulances in the fleet",
+        "seed": "random seed for call generation",
+        "coverage_zones": "geographic coverage zones"
+      },
+      "data_idea": "Simulates emergency calls with known optimal unit assignments.",
+      "real_world_use": "Dispatch optimization shortens response times for emergencies.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "incident-report-aggregator",
+      "name": "Incident Report Aggregator",
+      "concept": "Incident aggregation collects safety reports across units, categorizes them by type and severity, and detects emerging trends before they become harm events. Text clustering groups similar reports without manual review. Synthetic reports with planted trend clusters verify the detection.",
+      "key_params": {
+        "report_count": "incident reports aggregated",
+        "category_count": "incident categories",
+        "seed": "random seed for report generation",
+        "trend_window_days": "trend detection window"
+      },
+      "data_idea": "Generates synthetic incident reports with planted trend clusters.",
+      "real_world_use": "Aggregation turns scattered reports into patient-safety improvements.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "disaster-surge-simulator",
+      "name": "Disaster Surge Simulator",
+      "concept": "Surge simulators model mass-casualty influx against hospital capacity: triage categories, treatment times, and resource constraints determine how many patients can be absorbed. Bottleneck analysis shows whether the constraint is beds, staff, or supplies. Synthetic disaster scenarios with known casualty profiles verify the model.",
+      "key_params": {
+        "casualty_count": "casualties in the scenario",
+        "resource_count": "constrained resources modeled",
+        "seed": "random seed for scenario generation",
+        "sim_hours": "hours simulated"
+      },
+      "data_idea": "Simulates disaster casualty influx with known resource constraints.",
+      "real_world_use": "Surge planning prepares hospitals for mass-casualty events.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

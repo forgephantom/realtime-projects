@@ -1,0 +1,424 @@
+{
+  "domain": "healthcare",
+  "subdomain": "mental_health_tech",
+  "topics": [
+    {
+      "slug_base": "mood-journal-analyzer",
+      "name": "Mood Journal Analyzer",
+      "concept": "Journals become data when entries are tagged with mood ratings, energy levels, and mentioned activities. Aggregating tags over weeks reveals patterns, such as low moods clustering on certain weekdays. The tool is a self-reflection aid for wellness tracking, with clear text that it does not diagnose anything. Includes prominent disclaimer text that the tool is for wellness self-tracking and screening only, never a diagnosis, and encourages consulting a professional.",
+      "key_params": {
+        "entry_count": "journal entries analyzed",
+        "mood_scale": "mood rating scale used",
+        "seed": "random seed for entry generation",
+        "tag_count": "activity tags tracked"
+      },
+      "data_idea": "Generates synthetic journal entries with known mood patterns for analysis drills.",
+      "real_world_use": "Journal analytics help people notice patterns in their own wellbeing.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "phq9-style-screener",
+      "name": "PHQ-9-Style Self-Assessment Scorer",
+      "concept": "Depression screening questionnaires ask how often symptoms occurred over two weeks, scoring each answer from zero to three and summing to a total. Score bands suggest minimal through severe symptom levels, but only a clinician can diagnose. This educational tool computes scores from synthetic responses and always displays screening-only disclaimer text. Includes prominent disclaimer text that the tool is for wellness self-tracking and screening only, never a diagnosis, and encourages consulting a professional.",
+      "key_params": {
+        "question_count": "screening questions asked",
+        "response_count": "synthetic response sets",
+        "seed": "random seed for response generation",
+        "recall_weeks": "symptom recall window in weeks"
+      },
+      "data_idea": "Synthesizes questionnaire responses with known score totals for scorer drills.",
+      "real_world_use": "Screening questionnaires are the standard first step in depression screening workflows.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gad7-style-screener",
+      "name": "GAD-7-Style Self-Assessment Scorer",
+      "concept": "Anxiety screening questionnaires follow the same structure as depression screens: frequency-rated items summed into a total with severity bands. The tool is strictly educational, showing how scoring works on synthetic data while making clear that results are not a diagnosis. Disclaimer text accompanies every result screen. Includes prominent disclaimer text that the tool is for wellness self-tracking and screening only, never a diagnosis, and encourages consulting a professional.",
+      "key_params": {
+        "question_count": "screening questions asked",
+        "response_count": "synthetic response sets",
+        "seed": "random seed for response generation",
+        "recall_weeks": "symptom recall window in weeks"
+      },
+      "data_idea": "Synthesizes questionnaire responses with known score totals for scorer drills.",
+      "real_world_use": "Anxiety screens are routine in primary-care wellness checkups.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "habit-streak-tracker",
+      "name": "Habit Streak Tracker",
+      "concept": "Streak tracking counts consecutive days a habit is completed, with flexible rules for rest days and partial credit that keep the system kind rather than punishing. Visualizing streaks alongside calendar heatmaps makes consistency tangible. Synthetic habit logs with known streak lengths verify the counting logic.",
+      "key_params": {
+        "habit_count": "habits tracked",
+        "day_count": "days of history",
+        "seed": "random seed for log generation",
+        "rest_day_rule": "how rest days affect streaks"
+      },
+      "data_idea": "Generates synthetic habit logs with known streak lengths for tracker drills.",
+      "real_world_use": "Streak trackers support behavior-change goals like exercise and reading.",
+      "suggested_types": [
+        "scheduler",
+        "web_dashboard",
+        "kpi_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "breathing-exercise-timer",
+      "name": "Breathing Exercise Timer",
+      "concept": "Breathing timers guide inhale, hold, and exhale phases with visual and audio cues, supporting techniques like coherent breathing at around six breaths per minute. Session history shows practice consistency over time. Synthetic session logs verify the timing engine and progress summaries.",
+      "key_params": {
+        "phase_count": "breathing phases per cycle",
+        "cycle_count": "cycles per session",
+        "seed": "random seed for session generation",
+        "cue_style": "visual, audio, or haptic cues"
+      },
+      "data_idea": "Creates synthetic breathing sessions with known phase timings.",
+      "real_world_use": "Breathing exercises are a common stress-reduction practice.",
+      "suggested_types": [
+        "terminal_game",
+        "scheduler",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gratitude-journal-prompts",
+      "name": "Gratitude Journal Prompts",
+      "concept": "Gratitude journaling prompts users to record specific things they appreciate, with rotating prompts preventing the practice from going stale. Entry streaks and word counts give gentle feedback on consistency. Synthetic prompt rotations with known coverage verify the variety logic.",
+      "key_params": {
+        "prompt_count": "prompts in the rotation",
+        "entry_count": "synthetic entries generated",
+        "seed": "random seed for rotation",
+        "category_count": "gratitude categories covered"
+      },
+      "data_idea": "Generates synthetic prompt rotations with known category coverage.",
+      "real_world_use": "Gratitude practices are widely used in positive-psychology programs.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "grounding-exercise-guide",
+      "name": "Grounding Exercise Guide",
+      "concept": "Grounding exercises redirect attention to the present through the senses, such as naming five things seen or four things touched. Step-by-step guides with timers pace each stage without rushing. Synthetic session scripts with known step sequences verify the guide flow.",
+      "key_params": {
+        "step_count": "steps per exercise",
+        "exercise_count": "exercises in the library",
+        "seed": "random seed for script generation",
+        "timer_seconds": "seconds per guided step"
+      },
+      "data_idea": "Builds synthetic exercise scripts with known step sequences.",
+      "real_world_use": "Grounding techniques are taught in stress-management programs.",
+      "suggested_types": [
+        "chatbot",
+        "scheduler",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "coping-strategy-toolbox",
+      "name": "Coping Strategy Toolbox",
+      "concept": "A coping toolbox organizes strategies by situation, quick calm-downs, focus resets, and wind-down routines, letting users save favorites and rate what helps. Usage history reveals which strategies a person actually returns to. Synthetic strategy libraries with known categories verify the organization.",
+      "key_params": {
+        "strategy_count": "strategies in the toolbox",
+        "category_count": "situation categories",
+        "seed": "random seed for library generation",
+        "rating_scale": "effectiveness rating scale"
+      },
+      "data_idea": "Creates synthetic strategy libraries with known category coverage.",
+      "real_world_use": "Coping toolboxes support self-directed stress management.",
+      "suggested_types": [
+        "file_organizer",
+        "web_dashboard",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "box-breathing-coach",
+      "name": "Box Breathing Coach",
+      "concept": "Box breathing uses equal inhale, hold, exhale, and hold phases, often four seconds each, a pattern used to steady focus under pressure. A coach adapts phase lengths to experience level and tracks session completion. Synthetic coaching plans with known progressions verify the adaptive logic.",
+      "key_params": {
+        "phase_seconds": "seconds per breathing phase",
+        "session_count": "coaching sessions planned",
+        "seed": "random seed for plan generation",
+        "level_count": "experience levels supported"
+      },
+      "data_idea": "Generates synthetic coaching plans with known phase progressions.",
+      "real_world_use": "Box breathing is taught for focus in high-pressure professions.",
+      "suggested_types": [
+        "scheduler",
+        "chatbot",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sleep-log-analyzer",
+      "name": "Sleep Diary Analyzer",
+      "concept": "Sleep diaries record bedtime, sleep latency, awakenings, and morning restedness, from which sleep efficiency, total sleep time over time in bed, is computed. Weekly aggregates reveal trends like weekend catch-up sleep. Synthetic diaries with known sleep patterns verify the calculations.",
+      "key_params": {
+        "night_count": "nights of diary entries",
+        "seed": "random seed for diary generation",
+        "metric_count": "sleep metrics computed",
+        "aggregation": "daily or weekly aggregation"
+      },
+      "data_idea": "Synthesizes sleep diaries with known efficiency patterns for analysis drills.",
+      "real_world_use": "Sleep diaries are the first-line tool in insomnia assessment.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "thought-record-helper",
+      "name": "Thought Record Helper",
+      "concept": "Thought records, a cognitive-behavioral technique, capture a situation, the automatic thought, supporting and contradicting evidence, and a balanced alternative. Structured prompts guide users through each column without prescribing conclusions. Synthetic thought records with known structures verify the guided flow.",
+      "key_params": {
+        "record_count": "thought records created",
+        "column_count": "worksheet columns guided",
+        "seed": "random seed for record generation",
+        "prompt_style": "guided or freeform prompts"
+      },
+      "data_idea": "Builds synthetic thought records with known column structures.",
+      "real_world_use": "Thought records are a core CBT self-help exercise.",
+      "suggested_types": [
+        "chatbot",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "progressive-relaxation-timer",
+      "name": "Progressive Relaxation Timer",
+      "concept": "Progressive muscle relaxation guides tensing and releasing muscle groups in sequence, with timed holds and rests per group. Session scripts order groups from feet upward and track completion. Synthetic scripts with known timings verify the timer engine.",
+      "key_params": {
+        "muscle_groups": "muscle groups in the sequence",
+        "hold_seconds": "tension hold duration",
+        "seed": "random seed for script generation",
+        "session_count": "sessions planned"
+      },
+      "data_idea": "Generates synthetic relaxation scripts with known group timings.",
+      "real_world_use": "Progressive relaxation is a standard tension-reduction technique.",
+      "suggested_types": [
+        "scheduler",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mood-weather-tracker",
+      "name": "Mood Weather Tracker",
+      "concept": "Mood weather metaphors map feelings to weather, sunny, cloudy, stormy, making daily check-ins quick and expressive. Aggregating metaphors over time shows emotional seasons without clinical language. Synthetic check-in series with known metaphor distributions verify the aggregation.",
+      "key_params": {
+        "checkin_count": "daily check-ins recorded",
+        "metaphor_count": "weather metaphors available",
+        "seed": "random seed for check-in generation",
+        "period_days": "days tracked"
+      },
+      "data_idea": "Creates synthetic check-in series with known metaphor distributions.",
+      "real_world_use": "Metaphor check-ins lower the barrier to daily emotional reflection.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "kpi_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "energy-audit-log",
+      "name": "Energy Audit Log",
+      "concept": "Energy audits log activities with energy ratings, distinguishing drains from gains, then aggregate by category to show where energy actually goes. Weekly reviews turn the log into actionable schedule tweaks. Synthetic activity logs with known drain and gain patterns verify the categorization.",
+      "key_params": {
+        "activity_count": "activities logged",
+        "day_count": "days of logging",
+        "seed": "random seed for log generation",
+        "rating_scale": "energy rating scale"
+      },
+      "data_idea": "Generates synthetic activity logs with known energy patterns.",
+      "real_world_use": "Energy audits help people design more sustainable routines.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "kpi_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "check-in-streak-dashboard",
+      "name": "Check-In Streak Dashboard",
+      "concept": "Daily check-in dashboards combine streak counts, completion heatmaps, and gentle milestones to sustain a reflection habit. Missed-day handling avoids breaking motivation with harsh resets. Synthetic check-in histories with known streak patterns verify the dashboard math.",
+      "key_params": {
+        "day_count": "days of check-in history",
+        "metric_count": "habit metrics displayed",
+        "seed": "random seed for history generation",
+        "milestone_days": "milestone thresholds celebrated"
+      },
+      "data_idea": "Builds synthetic check-in histories with known streak patterns.",
+      "real_world_use": "Streak dashboards sustain daily wellness reflection habits.",
+      "suggested_types": [
+        "kpi_dashboard",
+        "web_dashboard",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cognitive-distortion-finder",
+      "name": "Cognitive Distortion Finder",
+      "concept": "Distortion finders scan journal text for common unhelpful thinking patterns, such as all-or-nothing framing or catastrophizing, using keyword and phrase patterns. Matches are presented as possibilities to reflect on, never as judgments. Synthetic journal entries with planted patterns verify the pattern matching.",
+      "key_params": {
+        "entry_count": "journal entries scanned",
+        "pattern_count": "distortion patterns detected",
+        "seed": "random seed for entry generation",
+        "match_mode": "keyword or phrase matching"
+      },
+      "data_idea": "Synthesizes journal entries with planted thinking-pattern phrases.",
+      "real_world_use": "Distortion spotting is a reflective CBT self-help practice.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "worry-time-planner",
+      "name": "Worry Time Planner",
+      "concept": "Worry-time scheduling contains rumination to a dedicated daily window, parking intrusive worries in a list to revisit later. Analytics show which worry themes recur and whether scheduled sessions shrink unscheduled worrying. Synthetic worry logs with known themes verify the analytics.",
+      "key_params": {
+        "worry_count": "worries logged",
+        "window_minutes": "daily worry window length",
+        "seed": "random seed for log generation",
+        "theme_count": "worry theme categories"
+      },
+      "data_idea": "Generates synthetic worry logs with known recurring themes.",
+      "real_world_use": "Scheduled worry time is a technique from anxiety self-management programs.",
+      "suggested_types": [
+        "scheduler",
+        "statistical_analyzer",
+        "kpi_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "screen-time-sleep-correlator",
+      "name": "Screen Time Sleep Correlator",
+      "concept": "Correlating evening screen time with sleep latency and quality tests the common belief with personal data, using lagged correlations across weeks. Confounders like caffeine and stress get logged alongside for context. Synthetic paired logs with known correlation strengths verify the statistics.",
+      "key_params": {
+        "night_count": "nights of paired logs",
+        "lag_days": "correlation lag tested",
+        "seed": "random seed for log generation",
+        "confounder_count": "contextual factors logged"
+      },
+      "data_idea": "Synthesizes paired screen and sleep logs with known correlations.",
+      "real_world_use": "Personal data helps people test their own sleep hygiene hypotheses.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "journaling-sentiment-trends",
+      "name": "Journaling Sentiment Trends",
+      "concept": "Sentiment trend analysis scores journal entries with lexicon-based methods and tracks the moving average over weeks, smoothing daily noise into visible direction. Word-shift analysis shows which terms drive changes. Synthetic journals with known sentiment arcs verify the trend computation.",
+      "key_params": {
+        "entry_count": "journal entries analyzed",
+        "window_days": "moving average window",
+        "seed": "random seed for journal generation",
+        "lexicon_size": "sentiment lexicon size"
+      },
+      "data_idea": "Creates synthetic journals with known sentiment trajectories.",
+      "real_world_use": "Sentiment trends give writers a mirror on their recent emotional tone.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "log_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "social-battery-tracker",
+      "name": "Social Battery Tracker",
+      "concept": "Social battery tracking logs interactions with energy cost estimates, revealing which social patterns recharge and which drain. Weekly budgets help plan social time sustainably. Synthetic interaction logs with known energy profiles verify the budget math.",
+      "key_params": {
+        "interaction_count": "social interactions logged",
+        "day_count": "days tracked",
+        "seed": "random seed for log generation",
+        "recharge_activities": "recharging activity types"
+      },
+      "data_idea": "Generates synthetic interaction logs with known energy profiles.",
+      "real_world_use": "Battery metaphors help people manage social energy intentionally.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "kpi_dashboard",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "adaptive-mindfulness-planner",
+      "name": "Adaptive Mindfulness Planner",
+      "concept": "Adaptive planners sequence mindfulness practices by duration and difficulty, progressing as completion streaks grow and easing off after missed days. Session variety prevents monotony across weeks. Synthetic practice histories with known progressions verify the adaptation rules.",
+      "key_params": {
+        "practice_count": "practices in the library",
+        "week_count": "weeks planned",
+        "seed": "random seed for history generation",
+        "difficulty_levels": "practice difficulty tiers"
+      },
+      "data_idea": "Builds synthetic practice histories with known progression patterns.",
+      "real_world_use": "Structured mindfulness programs support consistent meditation habits.",
+      "suggested_types": [
+        "scheduler",
+        "decision_tree",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "burnout-signal-monitor",
+      "name": "Burnout Signal Monitor",
+      "concept": "Burnout monitors combine workload, sleep, and self-reported exhaustion signals into early-warning indicators, flagging sustained overload patterns rather than single bad days. The tool frames results as wellness prompts to rest and rebalance, with clear text that it is not a medical assessment. Includes prominent disclaimer text that the tool is for wellness self-tracking and screening only, never a diagnosis, and encourages consulting a professional.",
+      "key_params": {
+        "signal_count": "wellness signals tracked",
+        "week_count": "weeks monitored",
+        "seed": "random seed for signal generation",
+        "alert_rule": "sustained-overload alert rule"
+      },
+      "data_idea": "Synthesizes wellness signals with known overload patterns for monitor drills.",
+      "real_world_use": "Early-warning prompts help people rebalance before exhaustion deepens.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "kpi_dashboard"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

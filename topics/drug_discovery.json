@@ -1,0 +1,576 @@
+{
+  "domain": "healthcare",
+  "subdomain": "drug_discovery",
+  "topics": [
+    {
+      "slug_base": "molecular-descriptor-calculator",
+      "name": "Molecular Descriptor Calculator",
+      "concept": "Molecular descriptors turn a chemical structure into numbers: molecular weight, rotatable bond count, and hydrogen bond donors and acceptors are the classic examples. Computing them from a simplified string notation teaches how structure becomes a feature vector. Every downstream model in cheminformatics starts from descriptors like these.",
+      "key_params": {
+        "smiles_count": "number of synthetic structures to process",
+        "descriptor_set": "which descriptors to compute",
+        "seed": "random seed for structure generation",
+        "strict_parse": "whether malformed strings raise errors"
+      },
+      "data_idea": "Generates seeded pseudo-structure strings with precomputed descriptor tables for validation.",
+      "real_world_use": "Descriptors feed every QSAR model used in medicinal chemistry.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "lipinski-filter-screen",
+      "name": "Lipinski Rule-of-Five Screen",
+      "concept": "Lipinski's rule of five flags compounds unlikely to absorb orally: molecular weight under 500, logP under 5, fewer than 5 hydrogen bond donors, and fewer than 10 acceptors. It is a guideline, not a law, and many good drugs violate one rule. Screening a synthetic library builds intuition for how these filters shape a compound collection.",
+      "key_params": {
+        "compound_count": "number of compounds to screen",
+        "violation_tolerance": "allowed number of rule violations",
+        "seed": "random seed for library generation",
+        "filter_set": "Lipinski, Veber, or custom filter rules"
+      },
+      "data_idea": "Builds synthetic compound libraries with known rule-of-five violations for filter drills.",
+      "real_world_use": "Rule-of-five filters triage screening libraries before expensive assays run.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "fingerprint-similarity-search",
+      "name": "Fingerprint Similarity Search",
+      "concept": "Binary fingerprints encode the presence of substructures as bit vectors, and the Tanimoto coefficient measures overlap between two fingerprints as a similarity score. Nearest-neighbor search over a library finds analogs of a query compound quickly. Seeded libraries with planted similar pairs let developers verify the search ranking.",
+      "key_params": {
+        "fingerprint_bits": "length of the binary fingerprint",
+        "library_size": "number of compounds in the library",
+        "query_count": "number of query compounds",
+        "seed": "random seed for fingerprint generation"
+      },
+      "data_idea": "Creates synthetic bit fingerprints with known similar pairs for search validation.",
+      "real_world_use": "Similarity search finds analogs of a known active compound for follow-up testing.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "toxicity-alert-checker",
+      "name": "Toxicity Alert Checker",
+      "concept": "Structural alert lists flag reactive or promiscuous groups, such as certain electrophiles, that historically cause assay interference or toxicity. Substructure matching against these patterns is a fast pre-filter before any expensive modeling. The trade-off is real: aggressive filtering removes problematic compounds along with some genuine hits.",
+      "key_params": {
+        "alert_count": "number of structural alerts in the list",
+        "compound_count": "number of compounds to check",
+        "seed": "random seed for compound generation",
+        "strictness": "how aggressively alerts are applied"
+      },
+      "data_idea": "Generates synthetic compounds with planted alert substructures for checker validation.",
+      "real_world_use": "Alert filters remove reactive compounds early in screening cascades.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "solubility-predictor",
+      "name": "Solubility Predictor",
+      "concept": "Aqueous solubility, often expressed as logS, determines whether a compound can be formulated and absorbed. The general solubility equation estimates it from melting point and logP, capturing the intuition that greasy, high-melting compounds dissolve poorly. Fitting this relationship on synthetic data shows how simple physics drives a key drug property.",
+      "key_params": {
+        "compound_count": "number of compounds in the training set",
+        "temp_c": "temperature in Celsius for solubility",
+        "noise": "noise added to logS values",
+        "seed": "random seed for data generation"
+      },
+      "data_idea": "Synthesizes compounds with known logS values for predictor training.",
+      "real_world_use": "Solubility prediction guides formulation decisions in drug development.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "logp-estimator",
+      "name": "LogP Estimator",
+      "concept": "The octanol-water partition coefficient, logP, measures lipophilicity, a primary driver of absorption and distribution. Fragment-based methods sum contributions from molecular pieces, an approach that is fast and surprisingly accurate. Building an estimator on synthetic fragments demonstrates the additive-contribution idea behind classic cheminformatics.",
+      "key_params": {
+        "fragment_count": "number of fragments in the library",
+        "compound_count": "number of compounds to estimate",
+        "seed": "random seed for fragment generation",
+        "method": "fragment-based or atom-based estimation"
+      },
+      "data_idea": "Creates synthetic fragments with additive logP contributions for estimator validation.",
+      "real_world_use": "LogP estimates lipophilicity, a key driver of drug absorption.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "compound-cluster-visualizer",
+      "name": "Compound Cluster Visualizer",
+      "concept": "Clustering compounds by fingerprint similarity groups a library into chemotypes, and picking one representative per cluster yields a diverse subset for screening. The similarity cutoff controls the granularity: too high fragments the library, too low merges distinct chemistry. Visualizing clusters with known planted structure validates the approach.",
+      "key_params": {
+        "compound_count": "number of compounds to cluster",
+        "cutoff": "similarity cutoff for cluster membership",
+        "fingerprint_bits": "fingerprint length for similarity",
+        "seed": "random seed for library generation"
+      },
+      "data_idea": "Builds synthetic libraries with known cluster structure for visualization drills.",
+      "real_world_use": "Clustering picks diverse compound subsets for efficient screening.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "web_dashboard",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hit-confirmation-workflow",
+      "name": "Hit Confirmation Workflow",
+      "concept": "Primary screening hits must survive confirmation: dose-response follow-up, counterscreens against assay artifacts, and chemical integrity checks. A decision tree encodes the triage logic that separates genuine actives from false positives. Walking synthetic hit lists through the workflow teaches the discipline of the confirmation cascade.",
+      "key_params": {
+        "hit_count": "number of primary hits to triage",
+        "counterscreens": "number of counterscreen assays",
+        "cutoff": "activity cutoff for confirmation",
+        "seed": "random seed for outcome generation"
+      },
+      "data_idea": "Generates synthetic hit lists with known confirmation outcomes for workflow drills.",
+      "real_world_use": "Confirmation funnels separate real hits from assay artifacts.",
+      "suggested_types": [
+        "decision_tree",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hill-curve-fitter",
+      "name": "Hill Equation Curve Fitter",
+      "concept": "The Hill equation describes sigmoidal dose-response with four parameters: bottom and top asymptotes, the EC50 midpoint, and the Hill slope controlling steepness. Nonlinear least squares fits these parameters to measured responses across a dose series. Recovering known parameters from noisy synthetic data validates the fitting routine.",
+      "key_params": {
+        "dose_points": "number of dose levels in the series",
+        "ec50_true": "true EC50 used to generate data",
+        "hill_slope": "true Hill slope for generation",
+        "seed": "random seed for noise"
+      },
+      "data_idea": "Synthesizes dose-response points from known Hill parameters for fitter validation.",
+      "real_world_use": "Pharmacologists fit Hill curves to quantify drug potency.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "tversky-similarity-lab",
+      "name": "Tversky Similarity Lab",
+      "concept": "The Tversky index generalizes Tanimoto with asymmetric weights, letting a search reward query features more than library features or vice versa. Tuning the alpha and beta parameters shifts behavior from substructure-biased to superstructure-biased matching. This lab compares rankings across parameter settings on synthetic fingerprint sets.",
+      "key_params": {
+        "alpha": "weight on query-only features",
+        "beta": "weight on library-only features",
+        "bit_count": "fingerprint bit length",
+        "seed": "random seed for fingerprint generation"
+      },
+      "data_idea": "Builds fingerprint sets tuned to reward substructure matches for parameter sweeps.",
+      "real_world_use": "Tversky similarity powers scaffold-hopping searches in drug design.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "qsar-scoring-lab",
+      "name": "QSAR Scoring Lab",
+      "concept": "Quantitative structure-activity relationship models regress measured activity on molecular descriptors, learning which structural features drive potency. A proper train-test split with R-squared and cross-validation guards against overfitting to the training series. Synthetic data with a known linear activity relationship makes model failures easy to diagnose.",
+      "key_params": {
+        "compound_count": "number of compounds in the dataset",
+        "descriptor_count": "number of descriptors per compound",
+        "noise": "noise added to activity values",
+        "seed": "random seed for data generation"
+      },
+      "data_idea": "Generates synthetic descriptor matrices with a known linear activity relationship.",
+      "real_world_use": "QSAR prioritizes which compounds chemists should synthesize next.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "virtual-screening-pipeline",
+      "name": "Virtual Screening Pipeline",
+      "concept": "A virtual screening funnel narrows millions of compounds through stages: property filters, similarity to known actives, then expensive scoring. Each stage trades throughput against accuracy, and the enrichment factor measures how much better than random the funnel performs. Planted actives in a synthetic library let developers measure enrichment directly.",
+      "key_params": {
+        "library_size": "number of compounds in the library",
+        "stages": "ordered list of screening stages",
+        "hit_rate": "fraction of planted actives",
+        "seed": "random seed for library generation"
+      },
+      "data_idea": "Builds synthetic libraries with planted actives to measure funnel enrichment.",
+      "real_world_use": "Screening funnels narrow millions of compounds down to testable hits.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "docking-score-simulator",
+      "name": "Docking Score Simulator",
+      "concept": "Docking scoring functions approximate binding free energy from shape complementarity, hydrogen bonds, and desolvation terms, sampling many ligand poses in a protein pocket. The root-mean-square deviation to a known pose measures geometric accuracy separately from score accuracy. Simulating pockets and poses with known answers exercises both ranking and geometry.",
+      "key_params": {
+        "pose_count": "number of sampled poses per ligand",
+        "pocket_size": "dimensions of the synthetic binding pocket",
+        "noise": "noise added to scoring terms",
+        "seed": "random seed for pose sampling"
+      },
+      "data_idea": "Creates synthetic protein pockets with seeded ligand poses and scores.",
+      "real_world_use": "Docking ranks compounds before expensive laboratory assays.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "admet-profile-estimator",
+      "name": "ADMET Profile Estimator",
+      "concept": "ADMET covers absorption, distribution, metabolism, excretion, and toxicity, the properties that decide whether an active compound can become a drug. Multi-parameter optimization balances these against potency, since improving one property often hurts another. Estimating correlated ADMET panels on synthetic data teaches the art of the trade-off.",
+      "key_params": {
+        "compound_count": "number of compounds to profile",
+        "property_count": "number of ADMET properties",
+        "risk_threshold": "flag threshold for risky properties",
+        "seed": "random seed for panel generation"
+      },
+      "data_idea": "Synthesizes ADMET panels with correlated property values for estimation drills.",
+      "real_world_use": "ADMET profiling removes poor candidates before animal studies.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ec50-estimator",
+      "name": "EC50 Estimator",
+      "concept": "The EC50 is the concentration producing half the maximal effect, the single number most often quoted for drug potency. Estimating it from replicate dose-response curves with bootstrap confidence intervals quantifies the uncertainty honestly. Synthetic replicates with a known true EC50 show how noise and dose spacing affect the estimate.",
+      "key_params": {
+        "replicates": "number of replicate curves",
+        "dose_range": "min and max dose tested",
+        "noise": "measurement noise level",
+        "seed": "random seed for replicate generation"
+      },
+      "data_idea": "Generates replicate dose-response sets with a known EC50 for estimation drills.",
+      "real_world_use": "EC50 summarizes potency in every drug screening report.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "binding-affinity-scorer",
+      "name": "Binding Affinity Scorer",
+      "concept": "Binding affinity is reported as Ki or IC50, related through the Cheng-Prusoff equation that corrects for substrate concentration and the Michaelis constant. The logarithmic pKi scale makes large affinity differences easier to compare. Scoring synthetic assay readouts with known Ki values validates the conversion math.",
+      "key_params": {
+        "assay_count": "number of assays to score",
+        "substrate_conc": "substrate concentration used",
+        "km_value": "Michaelis constant of the assay",
+        "seed": "random seed for readout generation"
+      },
+      "data_idea": "Synthesizes assay readouts with known Ki values for scorer validation.",
+      "real_world_use": "Affinity ranking drives lead selection in drug discovery programs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lead-optimization-tracker",
+      "name": "Lead Optimization Tracker",
+      "concept": "Lead optimization improves potency, selectivity, and developability across analog series, tracking multiple properties per compound over time. Pareto-front analysis identifies compounds where no property can improve without hurting another. A tracker that visualizes these trajectories helps teams decide which series to advance.",
+      "key_params": {
+        "series_count": "number of analog series tracked",
+        "analogs_per_series": "compounds per series",
+        "metric_count": "properties tracked per compound",
+        "seed": "random seed for trajectory generation"
+      },
+      "data_idea": "Creates synthetic analog series with improving property trajectories.",
+      "real_world_use": "Medicinal chemistry teams track multi-parameter optimization toward candidates.",
+      "suggested_types": [
+        "kpi_dashboard",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "permeability-assay-simulator",
+      "name": "Permeability Assay Simulator",
+      "concept": "Cell-based permeability assays estimate how well a compound crosses membranes, predicting oral absorption, while efflux ratios flag active transport out of cells. Classification thresholds turn continuous readouts into high, medium, and low permeability calls. Simulating readouts with known classes exercises the classification pipeline.",
+      "key_params": {
+        "compound_count": "number of compounds tested",
+        "replicates": "replicate wells per compound",
+        "efflux_threshold": "efflux ratio flag threshold",
+        "seed": "random seed for readout generation"
+      },
+      "data_idea": "Synthesizes permeability readouts with known class labels for classifier drills.",
+      "real_world_use": "Permeability assays predict oral absorption of drug candidates.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "high-throughput-screen-analyzer",
+      "name": "High-Throughput Screen Analyzer",
+      "concept": "High-throughput screening analysis starts with plate normalization against controls, then calls hits beyond a standard-deviation threshold. The Z-prime factor quantifies assay quality from the separation between positive and negative controls. Synthetic plates with planted hits let analysts verify normalization and hit-calling end to end.",
+      "key_params": {
+        "plate_count": "number of screening plates",
+        "wells_per_plate": "wells per plate",
+        "hit_rate": "fraction of planted hits",
+        "seed": "random seed for plate generation"
+      },
+      "data_idea": "Generates synthetic screening plates with controls and planted hits.",
+      "real_world_use": "HTS analysis turns millions of wells into actionable hit lists.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dose-escalation-planner",
+      "name": "Dose Escalation Planner",
+      "concept": "Phase 1 dose escalation, such as the 3+3 design, treats small cohorts at increasing doses and stops when dose-limiting toxicities appear. The maximum tolerated dose becomes the recommended phase 2 dose. Simulating cohorts with known toxicity rates shows how design choices affect the chance of finding the right dose.",
+      "key_params": {
+        "cohort_size": "patients per dose cohort",
+        "dose_levels": "number of planned dose levels",
+        "toxicity_rate": "true toxicity probability per dose",
+        "seed": "random seed for outcome simulation"
+      },
+      "data_idea": "Simulates trial cohorts with seeded toxicity outcomes for design comparison.",
+      "real_world_use": "Phase 1 trials use escalation rules to find safe starting doses.",
+      "suggested_types": [
+        "simulation",
+        "decision_tree",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fragment-screening-lab",
+      "name": "Fragment Screening Lab",
+      "concept": "Fragment screening starts from tiny compounds following the rule of three, then grows or links binders into leads. Hit rates are low but the hits that appear are efficient starting points with room to grow. Simulating fragment sets with seeded binders exercises hit detection and fragment-linking logic.",
+      "key_params": {
+        "fragment_count": "number of fragments in the library",
+        "hit_rate": "fraction of seeded binders",
+        "linking_rounds": "rounds of fragment linking",
+        "seed": "random seed for library generation"
+      },
+      "data_idea": "Builds synthetic fragment sets with seeded binders for screening drills.",
+      "real_world_use": "Fragment screening starts drug discovery from tiny, efficient binders.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "synthetic-compound-library-gen",
+      "name": "Synthetic Compound Library Generator",
+      "concept": "Combinatorial libraries enumerate products of scaffolds and R-groups, exploding a few building blocks into millions of virtual compounds. Diversity metrics like fingerprint-based spread keep the enumeration useful rather than redundant. Tracking scaffold and R-group provenance for every product supports later synthesis planning.",
+      "key_params": {
+        "scaffold_count": "number of core scaffolds",
+        "rgroup_count": "R-groups per attachment point",
+        "diversity_target": "minimum diversity score",
+        "seed": "random seed for enumeration"
+      },
+      "data_idea": "Enumerates seeded combinatorial libraries with full scaffold and R-group provenance.",
+      "real_world_use": "Virtual libraries enumerate millions of makeable compounds for screening.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "scaffold-hopper",
+      "name": "Scaffold Hopper",
+      "concept": "Scaffold hopping replaces a compound's core with a new chemotype while preserving the spatial arrangement of key features, escaping patent space or fixing liabilities. Bemis-Murcko-style scaffold extraction defines the core to replace. Synthetic molecules grouped by seeded scaffold classes make the hop measurable.",
+      "key_params": {
+        "scaffold_count": "number of scaffold classes",
+        "hop_depth": "number of hops from the starting scaffold",
+        "similarity_floor": "minimum similarity to keep",
+        "seed": "random seed for molecule generation"
+      },
+      "data_idea": "Generates synthetic molecules grouped by seeded scaffold classes for hopping drills.",
+      "real_world_use": "Scaffold hopping escapes patent space around an existing hit.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "de-novo-molecule-generator",
+      "name": "De Novo Molecule Generator",
+      "concept": "De novo design builds novel molecules by assembling fragments or growing structures step by step, guided by property filters that keep outputs drug-like. Validity checks reject impossible valences and unstable chemistry. Seeded fragment pools with generation traces let developers audit exactly how each molecule was proposed.",
+      "key_params": {
+        "fragment_count": "fragments available for assembly",
+        "max_steps": "maximum assembly steps per molecule",
+        "property_filters": "drug-likeness filters applied",
+        "seed": "random seed for generation"
+      },
+      "data_idea": "Assembles novel pseudo-molecules from seeded fragment pools with full traces.",
+      "real_world_use": "Generative design proposes new chemistry for difficult drug targets.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "pharmacophore-matcher",
+      "name": "Pharmacophore Matcher",
+      "concept": "A pharmacophore distills a binding mode into 3D feature points, donors, acceptors, and hydrophobic centers, with distance tolerances between them. Matching a conformer means finding feature subsets that satisfy the distance geometry. Synthetic conformers with planted matches let developers verify the geometric search.",
+      "key_params": {
+        "feature_count": "pharmacophore feature points",
+        "tolerance": "distance tolerance in angstroms",
+        "conformer_count": "conformers per molecule",
+        "seed": "random seed for conformer generation"
+      },
+      "data_idea": "Creates synthetic conformers with planted pharmacophore matches.",
+      "real_world_use": "Pharmacophore models capture the essence of a binding mode for virtual screening.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "pk-curve-modeler",
+      "name": "PK Curve Modeler",
+      "concept": "Pharmacokinetic modeling fits concentration-time data to compartment models, extracting Cmax, Tmax, area under the curve, and half-life. One-compartment models suit simple drugs while two compartments capture distribution phases. Fitting synthetic profiles with known parameters validates the estimation before real trial data arrives.",
+      "key_params": {
+        "dose_mg": "administered dose in milligrams",
+        "clearance": "drug clearance rate",
+        "volume": "volume of distribution",
+        "seed": "random seed for profile generation"
+      },
+      "data_idea": "Synthesizes PK profiles with known compartment parameters for fitting drills.",
+      "real_world_use": "PK modeling sets dosing regimens in clinical development.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "compartment-pk-simulator",
+      "name": "Compartment PK Simulator",
+      "concept": "Compartment simulators integrate absorption and elimination rate equations over time, handling single and multiple dosing schedules. Superposition of doses predicts accumulation and steady-state exposure. Comparing simulated curves against analytic solutions for simple cases verifies the numerical integration.",
+      "key_params": {
+        "compartments": "number of PK compartments",
+        "doses": "list of dose amounts",
+        "interval_hours": "dosing interval in hours",
+        "seed": "random seed for parameter sampling"
+      },
+      "data_idea": "Simulates multi-dose concentration curves from known rate constants.",
+      "real_world_use": "Simulators predict drug exposure for novel dosing schedules.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "target-engagement-estimator",
+      "name": "Target Engagement Estimator",
+      "concept": "Receptor occupancy links free drug concentration to pharmacological effect through the binding affinity, corrected for protein binding. Emax models translate occupancy into expected response. Estimating occupancy curves from synthetic data with known dissociation constants exercises the full dose-to-effect reasoning chain.",
+      "key_params": {
+        "kd_value": "dissociation constant",
+        "dose_range": "min and max dose simulated",
+        "protein_binding": "fraction of drug protein-bound",
+        "seed": "random seed for curve generation"
+      },
+      "data_idea": "Generates synthetic occupancy curves with known dissociation constants.",
+      "real_world_use": "Occupancy estimates link administered dose to pharmacological effect.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "synergy-score-calculator",
+      "name": "Synergy Score Calculator",
+      "concept": "Combination analysis compares observed effects against Bliss independence or Loewe additivity expectations across a dose matrix. Positive deviations indicate synergy, negative ones antagonism, summarized by a combination index. Synthetic matrices with planted synergy let developers verify the scoring math before analyzing real combinations.",
+      "key_params": {
+        "matrix_size": "dimensions of the dose matrix",
+        "dose_levels": "doses per drug in the matrix",
+        "synergy_strength": "magnitude of planted synergy",
+        "seed": "random seed for matrix generation"
+      },
+      "data_idea": "Builds synthetic combination matrices with planted synergy for scoring drills.",
+      "real_world_use": "Synergy analysis guides combination therapy design.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "allosteric-modulator-finder",
+      "name": "Allosteric Modulator Finder",
+      "concept": "Allosteric modulators bind away from the active site and shift the receptor's response to its natural ligand, quantified by the cooperativity factor alpha. Unlike orthosteric drugs they preserve physiological signaling patterns, which can mean better safety. Simulating modulator series with known cooperativity exercises the classification logic.",
+      "key_params": {
+        "modulator_count": "number of modulators screened",
+        "alpha_factor": "true cooperativity factor",
+        "seed": "random seed for series generation",
+        "assay_type": "functional or binding assay readout"
+      },
+      "data_idea": "Generates synthetic modulator series with known cooperativity factors.",
+      "real_world_use": "Allosteric modulators offer potentially safer, more selective medicines.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

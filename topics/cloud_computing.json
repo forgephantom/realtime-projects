@@ -1,0 +1,1226 @@
+{
+  "domain": "computer_science",
+  "subdomain": "cloud_computing",
+  "topics": [
+    {
+      "slug_base": "vm-lifecycle-simulator",
+      "name": "VM Lifecycle Simulator",
+      "concept": "Virtual machines move through states, pending, running, stopping, stopped, terminated, with billing tied to each transition. The simulator models provisioning delays, start and stop latencies, and per-state costs across instance types. It teaches why stopping idle VMs saves real money.",
+      "key_params": {
+        "instance_types": "shapes with cpu, ram, price",
+        "transitions": "state machine latencies",
+        "workload": "start and stop schedule",
+        "billing_granularity": "per-second or per-hour"
+      },
+      "data_idea": "A seeded RNG generates workload schedules with idle periods.",
+      "real_world_use": "Used in cloud cost training.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hypervisor-cpu-scheduler",
+      "name": "Hypervisor CPU Scheduler",
+      "concept": "A hypervisor multiplexes physical CPUs across virtual machines, balancing fairness against latency for interactive guests. The simulator implements credit-based scheduling showing how weights and caps translate into actual CPU shares. It reveals the layer beneath every cloud instance.",
+      "key_params": {
+        "pcpus": "physical cores",
+        "vms": "guests with weights and caps",
+        "quantum_ms": "scheduling slice",
+        "show_shares": "actual versus entitled CPU"
+      },
+      "data_idea": "A seeded RNG creates VM demand patterns with noisy neighbors.",
+      "real_world_use": "Used teaching virtualization internals.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "container-runtime-simulator",
+      "name": "Container Runtime Simulator",
+      "concept": "Containers share the host kernel while namespaces and cgroups provide isolation and limits, which is why they start in milliseconds. The simulator models image layer mounting, namespace setup, and cgroup enforcement with startup timing. It demystifies the difference from VMs.",
+      "key_params": {
+        "images": "layer stacks modeled",
+        "namespaces": "pid, net, mount isolation",
+        "cgroup_limits": "cpu and memory caps",
+        "startup_profile": "timing breakdown"
+      },
+      "data_idea": "A seeded RNG synthesizes container specs with resource demands.",
+      "real_world_use": "Used in container platform training.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "image-layer-analyzer",
+      "name": "Image Layer Analyzer",
+      "concept": "Container images stack read-only layers, and bloated layers slow every pull and deploy. The analyzer inspects simulated layer metadata, attributing size to layers and flagging duplicated files and cache-busting patterns. Slim images deploy faster and cheaper.",
+      "key_params": {
+        "layers": "layer sizes and file lists",
+        "dedupe": "cross-layer duplicate detection",
+        "bust_patterns": "cache-invalidation heuristics",
+        "recommend": "merge and reorder suggestions"
+      },
+      "data_idea": "A seeded RNG builds Dockerfiles with layering anti-patterns.",
+      "real_world_use": "Used optimizing container build pipelines.",
+      "suggested_types": [
+        "cli_tool",
+        "file_organizer",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "object-storage-simulator",
+      "name": "Object Storage Simulator",
+      "concept": "Object storage keeps blobs with metadata across erasure-coded or replicated backends, trading latency for eleven nines of durability. The simulator models PUT, GET, and multipart uploads with consistency and failure injection. It shows why S3 semantics differ from filesystems.",
+      "key_params": {
+        "objects": "key count and sizes",
+        "replication": "copies or erasure coding",
+        "consistency": "read-after-write behavior",
+        "failures": "node loss injection"
+      },
+      "data_idea": "A seeded RNG drives object operations with failure episodes.",
+      "real_world_use": "Used learning cloud storage architecture.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "block-storage-provisioner",
+      "name": "Block Storage Provisioner",
+      "concept": "Block volumes attach to instances with provisioned IOPS and throughput, and over-provisioning wastes money while under-provisioning throttles apps. The provisioner matches workload IO profiles to volume types, simulating latency under load. Right-sizing storage performance.",
+      "key_params": {
+        "workloads": "IOPS and throughput profiles",
+        "volume_types": "gp, io, st modeled",
+        "burst": "burst credit behavior",
+        "cost": "per-GB and per-IOPS pricing"
+      },
+      "data_idea": "A seeded RNG generates database-like IO patterns.",
+      "real_world_use": "Used by DBAs sizing cloud volumes.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cdn-cache-simulator",
+      "name": "CDN Cache Simulator",
+      "concept": "CDNs cache content at edge locations so users fetch from nearby, with hit ratios driven by popularity and TTLs. The simulator models edge PoPs, origin shielding, and purge propagation across a request stream. It quantifies the latency and cost wins of caching.",
+      "key_params": {
+        "pops": "edge location count",
+        "popularity": "zipf skew of content",
+        "ttl": "cache lifetimes",
+        "purge": "invalidation propagation delay"
+      },
+      "data_idea": "A seeded RNG generates content requests with viral spikes.",
+      "real_world_use": "Used by web teams planning CDN strategy.",
+      "suggested_types": [
+        "simulation",
+        "lru_cache",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "load-balancer-algorithm-lab",
+      "name": "Load Balancer Algorithm Lab",
+      "concept": "Round robin, least connections, and IP hash distribute traffic with different fairness under uneven backends. The lab runs each algorithm against backends with varied speeds, measuring tail latency and utilization balance. Algorithm choice matters when backends differ.",
+      "key_params": {
+        "algorithms": "round-robin, least-conn, ip-hash",
+        "backends": "server speeds",
+        "request_profile": "arrival process",
+        "health_checks": "failure handling"
+      },
+      "data_idea": "A seeded RNG drives requests to heterogeneous backends.",
+      "real_world_use": "Used tuning load balancer configurations.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "autoscaling-policy-tuner",
+      "name": "Autoscaling Policy Tuner",
+      "concept": "Cloud autoscalers add capacity on metrics like CPU or queue length, but aggressive policies flap while timid ones miss spikes. The tuner simulates scaling actions against traffic traces with cooldowns and step adjustments. It finds the policy that tracks demand without oscillation.",
+      "key_params": {
+        "metric": "scaling signal",
+        "thresholds": "scale-out and scale-in",
+        "cooldown": "quiet periods",
+        "step": "instances per action"
+      },
+      "data_idea": "A seeded RNG generates traffic with daily peaks and flash crowds.",
+      "real_world_use": "Used by SRE teams configuring auto scaling groups.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "spot-price-forecaster",
+      "name": "Spot Price Forecaster",
+      "concept": "Spot instance prices fluctuate with spare capacity, and bidding strategy decides savings versus interruption risk. The forecaster models price history per instance type and zone, recommending bid levels and diversification. It turns spot markets into a planning input.",
+      "key_params": {
+        "history_days": "price history modeled",
+        "instance_types": "shapes compared",
+        "zones": "availability zones",
+        "bid_strategy": "max price policy"
+      },
+      "data_idea": "A seeded RNG synthesizes spot price series with spikes.",
+      "real_world_use": "Used by batch teams bidding on spare capacity.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "reserved-instance-optimizer",
+      "name": "Reserved Instance Optimizer",
+      "concept": "Reserved instances trade commitment for discounts up to 70 percent, but only pay off above steady utilization. The optimizer analyzes usage history, recommends reservation quantities per shape, and computes break-even. Commitment becomes a math problem.",
+      "key_params": {
+        "usage_history": "hourly consumption",
+        "terms": "1-year and 3-year options",
+        "discount": "reserved versus on-demand",
+        "growth": "demand trend"
+      },
+      "data_idea": "A seeded RNG generates instance usage with baseload and peaks.",
+      "real_world_use": "Used by FinOps teams buying reservations.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cost-allocation-tagger",
+      "name": "Cost Allocation Tagger",
+      "concept": "Untagged resources make cloud bills unaccountable, so the tagger enforces tagging policy and attributes spend to teams. It scans the simulated inventory for missing or invalid tags and produces chargeback reports. Accountability drives efficiency.",
+      "key_params": {
+        "required_tags": "owner, project, env",
+        "inventory": "resources scanned",
+        "chargeback": "team cost rollup",
+        "enforce": "policy actions simulated"
+      },
+      "data_idea": "A seeded RNG builds resource inventories with tag gaps.",
+      "real_world_use": "Used by FinOps implementing showback.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "billing-anomaly-detector",
+      "name": "Billing Anomaly Detector",
+      "concept": "A compromised key or runaway job can multiply a cloud bill overnight, so anomaly detection watches daily spend. The detector learns per-service baselines and flags spikes with likely causes like new resource types. It pages before the invoice does.",
+      "key_params": {
+        "services": "cost dimensions tracked",
+        "baseline_days": "learning window",
+        "spike_sigma": "alert threshold",
+        "attribution": "resource-level drill down"
+      },
+      "data_idea": "A seeded RNG synthesizes daily spend with cost incidents.",
+      "real_world_use": "Used by FinOps catching billing surprises.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "report_generator",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "multi-region-latency-router",
+      "name": "Multi-Region Latency Router",
+      "concept": "Global users should hit the nearest healthy region, with failover when latency or errors rise. The router simulates latency-based routing with health checks across regions, measuring user experience under regional degradation. It designs for the region outage, not just the server one.",
+      "key_params": {
+        "regions": "deployment locations",
+        "latency_matrix": "inter-region RTTs",
+        "health": "per-region status",
+        "failover": "reroute policy"
+      },
+      "data_idea": "A seeded RNG generates user locations and regional health.",
+      "real_world_use": "Used architecting global active-active systems.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "failover-orchestrator",
+      "name": "Failover Orchestrator",
+      "concept": "Failover moves traffic and promotes standbys in a strict order: stop writes, sync data, promote, reroute, verify. The orchestrator executes the runbook against simulated regions with timing and rollback on failure. Practiced failover beats improvised failover.",
+      "key_params": {
+        "steps": "ordered runbook",
+        "rto": "recovery time target",
+        "verify": "post-failover checks",
+        "rollback": "failure handling"
+      },
+      "data_idea": "A seeded RNG simulates regional outages with partial failures.",
+      "real_world_use": "Used in disaster recovery planning.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "region-capacity-planner",
+      "name": "Region Capacity Planner",
+      "concept": "Each region has finite capacity and quotas, and big launches must fit. The planner forecasts demand per region against quotas and physical headroom, flagging constraints before launch day. It prevents the out-of-capacity error at scale.",
+      "key_params": {
+        "demand": "forecast per region",
+        "quotas": "service limits",
+        "headroom": "safety buffer",
+        "growth": "trend"
+      },
+      "data_idea": "A seeded RNG generates regional demand forecasts.",
+      "real_world_use": "Used by capacity teams planning launches.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "report_generator",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "iam-policy-simulator",
+      "name": "IAM Policy Simulator",
+      "concept": "Cloud IAM policies combine identity and resource rules where explicit denies win, and the effective permission is non-obvious. The simulator evaluates requests against policy sets showing which statement decided. It answers can this role do that definitively.",
+      "key_params": {
+        "policies": "identity and resource policies",
+        "requests": "actions tested",
+        "show_decision": "matching statement displayed",
+        "conditions": "context keys evaluated"
+      },
+      "data_idea": "A seeded RNG builds policy sets with conflicting statements.",
+      "real_world_use": "Used by cloud security teams auditing permissions.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "config_manager",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "role-assumption-tracker",
+      "name": "Role Assumption Tracker",
+      "concept": "Temporary credentials from role assumption should be short-lived and scoped, but they sprawl. The tracker inventories assumed roles with duration, scope, and usage, flagging over-broad or stale assumptions. Least privilege for the temporary.",
+      "key_params": {
+        "roles": "assumable roles",
+        "sessions": "assumption events",
+        "max_duration": "session limit",
+        "scope_check": "permission usage versus grant"
+      },
+      "data_idea": "A seeded RNG synthesizes role assumption logs.",
+      "real_world_use": "Used auditing temporary credential hygiene.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "secrets-vault-simulator",
+      "name": "Secrets Vault Simulator",
+      "concept": "Central secret vaults broker access with leases, rotation, and audit, instead of scattering credentials. The simulator models secret engines, dynamic credentials with TTLs, and revocation. It shows the operational pattern behind Vault-style systems.",
+      "key_params": {
+        "engines": "kv, database, pki modeled",
+        "ttl": "lease durations",
+        "rotation": "automatic rollover",
+        "audit": "access logging"
+      },
+      "data_idea": "A seeded RNG drives secret reads and rotations.",
+      "real_world_use": "Used learning secrets management.",
+      "suggested_types": [
+        "simulation",
+        "encryption_tool",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "vpc-subnet-planner",
+      "name": "VPC Subnet Planner",
+      "concept": "IP address planning decides subnet sizes and AZ spread before anything launches, and mistakes are painful to fix. The planner allocates CIDR blocks across availability zones with room for growth, validating no overlaps. Address space is finite; plan it.",
+      "key_params": {
+        "cidr": "VPC block",
+        "azs": "zone count",
+        "growth": "expansion headroom",
+        "validate": "overlap detection"
+      },
+      "data_idea": "Subnet requirements derive from service plans.",
+      "real_world_use": "Used by network architects designing VPCs.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "security-group-rule-analyzer",
+      "name": "Security Group Rule Analyzer",
+      "concept": "Security groups are stateful firewalls where rules accumulate into permissive mush. The analyzer audits rules for open-to-world ports, unused allows, and shadowed entries, scoring the attack surface. It keeps the front door narrow.",
+      "key_params": {
+        "rules": "ingress and egress sets",
+        "open_world": "0.0.0.0 findings",
+        "usage": "flow-log based relevance",
+        "score": "exposure rating"
+      },
+      "data_idea": "A seeded RNG fabricates security groups with drift.",
+      "real_world_use": "Used by cloud security teams.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "nat-gateway-simulator",
+      "name": "NAT Gateway Simulator",
+      "concept": "Private subnets reach the internet through NAT gateways that multiplex many private IPs onto few public ones with port limits. The simulator models connection tracking and port exhaustion under load. It explains the mysterious connection timeouts.",
+      "key_params": {
+        "private_ips": "hosts behind NAT",
+        "ports": "available port pool",
+        "connections": "outbound demand",
+        "show_exhaustion": "port pressure display"
+      },
+      "data_idea": "A seeded RNG generates outbound connection bursts.",
+      "real_world_use": "Used diagnosing NAT limits.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dns-failover-simulator",
+      "name": "DNS Failover Simulator",
+      "concept": "DNS failover reroutes users by changing answers when health checks fail, but TTLs delay the switch. The simulator models health-check intervals, TTL propagation, and client caching during regional failure. It sets realistic RTO expectations.",
+      "key_params": {
+        "ttl": "record TTL",
+        "health_interval": "check cadence",
+        "clients": "resolver behaviors",
+        "failover_time": "measured switch duration"
+      },
+      "data_idea": "A seeded RNG simulates regional health with client caches.",
+      "real_world_use": "Used planning DNS-based disaster recovery.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "service-discovery-registry",
+      "name": "Service Discovery Registry",
+      "concept": "Microservices find each other through a registry with health-checked registrations, not hardcoded IPs. The registry handles register, deregister, and lookup with TTLs and health eviction. It is the phone book of dynamic infrastructure.",
+      "key_params": {
+        "services": "registered instances",
+        "ttl": "registration lifetime",
+        "health": "check integration",
+        "lookup": "query patterns"
+      },
+      "data_idea": "A seeded RNG simulates instance churn and lookups.",
+      "real_world_use": "Used learning service mesh fundamentals.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "serverless-function-simulator",
+      "name": "Serverless Function Simulator",
+      "concept": "Serverless functions bill per invocation with cold starts penalizing idle functions. The simulator models invocation patterns, concurrency limits, and cold-start latency against memory sizing. It reveals the true cost and latency profile.",
+      "key_params": {
+        "invocations": "request pattern",
+        "memory": "function sizing",
+        "cold_start_ms": "init penalty",
+        "concurrency": "limit modeled"
+      },
+      "data_idea": "A seeded RNG generates bursty invocation traffic.",
+      "real_world_use": "Used evaluating serverless fit.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cold-start-analyzer",
+      "name": "Cold Start Analyzer",
+      "concept": "Cold starts add hundreds of milliseconds when runtimes initialize, dominating latency for infrequent functions. The analyzer correlates invocation gaps with latency, quantifies cold-start impact, and evaluates provisioned concurrency. It separates code problems from platform ones.",
+      "key_params": {
+        "invocations": "timestamped calls",
+        "init_ms": "cold penalty",
+        "idle_threshold": "gap defining cold",
+        "mitigations": "provisioned concurrency modeled"
+      },
+      "data_idea": "A seeded RNG synthesizes invocations with idle gaps.",
+      "real_world_use": "Used optimizing serverless latency.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "log_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "workflow-orchestrator",
+      "name": "Workflow Orchestrator",
+      "concept": "Multi-step cloud workflows need orchestration with retries, timeouts, and compensation on failure. The orchestrator executes DAGs of steps with state persistence and exactly-once-ish semantics. It models the engine behind step functions.",
+      "key_params": {
+        "steps": "DAG definition",
+        "retries": "per-step policy",
+        "compensation": "rollback actions",
+        "state": "execution persistence"
+      },
+      "data_idea": "A seeded RNG drives workflows with step failures.",
+      "real_world_use": "Used learning workflow engines.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "batch-job-array-simulator",
+      "name": "Batch Job Array Simulator",
+      "concept": "Array jobs run thousands of parameter variations, and schedulers must place them efficiently. The simulator models job arrays with dependencies across a cluster, measuring throughput and queue wait. HPC scheduling in miniature.",
+      "key_params": {
+        "jobs": "array size",
+        "params": "parameter sweep",
+        "cluster": "node capacity",
+        "priority": "queue policy"
+      },
+      "data_idea": "A seeded RNG generates job durations and dependencies.",
+      "real_world_use": "Used in scientific computing scheduling.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "task_queue",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gpu-scheduler-simulator",
+      "name": "GPU Scheduler Simulator",
+      "concept": "GPUs are scarce and expensive, so schedulers must bin-pack jobs while respecting memory and topology. The simulator places GPU jobs with gang scheduling and preemption policies. It shows why GPU clusters need smarter scheduling.",
+      "key_params": {
+        "gpus": "device count",
+        "jobs": "GPU demands",
+        "topology": "NVLink groupings",
+        "preemption": "policy modeled"
+      },
+      "data_idea": "A seeded RNG creates ML training job mixes.",
+      "real_world_use": "Used by ML platform teams.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "data-lake-partition-planner",
+      "name": "Data Lake Partition Planner",
+      "concept": "Partitioning by date or key prunes scans, but too-fine partitions create small-file hell. The planner evaluates partition schemes against query patterns, estimating scanned bytes and file counts. Layout is performance.",
+      "key_params": {
+        "queries": "access patterns",
+        "schemes": "partition keys compared",
+        "file_target_mb": "ideal file size",
+        "estimate": "scan cost model"
+      },
+      "data_idea": "A seeded RNG generates query workloads over time ranges.",
+      "real_world_use": "Used by data engineers designing lakes.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lifecycle-policy-engine",
+      "name": "Lifecycle Policy Engine",
+      "concept": "Storage lifecycle policies move aging data to cheaper tiers and eventually delete it. The engine applies rules to object inventories, projecting cost savings and flagging premature transitions. Tiering automation with guardrails.",
+      "key_params": {
+        "rules": "age-based transitions",
+        "tiers": "hot, cool, archive pricing",
+        "objects": "inventory with ages",
+        "project": "savings forecast"
+      },
+      "data_idea": "A seeded RNG ages object inventories.",
+      "real_world_use": "Used managing storage costs.",
+      "suggested_types": [
+        "scheduler",
+        "statistical_analyzer",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cross-region-replication-monitor",
+      "name": "Cross Region Replication Monitor",
+      "concept": "Cross-region replication gives disaster recovery, but lag determines data loss on failover. The monitor tracks replication lag, backlog, and throughput per region pair, alerting before lag exceeds RPO. It watches the safety net.",
+      "key_params": {
+        "pairs": "source to destination",
+        "rpo": "max acceptable lag",
+        "throughput": "replication rate",
+        "backlog": "pending bytes"
+      },
+      "data_idea": "A seeded RNG synthesizes replication metrics with lag spikes.",
+      "real_world_use": "Used by DR teams.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "scheduler",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "snapshot-scheduler",
+      "name": "Snapshot Scheduler",
+      "concept": "Snapshots protect against data loss, but uncoordinated snapshots bloat storage and miss consistency. The scheduler coordinates application-quiesced snapshots across volumes with retention chains. Recovery points stay meaningful.",
+      "key_params": {
+        "volumes": "protected resources",
+        "frequency": "snapshot cadence",
+        "retention": "generations kept",
+        "quiesce": "app-consistent hooks"
+      },
+      "data_idea": "A seeded RNG models change rates and snapshot chains.",
+      "real_world_use": "Used by backup administrators.",
+      "suggested_types": [
+        "scheduler",
+        "backup_tool",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rto-rpo-calculator",
+      "name": "RTO RPO Calculator",
+      "concept": "Recovery objectives need numbers: how long can we be down, how much data can we lose. The calculator derives achievable RTO and RPO from backup frequency, replication lag, and restore speeds, then prices better objectives. It grounds DR discussions in math.",
+      "key_params": {
+        "backup_freq": "protection cadence",
+        "restore_mbps": "recovery throughput",
+        "data_tb": "protected size",
+        "cost_model": "price per objective tier"
+      },
+      "data_idea": "A seeded RNG varies backup and restore parameters.",
+      "real_world_use": "Used in business continuity planning.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "compliance-drift-checker",
+      "name": "Compliance Drift Checker",
+      "concept": "Compliance frameworks demand configurations stay within policy, but reality drifts. The checker evaluates resources against CIS-style benchmarks, scoring compliance per control with remediation hints. Audit readiness becomes continuous.",
+      "key_params": {
+        "benchmarks": "control definitions",
+        "resources": "evaluated inventory",
+        "scoring": "pass, fail, manual",
+        "remediate": "fix guidance"
+      },
+      "data_idea": "A seeded RNG fabricates resource configs with violations.",
+      "real_world_use": "Used by GRC teams.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tag-policy-enforcer",
+      "name": "Tag Policy Enforcer",
+      "concept": "Tagging policies only work when enforced at creation time with clear remediation for violations. The enforcer validates tags on simulated provisioning, quarantines violators, and reports compliance by team. Policy as code for metadata.",
+      "key_params": {
+        "policy": "required tags and formats",
+        "provisioning": "creation events",
+        "quarantine": "violation handling",
+        "report": "team compliance"
+      },
+      "data_idea": "A seeded RNG generates provisioning with tag quality variance.",
+      "real_world_use": "Used by cloud governance teams.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "quota-monitor",
+      "name": "Quota Monitor",
+      "concept": "Service quotas cap usage per region, and hitting one mid-launch blocks scaling. The monitor tracks utilization against quotas with burn projections, requesting increases before the wall. Limits stop being surprises.",
+      "key_params": {
+        "quotas": "limits per service",
+        "usage": "consumption history",
+        "project": "exhaustion forecast",
+        "request": "increase workflow simulated"
+      },
+      "data_idea": "A seeded RNG grows usage toward quota ceilings.",
+      "real_world_use": "Used by platform teams preventing throttling.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "event-source-mapper",
+      "name": "Event Source Mapper",
+      "concept": "Serverless event mappings connect queues and streams to functions with batching and filtering. The mapper simulates batch windows, filter patterns, and partial-failure handling. It tunes the plumbing between events and code.",
+      "key_params": {
+        "sources": "queues and streams",
+        "batch": "size and window",
+        "filters": "event patterns",
+        "partial_failure": "bisect behavior"
+      },
+      "data_idea": "A seeded RNG streams events with poison messages.",
+      "real_world_use": "Used building event-driven serverless apps.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "state-machine-simulator",
+      "name": "State Machine Simulator",
+      "concept": "Workflow state machines branch, parallelize, and handle errors explicitly, and visualizing execution clarifies complex flows. The simulator runs state definitions with input passing and error catches. It debugs orchestration logic safely.",
+      "key_params": {
+        "definition": "states and transitions",
+        "inputs": "execution payloads",
+        "parallel": "branch fan-out",
+        "errors": "catch and retry"
+      },
+      "data_idea": "A seeded RNG drives executions with failures.",
+      "real_world_use": "Used developing step-function workflows.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "api-throttle-designer",
+      "name": "API Throttle Designer",
+      "concept": "API throttles protect backends with per-key quotas, but tiers and bursts need design. The designer models quota tiers, burst allowances, and overage handling against client demand. Monetization and protection in one policy.",
+      "key_params": {
+        "tiers": "free, pro, enterprise quotas",
+        "burst": "short-term allowance",
+        "overage": "handling policy",
+        "demand": "client usage patterns"
+      },
+      "data_idea": "A seeded RNG generates client demand across tiers.",
+      "real_world_use": "Used by API product teams.",
+      "suggested_types": [
+        "simulation",
+        "rate_limiter",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "waf-rule-tester",
+      "name": "WAF Rule Tester",
+      "concept": "Web application firewall rules block attacks but also block customers when wrong. The tester fires attack payloads and legitimate traffic at rule sets measuring block and false-positive rates. Rules get tuned with evidence.",
+      "key_params": {
+        "rules": "managed and custom sets",
+        "attacks": "OWASP-style payloads",
+        "legit": "normal traffic",
+        "tune": "threshold adjustments"
+      },
+      "data_idea": "A seeded RNG mixes attacks with edge-case legitimate requests.",
+      "real_world_use": "Used by AppSec teams tuning WAFs.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ddos-mitigation-planner",
+      "name": "DDoS Mitigation Planner",
+      "concept": "DDoS response needs pre-planned playbooks: detection thresholds, scrubbing activation, and communication. The planner simulates attack volumes against mitigation capacity, sizing scrubbing and anycast. It prepares the worst day.",
+      "key_params": {
+        "attack_gbps": "volumes modeled",
+        "scrub_capacity": "mitigation headroom",
+        "anycast": "absorption distribution",
+        "playbook": "response steps"
+      },
+      "data_idea": "A seeded RNG generates attack ramps.",
+      "real_world_use": "Used by network security teams.",
+      "suggested_types": [
+        "simulation",
+        "report_generator",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "private-link-simulator",
+      "name": "Private Link Simulator",
+      "concept": "PrivateLink-style endpoints expose services without internet traversal, with DNS and policy controls. The simulator models endpoint provisioning, DNS resolution, and policy enforcement. It designs private connectivity correctly.",
+      "key_params": {
+        "services": "exposed endpoints",
+        "consumers": "client VPCs",
+        "dns": "private zone behavior",
+        "policy": "endpoint policies"
+      },
+      "data_idea": "A seeded RNG simulates connection setups.",
+      "real_world_use": "Used by network architects.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "config_manager",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "transit-gateway-planner",
+      "name": "Transit Gateway Planner",
+      "concept": "Hub-and-spoke transit gateways replace VPC peering meshes, with route tables controlling the spokes. The planner designs attachments and route propagation for isolation needs. It tames multi-VPC complexity.",
+      "key_params": {
+        "vpcs": "spoke count",
+        "isolation": "segmentation needs",
+        "routes": "propagation rules",
+        "bandwidth": "throughput sizing"
+      },
+      "data_idea": "Network requirements derive from workload plans.",
+      "real_world_use": "Used in enterprise cloud networking.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cloud-shell-session-recorder",
+      "name": "Cloud Shell Session Recorder",
+      "concept": "Ephemeral cloud shells need session recording for audit, capturing commands without storing secrets. The recorder logs simulated shell sessions with redaction and playback. It balances admin convenience with accountability.",
+      "key_params": {
+        "sessions": "command streams",
+        "redact": "secret patterns masked",
+        "playback": "session replay",
+        "retention": "log lifetime"
+      },
+      "data_idea": "A seeded RNG fabricates admin shell sessions.",
+      "real_world_use": "Used for privileged access auditing.",
+      "suggested_types": [
+        "log_analyzer",
+        "cli_tool",
+        "encryption_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cost-anomaly-root-causer",
+      "name": "Cost Anomaly Root Causer",
+      "concept": "Knowing spend spiked is half the battle; the root causer attributes it to specific resources and actions. It diffs resource inventories across the spike window ranking likely culprits. Investigation time collapses.",
+      "key_params": {
+        "window": "spike period",
+        "inventory_diff": "resource changes",
+        "rank": "culprit scoring",
+        "actions": "API calls correlated"
+      },
+      "data_idea": "A seeded RNG injects cost incidents into spend data.",
+      "real_world_use": "Used by FinOps investigating overruns.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "log_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "savings-plan-analyzer",
+      "name": "Savings Plan Analyzer",
+      "concept": "Savings plans discount compute in exchange for hourly commitments, with utilization deciding the payoff. The analyzer models commitment levels against usage variability. It optimizes the commitment portfolio.",
+      "key_params": {
+        "usage": "hourly compute",
+        "commit": "hourly commitment",
+        "discount": "plan rates",
+        "term": "1 or 3 year"
+      },
+      "data_idea": "A seeded RNG generates compute usage with variability.",
+      "real_world_use": "Used by FinOps buying savings plans.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "graviton-migration-estimator",
+      "name": "Graviton Migration Estimator",
+      "concept": "ARM-based instances promise better price-performance, but migration needs measurement. The estimator models workload portability, benchmarks simulated performance, and projects savings. It de-risks architecture transitions.",
+      "key_params": {
+        "workloads": "services evaluated",
+        "portability": "x86 dependencies",
+        "perf_ratio": "relative performance",
+        "savings": "cost projection"
+      },
+      "data_idea": "A seeded RNG profiles workload characteristics.",
+      "real_world_use": "Used planning ARM migrations.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "multi-account-strategy-planner",
+      "name": "Multi Account Strategy Planner",
+      "concept": "Multiple accounts isolate blast radius and simplify billing, but need organization design. The planner models OU structures, SCP guardrails, and cross-account roles. It designs the account foundation.",
+      "key_params": {
+        "ous": "organizational units",
+        "scps": "guardrail policies",
+        "roles": "cross-account access",
+        "billing": "consolidation"
+      },
+      "data_idea": "Account needs derive from team structures.",
+      "real_world_use": "Used by cloud architects.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "service-control-policy-tester",
+      "name": "Service Control Policy Tester",
+      "concept": "SCPs set permission guardrails across accounts, where denies override everything. The tester evaluates actions against SCP hierarchies showing effective permissions. It previews guardrail impact safely.",
+      "key_params": {
+        "scps": "policy hierarchy",
+        "actions": "tested operations",
+        "accounts": "OU placement",
+        "show_effective": "decision trace"
+      },
+      "data_idea": "A seeded RNG builds SCP sets with conflicts.",
+      "real_world_use": "Used by cloud governance teams.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "config_manager",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cloudtrail-log-analyzer",
+      "name": "CloudTrail Log Analyzer",
+      "concept": "CloudTrail records every API call, the ultimate audit source and a haystack for incident response. The analyzer parses call logs, flags anomalous actions like privilege escalations, and builds timelines. It turns API exhaust into evidence.",
+      "key_params": {
+        "calls": "API event stream",
+        "anomalies": "detection rules",
+        "timeline": "incident reconstruction",
+        "attribution": "user and role mapping"
+      },
+      "data_idea": "A seeded RNG synthesizes API calls with attacker activity.",
+      "real_world_use": "Used in cloud incident response.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "config-rule-evaluator",
+      "name": "Config Rule Evaluator",
+      "concept": "Config rules continuously audit resource compliance, like requiring encryption or tags. The evaluator runs rules against inventory snapshots with pass, fail, and not-applicable outcomes. It automates the compliance checklist.",
+      "key_params": {
+        "rules": "compliance checks",
+        "inventory": "resource snapshots",
+        "evaluate": "rule engine",
+        "remediate": "auto-fix simulation"
+      },
+      "data_idea": "A seeded RNG fabricates inventories with drift.",
+      "real_world_use": "Used by governance teams.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "backup-vault-planner",
+      "name": "Backup Vault Planner",
+      "concept": "Backup vaults with immutability protect against ransomware encrypting the backups too. The planner designs vault policies with lock periods and cross-account copies. It makes backups the last line that holds.",
+      "key_params": {
+        "policies": "retention and lock",
+        "copies": "cross-region and account",
+        "lock_days": "immutability period",
+        "test": "restore verification"
+      },
+      "data_idea": "A seeded RNG models backup chains under attack.",
+      "real_world_use": "Used in ransomware resilience planning.",
+      "suggested_types": [
+        "backup_tool",
+        "scheduler",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "edge-function-router",
+      "name": "Edge Function Router",
+      "concept": "Edge functions run logic at CDN PoPs for personalization and auth at the edge. The router simulates request handling with regional logic and origin fallback. It pushes compute to the user.",
+      "key_params": {
+        "functions": "edge handlers",
+        "pops": "execution locations",
+        "fallback": "origin behavior",
+        "latency": "edge versus origin"
+      },
+      "data_idea": "A seeded RNG routes requests with edge logic.",
+      "real_world_use": "Used building low-latency web apps.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "origin-shield-designer",
+      "name": "Origin Shield Designer",
+      "concept": "Origin shields add a mid-tier cache layer so origins face one region instead of every edge. The designer models shield placement against origin load and cache efficiency. It protects origins from thundering herds.",
+      "key_params": {
+        "edges": "PoP count",
+        "shields": "mid-tier regions",
+        "origin_capacity": "backend limit",
+        "purge": "invalidation flow"
+      },
+      "data_idea": "A seeded RNG generates cache misses needing origin fetch.",
+      "real_world_use": "Used scaling high-traffic origins.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "lru_cache"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cloud-cost-dashboard",
+      "name": "Cloud Cost Dashboard",
+      "concept": "Cost dashboards translate raw billing into team-accountable views with trends and forecasts. The generator builds dashboards from cost and usage records with anomaly highlights. Visibility precedes optimization.",
+      "key_params": {
+        "records": "cost and usage data",
+        "views": "by team, service, trend",
+        "forecast": "spend projection",
+        "anomalies": "spike highlights"
+      },
+      "data_idea": "A seeded RNG synthesizes billing records.",
+      "real_world_use": "Used by FinOps teams.",
+      "suggested_types": [
+        "web_dashboard",
+        "report_generator",
+        "statistical_analyzer",
+        "linear_regression"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "instance-rightsizer",
+      "name": "Instance Rightsizer",
+      "concept": "Cloud instances are routinely oversized, and rightsizing recommendations need utilization evidence. The analyzer computes CPU and memory percentiles per instance recommending smaller shapes with headroom. It finds the waste hiding in averages.",
+      "key_params": {
+        "instances": "fleet inventory",
+        "metrics": "utilization history",
+        "headroom": "safety buffer",
+        "savings": "projected reduction"
+      },
+      "data_idea": "A seeded RNG generates instance utilization.",
+      "real_world_use": "Used by FinOps teams.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "container-cost-allocator",
+      "name": "Container Cost Allocator",
+      "concept": "Kubernetes costs need attribution to namespaces and teams despite shared nodes. The allocator splits node costs by request, usage, and idle overhead with showback reports. Shared infrastructure gets fair bills.",
+      "key_params": {
+        "clusters": "node inventory",
+        "workloads": "pod resource usage",
+        "method": "request versus usage split",
+        "idle": "overhead allocation"
+      },
+      "data_idea": "A seeded RNG synthesizes cluster utilization.",
+      "real_world_use": "Used by platform FinOps.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "finops-alert-engine",
+      "name": "FinOps Alert Engine",
+      "concept": "Budget alerts should fire before overspend, with context about what is driving it. The engine watches forecasted spend against budgets with severity tiers. It makes budgets self-enforcing.",
+      "key_params": {
+        "budgets": "team and project limits",
+        "forecast": "spend projection",
+        "tiers": "warn and breach",
+        "context": "driver attribution"
+      },
+      "data_idea": "A seeded RNG drives spend toward budget breaches.",
+      "real_world_use": "Used by finance and engineering.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "green-computing-scheduler",
+      "name": "Green Computing Scheduler",
+      "concept": "Carbon-aware scheduling shifts flexible workloads to times and regions with cleaner energy. The scheduler models carbon intensity forecasts placing batch jobs accordingly. It trades a little latency for a lot less CO2.",
+      "key_params": {
+        "intensity": "grid carbon forecasts",
+        "jobs": "flexible workloads",
+        "regions": "placement options",
+        "tradeoff": "delay tolerance"
+      },
+      "data_idea": "A seeded RNG synthesizes carbon intensity curves.",
+      "real_world_use": "Used in sustainability engineering.",
+      "suggested_types": [
+        "scheduler",
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "disaster-recovery-tester",
+      "name": "Disaster Recovery Tester",
+      "concept": "DR tests prove recovery works, measuring actual RTO against targets with game-day scenarios. The tester orchestrates simulated failovers scoring each phase. Confidence comes from practice.",
+      "key_params": {
+        "scenarios": "region and AZ loss",
+        "phases": "detect, failover, verify",
+        "score": "RTO achievement",
+        "gaps": "improvement items"
+      },
+      "data_idea": "A seeded RNG runs failover drills with timing.",
+      "real_world_use": "Used by business continuity teams.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "report_generator",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    }
+  ]
+}

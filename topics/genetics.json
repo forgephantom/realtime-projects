@@ -1,0 +1,762 @@
+{
+  "domain": "biology",
+  "subdomain": "genetics",
+  "topics": [
+    {
+      "concept": "Hardy-Weinberg equilibrium predicts genotype frequencies p^2, 2pq, q^2 from allele frequencies under random mating with no selection, mutation, or drift. A chi-square test of observed versus expected counts detects violations. The tester reports allele frequencies, expected counts, and the equilibrium verdict.",
+      "data_idea": "The demo draws seeded-RNG random genotypes from known allele frequencies and checks the tester accepts equilibrium.",
+      "difficulty": "beginner",
+      "key_params": {
+        "alpha": "significance level",
+        "genotypes": "observed AA/Aa/aa counts",
+        "show_expected": "display expected counts"
+      },
+      "name": "Hardy-Weinberg Equilibrium Tester",
+      "real_world_use": "HWE testing QC's genotyping data and detects selection or stratification in GWAS.",
+      "slug_base": "hardy-weinberg-tester",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Mendel's ratios (3:1, 9:3:3:1, 1:1) are hypotheses tested with chi-square: squared deviations of observed from expected counts, scaled by expectation. The analyzer takes observed offspring counts and a hypothesized ratio, returning the statistic, p-value, and accept/reject verdict. It warns when expected counts are too small.",
+      "data_idea": "The demo synthesizes seeded-RNG random offspring from known ratios and checks acceptance rates.",
+      "difficulty": "beginner",
+      "key_params": {
+        "alpha": "significance level",
+        "observed": "offspring counts",
+        "ratio": "hypothesized ratio like 9:3:3:1"
+      },
+      "name": "Mendelian Ratio Chi-Square Analyzer",
+      "real_world_use": "Ratio testing validates inheritance patterns in breeding and genetics labs.",
+      "slug_base": "chi-square-genetic-ratios",
+      "suggested_types": [
+        "statistical_analyzer",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A Punnett square enumerates all gamete combinations from two parents, giving offspring genotype and phenotype probabilities for single-gene traits. The simulator generalizes to any parental genotypes and dominance schemes, including incomplete dominance and codominance. It draws the square and summarizes probabilities.",
+      "data_idea": "The demo simulates seeded-RNG random crosses and verifies offspring frequencies match the square's predictions.",
+      "difficulty": "beginner",
+      "key_params": {
+        "dominance": "complete, incomplete, or codominant",
+        "parent_a": "genotype like Aa",
+        "parent_b": "genotype like Aa"
+      },
+      "name": "Punnett Square Cross Simulator",
+      "real_world_use": "Punnett squares teach inheritance and predict breeding outcomes in agriculture.",
+      "slug_base": "punnett-square-simulator",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Dihybrid crosses track two genes at once: independent assortment gives the 9:3:3:1 phenotypic ratio, while linkage distorts it toward parental types. The analyzer computes expected offspring distributions under both hypotheses and fits recombination fractions. It reports which model the data support.",
+      "data_idea": "The demo synthesizes seeded-RNG random dihybrid offspring under known linkage and checks the analyzer recovers the recombination fraction.",
+      "difficulty": "beginner",
+      "key_params": {
+        "gene_a": "first gene genotypes",
+        "gene_b": "second gene genotypes",
+        "offspring": "observed counts"
+      },
+      "name": "Dihybrid Cross Linkage Analyzer",
+      "real_world_use": "Dihybrid analysis maps genes in model-organism genetics.",
+      "slug_base": "dihybrid-cross-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Recombination frequency between two loci estimates their map distance: 1 percent recombination equals 1 centimorgan (with mapping-function corrections for double crossovers). The mapper takes testcross offspring counts, computes recombinant fractions, and converts to map distances via Haldane or Kosambi functions. It orders multiple loci by pairwise distances.",
+      "data_idea": "The demo synthesizes seeded-RNG random testcross data from known map distances and checks recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "mapping_function": "haldane or kosambi",
+        "offspring": "testcross counts",
+        "parental_types": "parental gamete classes"
+      },
+      "name": "Recombination Frequency Map Builder",
+      "real_world_use": "Linkage mapping locates genes in breeding programs and model organisms.",
+      "slug_base": "linkage-recombination-mapper",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Autosomal dominant traits appear every generation with 50 percent transmission from an affected heterozygote; recessive traits skip generations and cluster in consanguineous families. The pedigree analyzer scores a pedigree against dominant, recessive, and X-linked models, ruling out incompatible ones. It explains each ruling with the violated expectation.",
+      "data_idea": "The demo synthesizes seeded-RNG random pedigrees under known inheritance modes and checks the analyzer identifies them.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "affected": "set of affected individuals",
+        "mode": "model to test",
+        "pedigree": "family structure"
+      },
+      "name": "Autosomal Pedigree Mode Analyzer",
+      "real_world_use": "Pedigree analysis is the first step in clinical genetics consultations.",
+      "slug_base": "pedigree-autosomal-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "X-linked traits show criss-cross inheritance: fathers pass X to daughters only, so affected fathers have carrier daughters and affected sons inherit from carrier mothers. The solver computes transmission probabilities through a pedigree and flags obligate carriers. It handles X-linked dominant and recessive separately.",
+      "data_idea": "The demo synthesizes seeded-RNG random X-linked pedigrees and verifies computed carrier probabilities.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "affected": "affected individuals",
+        "mode": "x_dominant or x_recessive",
+        "pedigree": "family structure"
+      },
+      "name": "X-Linked Pedigree Solver",
+      "real_world_use": "X-linked analysis counsels families for conditions like hemophilia and color blindness.",
+      "slug_base": "x-linked-pedigree-solver",
+      "suggested_types": [
+        "statistical_analyzer",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The Wright-Fisher model samples 2N gene copies each generation from the previous one, so allele frequencies wander by drift with variance p(1-p)/2N per generation. Small populations fix or lose alleles quickly. The simulator tracks allele trajectories, time to fixation, and heterozygosity decay.",
+      "data_idea": "The demo runs seeded-RNG random replicate populations and checks fixation times match diffusion approximations.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "generations": "simulation length",
+        "pop_size": "diploid population size",
+        "replicates": "independent runs",
+        "start_freq": "initial allele frequency"
+      },
+      "name": "Wright-Fisher Drift Simulator",
+      "real_world_use": "Drift models explain allele loss in endangered species and lab evolution.",
+      "slug_base": "wright-fisher-drift-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A selection coefficient s changes allele fitnesses (1, 1+hs, 1+s), driving deterministic frequency change layered over drift. The simulator integrates the deterministic recursion and adds binomial sampling noise for finite populations. It reports time to fixation and the probability of fixation from a single copy.",
+      "data_idea": "The demo runs seeded-RNG random selection trajectories and compares fixation probabilities to the 2s approximation.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "dominance": "h value",
+        "generations": "simulation length",
+        "pop_size": "population size",
+        "selection": "s value"
+      },
+      "name": "Selection Coefficient Trajectory Simulator",
+      "real_world_use": "Selection models predict pesticide resistance and antibiotic resistance spread.",
+      "slug_base": "selection-coefficient-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Deleterious alleles persist at mutation-selection balance: new mutations arrive at rate mu while selection removes them, equilibrating near mu/s for dominant alleles. The calculator derives equilibrium frequencies for dominant, recessive, and overdominant cases. It shows how recessives hide at higher frequencies.",
+      "data_idea": "The demo iterates seeded-RNG random mutation-selection recursions and checks convergence to the predicted equilibria.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "dominance": "h value",
+        "mutation_rate": "mu",
+        "selection": "s value"
+      },
+      "name": "Mutation-Selection Balance Calculator",
+      "real_world_use": "Balance theory explains why harmful alleles persist in human populations.",
+      "slug_base": "mutation-selection-balance",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The island model connects subpopulations by migration at rate m per generation, which homogenizes allele frequencies and opposes drift-driven divergence. Equilibrium Fst approximates 1/(1+4Nm). The simulator runs multiple demes with migration and tracks divergence over time.",
+      "data_idea": "The demo runs seeded-RNG random multi-deme simulations and checks Fst converges near the theoretical value.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "demes": "number of subpopulations",
+        "generations": "simulation length",
+        "migration": "m per generation"
+      },
+      "name": "Island Model Migration Simulator",
+      "real_world_use": "Migration models guide wildlife corridor design and interpret human population structure.",
+      "slug_base": "migration-island-model",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The coalescent traces gene copies backward in time: pairs merge at rate depending on population size, and mutations fall on branches as a Poisson process. Simulating genealogies this way is far cheaper than forward simulation. The tool generates trees, overlays mutations, and reports pairwise diversity.",
+      "data_idea": "The demo simulates seeded-RNG random coalescent trees and checks pairwise differences match the theta expectation.",
+      "difficulty": "advanced",
+      "key_params": {
+        "mutation_rate": "per-branch mutation",
+        "pop_size": "effective size",
+        "samples": "gene copies"
+      },
+      "name": "Coalescent Genealogy Simulator",
+      "real_world_use": "Coalescent methods infer demographic history from DNA samples in human genetics.",
+      "slug_base": "coalescent-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Effective population size Ne is the size of an ideal population experiencing the same drift as the real one; it is reduced by skewed sex ratios, variance in offspring number, and bottlenecks. The estimator computes Ne from demographic inputs via the harmonic-mean and sex-ratio formulas. It contrasts Ne with census size.",
+      "data_idea": "The demo computes Ne for seeded-RNG random demographic scenarios and checks the harmonic-mean behavior.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "generation_sizes": "sizes per generation",
+        "offspring_variance": "variance in family size",
+        "sex_ratio": "breeding male/female ratio"
+      },
+      "name": "Effective Population Size Estimator",
+      "real_world_use": "Ne estimates assess extinction risk in conservation biology.",
+      "slug_base": "effective-population-estimator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The inbreeding coefficient F is the probability that two alleles in an individual are identical by descent; it rises with consanguineous mating and small population size. The calculator derives F from pedigree loops or from heterozygote deficiency. It predicts the increased risk of recessive disorders.",
+      "data_idea": "The demo computes F for seeded-RNG random pedigrees and validates against path-method calculations.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "method": "pedigree or heterozygosity",
+        "observed_het": "observed heterozygosity",
+        "pedigree": "family structure"
+      },
+      "name": "Inbreeding Coefficient Calculator",
+      "real_world_use": "Inbreeding estimates manage zoo breeding and livestock programs.",
+      "slug_base": "inbreeding-coefficient-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Wright's path method computes inbreeding by summing (1/2)^n over every path connecting the parents through a common ancestor, where n counts individuals in the path. The tool enumerates all such paths in a pedigree graph and sums their contributions. It handles multiple common ancestors.",
+      "data_idea": "The demo evaluates seeded-RNG random pedigrees and cross-checks path sums against matrix-method F.",
+      "difficulty": "advanced",
+      "key_params": {
+        "individual": "target individual",
+        "pedigree": "family structure",
+        "show_paths": "list each path"
+      },
+      "name": "Pedigree Path-Method Inbreeding Tool",
+      "real_world_use": "Path analysis quantifies inbreeding in royal, isolated, and pedigree dog populations.",
+      "slug_base": "pedigree-path-inbreeding",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "QTL mapping crosses divergent lines and tests each genomic position for association with a quantitative trait; LOD-like scores peak near causal loci. The simulator generates a cross with planted QTLs of known effect, runs interval mapping, and reports detected peaks versus truth. It demonstrates the Beavis effect of overestimated small effects.",
+      "data_idea": "The demo simulates seeded-RNG random crosses with planted QTLs and measures detection power by effect size.",
+      "difficulty": "advanced",
+      "key_params": {
+        "cross_size": "offspring count",
+        "markers": "marker count",
+        "qtl_effects": "planted effect sizes"
+      },
+      "name": "QTL Interval Mapping Simulator",
+      "real_world_use": "QTL mapping finds crop-yield and disease-resistance genes in breeding programs.",
+      "slug_base": "qtl-mapping-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A Manhattan plot stacks association p-values across the genome; true signals tower above the noise as skyscraper peaks. The simulator plants causal variants with realistic effect sizes, runs association tests with population-structure noise, and renders the plot data with a genome-wide significance line. It reports power and false-positive rates.",
+      "data_idea": "The demo simulates seeded-RNG random GWAS panels with planted signals and checks peak detection.",
+      "difficulty": "advanced",
+      "key_params": {
+        "causal": "planted causal variants",
+        "samples": "cohort size",
+        "significance": "genome-wide threshold",
+        "variants": "total variant count"
+      },
+      "name": "GWAS Manhattan Plot Simulator",
+      "real_world_use": "GWAS identifies disease-associated loci in human genetics.",
+      "slug_base": "gwas-manhattan-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Twin studies estimate heritability by comparing identical (MZ) and fraternal (DZ) twin correlations: Falconer's formula gives h^2 = 2(r_MZ - r_DZ). The ACE model further splits variance into additive genetic, shared, and unique environment. The estimator reports all components with confidence intervals.",
+      "data_idea": "The demo synthesizes seeded-RNG random twin pairs with known variance components and checks recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "dz_corr": "fraternal twin correlation",
+        "mz_corr": "identical twin correlation",
+        "n_pairs": "twin pair count"
+      },
+      "name": "Twin Study Heritability Estimator",
+      "real_world_use": "Heritability estimates partition nature versus nurture in behavioral genetics.",
+      "slug_base": "heritability-twin-estimator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "A polygenic score sums trait-increasing alleles weighted by their GWAS effect sizes, predicting individual genetic liability on a population scale. The calculator builds scores from genotype dosages and effect weights, then reports the score distribution and top-decile enrichment. It stresses that scores are probabilistic, not diagnostic.",
+      "data_idea": "The demo synthesizes seeded-RNG random genotypes with known architectures and checks score-trait correlations.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "genotypes": "dosage matrix",
+        "threshold": "p-value inclusion cutoff",
+        "weights": "per-variant effect sizes"
+      },
+      "name": "Polygenic Score Calculator",
+      "real_world_use": "Polygenic scores stratify risk in research biobanks (population-level, not clinical diagnosis).",
+      "slug_base": "polygenic-score-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "Epistasis means one gene masks or modifies another, producing ratios like 9:7 (complementary), 12:3:1 (dominant epistasis), or 9:3:4 (recessive epistasis) instead of 9:3:3:1. The simulator generates offspring under each epistatic model and fits observed counts to identify the interaction type. It explains the deviating phenotypic classes.",
+      "data_idea": "The demo synthesizes seeded-RNG random offspring under each epistasis model and checks model identification.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "model": "complementary, dominant, or recessive",
+        "offspring": "observed counts",
+        "parental": "parental genotypes"
+      },
+      "name": "Epistasis Ratio Simulator",
+      "real_world_use": "Epistasis analysis dissects interacting pathways in model-organism genetics.",
+      "slug_base": "epistasis-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The complementation test crosses two recessive mutants: if offspring are wild-type, the mutations are in different genes; if mutant, they are alleles of the same gene. The logic tool takes cross outcomes across mutant pairs and clusters them into complementation groups (genes). It handles incomplete outcomes gracefully.",
+      "data_idea": "The demo synthesizes seeded-RNG random mutant panels with known gene assignments and checks group recovery.",
+      "difficulty": "beginner",
+      "key_params": {
+        "crosses": "pairwise cross outcomes",
+        "mutants": "mutant list",
+        "show_groups": "display complementation groups"
+      },
+      "name": "Complementation Test Logic Engine",
+      "real_world_use": "Complementation groups defined genes before sequencing in classical genetics.",
+      "slug_base": "complementation-tester",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Trihybrid crosses track three genes; with independent assortment the phenotypic ratio is 27:9:9:9:3:3:3:1. The predictor enumerates all 64 gamete combinations from parental genotypes and aggregates offspring genotype and phenotype probabilities. It flags linked gene pairs that would distort the ratio.",
+      "data_idea": "The demo simulates seeded-RNG random trihybrid offspring and verifies frequencies match the predicted distribution.",
+      "difficulty": "beginner",
+      "key_params": {
+        "dominance": "per-gene dominance",
+        "parent_a": "genotype",
+        "parent_b": "genotype"
+      },
+      "name": "Trihybrid Cross Predictor",
+      "real_world_use": "Trihybrid prediction plans multi-trait breeding in crops and livestock.",
+      "slug_base": "trihybrid-cross-predictor",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Sex-linked transmission probabilities follow from X/Y segregation: a carrier mother passes the trait to half her sons, an affected father to none of his sons but all daughters become carriers. The calculator propagates these probabilities through arbitrary pedigrees. It reports each individual's carrier and affected probabilities.",
+      "data_idea": "The demo evaluates seeded-RNG random pedigrees and validates probabilities against exact enumeration.",
+      "difficulty": "beginner",
+      "key_params": {
+        "mode": "x-linked dominant or recessive",
+        "pedigree": "family structure",
+        "proband": "individual of interest"
+      },
+      "name": "Sex-Linkage Probability Calculator",
+      "real_world_use": "Risk calculation counsels families about X-linked disorder transmission.",
+      "slug_base": "sex-linkage-probability",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Pedigree risk calculation combines Mendelian transmission probabilities with observed family data via Bayes' rule to update carrier risks. Each new birth or test result revises the probabilities. The calculator processes pedigrees sequentially and reports posterior risks per individual.",
+      "data_idea": "The demo synthesizes seeded-RNG random pedigrees with known carrier states and checks posterior calibration.",
+      "difficulty": "advanced",
+      "key_params": {
+        "observations": "affected/unaffected data",
+        "pedigree": "family structure",
+        "target": "individual for risk"
+      },
+      "name": "Bayesian Pedigree Risk Calculator",
+      "real_world_use": "Bayesian risk updates are the quantitative core of genetic counseling.",
+      "slug_base": "pedigree-risk-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "naive_bayes"
+      ]
+    },
+    {
+      "concept": "A founder effect occurs when a new population starts from a few individuals, so its allele frequencies are a small random sample of the source, often losing rare alleles entirely. The simulator draws founder samples and tracks diversity loss over subsequent generations. It compares heterozygosity in founders versus source.",
+      "data_idea": "The demo draws seeded-RNG random founder samples and measures allele-loss rates by founder count.",
+      "difficulty": "beginner",
+      "key_params": {
+        "founders": "founder count",
+        "generations": "post-founding generations",
+        "source_freqs": "source allele frequencies"
+      },
+      "name": "Founder Effect Simulator",
+      "real_world_use": "Founder effects explain disease alleles in island and isolate populations.",
+      "slug_base": "founder-effect-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A population bottleneck crashes to a small size for a few generations, purging rare alleles and inflating drift; heterozygosity recovers slowly afterward. The simulator models the crash and recovery, tracking allele counts and heterozygosity. It contrasts bottlenecked versus stable control populations.",
+      "data_idea": "The demo runs seeded-RNG random bottleneck scenarios and checks heterozygosity loss against theoretical expectations.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "bottleneck_size": "crash size",
+        "duration": "bottleneck generations",
+        "initial_size": "pre-crash size"
+      },
+      "name": "Population Bottleneck Simulator",
+      "real_world_use": "Bottleneck models interpret cheetah and elephant-seal genetic uniformity.",
+      "slug_base": "bottleneck-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Assortative mating pairs similar phenotypes, increasing homozygosity and the variance of polygenic traits without changing allele frequencies. The model iterates genotype frequencies under positive assortative mating and tracks heterozygote decline. It contrasts with random and disassortative mating.",
+      "data_idea": "The demo iterates seeded-RNG random mating tables and verifies heterozygosity declines under assortative mating.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "assortment": "mating correlation",
+        "generations": "iterations",
+        "start_freqs": "initial genotype frequencies"
+      },
+      "name": "Assortative Mating Model",
+      "real_world_use": "Assortative mating models human height and IQ partner correlations in quantitative genetics.",
+      "slug_base": "assortative-mating-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Overdominance (heterozygote advantage) maintains both alleles at a stable interior equilibrium p = s2/(s1+s2), where s1 and s2 are the homozygote disadvantages. The classic example is sickle-cell versus malaria. The calculator derives the equilibrium and simulates approach from any starting frequency.",
+      "data_idea": "The demo iterates seeded-RNG random overdominant systems and checks convergence to the predicted equilibrium.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "s1": "AA disadvantage",
+        "s2": "aa disadvantage",
+        "start_freq": "initial p"
+      },
+      "name": "Overdominance Equilibrium Calculator",
+      "real_world_use": "Balancing selection explains MHC diversity and blood-group polymorphisms.",
+      "slug_base": "overdominance-equilibrium",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Balancing selection, through heterozygote advantage or frequency-dependent selection, actively maintains polymorphism against drift and directional selection. The simulator combines selection regimes with drift and reports equilibrium diversity versus neutral expectations. It detects the elevated heterozygosity signature.",
+      "data_idea": "The demo runs seeded-RNG random selection-plus-drift scenarios and compares diversity to neutral controls.",
+      "difficulty": "advanced",
+      "key_params": {
+        "generations": "simulation length",
+        "regime": "overdominance or frequency_dependent",
+        "selection": "selection strength"
+      },
+      "name": "Balancing Selection Simulator",
+      "real_world_use": "Balancing selection maintains immune-system diversity studied in evolutionary medicine.",
+      "slug_base": "balancing-selection-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Mitochondrial DNA passes only from mother to offspring, so pedigrees show strictly maternal transmission with all children of an affected mother inheriting the variant. The simulator traces mitochondrial haplotypes through pedigrees and flags paternal-transmission claims as errors. It models heteroplasmy thresholds for phenotype expression.",
+      "data_idea": "The demo traces seeded-RNG random mitochondrial variants through pedigrees and verifies maternal-only transmission.",
+      "difficulty": "beginner",
+      "key_params": {
+        "heteroplasmy": "mutant fraction threshold",
+        "pedigree": "family structure",
+        "variant": "mitochondrial variant"
+      },
+      "name": "Mitochondrial Inheritance Simulator",
+      "real_world_use": "Maternal inheritance patterns diagnose mitochondrial disorders in clinics.",
+      "slug_base": "mitochondrial-inheritance-simulator",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Imprinted genes express only the paternal or maternal copy, so the same allele causes disease only when inherited from a specific parent. The pedigree model tracks parent-of-origin for each transmission and predicts affected status accordingly. It explains pedigrees that defy Mendelian expectations.",
+      "data_idea": "The demo synthesizes seeded-RNG random imprinted pedigrees and checks the model predicts the parent-of-origin pattern.",
+      "difficulty": "advanced",
+      "key_params": {
+        "imprint": "maternal or paternal expression",
+        "pedigree": "family structure",
+        "variant": "allele"
+      },
+      "name": "Genomic Imprinting Pedigree Model",
+      "real_world_use": "Imprinting explains Prader-Willi and Angelman syndrome inheritance.",
+      "slug_base": "imprinting-pedigree-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Penetrance is the probability a genotype shows any phenotype; expressivity is how severely. The modeler combines genotype probabilities with penetrance values to predict family phenotype patterns. It fits penetrance estimates from pedigree data by maximum likelihood.",
+      "data_idea": "The demo synthesizes seeded-RNG random families with known penetrance and checks the estimator recovers it.",
+      "difficulty": "beginner",
+      "key_params": {
+        "genotypes": "family genotypes",
+        "penetrance": "genotype-to-phenotype map",
+        "phenotypes": "observed phenotypes"
+      },
+      "name": "Penetrance and Expressivity Modeler",
+      "real_world_use": "Penetrance modeling refines risk estimates for BRCA and other variable traits.",
+      "slug_base": "penetrance-expressivity-modeler",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "The LOD score is the log10 likelihood ratio of linkage at recombination fraction theta versus no linkage; scores above 3 traditionally declare linkage. The calculator sums LOD contributions across families from phase-known or phase-unknown meioses. It scans theta to find the maximum LOD and its support interval.",
+      "data_idea": "The demo synthesizes seeded-RNG random family data with known linkage and checks LOD peaks at the true theta.",
+      "difficulty": "advanced",
+      "key_params": {
+        "families": "meiosis data per family",
+        "theta_grid": "theta values to scan",
+        "threshold": "significance cutoff"
+      },
+      "name": "LOD Score Linkage Calculator",
+      "real_world_use": "LOD scores mapped Mendelian disease genes before the GWAS era.",
+      "slug_base": "lod-score-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Haplotype phasing assigns each heterozygous allele to its parental chromosome; with only genotypes, phasing is ambiguous and needs statistical methods. The simulator generates true haplotypes, masks phase, and tests a parsimony-based phaser's accuracy. It reports switch-error rates by marker density.",
+      "data_idea": "The demo synthesizes seeded-RNG random haplotype pairs and measures phasing accuracy across densities.",
+      "difficulty": "advanced",
+      "key_params": {
+        "genotypes": "unphased genotypes",
+        "markers": "marker count",
+        "method": "parsimony or random"
+      },
+      "name": "Haplotype Phasing Simulator",
+      "real_world_use": "Phasing enables allele-specific analysis in clinical and population genomics.",
+      "slug_base": "haplotype-phasing-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Recombination concentrates in hotspots, short regions with far higher crossover rates than background, shaped by PRDM9 binding in mammals. The model places crossovers with a hotspot-modulated rate along a chromosome and reports hotspot usage statistics. It compares observed versus uniform crossover spacing.",
+      "data_idea": "The demo places seeded-RNG random crossovers under hotspot models and checks enrichment statistics.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "crossovers": "number to place",
+        "hotspots": "hotspot positions and strengths",
+        "length": "chromosome length"
+      },
+      "name": "Recombination Hotspot Model",
+      "real_world_use": "Hotspot maps improve imputation and interpret LD patterns in GWAS.",
+      "slug_base": "recombination-hotspot-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Copy number variants duplicate or delete genomic segments; tandem duplications arise by non-allelic homologous recombination between repeats. The simulator generates CNV events with size distributions from empirical studies and tracks copy-number state along a chromosome. It reports CNV counts by type and size class.",
+      "data_idea": "The demo synthesizes seeded-RNG random CNV catalogs and validates size-distribution statistics.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "events": "number of CNVs",
+        "length": "chromosome length",
+        "size_model": "duplication/deletion size distribution"
+      },
+      "name": "Copy Number Variant Simulator",
+      "real_world_use": "CNV simulation benchmarks detection tools for clinical microarray and sequencing.",
+      "slug_base": "cnv-simulator",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Reciprocal translocations swap chromosome arms; carriers produce alternate (balanced), adjacent-1, adjacent-2, and 3:1 segregation products, mostly unbalanced. The tool enumerates gamete types from a translocation configuration and computes the probability of viable balanced offspring. It explains each segregation pattern.",
+      "data_idea": "The demo enumerates seeded-RNG random translocation configurations and verifies gamete counts by segregation type.",
+      "difficulty": "advanced",
+      "key_params": {
+        "breakpoints": "translocation breakpoints",
+        "show_gametes": "list gamete types",
+        "viability": "which products are viable"
+      },
+      "name": "Translocation Segregation Analyzer",
+      "real_world_use": "Segregation analysis counsels translocation carriers about miscarriage and offspring risks.",
+      "slug_base": "translocation-segregation",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Nondisjunction is the failure of chromosomes to separate in meiosis, producing aneuploid gametes; its probability rises sharply with maternal age. The calculator combines age-specific nondisjunction rates with chromosome-specific data to estimate aneuploidy risk. It reports risks by chromosome and maternal age.",
+      "data_idea": "The demo computes seeded-RNG random age-risk curves and checks monotonic increase with age.",
+      "difficulty": "beginner",
+      "key_params": {
+        "age": "maternal age",
+        "chromosome": "chromosome of interest",
+        "rate_table": "age-specific rates"
+      },
+      "name": "Nondisjunction Risk Calculator",
+      "real_world_use": "Aneuploidy risk tables inform prenatal screening decisions (population statistics, not diagnosis).",
+      "slug_base": "nondisjunction-probability",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Gene drives bias inheritance above 50 percent (e.g., CRISPR homing converts heterozygotes), spreading engineered alleles through populations even with fitness costs. The simulator models drive spread with conversion efficiency, resistance-allele formation, and fitness costs. It reports time to fixation and containment thresholds.",
+      "data_idea": "The demo runs seeded-RNG random drive releases and checks spread rates against deterministic predictions.",
+      "difficulty": "advanced",
+      "key_params": {
+        "conversion": "homing efficiency",
+        "fitness_cost": "drive allele cost",
+        "release_freq": "initial release frequency"
+      },
+      "name": "Gene Drive Spread Simulator",
+      "real_world_use": "Gene-drive models evaluate malaria mosquito-control strategies (research modeling only).",
+      "slug_base": "gene-drive-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "CRISPR editing produces a spectrum of outcomes: precise homology-directed repair, error-prone indels from non-homologous end joining, and unedited alleles, with probabilities depending on guide efficiency and cell state. The educational simulator samples outcomes for a target site and reports the edit spectrum. It is a teaching model, not a design tool.",
+      "data_idea": "The demo simulates seeded-RNG random editing experiments and checks outcome frequencies match the input probabilities.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "efficiency": "guide cutting efficiency",
+        "hdr_rate": "homology-directed repair fraction",
+        "target": "target site description"
+      },
+      "name": "CRISPR Edit Outcome Simulator (Educational)",
+      "real_world_use": "Outcome models teach genome-editing concepts in classrooms and training.",
+      "slug_base": "crispr-edit-outcome-simulator",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The genetic code is degenerate: 61 codons encode 20 amino acids, with third-position wobble carrying most redundancy. The analyzer tabulates codon degeneracy per amino acid, computes the fraction of synonymous versus nonsynonymous single-base changes, and reports the code's error-minimization properties. It compares against randomized codes.",
+      "data_idea": "The demo analyzes the standard code table deterministically and compares robustness metrics to seeded-RNG random codes.",
+      "difficulty": "beginner",
+      "key_params": {
+        "code_table": "genetic code to analyze",
+        "compare_random": "benchmark against random codes",
+        "show_wobble": "report third-position stats"
+      },
+      "name": "Genetic Code Degeneracy Analyzer",
+      "real_world_use": "Code analysis informs theories of code evolution and synthetic-code design.",
+      "slug_base": "genetic-code-degeneracy-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Clonal inheritance passes the entire genome without recombination, so mutations accumulate along lineages and phylogenies are simple trees. The tracker simulates clonal expansion with neutral mutations and reconstructs lineage relationships. It contrasts diversity patterns with sexual populations.",
+      "data_idea": "The demo simulates seeded-RNG random clonal expansions and checks tree reconstruction accuracy.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "generations": "expansion length",
+        "lineages": "starting clones",
+        "mutation_rate": "per-genome rate"
+      },
+      "name": "Clonal Lineage Tracker",
+      "real_world_use": "Clonal tracking studies bacterial outbreaks and cancer evolution.",
+      "slug_base": "clonal-inheritance-tracker",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Lethal recessive alleles persist because heterozygotes are healthy; selection removes them only in homozygotes, giving equilibrium near sqrt(mu/s) for full lethals. The calculator derives equilibrium frequencies for lethal and sublethal alleles under dominance models. It shows why lethals are rarer than mild recessives.",
+      "data_idea": "The demo iterates seeded-RNG random lethal-allele systems and checks convergence to predicted equilibria.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "dominance": "h value",
+        "lethality": "selection against homozygote",
+        "mutation_rate": "mu"
+      },
+      "name": "Lethal Allele Equilibrium Calculator",
+      "real_world_use": "Lethal-allele theory explains persistence of severe recessive disorders.",
+      "slug_base": "lethal-allele-equilibrium",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Mutation rates are estimated by fluctuation tests: parallel cultures show jackpot distributions because early mutations produce many descendants. The simulator grows cultures with stochastic mutations and fits the mutation rate from the mutant-count distribution using the Lea-Coulson approach. It contrasts with naive averaging.",
+      "data_idea": "The demo simulates seeded-RNG random fluctuation tests with known mutation rates and checks estimator accuracy.",
+      "difficulty": "advanced",
+      "key_params": {
+        "cultures": "parallel culture count",
+        "final_size": "cells per culture",
+        "mutation_rate": "true rate (validation)"
+      },
+      "name": "Fluctuation Test Mutation-Rate Estimator",
+      "real_world_use": "Fluctuation analysis measures mutation rates in microbiology and cancer biology.",
+      "slug_base": "mutation-rate-estimator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    }
+  ]
+}

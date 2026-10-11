@@ -1,0 +1,1346 @@
+{
+  "domain": "computer_science",
+  "subdomain": "algorithms_data_structures",
+  "topics": [
+    {
+      "slug_base": "sorting-algorithm-race",
+      "name": "Sorting Algorithm Race",
+      "concept": "Different sorting algorithms trade comparisons, swaps, and memory in ways that only show up on real data. This tool runs bubble, insertion, merge, quick, and heap sort on the same seeded arrays, counting comparisons and swaps and timing each. Watching quicksort's partitions against merge sort's steady halves builds lasting intuition.",
+      "key_params": {
+        "array_size": "elements sorted per race",
+        "distributions": "random, sorted, reverse, nearly-sorted inputs",
+        "algorithms": "which sorters compete",
+        "trials": "repetitions per matchup"
+      },
+      "data_idea": "A seeded RNG generates arrays in several orderings for fair comparison.",
+      "real_world_use": "Used in CS courses and interviews to teach algorithm tradeoffs.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "quicksort-partition-visualizer",
+      "name": "Quicksort Partition Visualizer",
+      "concept": "Quicksort's speed comes from partitioning: picking a pivot and shuffling smaller elements left and larger right, then recursing. The visualizer steps through partition schemes like Lomuto and Hoare on a bar display, highlighting the pivot, the scanning pointers, and the swaps. Bad pivot choices visibly degrade into quadratic behavior.",
+      "key_params": {
+        "array_size": "elements visualized",
+        "scheme": "Lomuto or Hoare partitioning",
+        "pivot_rule": "first, last, median-of-three, random",
+        "step_delay_ms": "animation pacing"
+      },
+      "data_idea": "A seeded RNG builds arrays that expose best and worst-case pivot behavior.",
+      "real_world_use": "Used teaching divide-and-conquer sorting.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "merge-sort-trace",
+      "name": "Merge Sort Trace",
+      "concept": "Merge sort guarantees n log n time by splitting arrays down to single elements and merging the sorted halves back together. The tracer shows the recursion tree, the split phases, and each merge step with its comparisons. Its stability and predictability become obvious next to quicksort's variance.",
+      "key_params": {
+        "array_size": "elements traced",
+        "show_tree": "whether the recursion tree renders",
+        "count_comparisons": "operation counting on or off",
+        "merge_detail": "step-by-step merge display"
+      },
+      "data_idea": "A seeded RNG generates arrays for split-and-merge tracing.",
+      "real_world_use": "Used in algorithms courses demonstrating guaranteed performance.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "heap-sort-heapify-demo",
+      "name": "Heap Sort Heapify Demo",
+      "concept": "Heap sort turns the array into a max-heap, then repeatedly extracts the maximum to the end. The demo visualizes the array as a binary tree, showing sift-down operations restoring the heap property after each extraction. It connects the abstract heap to the concrete array indices.",
+      "key_params": {
+        "array_size": "elements sorted",
+        "show_tree": "array-as-tree rendering",
+        "heapify_steps": "build-heap phase detail",
+        "extract_steps": "extraction phase detail"
+      },
+      "data_idea": "A seeded RNG creates arrays needing varied heapify work.",
+      "real_world_use": "Used teaching heaps through sorting.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "radix-sort-digit-passes",
+      "name": "Radix Sort Digit Passes",
+      "concept": "Radix sort skips comparisons entirely, sorting integers digit by digit with stable counting sort passes. The tool shows each pass grouping numbers by the current digit, demonstrating why the least-significant-digit-first order works. Linear time on fixed-width keys feels like magic until you see the passes.",
+      "key_params": {
+        "array_size": "numbers sorted",
+        "base": "digit base like 10 or 256",
+        "max_digits": "key width",
+        "show_buckets": "per-pass bucket display"
+      },
+      "data_idea": "A seeded RNG generates fixed-width integers for digit passes.",
+      "real_world_use": "Used teaching non-comparative sorting.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "binary-search-trainer",
+      "name": "Binary Search Trainer",
+      "concept": "Binary search halves a sorted array each step, finding any element in logarithmic time, but off-by-one errors plague implementations. The trainer lets users guess the midpoint sequence, checks each step, and explains the invariant that the target stays within the bounds. It drills the pattern until it is automatic.",
+      "key_params": {
+        "array_size": "search space size",
+        "mode": "guided or quiz",
+        "target": "value hidden or shown",
+        "hints": "invariant explanations on or off"
+      },
+      "data_idea": "A seeded RNG builds sorted arrays and picks targets including missing values.",
+      "real_world_use": "Used in interview prep for search fundamentals.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "cli_tool",
+        "terminal_game"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "interpolation-search-demo",
+      "name": "Interpolation Search Demo",
+      "concept": "When data is uniformly distributed, interpolation search guesses position by value proportion instead of blindly halving, often beating binary search. The demo compares probe counts of both strategies on uniform versus skewed data. It shows how distributional knowledge buys speed.",
+      "key_params": {
+        "array_size": "elements searched",
+        "distribution": "uniform or skewed values",
+        "trials": "searches compared",
+        "show_probes": "probe sequence display"
+      },
+      "data_idea": "A seeded RNG generates uniform and clustered value distributions.",
+      "real_world_use": "Used teaching adaptive search strategies.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "linked-list-playground",
+      "name": "Linked List Playground",
+      "concept": "Linked lists chain nodes through pointers, trading cache-unfriendly traversal for O(1) insertion at known positions. The playground supports insert, delete, reverse, and cycle creation with step-by-step pointer visualization. Seeing the pointers move demystifies the structure.",
+      "key_params": {
+        "operations": "insert, delete, reverse, detect-cycle",
+        "list_size": "nodes created",
+        "visualize": "pointer diagram on or off",
+        "cycle_test": "whether cycle detection is exercised"
+      },
+      "data_idea": "A seeded RNG builds lists and operation scripts including cycles.",
+      "real_world_use": "Used in data-structures courses.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hash-table-collision-lab",
+      "name": "Hash Table Collision Lab",
+      "concept": "Hash tables map keys to buckets in average constant time, but collisions are inevitable and the resolution strategy defines performance. The lab inserts keys under chaining and open addressing with linear, quadratic, and double hashing, measuring probe lengths as load factor grows. The load-factor cliff becomes visceral.",
+      "key_params": {
+        "table_size": "bucket count",
+        "load_factors": "fill levels tested",
+        "strategies": "chaining and probing variants",
+        "key_count": "insertions per test"
+      },
+      "data_idea": "A seeded RNG generates keys with controllable hash clustering.",
+      "real_world_use": "Used teaching hashing and collision resolution.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "bst-operation-visualizer",
+      "name": "BST Operation Visualizer",
+      "concept": "Binary search trees keep left subtrees smaller and right subtrees larger than each node, giving logarithmic search when balanced. The visualizer inserts, deletes, and searches with rotations of the tree drawn after each step. Degenerate insertion order visibly collapses it into a linked list.",
+      "key_params": {
+        "operations": "insert, delete, search sequence",
+        "insert_order": "random or sorted keys",
+        "show_balance": "height annotations",
+        "step_mode": "pause per operation"
+      },
+      "data_idea": "A seeded RNG creates insertion orders from random to adversarial.",
+      "real_world_use": "Used teaching tree invariants.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "avl-rotation-demo",
+      "name": "AVL Rotation Demo",
+      "concept": "AVL trees rebalance after every update so heights of child subtrees differ by at most one, guaranteeing logarithmic operations. The demo triggers each rotation case, single and double, left and right, showing the before and after shapes with balance factors. Self-balancing stops being abstract.",
+      "key_params": {
+        "sequence": "insertions triggering each case",
+        "show_factors": "balance factor labels",
+        "rotation_pause": "step pacing",
+        "compare_unbalanced": "side-by-side with plain BST"
+      },
+      "data_idea": "A seeded RNG crafts insertion orders hitting all four rotation cases.",
+      "real_world_use": "Used teaching self-balancing trees.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "trie-autocomplete-engine",
+      "name": "Trie Autocomplete Engine",
+      "concept": "Tries store strings character by character in a tree, making prefix searches and autocomplete naturally efficient. The engine builds a trie from a word list, serves prefix completions ranked by frequency, and visualizes the shared prefixes. It is the data structure behind every search box.",
+      "key_params": {
+        "word_list_size": "vocabulary built",
+        "prefix": "query prefix",
+        "top_k": "suggestions returned",
+        "frequencies": "ranking weights"
+      },
+      "data_idea": "A seeded RNG generates vocabularies with word frequencies.",
+      "real_world_use": "Used in search boxes and spell checkers.",
+      "suggested_types": [
+        "simulation",
+        "rest_api",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "segment-tree-range-queries",
+      "name": "Segment Tree Range Queries",
+      "concept": "Range sum or minimum queries over arrays are slow if recomputed, so segment trees precompute interval aggregates in a tree for logarithmic queries and updates. The tool builds the tree, answers range queries showing visited nodes, and applies point updates. It unlocks a whole class of range problems.",
+      "key_params": {
+        "array_size": "base array length",
+        "operation": "sum, min, or max",
+        "queries": "range queries executed",
+        "updates": "point updates interleaved"
+      },
+      "data_idea": "A seeded RNG generates arrays with query and update workloads.",
+      "real_world_use": "Used in competitive programming for range problems.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "fenwick-tree-demo",
+      "name": "Fenwick Tree Demo",
+      "concept": "Fenwick trees answer prefix sums with less code and memory than segment trees, using clever bit manipulation on indices. The demo shows the internal tree array, how lowbit jumps traverse it, and compares operation counts against naive prefix sums. Elegance through bit tricks.",
+      "key_params": {
+        "array_size": "base array length",
+        "show_bits": "lowbit annotations",
+        "operations": "updates and prefix queries",
+        "compare_naive": "operation count comparison"
+      },
+      "data_idea": "A seeded RNG creates arrays with update and query mixes.",
+      "real_world_use": "Used teaching compact range-sum structures.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "union-find-connectivity",
+      "name": "Union-Find Connectivity",
+      "concept": "Union-find tracks which elements share a set with near-constant amortized time using path compression and union by rank. The tool processes union and find operations on a grid, visualizing component merges for percolation-style problems. It powers Kruskal's algorithm and dynamic connectivity.",
+      "key_params": {
+        "elements": "universe size",
+        "operations": "union and find sequence",
+        "path_compression": "optimization on or off",
+        "show_components": "component coloring"
+      },
+      "data_idea": "A seeded RNG generates union operations with cluster structure.",
+      "real_world_use": "Used in network connectivity and Kruskal's MST.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "bloom-filter-lab",
+      "name": "Bloom Filter Lab",
+      "concept": "Bloom filters answer set membership with a tiny bit array and a tunable false-positive rate, never false negatives. The lab inserts items, tests membership, and measures the actual false-positive rate against the theoretical formula as parameters change. It shows probabilistic data structures earning their keep.",
+      "key_params": {
+        "bit_size": "filter bits",
+        "hash_count": "hash functions",
+        "insertions": "items added",
+        "trials": "membership tests"
+      },
+      "data_idea": "A seeded RNG generates inserted and queried item sets.",
+      "real_world_use": "Used in databases and caches to skip disk lookups.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lru-cache-simulator",
+      "name": "LRU Cache Simulator",
+      "concept": "LRU caches evict the least recently used entry, implemented with a hash map plus doubly linked list for O(1) operations. The simulator runs get and put sequences showing hits, misses, and evictions with the recency order visible. Cache behavior becomes predictable.",
+      "key_params": {
+        "capacity": "cache slots",
+        "workload": "access pattern: zipfian, scan, loop",
+        "operations": "gets and puts",
+        "show_order": "recency list display"
+      },
+      "data_idea": "A seeded RNG generates access patterns from locality-heavy to scans.",
+      "real_world_use": "Used in web caches and database buffer pools.",
+      "suggested_types": [
+        "lru_cache",
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lfu-cache-simulator",
+      "name": "LFU Cache Simulator",
+      "concept": "LFU evicts the least frequently used entry, beating LRU when popularity is stable but suffering when it shifts. The simulator compares hit rates of LRU, LFU, and FIFO across workloads, showing where each policy wins. Policy choice becomes data-driven.",
+      "key_params": {
+        "capacity": "cache slots",
+        "policies": "LRU, LFU, FIFO compared",
+        "workload": "popularity distributions",
+        "aging": "whether LFU frequency decays"
+      },
+      "data_idea": "A seeded RNG creates workloads with stable and shifting popularity.",
+      "real_world_use": "Used tuning cache policies for CDNs and databases.",
+      "suggested_types": [
+        "lru_cache",
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "min-heap-priority-queue",
+      "name": "Min-Heap Priority Queue",
+      "concept": "Priority queues serve the smallest or largest item first, and binary heaps deliver logarithmic push and pop. The tool visualizes the heap array as a tree through pushes, pops, and priority updates. It is the engine inside Dijkstra and task schedulers.",
+      "key_params": {
+        "operations": "push, pop, peek sequence",
+        "priorities": "value distribution",
+        "show_tree": "heap visualization",
+        "capacity": "max elements"
+      },
+      "data_idea": "A seeded RNG generates priority workloads.",
+      "real_world_use": "Used in schedulers and graph algorithms.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bfs-dfs-maze-explorer",
+      "name": "BFS DFS Maze Explorer",
+      "concept": "Breadth-first search explores level by level finding shortest paths in unweighted graphs, while depth-first dives deep using less memory. The explorer runs both on generated mazes, animating the frontier and visited sets side by side. Their different personalities become obvious.",
+      "key_params": {
+        "maze_size": "grid dimensions",
+        "algorithm": "BFS, DFS, or both",
+        "animate": "step visualization",
+        "maze_density": "wall probability"
+      },
+      "data_idea": "A seeded RNG generates solvable mazes with start and goal.",
+      "real_world_use": "Used teaching graph traversal.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dijkstra-pathfinder",
+      "name": "Dijkstra Pathfinder",
+      "concept": "Dijkstra's algorithm finds shortest paths from a source by always expanding the closest unvisited node, which works when edge weights are non-negative. The pathfinder animates the priority queue and distance labels on weighted grids and graphs. It is the foundation of routing.",
+      "key_params": {
+        "graph_size": "nodes modeled",
+        "weight_range": "edge weight spread",
+        "source": "start node",
+        "show_labels": "distance annotations"
+      },
+      "data_idea": "A seeded RNG builds weighted graphs with varied edge costs.",
+      "real_world_use": "Used in GPS routing and network path computation.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "a-star-grid-navigator",
+      "name": "A-Star Grid Navigator",
+      "concept": "A-star guides Dijkstra with a heuristic estimating remaining distance, exploring far fewer nodes when the heuristic is admissible. The navigator compares node expansions of Dijkstra, greedy, and A-star on obstacle grids with Manhattan and Euclidean heuristics. Good heuristics feel like cheating.",
+      "key_params": {
+        "grid_size": "map dimensions",
+        "obstacle_density": "blocked cells",
+        "heuristic": "manhattan, euclidean, or none",
+        "compare": "algorithms raced"
+      },
+      "data_idea": "A seeded RNG generates obstacle maps with guaranteed paths.",
+      "real_world_use": "Used in game AI and robotics pathfinding.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "bellman-ford-demo",
+      "name": "Bellman-Ford Demo",
+      "concept": "Bellman-Ford handles negative edge weights that break Dijkstra, relaxing all edges repeatedly and detecting negative cycles on the final pass. The demo traces relaxation rounds on graphs with negative edges, showing distance labels converging. It trades speed for generality.",
+      "key_params": {
+        "nodes": "graph size",
+        "negative_edges": "count of negative weights",
+        "show_rounds": "relaxation passes displayed",
+        "cycle_test": "negative cycle detection demo"
+      },
+      "data_idea": "A seeded RNG builds graphs with negative edges, some with cycles.",
+      "real_world_use": "Used teaching shortest paths with negative weights.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "floyd-warshall-all-pairs",
+      "name": "Floyd-Warshall All-Pairs",
+      "concept": "Floyd-Warshall computes shortest paths between every pair of nodes with a triple loop that is beautifully simple. The tool shows the distance matrix evolving as intermediate nodes are allowed, which also reveals the dynamic programming structure. Cubic time buys complete answers.",
+      "key_params": {
+        "nodes": "graph size",
+        "density": "edge probability",
+        "show_matrix": "matrix evolution display",
+        "path_reconstruct": "whether paths are rebuilt"
+      },
+      "data_idea": "A seeded RNG generates dense and sparse weighted graphs.",
+      "real_world_use": "Used for all-pairs routing tables.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "kruskal-mst-builder",
+      "name": "Kruskal MST Builder",
+      "concept": "Kruskal builds a minimum spanning tree by adding the cheapest edges that do not form cycles, using union-find for the cycle test. The builder sorts edges and shows each accept or reject decision with the growing forest. Greedy works here because of the matroid structure.",
+      "key_params": {
+        "nodes": "graph size",
+        "edge_density": "candidate edges",
+        "show_steps": "per-edge decisions",
+        "weight_range": "edge cost spread"
+      },
+      "data_idea": "A seeded RNG generates weighted graphs for MST construction.",
+      "real_world_use": "Used in network design minimizing cable cost.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "prim-mst-grower",
+      "name": "Prim MST Grower",
+      "concept": "Prim grows the minimum spanning tree outward from a start node, always attaching the cheapest edge to the growing tree. The grower animates the frontier of candidate edges with a priority queue. Same optimal result as Kruskal through a different greedy lens.",
+      "key_params": {
+        "nodes": "graph size",
+        "start": "root node",
+        "show_frontier": "candidate edge display",
+        "compare_kruskal": "side-by-side total weight"
+      },
+      "data_idea": "A seeded RNG builds weighted graphs for tree growth.",
+      "real_world_use": "Used in clustering and network layout.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "topological-sort-scheduler",
+      "name": "Topological Sort Scheduler",
+      "concept": "Tasks with prerequisites form a directed acyclic graph, and topological order gives a valid execution sequence. The scheduler runs Kahn's algorithm on course-like dependencies, detects cycles that make scheduling impossible, and shows parallel levels. It is the algorithm behind build systems.",
+      "key_params": {
+        "tasks": "node count",
+        "dependency_density": "edge probability",
+        "show_levels": "parallel stages displayed",
+        "cycle_inject": "whether a cycle is planted"
+      },
+      "data_idea": "A seeded RNG generates DAGs with layered dependencies.",
+      "real_world_use": "Used in build tools and course planners.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "kosaraju-scc-finder",
+      "name": "Kosaraju SCC Finder",
+      "concept": "Strongly connected components are groups where every node reaches every other, found by Kosaraju's two-pass DFS on the graph and its transpose. The finder colors components on directed graphs, showing the condensation DAG. It reveals the hidden modular structure of directed networks.",
+      "key_params": {
+        "nodes": "graph size",
+        "edge_density": "connection probability",
+        "show_passes": "both DFS passes displayed",
+        "condensation": "component DAG view"
+      },
+      "data_idea": "A seeded RNG builds directed graphs with clustered components.",
+      "real_world_use": "Used analyzing web graphs and dependency cycles.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cycle-detection-lab",
+      "name": "Cycle Detection Lab",
+      "concept": "Cycles in directed graphs mean circular dependencies, and detecting them early prevents deadlocks and infinite loops. The lab compares DFS coloring, Kahn's algorithm, and union-find approaches on graphs with and without cycles. Each method's trace teaches a different way to see the loop.",
+      "key_params": {
+        "nodes": "graph size",
+        "methods": "DFS, Kahn, union-find",
+        "plant_cycle": "whether a cycle exists",
+        "show_trace": "detection steps shown"
+      },
+      "data_idea": "A seeded RNG generates graphs with and without planted cycles.",
+      "real_world_use": "Used in dependency analysis and deadlock detection.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "max-flow-ford-fulkerson",
+      "name": "Max Flow Ford-Fulkerson",
+      "concept": "Maximum flow pushes the most units from source to sink through capacitated edges, with min-cut duality certifying optimality. The tool animates augmenting paths and residual graph updates on flow networks. It models everything from traffic to bipartite matching.",
+      "key_params": {
+        "nodes": "network size",
+        "capacities": "edge capacity range",
+        "show_paths": "augmenting path animation",
+        "min_cut": "whether the cut is displayed"
+      },
+      "data_idea": "A seeded RNG builds flow networks with varied bottlenecks.",
+      "real_world_use": "Used in logistics and network throughput planning.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bipartite-matching-demo",
+      "name": "Bipartite Matching Demo",
+      "concept": "Matching workers to jobs or students to projects is a bipartite matching problem, solved by augmenting paths or reduced to max flow. The demo matches two sets showing each augmenting assignment. It is the algorithm behind assignment problems everywhere.",
+      "key_params": {
+        "left_size": "workers count",
+        "right_size": "jobs count",
+        "edge_probability": "qualification density",
+        "show_augmenting": "path display"
+      },
+      "data_idea": "A seeded RNG generates bipartite qualification graphs.",
+      "real_world_use": "Used in scheduling and resource allocation.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "knapsack-solver",
+      "name": "Knapsack Solver",
+      "concept": "The 0/1 knapsack picks items maximizing value under a weight limit, solved exactly by dynamic programming over capacity. The solver builds the DP table showing how each item updates the best achievable value, then backtracks the chosen set. It is the canonical DP introduction.",
+      "key_params": {
+        "items": "item count",
+        "capacity": "weight limit",
+        "value_range": "item values",
+        "show_table": "DP table display"
+      },
+      "data_idea": "A seeded RNG generates items with weights and values.",
+      "real_world_use": "Used in resource allocation and cargo loading.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lcs-diff-engine",
+      "name": "LCS Diff Engine",
+      "concept": "Longest common subsequence powers diff tools: the LCS of two texts is what stayed the same, and the rest are insertions and deletions. The engine computes the DP table and renders a unified diff from the backtrack. Every git diff runs on this idea.",
+      "key_params": {
+        "text_a": "original lines",
+        "text_b": "modified lines",
+        "show_table": "DP table for small inputs",
+        "context_lines": "surrounding unchanged lines"
+      },
+      "data_idea": "A seeded RNG mutates base texts with edits to diff.",
+      "real_world_use": "Used in version control and plagiarism detection.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "file_organizer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "edit-distance-calculator",
+      "name": "Edit Distance Calculator",
+      "concept": "Edit distance counts the insertions, deletions, and substitutions turning one string into another, the basis of spell checking. The calculator fills the DP table and backtracks the optimal edit script. Close matches surface with their transformation shown.",
+      "key_params": {
+        "word_a": "source string",
+        "word_b": "target string",
+        "costs": "insert, delete, substitute weights",
+        "show_table": "DP visualization"
+      },
+      "data_idea": "A seeded RNG picks word pairs with typo-like differences.",
+      "real_world_use": "Used in spell checkers and DNA alignment.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "coin-change-counter",
+      "name": "Coin Change Counter",
+      "concept": "Counting ways to make change and finding the minimum coins are classic DP problems with subtly different recurrences. The tool solves both variants, showing how the table differs between counting combinations and optimizing. Small change, deep lessons.",
+      "key_params": {
+        "amount": "target sum",
+        "denominations": "coin values",
+        "variant": "count ways or min coins",
+        "show_table": "DP display"
+      },
+      "data_idea": "A seeded RNG picks amounts and denomination sets.",
+      "real_world_use": "Used teaching DP formulation differences.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "lis-finder",
+      "name": "LIS Finder",
+      "concept": "The longest increasing subsequence finds the longest sorted-across-gaps pattern, solvable in n log n with patience sorting. The finder shows both the quadratic DP and the piles method, revealing the elegant greedy insight. It appears in scheduling and bioinformatics.",
+      "key_params": {
+        "sequence_length": "numbers count",
+        "method": "DP or patience sorting",
+        "show_piles": "patience piles display",
+        "duplicates": "strictly versus non-decreasing"
+      },
+      "data_idea": "A seeded RNG generates sequences with hidden long runs.",
+      "real_world_use": "Used in pattern analysis.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "matrix-chain-optimizer",
+      "name": "Matrix Chain Optimizer",
+      "concept": "Multiplying a chain of matrices costs wildly different amounts depending on parenthesization, and DP finds the cheapest order. The optimizer computes the cost table and reconstructs the optimal parenthesization. It demonstrates DP over intervals.",
+      "key_params": {
+        "dimensions": "matrix dimension chain",
+        "show_table": "cost table display",
+        "reconstruct": "optimal order shown",
+        "compare_greedy": "greedy baseline"
+      },
+      "data_idea": "A seeded RNG generates dimension chains with deceptive costs.",
+      "real_world_use": "Used teaching interval dynamic programming.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "subset-sum-explorer",
+      "name": "Subset Sum Explorer",
+      "concept": "Subset sum asks whether any subset hits a target, the decision problem behind knapsack and partition. The explorer builds the reachable-sums DP table and backtracks a witness subset when one exists. It introduces NP-completeness gently.",
+      "key_params": {
+        "numbers": "set size",
+        "target": "desired sum",
+        "show_table": "reachable sums display",
+        "find_all": "whether all solutions enumerate"
+      },
+      "data_idea": "A seeded RNG crafts sets with and without solutions.",
+      "real_world_use": "Used teaching NP-complete decision problems.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "word-break-segmenter",
+      "name": "Word Break Segmenter",
+      "concept": "Splitting a concatenated string into dictionary words is DP over prefixes with a trie for speed. The segmenter shows the DP array filling and reconstructs all valid segmentations. It is the algorithm behind hashtag splitting.",
+      "key_params": {
+        "string": "concatenated input",
+        "dictionary_size": "word list",
+        "all_solutions": "enumerate versus first",
+        "show_dp": "prefix table display"
+      },
+      "data_idea": "A seeded RNG concatenates dictionary words into test strings.",
+      "real_world_use": "Used in text segmentation and autocomplete.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "kmp-pattern-matcher",
+      "name": "KMP Pattern Matcher",
+      "concept": "Knuth-Morris-Pratt skips ahead on mismatches using a prefix function, achieving linear-time search without backtracking. The matcher shows the prefix table construction and the text scan with its clever shifts. It turns string matching from quadratic to linear.",
+      "key_params": {
+        "text_length": "haystack size",
+        "pattern": "needle",
+        "show_prefix": "prefix function display",
+        "compare_naive": "comparison counts raced"
+      },
+      "data_idea": "A seeded RNG generates texts with repetitive patterns stressing naive search.",
+      "real_world_use": "Used in text editors and intrusion detection.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rabin-karp-rolling-hash",
+      "name": "Rabin-Karp Rolling Hash",
+      "concept": "Rabin-Karp hashes the pattern and slides a rolling hash across the text, verifying only on hash matches. The tool demonstrates the rolling update arithmetic and shows how hash collisions are handled by verification. It shines for multi-pattern search.",
+      "key_params": {
+        "text_length": "haystack size",
+        "patterns": "needles searched",
+        "modulus": "hash modulus",
+        "show_hashes": "rolling values displayed"
+      },
+      "data_idea": "A seeded RNG builds texts embedding the patterns.",
+      "real_world_use": "Used in plagiarism detection and multi-pattern scanning.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "z-algorithm-demo",
+      "name": "Z-Algorithm Demo",
+      "concept": "The Z-algorithm computes for each position the longest prefix match in linear time, elegantly solving pattern matching. The demo fills the Z-array showing how the Z-box window reuses previous work. It is stringology's neat trick.",
+      "key_params": {
+        "string_length": "input size",
+        "pattern": "search pattern",
+        "show_zbox": "window visualization",
+        "application": "matching or period finding"
+      },
+      "data_idea": "A seeded RNG generates strings with periodic structure.",
+      "real_world_use": "Used in string algorithms courses.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "tower-of-hanoi-solver",
+      "name": "Tower of Hanoi Solver",
+      "concept": "The Tower of Hanoi's recursive solution moves n-1 disks out of the way, moves the largest, then moves the stack again, taking 2^n minus 1 moves. The solver animates the optimal moves and proves minimality by the recurrence. Recursion's hello world.",
+      "key_params": {
+        "disks": "disk count",
+        "animate": "move animation",
+        "count_moves": "move counter",
+        "frame_stewart": "4-peg variant option"
+      },
+      "data_idea": "The puzzle state is generated deterministically from disk count.",
+      "real_world_use": "Used teaching recursion.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "n-queens-solver",
+      "name": "N-Queens Solver",
+      "concept": "Placing n queens so none attack each other is the classic backtracking problem, with pruning cutting the search dramatically. The solver animates placements and backtracks, counting solutions for each n. Constraint propagation in miniature.",
+      "key_params": {
+        "n": "board size",
+        "find_all": "enumerate solutions",
+        "animate": "placement animation",
+        "show_count": "solution totals"
+      },
+      "data_idea": "Board states derive from n; symmetry used for counting.",
+      "real_world_use": "Used teaching backtracking and pruning.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sudoku-solver",
+      "name": "Sudoku Solver",
+      "concept": "Sudoku solving combines constraint propagation with backtracking search, trying candidates where forced. The solver shows candidate elimination and the search tree on hard puzzles. It is constraint satisfaction made tangible.",
+      "key_params": {
+        "difficulty": "givens count",
+        "show_candidates": "pencil marks display",
+        "strategy": "propagation then search",
+        "generate": "puzzle generation with unique solution"
+      },
+      "data_idea": "A seeded RNG generates puzzles with unique solutions.",
+      "real_world_use": "Used in puzzle apps and AI search courses.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "maze-generator-solver",
+      "name": "Maze Generator Solver",
+      "concept": "Perfect mazes come from randomized DFS carving or Prim's algorithm, and each generator has a visual texture. The tool generates mazes with several algorithms then solves them, comparing path lengths and dead ends. Generation and search in one playground.",
+      "key_params": {
+        "size": "maze dimensions",
+        "generator": "DFS, Prim, or Kruskal",
+        "solver": "BFS or A-star",
+        "show_stats": "dead ends and path length"
+      },
+      "data_idea": "A seeded RNG drives maze carving algorithms.",
+      "real_world_use": "Used in game level prototyping.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "activity-selection-scheduler",
+      "name": "Activity Selection Scheduler",
+      "concept": "Picking the maximum number of non-overlapping activities is solved greedily by earliest finish time, and the proof is instructive. The scheduler shows the greedy picks versus brute force on small inputs. The rare case where greedy is provably optimal.",
+      "key_params": {
+        "activities": "count",
+        "time_range": "scheduling horizon",
+        "show_proof": "exchange argument sketch",
+        "compare_brute": "optimality check on small n"
+      },
+      "data_idea": "A seeded RNG generates activity intervals.",
+      "real_world_use": "Used teaching greedy correctness.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "huffman-coding-compressor",
+      "name": "Huffman Coding Compressor",
+      "concept": "Huffman coding assigns shorter bit codes to frequent symbols using a greedy tree merge, achieving optimal prefix-free compression. The tool builds the tree from symbol frequencies, shows the code table, and compresses sample text with ratio stats. Information theory you can watch.",
+      "key_params": {
+        "text_length": "input size",
+        "alphabet": "symbols modeled",
+        "show_tree": "code tree display",
+        "compare_fixed": "versus fixed-width baseline"
+      },
+      "data_idea": "A seeded RNG generates text with skewed symbol frequencies.",
+      "real_world_use": "Used in file compression like gzip and JPEG.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sieve-of-eratosthenes",
+      "name": "Sieve of Eratosthenes",
+      "concept": "The sieve finds all primes up to n by crossing out multiples, running in n log log n time. The visualizer animates the crossing-out passes and compares against trial division. Ancient algorithm, enduring elegance.",
+      "key_params": {
+        "limit": "upper bound",
+        "animate": "crossing animation",
+        "compare_trial": "trial division race",
+        "segmented": "memory-efficient variant"
+      },
+      "data_idea": "Prime ranges derive deterministically from the limit.",
+      "real_world_use": "Used in cryptography prime generation.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "modular-exponentiation-lab",
+      "name": "Modular Exponentiation Lab",
+      "concept": "Fast modular exponentiation squares and multiplies in logarithmic time, making RSA-sized powers feasible. The lab traces the square-and-multiply steps and shows why naive multiplication is impossible at cryptographic sizes. The engine inside public-key crypto.",
+      "key_params": {
+        "base": "base value",
+        "exponent_bits": "exponent size",
+        "modulus_bits": "modulus size",
+        "show_steps": "binary method trace"
+      },
+      "data_idea": "A seeded RNG picks bases and large exponents.",
+      "real_world_use": "Used teaching the math behind RSA.",
+      "suggested_types": [
+        "simulation",
+        "encryption_tool",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "miller-rabin-primality",
+      "name": "Miller-Rabin Primality",
+      "concept": "Miller-Rabin tests primality probabilistically: composites are caught with probability 3/4 per round, so enough rounds mean practical certainty. The tool runs rounds on candidates showing witnesses, and compares against deterministic trial division. How crypto finds its primes.",
+      "key_params": {
+        "candidate_bits": "number size",
+        "rounds": "test repetitions",
+        "show_witnesses": "witness display",
+        "carmichael": "tricky composite demo"
+      },
+      "data_idea": "A seeded RNG generates odd candidates including pseudoprimes.",
+      "real_world_use": "Used in cryptographic key generation.",
+      "suggested_types": [
+        "simulation",
+        "encryption_tool",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "fibonacci-fast-doubling",
+      "name": "Fibonacci Fast Doubling",
+      "concept": "Fast doubling computes Fibonacci numbers in logarithmic time using identities that jump two steps at once, even for thousand-digit results. The tool compares naive recursion, memoization, iteration, and fast doubling on operation counts. A parable about algorithmic thinking.",
+      "key_params": {
+        "n": "fibonacci index",
+        "methods": "compared implementations",
+        "big_int": "arbitrary precision on",
+        "count_ops": "operation counting"
+      },
+      "data_idea": "Inputs are just the index n; outputs verified against known values.",
+      "real_world_use": "Used teaching complexity classes.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "convex-hull-finder",
+      "name": "Convex Hull Finder",
+      "concept": "The convex hull wraps a point set in the smallest convex polygon, found by Graham scan sorting by angle or Jarvis march wrapping. The finder animates both on random point sets showing their different rhythms. Computational geometry's entry point.",
+      "key_params": {
+        "points": "point count",
+        "algorithm": "graham scan or jarvis march",
+        "animate": "hull construction display",
+        "distribution": "uniform or clustered"
+      },
+      "data_idea": "A seeded RNG scatters points in the plane.",
+      "real_world_use": "Used in graphics and geographic analysis.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "reservoir-sampling-demo",
+      "name": "Reservoir Sampling Demo",
+      "concept": "Reservoir sampling picks k uniform samples from a stream of unknown length in one pass, replacing entries with decreasing probability. The demo verifies uniformity statistically over many runs. Streaming algorithms start here.",
+      "key_params": {
+        "stream_length": "items streamed",
+        "k": "reservoir size",
+        "trials": "uniformity verification runs",
+        "show_probs": "inclusion probability display"
+      },
+      "data_idea": "A seeded RNG streams items for sampling trials.",
+      "real_world_use": "Used in stream processing and A/B testing.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "skip-list-demo",
+      "name": "Skip List Demo",
+      "concept": "Skip lists layer express lanes over a linked list with random promotion, giving expected logarithmic search without rotations. The demo builds the tower structure and traces searches down the levels. Randomization replacing rebalancing.",
+      "key_params": {
+        "elements": "inserted count",
+        "max_level": "tower height cap",
+        "p": "promotion probability",
+        "show_levels": "layer visualization"
+      },
+      "data_idea": "A seeded RNG drives insertions with random level draws.",
+      "real_world_use": "Used in Redis sorted sets.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "quickselect-demo",
+      "name": "Quickselect Demo",
+      "concept": "Quickselect finds the kth smallest element in expected linear time by partitioning like quicksort but recursing into only one side. The demo shows the discarded partitions and compares against full sorting. Selection without the sort.",
+      "key_params": {
+        "array_size": "elements",
+        "k": "order statistic",
+        "pivot_rule": "pivot strategy",
+        "compare_sort": "versus sort-then-index"
+      },
+      "data_idea": "A seeded RNG generates arrays for selection.",
+      "real_world_use": "Used in percentile and median computations.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "consistent-hashing-ring",
+      "name": "Consistent Hashing Ring",
+      "concept": "Consistent hashing maps keys and nodes onto a ring so adding a node moves only nearby keys, unlike naive modulo hashing. The visualizer places nodes and keys on the ring with virtual nodes, showing key migration on membership changes. The backbone of distributed caches.",
+      "key_params": {
+        "nodes": "server count",
+        "virtual_nodes": "replicas per server",
+        "keys": "key count",
+        "churn": "node joins and leaves"
+      },
+      "data_idea": "A seeded RNG hashes keys and nodes onto the ring.",
+      "real_world_use": "Used in Dynamo, Cassandra, and memcached clients.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "token-ring-simulator",
+      "name": "Token Ring Simulator",
+      "concept": "Token passing grants exclusive access in a ring: only the holder may transmit, eliminating collisions deterministically. The simulator circulates the token showing wait times under varying loads. Old LANs ran on this idea.",
+      "key_params": {
+        "stations": "ring size",
+        "load": "traffic offered",
+        "token_hold_ms": "max hold time",
+        "show_waits": "queueing display"
+      },
+      "data_idea": "A seeded RNG generates station traffic demands.",
+      "real_world_use": "Used teaching deterministic medium access.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "graph-coloring-scheduler",
+      "name": "Graph Coloring Scheduler",
+      "concept": "Scheduling exams or registers so conflicting items differ is graph coloring, NP-hard but greedy-friendly. The tool colors conflict graphs with greedy orderings showing how order affects color count. Approximation in action.",
+      "key_params": {
+        "nodes": "item count",
+        "conflict_density": "edge probability",
+        "orderings": "greedy strategies compared",
+        "show_colors": "coloring display"
+      },
+      "data_idea": "A seeded RNG builds conflict graphs.",
+      "real_world_use": "Used in register allocation and timetabling.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "edit-script-compressor",
+      "name": "Edit Script Compressor",
+      "concept": "Beyond computing edit distance, real diff tools compress the edit script into hunks humans can review. The tool generates diffs then groups nearby edits with context lines. From algorithm to usable tool.",
+      "key_params": {
+        "lines_a": "original size",
+        "lines_b": "modified size",
+        "context": "hunk context lines",
+        "group_gap": "merge distance"
+      },
+      "data_idea": "A seeded RNG mutates texts producing edit clusters.",
+      "real_world_use": "Used in code review tooling.",
+      "suggested_types": [
+        "cli_tool",
+        "file_organizer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "suffix-array-builder",
+      "name": "Suffix Array Builder",
+      "concept": "Suffix arrays sort all suffixes of a string enabling fast substring search and LCP queries. The builder shows the doubling construction sorting by 2^k prefixes. The index behind full-text search.",
+      "key_params": {
+        "text_length": "string size",
+        "method": "naive or doubling",
+        "show_steps": "sort passes displayed",
+        "lcp": "whether LCP array is built"
+      },
+      "data_idea": "A seeded RNG generates strings with repeated substrings.",
+      "real_world_use": "Used in bioinformatics and text indexes.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "closest-pair-sweep",
+      "name": "Closest Pair Sweep",
+      "concept": "Finding the closest pair among n points is O(n log n) with a sweep line, beating the quadratic check. The tool animates the sweep with its sliding strip of candidates. Divide and conquer in geometry.",
+      "key_params": {
+        "points": "point count",
+        "show_strip": "candidate strip display",
+        "compare_brute": "quadratic baseline",
+        "distribution": "point layout"
+      },
+      "data_idea": "A seeded RNG scatters points with a planted close pair.",
+      "real_world_use": "Used in graphics and collision detection.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "boyer-moore-matcher",
+      "name": "Boyer-Moore Matcher",
+      "concept": "Boyer-Moore scans the pattern from right to left and skips ahead using bad-character and good-suffix rules, often sublinear in practice. The matcher shows the skip tables and the jumps on natural-language text. The fastest practical single-pattern search.",
+      "key_params": {
+        "text_length": "haystack size",
+        "pattern": "needle",
+        "show_tables": "skip table display",
+        "compare_kmp": "race against KMP"
+      },
+      "data_idea": "A seeded RNG generates English-like text with pattern occurrences.",
+      "real_world_use": "Used in grep and text editors.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rod-cutting-optimizer",
+      "name": "Rod Cutting Optimizer",
+      "concept": "Cutting a rod into pieces to maximize revenue is the unbounded-knapsack-flavored DP classic. The optimizer fills the revenue table and reconstructs the optimal cut plan. Simple statement, rich structure.",
+      "key_params": {
+        "rod_length": "length units",
+        "prices": "price per length",
+        "show_table": "DP display",
+        "reconstruct": "cut plan shown"
+      },
+      "data_idea": "A seeded RNG generates price tables with deceptive local optima.",
+      "real_world_use": "Used teaching DP over prefixes.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "longest-palindromic-subsequence",
+      "name": "Longest Palindromic Subsequence",
+      "concept": "The longest palindromic subsequence reveals the most symmetric hidden pattern, solved by DP over intervals. The tool fills the interval table and reconstructs the palindrome. A cousin of LCS with its own charm.",
+      "key_params": {
+        "string_length": "input size",
+        "show_table": "interval DP display",
+        "reconstruct": "palindrome rebuilt",
+        "alphabet": "symbol set"
+      },
+      "data_idea": "A seeded RNG generates strings with embedded palindromes.",
+      "real_world_use": "Used in sequence analysis.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "egg-drop-puzzle",
+      "name": "Egg Drop Puzzle",
+      "concept": "With two eggs and a 100-floor building, the optimal strategy balances worst-case drops via a clever DP, not binary search. The solver computes the optimal first drop and the decision tree. A puzzle that punishes naive halving.",
+      "key_params": {
+        "floors": "building height",
+        "eggs": "egg count",
+        "show_strategy": "decision tree display",
+        "compare_binary": "naive strategy cost"
+      },
+      "data_idea": "Puzzle parameters derive deterministically from floors and eggs.",
+      "real_world_use": "Used in interview puzzles and DP teaching.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "terminal_game",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "trapping-rain-water",
+      "name": "Trapping Rain Water",
+      "concept": "Given elevation bars, trapped rainwater equals the sum over positions of min(left max, right max) minus height, computed in linear time with two pointers. The visualizer fills the water and shows the pointer sweep. A favorite interview problem made visual.",
+      "key_params": {
+        "bars": "elevation count",
+        "height_range": "bar heights",
+        "method": "two pointers or DP",
+        "show_fill": "water rendering"
+      },
+      "data_idea": "A seeded RNG generates elevation profiles with basins.",
+      "real_world_use": "Used in coding interview prep.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    }
+  ]
+}

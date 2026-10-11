@@ -1,0 +1,606 @@
+{
+  "domain": "computer_science",
+  "subdomain": "operating_systems",
+  "topics": [
+    {
+      "slug_base": "cpu-scheduler-simulator",
+      "name": "CPU Scheduler Simulator",
+      "concept": "CPU schedulers decide which process runs next, with FCFS, SJF, round robin, and priority each optimizing different goals. The simulator runs process sets through each algorithm measuring wait and turnaround times. Scheduling policy becomes visible arithmetic.",
+      "key_params": {
+        "processes": "arrival and burst times",
+        "algorithms": "FCFS, SJF, RR, priority",
+        "quantum": "round robin slice",
+        "metrics": "wait, turnaround, throughput"
+      },
+      "data_idea": "A seeded RNG generates process mixes.",
+      "real_world_use": "Used in OS courses.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "multilevel-feedback-queue",
+      "name": "Multilevel Feedback Queue",
+      "concept": "MLFQ adapts to unknown burst times by demoting CPU hogs and promoting interactive jobs, approximating SJF without knowing the future. The simulator shows jobs migrating between queues. It is the scheduler behind many real systems.",
+      "key_params": {
+        "queues": "priority levels",
+        "quanta": "per-level slices",
+        "boost": "priority reset interval",
+        "demote": "downgrade rules"
+      },
+      "data_idea": "A seeded RNG mixes interactive and batch jobs.",
+      "real_world_use": "Used teaching adaptive scheduling.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "context-switch-estimator",
+      "name": "Context Switch Estimator",
+      "concept": "Context switches cost cache pollution and TLB flushes, so the estimator models overhead against quantum size. It shows why tiny quanta waste CPU on switching. Responsiveness has a price.",
+      "key_params": {
+        "quantum": "time slice",
+        "switch_cost_us": "overhead per switch",
+        "processes": "workload",
+        "measure": "useful versus overhead"
+      },
+      "data_idea": "A seeded RNG varies quanta and workloads.",
+      "real_world_use": "Used in scheduler tuning.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "deadlock-detector",
+      "name": "Deadlock Detector",
+      "concept": "Deadlocks need mutual exclusion, hold-and-wait, no preemption, and circular wait; breaking any prevents them. The detector builds resource allocation graphs finding cycles. It catches the embrace before it is fatal.",
+      "key_params": {
+        "processes": "holders and waiters",
+        "resources": "instances",
+        "detect": "cycle search",
+        "recover": "victim selection"
+      },
+      "data_idea": "A seeded RNG creates allocation states with cycles.",
+      "real_world_use": "Used in database lock managers.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bankers-safety-checker",
+      "name": "Bankers Safety Checker",
+      "concept": "The banker's algorithm grants requests only when a safe sequence exists, simulating allocation before committing. The checker walks requests through the safety test. Conservative allocation, proven safe.",
+      "key_params": {
+        "processes": "max claims",
+        "available": "free resources",
+        "requests": "sequence tested",
+        "show_seq": "safe sequence display"
+      },
+      "data_idea": "A seeded RNG generates claims and requests.",
+      "real_world_use": "Used teaching avoidance.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "mutex-semaphore-lab",
+      "name": "Mutex Semaphore Lab",
+      "concept": "Mutexes guard critical sections while semaphores count resources, and misusing them causes races or deadlocks. The lab runs threads with correct and buggy synchronization showing outcomes. Concurrency primitives, hands-on.",
+      "key_params": {
+        "threads": "contending workers",
+        "primitive": "mutex or semaphore",
+        "critical_ms": "section length",
+        "bug": "missing lock demo"
+      },
+      "data_idea": "A seeded RNG interleaves thread execution.",
+      "real_world_use": "Used teaching synchronization.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "reader-writer-simulator",
+      "name": "Reader Writer Simulator",
+      "concept": "Readers can share access but writers need exclusivity, with fairness policies preventing starvation. The simulator runs reader and writer mixes under preference policies. Shared data stays consistent.",
+      "key_params": {
+        "readers": "reader count",
+        "writers": "writer count",
+        "policy": "reader or writer preference",
+        "starve": "starvation detection"
+      },
+      "data_idea": "A seeded RNG issues read and write requests.",
+      "real_world_use": "Used in database concurrency.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dining-philosophers-os",
+      "name": "Dining Philosophers OS",
+      "concept": "The OS-flavored philosophers demonstrate deadlock with fork mutexes and solutions via ordering or a waiter semaphore. The simulator compares strategies measuring throughput. The classic, executable.",
+      "key_params": {
+        "philosophers": "diner count",
+        "strategy": "naive, ordered, waiter",
+        "measure": "eat rate, deadlock",
+        "timing": "think and eat"
+      },
+      "data_idea": "A seeded RNG paces philosophers.",
+      "real_world_use": "Used in OS courses.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "producer-consumer-os",
+      "name": "Producer Consumer OS",
+      "concept": "Bounded buffers need a mutex plus empty and full semaphores, the pattern behind every queue. The simulator shows buffer levels with correct synchronization. The OS workhorse pattern.",
+      "key_params": {
+        "buffer": "slot count",
+        "producers": "count",
+        "consumers": "count",
+        "watch": "level display"
+      },
+      "data_idea": "A seeded RNG paces production.",
+      "real_world_use": "Used teaching semaphores.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "memory-allocator-sim",
+      "name": "Memory Allocator Sim",
+      "concept": "Allocators place variable requests into free blocks with first, best, and worst fit, fragmenting differently. The simulator tracks fragmentation under each strategy. malloc's hidden complexity.",
+      "key_params": {
+        "heap": "memory size",
+        "requests": "alloc and free pattern",
+        "strategy": "fit algorithms",
+        "fragment": "external fragmentation"
+      },
+      "data_idea": "A seeded RNG issues allocation patterns.",
+      "real_world_use": "Used teaching memory management.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "paging-simulator",
+      "name": "Paging Simulator",
+      "concept": "Paging divides memory into fixed frames mapping virtual pages through page tables. The simulator translates addresses showing table walks and faults. Virtual memory's foundation.",
+      "key_params": {
+        "address_bits": "virtual size",
+        "page_size": "page bytes",
+        "frames": "physical count",
+        "trace": "address stream"
+      },
+      "data_idea": "A seeded RNG generates address traces with locality.",
+      "real_world_use": "Used in OS courses.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "page-replacement-os-lab",
+      "name": "Page Replacement OS Lab",
+      "concept": "When frames fill, FIFO, LRU, optimal, and clock choose victims differently, with Belady's anomaly haunting FIFO. The lab replays reference strings counting faults per policy. The OS decides what to forget.",
+      "key_params": {
+        "frames": "memory size",
+        "references": "access string",
+        "policies": "FIFO, LRU, OPT, clock",
+        "belady": "anomaly demo"
+      },
+      "data_idea": "A seeded RNG builds reference strings.",
+      "real_world_use": "Used teaching virtual memory.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tlb-hit-estimator",
+      "name": "TLB Hit Estimator",
+      "concept": "TLBs cache translations making hits fast and misses expensive, so hit rate dominates memory performance. The estimator models TLB size and associativity against traces. A tiny cache with huge impact.",
+      "key_params": {
+        "entries": "TLB size",
+        "assoc": "associativity",
+        "trace": "page accesses",
+        "miss_cost": "penalty cycles"
+      },
+      "data_idea": "A seeded RNG generates page access patterns.",
+      "real_world_use": "Used in computer architecture.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "copy-on-write-simulator",
+      "name": "Copy On Write Simulator",
+      "concept": "Fork copies page tables marking pages shared read-only, copying only on write, making process creation cheap. The simulator shows sharing and fault-driven copies. Efficient process birth.",
+      "key_params": {
+        "pages": "address space",
+        "fork": "process creation",
+        "writes": "write pattern",
+        "measure": "copies saved"
+      },
+      "data_idea": "A seeded RNG writes after forking.",
+      "real_world_use": "Used teaching process creation.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "zombie-reaper-monitor",
+      "name": "Zombie Reaper Monitor",
+      "concept": "Zombies are dead processes awaiting parental wait, and orphans get adopted by init. The monitor simulates process trees with exit and wait showing reaping. Process lifecycle hygiene.",
+      "key_params": {
+        "tree": "process hierarchy",
+        "exits": "termination order",
+        "waits": "parent reaping",
+        "adopt": "orphan handling"
+      },
+      "data_idea": "A seeded RNG kills processes randomly.",
+      "real_world_use": "Used teaching process management.",
+      "suggested_types": [
+        "monitoring_agent",
+        "simulation",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "signal-dispatcher-sim",
+      "name": "Signal Dispatcher Sim",
+      "concept": "Signals interrupt processes asynchronously, with handlers, masks, and default actions. The simulator delivers signals showing masking and pending states. Unix's interrupt mechanism.",
+      "key_params": {
+        "signals": "types modeled",
+        "handlers": "custom actions",
+        "mask": "blocked sets",
+        "pending": "queued delivery"
+      },
+      "data_idea": "A seeded RNG sends signals to processes.",
+      "real_world_use": "Used teaching IPC.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "inode-filesystem-sim",
+      "name": "Inode Filesystem Sim",
+      "concept": "Inodes store metadata with direct and indirect block pointers, separating names from data. The simulator creates files showing block allocation. Unix filesystem anatomy.",
+      "key_params": {
+        "blocks": "disk size",
+        "files": "creation pattern",
+        "pointers": "direct and indirect",
+        "free": "bitmap tracking"
+      },
+      "data_idea": "A seeded RNG creates and deletes files.",
+      "real_world_use": "Used teaching filesystems.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "journaling-simulator",
+      "name": "Journaling Simulator",
+      "concept": "Journaling writes intentions before data, replaying after crashes for consistency. The simulator crashes mid-operation showing recovery. Filesystems that survive power loss.",
+      "key_params": {
+        "ops": "file operations",
+        "journal": "write-ahead log",
+        "crash": "injected failures",
+        "replay": "recovery"
+      },
+      "data_idea": "A seeded RNG crashes during writes.",
+      "real_world_use": "Used teaching filesystem reliability.",
+      "suggested_types": [
+        "simulation",
+        "backup_tool",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "disk-scheduler-os-lab",
+      "name": "Disk Scheduler OS Lab",
+      "concept": "FCFS, SSTF, SCAN, and C-SCAN order disk requests minimizing seek time. The lab animates head movement per algorithm. Elevator algorithms for spinning rust.",
+      "key_params": {
+        "requests": "queue",
+        "cylinders": "disk geometry",
+        "algorithms": "scheduling policies",
+        "animate": "head movement"
+      },
+      "data_idea": "A seeded RNG queues requests.",
+      "real_world_use": "Used teaching IO scheduling.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "raid-calculator",
+      "name": "RAID Calculator",
+      "concept": "RAID levels trade capacity, performance, and fault tolerance: striping, mirroring, and parity. The calculator sizes arrays showing usable space and failure survival. Storage math that matters.",
+      "key_params": {
+        "level": "0, 1, 5, 6, 10",
+        "disks": "count and size",
+        "usable": "capacity math",
+        "survive": "failure tolerance"
+      },
+      "data_idea": "Array configs derive from inputs.",
+      "real_world_use": "Used in storage planning.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "simulation",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "swap-space-monitor",
+      "name": "Swap Space Monitor",
+      "concept": "Swapping extends memory to disk at steep performance cost, and thrashing means the system pages itself to death. The monitor tracks swap rates alerting on thrashing. The last resort, watched.",
+      "key_params": {
+        "swap_mb": "swap size",
+        "pressure": "memory demand",
+        "thrash": "page rate threshold",
+        "alert": "notification"
+      },
+      "data_idea": "A seeded RNG ramps memory pressure.",
+      "real_world_use": "Used in capacity monitoring.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "scheduler",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "oom-killer-policy-sim",
+      "name": "OOM Killer Policy Sim",
+      "concept": "When memory exhausts, the OOM killer sacrifices processes by badness score. The simulator scores processes selecting victims under policies. The kernel's grim triage.",
+      "key_params": {
+        "processes": "memory footprints",
+        "scores": "badness formula",
+        "policy": "victim selection",
+        "protect": "oom_score_adj"
+      },
+      "data_idea": "A seeded RNG grows memory usage.",
+      "real_world_use": "Used in Linux tuning.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cgroup-limiter-sim",
+      "name": "Cgroup Limiter Sim",
+      "concept": "Cgroups cap CPU, memory, and IO per group, the mechanism behind containers. The simulator enforces limits throttling overuse. Resource control, kernel-enforced.",
+      "key_params": {
+        "limits": "cpu, memory, io caps",
+        "groups": "cgroup hierarchy",
+        "workloads": "demands",
+        "throttle": "enforcement"
+      },
+      "data_idea": "A seeded RNG drives group demands.",
+      "real_world_use": "Used learning container internals.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "syscall-tracer-sim",
+      "name": "Syscall Tracer Sim",
+      "concept": "Strace-style tracing logs system calls revealing what programs actually do. The simulator traces calls with timing and arguments. X-ray vision for processes.",
+      "key_params": {
+        "calls": "syscall stream",
+        "filter": "call selection",
+        "timing": "duration capture",
+        "summary": "call counts"
+      },
+      "data_idea": "A seeded RNG emits syscall streams.",
+      "real_world_use": "Used debugging programs.",
+      "suggested_types": [
+        "log_analyzer",
+        "cli_tool",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "boot-sequence-simulator",
+      "name": "Boot Sequence Simulator",
+      "concept": "Booting chains firmware, bootloader, kernel, and init with dependency ordering. The simulator steps through stages with timing. From power-on to login.",
+      "key_params": {
+        "stages": "firmware to init",
+        "timing": "per-stage duration",
+        "fail": "injected faults",
+        "log": "boot messages"
+      },
+      "data_idea": "Boot flows derive from stage definitions.",
+      "real_world_use": "Used teaching system startup.",
+      "suggested_types": [
+        "simulation",
+        "log_analyzer",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "init-dependency-resolver",
+      "name": "Init Dependency Resolver",
+      "concept": "Init systems order service startup from dependency graphs, parallelizing where possible. The resolver topologically sorts services with timeout handling. Boot, parallelized.",
+      "key_params": {
+        "services": "unit definitions",
+        "deps": "ordering edges",
+        "parallel": "concurrency",
+        "timeout": "start limits"
+      },
+      "data_idea": "A seeded RNG builds service graphs.",
+      "real_world_use": "Used learning systemd concepts.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "kernel-module-dependency-checker",
+      "name": "Kernel Module Dependency Checker",
+      "concept": "Kernel modules declare dependencies that modprobe resolves in order. The checker validates dependency graphs detecting cycles. Loading order, guaranteed.",
+      "key_params": {
+        "modules": "module list",
+        "deps": "dependency edges",
+        "order": "load sequence",
+        "cycles": "detection"
+      },
+      "data_idea": "A seeded RNG wires module dependencies.",
+      "real_world_use": "Used in driver development.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "file-descriptor-tracker",
+      "name": "File Descriptor Tracker",
+      "concept": "Every open file, socket, and pipe consumes a descriptor, and leaks exhaust the table. The tracker monitors open and close pairing flagging leaks. fds are finite.",
+      "key_params": {
+        "limit": "max descriptors",
+        "ops": "open and close stream",
+        "leak": "unpaired detection",
+        "report": "top holders"
+      },
+      "data_idea": "A seeded RNG opens files with leaks.",
+      "real_world_use": "Used debugging resource exhaustion.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "inter-process-pipe-sim",
+      "name": "Inter Process Pipe Sim",
+      "concept": "Pipes stream bytes between processes with blocking semantics and buffer limits. The simulator models producer-consumer flow with capacity. Unix's simplest IPC.",
+      "key_params": {
+        "buffer": "pipe capacity",
+        "writers": "producers",
+        "readers": "consumers",
+        "block": "full and empty behavior"
+      },
+      "data_idea": "A seeded RNG paces pipe IO.",
+      "real_world_use": "Used teaching IPC.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "shared-memory-simulator",
+      "name": "Shared Memory Simulator",
+      "concept": "Shared memory maps the same pages into multiple processes for the fastest IPC, needing external synchronization. The simulator shows mapping with semaphore guards. Speed with responsibility.",
+      "key_params": {
+        "segments": "shared regions",
+        "attach": "process mappings",
+        "sync": "semaphore guards",
+        "race": "unsynchronized demo"
+      },
+      "data_idea": "A seeded RNG accesses shared regions.",
+      "real_world_use": "Used in high-performance IPC.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

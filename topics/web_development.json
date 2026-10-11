@@ -1,0 +1,2598 @@
+{
+  "domain": "computer_science",
+  "subdomain": "web_development",
+  "topics": [
+    {
+      "slug_base": "http-request-router",
+      "name": "HTTP Request Router",
+      "concept": "A request router matches an incoming HTTP method and path against registered route patterns and dispatches to the right handler. Patterns support literal segments, named parameters like /users/{id}, and wildcards, with precedence rules so the most specific route wins. It is the dispatch core that every web framework builds its API layer on.",
+      "key_params": {
+        "routes": "list of (method, pattern, handler) registrations",
+        "precedence": "static segment > named parameter > wildcard",
+        "not_found_policy": "404 vs 405 behavior when path or method misses"
+      },
+      "data_idea": "Synthesizes random route tables and request paths with a seeded RNG, then asserts each request reaches the expected handler and parameter extraction is correct.",
+      "real_world_use": "Every web framework (Flask, Express, FastAPI, Rails) ships a router; CDNs and API gateways route at the edge the same way.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "static-file-server",
+      "name": "Static File Server with Conditional Requests",
+      "concept": "A static file server maps URL paths to files on disk and serves them with the right content type, but it can avoid resending unchanged files using conditional requests. ETags and Last-Modified headers let clients send If-None-Match, so the server answers 304 Not Modified instead of the full body. This single mechanism cuts bandwidth dramatically for assets that rarely change.",
+      "key_params": {
+        "root_dir": "directory served, with path-traversal protection",
+        "etag_strength": "strong vs weak ETag generation strategy",
+        "cache_max_age": "Cache-Control max-age seconds for immutable assets"
+      },
+      "data_idea": "Generates a seeded tree of random files with random mtimes, then simulates client request sequences and counts how many responses are 304s vs 200s.",
+      "real_world_use": "Nginx, CDNs, and object stores (S3) all implement conditional GETs; browsers rely on them for cache revalidation.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "http-status-code-playground",
+      "name": "HTTP Status Code Playground",
+      "concept": "Status codes are a compact contract: 2xx means the server did what was asked, 3xx redirects, 4xx blames the client, 5xx blames the server. Choosing precisely (201 vs 200, 404 vs 410, 409 vs 422) tells clients whether to retry, fix input, or give up. This playground maps everyday API outcomes to the correct code and reason phrase.",
+      "key_params": {
+        "scenario_catalog": "named scenarios like duplicate-create or stale-write",
+        "retry_advice": "whether each code implies retry, fix, or abort",
+        "strictness": "lenient 200-with-error-body vs strict code usage"
+      },
+      "data_idea": "Builds a seeded catalog of API outcomes (successes, validation failures, conflicts, outages) and quizzes/maps each to its canonical status code.",
+      "real_world_use": "API design guides and gateway error mapping at companies like Stripe and Twilio standardize on precise status semantics.",
+      "suggested_types": [
+        "quiz_engine",
+        "api_client_sim",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "chunked-transfer-encoding",
+      "name": "Chunked Transfer Encoding Codec",
+      "concept": "Chunked encoding lets a server stream a response of unknown length by sending it as a series of length-prefixed chunks instead of one Content-Length body. Each chunk carries its size in hex, and a zero-length chunk terminates the stream, optionally followed by trailers. It powers streaming downloads, server-sent events, and any response generated on the fly.",
+      "key_params": {
+        "chunk_size": "bytes per chunk when splitting the body",
+        "trailers": "optional trailing headers after the last chunk",
+        "max_chunk": "safety cap rejecting oversized chunk declarations"
+      },
+      "data_idea": "Synthesizes random binary payloads with a seeded RNG, encodes them into chunked frames, decodes them back, and verifies byte-identical round trips including trailer handling.",
+      "real_world_use": "Streaming APIs, video segment delivery, and SSE endpoints rely on chunked encoding; proxies must parse it to forward streams.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "content-negotiation-engine",
+      "name": "Content Negotiation Engine",
+      "concept": "Content negotiation lets one URL serve many representations: the client sends Accept, Accept-Language, and Accept-Encoding headers with quality values, and the server picks the best variant it can produce. The algorithm parses q-values, matches media ranges against available variants, and falls back to a default with 406 when nothing fits. Done well, a single endpoint serves JSON, HTML, and multiple languages transparently.",
+      "key_params": {
+        "variants": "available (media type, language, encoding) triples",
+        "q_default": "quality assumed when a header omits q",
+        "fallback_policy": "default variant vs 406 on no match"
+      },
+      "data_idea": "Generates seeded variant catalogs and random Accept header combinations, then checks the negotiated choice against a brute-force best-match reference.",
+      "real_world_use": "REST APIs serving JSON/XML, multilingual sites, and image CDNs (WebP vs JPEG) all negotiate representations per request.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gzip-response-middleware",
+      "name": "Gzip Response Middleware",
+      "concept": "Text responses compress well, so middleware can gzip bodies on the fly when the client advertises Accept-Encoding: gzip. The middleware checks the content type allowlist, skips already-compressed formats like images, sets Content-Encoding, and streams the compressed bytes. The trade-off is CPU per request against bandwidth saved, which is why thresholds and level settings matter.",
+      "key_params": {
+        "min_bytes": "minimum body size worth compressing",
+        "compress_level": "gzip level 1-9 trading speed for ratio",
+        "type_allowlist": "MIME types eligible for compression"
+      },
+      "data_idea": "Creates seeded text and binary bodies of varying sizes, runs them through the middleware, and reports compression ratios plus which responses were skipped.",
+      "real_world_use": "Nginx gzip, CDN edge compression, and every major web framework's compression middleware work exactly this way.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "http-cache-headers-advisor",
+      "name": "HTTP Cache Header Advisor",
+      "concept": "Cache-Control, Expires, and validators like ETag decide how long browsers and CDNs may reuse a response without asking again. Immutable hashed assets get long max-age with immutable, while personalized HTML gets no-store or short private caching. The advisor inspects a resource's change frequency and personalization to recommend the right header set.",
+      "key_params": {
+        "resource_profile": "change frequency and personalization flags",
+        "cdn_present": "whether a shared cache sits in front",
+        "stale_policy": "stale-while-revalidate and stale-if-error windows"
+      },
+      "data_idea": "Synthesizes seeded resource profiles (static asset, API JSON, user page) and verifies the advisor emits canonical header sets for each profile.",
+      "real_world_use": "CDN cache-rule configuration at Cloudflare, Fastly, and Akamai is this decision encoded as rules.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "reverse-proxy",
+      "name": "Reverse Proxy",
+      "concept": "A reverse proxy sits in front of backend servers, receives client requests, and forwards them to the appropriate upstream while returning the response as its own. It can add headers like X-Forwarded-For, strip hop-by-hop headers, buffer slow clients, and present one public face for many services. Beyond hiding topology, it is where TLS termination, caching, and access control naturally live.",
+      "key_params": {
+        "upstreams": "backend pool with weights",
+        "header_rewrites": "headers added, removed, or overridden",
+        "timeout": "upstream connect/read timeout seconds"
+      },
+      "data_idea": "Spins up seeded fake upstreams returning canned responses, sends requests through the proxy, and verifies header rewrites and correct upstream selection.",
+      "real_world_use": "Nginx, HAProxy, Envoy, and cloud load balancers all act as reverse proxies in front of application servers.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "round-robin-load-balancer",
+      "name": "Round-Robin Load Balancer",
+      "concept": "A load balancer spreads incoming requests across a pool of backend servers so no single machine takes all the traffic. Round-robin walks the pool in order, weighted variants favor stronger machines, and health checks remove dead backends from rotation. Session stickiness can pin a client to one server when state demands it, at the cost of even spreading.",
+      "key_params": {
+        "pool_size": "number of backend servers",
+        "weights": "per-server traffic weights",
+        "health_check_interval": "seconds between backend probes"
+      },
+      "data_idea": "Simulates seeded backend pools with random failures and measures request distribution evenness plus failover time when a node dies.",
+      "real_world_use": "Every cloud load balancer (AWS ALB, GCP, Azure) and ingress controllers distribute traffic across service replicas.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "health-check-endpoint",
+      "name": "Health Check Endpoint Suite",
+      "concept": "Orchestrators decide whether a service instance should receive traffic by polling its health endpoint. A liveness check answers whether the process is alive, a readiness check whether it can serve (database reachable, migrations done), and a startup check guards slow boots. Returning the right status per subsystem, with timeouts, prevents routers from sending traffic into a half-dead instance.",
+      "key_params": {
+        "checks": "named subsystem checks with timeouts",
+        "failure_threshold": "consecutive failures before unhealthy",
+        "degraded_mode": "whether partial failure returns 200-degraded or 503"
+      },
+      "data_idea": "Simulates seeded subsystem flaps (DB down, disk full) and verifies the endpoint transitions through healthy, degraded, and unhealthy states correctly.",
+      "real_world_use": "Kubernetes liveness/readiness probes, AWS target-group health checks, and Consul checks all consume these endpoints.",
+      "suggested_types": [
+        "monitoring_agent",
+        "rest_api",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "graceful-shutdown-server",
+      "name": "Graceful Shutdown Server",
+      "concept": "Killing a server mid-request drops in-flight work, so graceful shutdown stops accepting new connections, lets active requests finish within a deadline, then exits. The server traps SIGTERM, drains the connection pool, closes idle keep-alive sockets, and force-closes stragglers after the timeout. This is what makes rolling deploys invisible to users.",
+      "key_params": {
+        "drain_timeout": "seconds to wait for in-flight requests",
+        "signal": "SIGTERM vs SIGINT handling",
+        "force_kill_after": "hard cutoff when drain overruns"
+      },
+      "data_idea": "Runs a seeded workload of long and short fake requests, sends the shutdown signal mid-flight, and verifies no request is cut off before the deadline.",
+      "real_world_use": "Container orchestrators send SIGTERM before SIGKILL; every production web server implements drain logic for zero-downtime deploys.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "server-sent-events-feed",
+      "name": "Server-Sent Events Feed",
+      "concept": "Server-Sent Events give the server a one-way push channel over plain HTTP: the client opens an EventSource and the server streams text/event-stream messages with event types, ids, and retry hints. Automatic reconnection with Last-Event-ID lets clients resume where they left off after a drop. SSE is simpler than WebSockets whenever the client never needs to send messages back.",
+      "key_params": {
+        "events": "named event types with payload schemas",
+        "retry_ms": "client reconnection delay hint",
+        "heartbeat_interval": "keep-alive comment cadence"
+      },
+      "data_idea": "Generates a seeded event log, streams it through the SSE encoder, simulates disconnects, and verifies clients resume from the correct last event id.",
+      "real_world_use": "Live dashboards, stock tickers, CI build logs, and notification feeds use SSE for server-to-browser push.",
+      "suggested_types": [
+        "rest_api",
+        "web_dashboard",
+        "chat_server"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "websocket-chat-server",
+      "name": "WebSocket Chat Server",
+      "concept": "WebSockets upgrade an HTTP connection into a full-duplex message channel, letting server and client exchange frames in either direction at any time. The server manages the handshake, frame masking, ping/pong heartbeats, room subscriptions, and broadcast fan-out to room members. Presence and backpressure handling separate a toy chat from one that survives real load.",
+      "key_params": {
+        "rooms": "room topology and membership rules",
+        "heartbeat_interval": "ping/pong seconds before drop",
+        "history_size": "messages retained per room for joiners"
+      },
+      "data_idea": "Simulates seeded users joining rooms and exchanging messages, then verifies broadcast reach, heartbeat eviction of dead sockets, and history replay.",
+      "real_world_use": "Slack-style messaging, live support chat, multiplayer lobbies, and trading terminals all run on WebSocket servers.",
+      "suggested_types": [
+        "chat_server",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "long-polling-fallback",
+      "name": "Long-Polling Fallback Transport",
+      "concept": "Where WebSockets are blocked, long polling emulates push: the client holds a request open until the server has data or a timeout fires, then immediately re-issues it. The server needs per-client queues, timeout management, and message ordering so nothing is lost between polls. It is less efficient than a persistent socket but works through the most restrictive proxies.",
+      "key_params": {
+        "hold_timeout": "seconds before an empty poll returns",
+        "queue_size": "per-client buffered message cap",
+        "ordering": "sequence numbering for gap detection"
+      },
+      "data_idea": "Simulates seeded message bursts and restrictive-proxy conditions, verifying every message is delivered exactly once and in order across reconnects.",
+      "real_world_use": "Legacy enterprise networks, old mobile carriers, and fallback paths in libraries like Socket.IO rely on long polling.",
+      "suggested_types": [
+        "simulation",
+        "chat_server",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "webhook-dispatcher",
+      "name": "Webhook Dispatcher with Retries",
+      "concept": "Webhooks let a service notify subscribers about events by POSTing JSON to their registered URLs, but the open internet means deliveries fail. A robust dispatcher signs each payload, retries with exponential backoff and jitter, honors Retry-After, and dead-letters endpoints that stay down. Idempotency keys let receivers deduplicate the redeliveries that retries inevitably cause.",
+      "key_params": {
+        "endpoints": "subscriber URLs with secrets",
+        "max_attempts": "retry ceiling before dead-letter",
+        "backoff_base": "base seconds for exponential backoff"
+      },
+      "data_idea": "Creates seeded endpoints with random failure patterns, dispatches events, and verifies delivery counts, backoff spacing, and dead-letter routing.",
+      "real_world_use": "Stripe, GitHub, and Shopify webhooks all use signed, retried delivery; receivers implement the verification side.",
+      "suggested_types": [
+        "task_queue",
+        "rest_api",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "webhook-receiver-verifier",
+      "name": "Webhook Receiver Verifier",
+      "concept": "The receiving side of webhooks must prove each delivery is genuine and fresh: recompute the HMAC signature over the raw body with the shared secret and compare in constant time, then reject stale timestamps to block replays. Only after verification should the payload be parsed and the idempotency key checked. This closes the loop that the dispatcher's signing opened.",
+      "key_params": {
+        "secret": "shared signing secret",
+        "tolerance": "timestamp skew window in seconds",
+        "idempotency_ttl": "dedupe key retention"
+      },
+      "data_idea": "Generates seeded payloads, some with tampered bodies or replayed timestamps, and verifies the receiver accepts only genuine fresh deliveries exactly once.",
+      "real_world_use": "Every Stripe/GitHub webhook integration implements signature verification before acting on events.",
+      "suggested_types": [
+        "encryption_tool",
+        "rest_api",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rest-pagination-service",
+      "name": "REST Pagination Service",
+      "concept": "Large collections cannot be returned in one response, so APIs paginate: offset/limit is simple but drifts when rows change, while cursor pagination uses an opaque token over a stable sort key for consistent pages. The service also returns total counts or has-more flags and guards against absurd page sizes. Choosing cursor vs offset is a real API design decision with correctness trade-offs.",
+      "key_params": {
+        "strategy": "offset vs cursor pagination",
+        "page_size": "default items per page",
+        "max_page_size": "cap to prevent abuse"
+      },
+      "data_idea": "Builds a seeded dataset with concurrent inserts/deletes, pages through it under both strategies, and measures duplicate/missed items per strategy.",
+      "real_world_use": "GitHub, Stripe, and Twitter APIs paginate with cursors; admin UIs often use offset for jump-to-page needs.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "api-versioning-strategies",
+      "name": "API Versioning Strategies",
+      "concept": "APIs evolve, and versioning decides how old clients keep working: URL path versions (/v1/), header versions, or content-type negotiation each have fans. The strategy layer routes versioned requests to the right handler set, deprecates old versions with Sunset headers, and tracks usage per version to plan retirements. The hardest part is not the mechanism but the deprecation policy.",
+      "key_params": {
+        "scheme": "url path vs header vs media-type versioning",
+        "sunset_policy": "warning period before removal",
+        "default_version": "behavior for unversioned requests"
+      },
+      "data_idea": "Simulates seeded versioned handler sets and client traffic across versions, verifying routing correctness and sunset-header emission on deprecated paths.",
+      "real_world_use": "Stripe uses date-based header versioning; GitHub and Twilio use URL versions; all publish sunset timelines.",
+      "suggested_types": [
+        "rest_api",
+        "config_manager",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hateoas-link-builder",
+      "name": "HATEOAS Link Builder",
+      "concept": "HATEOAS makes APIs self-describing by embedding links to related actions in each response, so clients discover workflows instead of hardcoding URLs. The builder attaches templated links (self, next, cancel, pay) with the HTTP method each expects, driven by the resource's current state. A state machine decides which transitions are legal, so the links always reflect what the client may do next.",
+      "key_params": {
+        "resources": "resource types and their state machines",
+        "link_relations": "rel names like self, next, cancel",
+        "base_url": "prefix for generated hrefs"
+      },
+      "data_idea": "Generates seeded resources in random states and verifies emitted links match exactly the legal transitions of each state machine.",
+      "real_world_use": "Hypermedia APIs (some HAL/JSON:API services) and workflow-heavy domains like payments use link-driven navigation.",
+      "suggested_types": [
+        "rest_api",
+        "api_client_sim",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rest-error-envelope",
+      "name": "REST Error Envelope (RFC 7807)",
+      "concept": "Inconsistent error shapes force every client to guess; RFC 7807 fixes this with problem+json: a type URI identifying the problem, a human title, the status, a detail message, and the instance that failed. Validation errors extend it with per-field breakdowns. A uniform envelope lets clients, SDKs, and monitoring all parse failures the same way.",
+      "key_params": {
+        "problem_types": "catalog of type URIs and titles",
+        "include_trace": "whether a trace id is attached",
+        "validation_shape": "field-error extension format"
+      },
+      "data_idea": "Feeds seeded failure scenarios through the envelope builder and checks every response carries the required members and valid problem type URIs.",
+      "real_world_use": "Zalando, many government APIs, and mature SaaS platforms standardize errors on RFC 7807 problem details.",
+      "suggested_types": [
+        "rest_api",
+        "log_analyzer",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "token-bucket-rate-limiter",
+      "name": "Token-Bucket Rate Limit Middleware",
+      "concept": "Rate limiting protects APIs from abuse: a token bucket refills at a fixed rate up to a capacity, and each request spends a token, so bursts are allowed but sustained rates are capped. The middleware keys buckets per API key or IP, returns 429 with Retry-After when empty, and exposes limit headers. Distributed deployments share bucket state so limits hold across instances.",
+      "key_params": {
+        "rate": "tokens added per second",
+        "burst": "bucket capacity for short bursts",
+        "key_fn": "per-key, per-IP, or global bucketing"
+      },
+      "data_idea": "Simulates seeded request streams (steady, bursty, abusive) and verifies allowed/rejected counts match token-bucket math plus correct Retry-After values.",
+      "real_world_use": "API gateways (Kong, AWS API Gateway), GitHub, and Twitter all rate-limit with token or leaky bucket variants.",
+      "suggested_types": [
+        "rate_limiter",
+        "rest_api",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "request-id-tracing",
+      "name": "Request ID Tracing Middleware",
+      "concept": "Debugging distributed systems is hopeless without correlation: the middleware assigns or propagates a request id (X-Request-ID) through every layer and log line. Downstream calls forward it, so one id ties together the edge log, service logs, and database slow-query entries. Sampling keeps the overhead sane at high volume.",
+      "key_params": {
+        "header": "incoming header name carrying the id",
+        "generate": "uuid4 vs ulid style ids",
+        "propagate_to": "downstream services receiving the id"
+      },
+      "data_idea": "Runs seeded multi-service call chains and verifies a single id appears in every log record across all hops.",
+      "real_world_use": "Envoy, AWS ALB, and every observability platform (Datadog, Honeycomb) correlate traces on propagated request ids.",
+      "suggested_types": [
+        "log_analyzer",
+        "rest_api",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "structured-request-logging",
+      "name": "Structured Request Logging",
+      "concept": "Plain-text access logs are painful to query, so structured logging emits each request as a JSON record: method, path, status, duration, user, request id, and sizes. Consistent field names let log pipelines aggregate p99 latency or error rates without regex. The middleware must also redact sensitive fields before the record leaves the process.",
+      "key_params": {
+        "fields": "which fields each record carries",
+        "redact": "field patterns scrubbed (tokens, passwords)",
+        "sampling": "log every request vs sampled at volume"
+      },
+      "data_idea": "Replays seeded request streams through the logger and validates every record parses as JSON with redaction applied and timing fields present.",
+      "real_world_use": "ELK, Datadog, and CloudWatch Logs Insights all assume JSON-structured request logs for dashboards and alerts.",
+      "suggested_types": [
+        "log_analyzer",
+        "monitoring_agent",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "api-key-auth-service",
+      "name": "API Key Authentication Service",
+      "concept": "API keys are the simplest service-to-service credential: the server issues random high-entropy keys, stores only their hashes, and checks the presented key on each request. Keys carry scopes, expiry, and per-key rate limits, and rotation issues a replacement while the old one stays valid briefly. The hard parts are secure storage, revocation propagation, and never logging the raw key.",
+      "key_params": {
+        "key_bytes": "entropy length of issued keys",
+        "scopes": "permission scopes attachable to keys",
+        "rotation_grace": "overlap window during rotation"
+      },
+      "data_idea": "Issues seeded keys, simulates authentication attempts including revoked and expired keys, and verifies constant-time hash comparison and scope enforcement.",
+      "real_world_use": "Stripe, SendGrid, and AWS access keys all follow the issue-hash-scope-rotate lifecycle.",
+      "suggested_types": [
+        "encryption_tool",
+        "rest_api",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "jwt-issuer-verifier",
+      "name": "JWT Issuer and Verifier",
+      "concept": "JSON Web Tokens carry signed claims between services without a session lookup: the issuer builds a header and payload, signs with HMAC or RSA, and sets exp, iat, and aud. The verifier checks the signature, expiry, audience, and algorithm, rejecting the classic alg=none attack. Short-lived access tokens plus refresh tokens balance security against login friction.",
+      "key_params": {
+        "algorithm": "HS256 vs RS256 signing",
+        "ttl": "access token lifetime seconds",
+        "audience": "aud claim enforcement"
+      },
+      "data_idea": "Issues seeded tokens (valid, expired, wrong-audience, tampered) and verifies the verifier accepts only the genuine ones with correct claims.",
+      "real_world_use": "Auth0, Firebase Auth, and countless microservice meshes pass JWTs for stateless authentication.",
+      "suggested_types": [
+        "encryption_tool",
+        "rest_api",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hmac-signed-session-cookies",
+      "name": "HMAC-Signed Session Cookies",
+      "concept": "Server-side sessions cost a datastore lookup per request, so signed cookies move the session into the cookie itself: the payload is serialized, timestamped, and HMAC-signed with a server secret. The server verifies the signature on each request and rejects tampered or expired cookies without any storage. Key rotation needs versioned secrets so old cookies survive a roll.",
+      "key_params": {
+        "secret": "HMAC signing secret",
+        "max_age": "cookie lifetime seconds",
+        "key_version": "secret version for rotation"
+      },
+      "data_idea": "Generates seeded session payloads, signs them, then tests tampered, expired, and wrong-version cookies for correct rejection.",
+      "real_world_use": "Flask and Django signed-cookie sessions, Rails cookie store, and Play Framework sessions all use this pattern.",
+      "suggested_types": [
+        "encryption_tool",
+        "rest_api",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "oauth2-code-flow-simulator",
+      "name": "OAuth2 Authorization Code Flow Simulator",
+      "concept": "OAuth2 lets users grant a third-party app limited access without sharing passwords: the app redirects to the provider, the user approves scopes, and the provider returns an authorization code that the app exchanges for tokens. PKCE adds a code challenge so mobile apps can do this without a client secret. Simulating all four roles (user, client, auth server, resource server) shows where each secret must live.",
+      "key_params": {
+        "scopes": "permission scopes requested",
+        "pkce": "whether PKCE challenge/verifier is used",
+        "token_ttl": "access and refresh token lifetimes"
+      },
+      "data_idea": "Runs seeded flows including consent-denied, code-replay, and expired-code cases, verifying tokens issue only on the exact valid exchange.",
+      "real_world_use": "'Login with Google/GitHub' and every SaaS integration (Slack apps, Zapier) implement this flow.",
+      "suggested_types": [
+        "simulation",
+        "encryption_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "csrf-token-protection",
+      "name": "CSRF Token Protection",
+      "concept": "Cross-site request forgery tricks a logged-in browser into submitting a form on another site, riding the victim's cookies. The defense issues a per-session CSRF token, embeds it in forms, and requires it on state-changing requests; same-site cookie attributes add a second layer. Token validation must be constant-time and bound to the session so stolen tokens do not transfer.",
+      "key_params": {
+        "token_bytes": "CSRF token entropy",
+        "samesite": "Lax vs Strict cookie attribute",
+        "exempt_methods": "safe methods skipping validation"
+      },
+      "data_idea": "Simulates seeded cross-origin form posts with missing, stale, and mismatched tokens, verifying only same-session valid tokens pass.",
+      "real_world_use": "Django, Rails, and Spring Security all generate per-session CSRF tokens for form submissions.",
+      "suggested_types": [
+        "encryption_tool",
+        "rest_api",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "password-hashing-pbkdf2",
+      "name": "Password Hashing with PBKDF2",
+      "concept": "Passwords must never be stored reversibly: PBKDF2 stretches a password with a random salt through many HMAC iterations so each guess costs real work. The stored record keeps algorithm, iteration count, salt, and hash, letting the server raise iterations as hardware improves. Constant-time comparison and per-user salts defeat rainbow tables and timing probes.",
+      "key_params": {
+        "iterations": "PBKDF2 work factor",
+        "salt_bytes": "per-password salt length",
+        "hash_len": "derived key length"
+      },
+      "data_idea": "Hashes seeded passwords, verifies correct/incorrect attempts, and benchmarks guess cost to show why iteration counts matter.",
+      "real_world_use": "Django, passlib, and NIST 800-63 guidance recommend salted, iterated hashing (PBKDF2, bcrypt, scrypt, Argon2).",
+      "suggested_types": [
+        "encryption_tool",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "login-attempt-throttler",
+      "name": "Login Attempt Throttler",
+      "concept": "Brute-force login attacks try thousands of password guesses, so throttling slows them down: failed attempts per account and per IP accumulate, triggering growing delays, CAPTCHAs, or temporary lockouts. The design must not let attackers lock out legitimate users or enumerate which accounts exist. Exponential backoff per source balances security with usability.",
+      "key_params": {
+        "max_attempts": "failures before throttle engages",
+        "lockout_minutes": "lockout duration",
+        "per_ip_vs_account": "which dimensions are tracked"
+      },
+      "data_idea": "Simulates seeded credential-stuffing bursts and legitimate mistypes, verifying attackers get throttled while normal users stay unaffected.",
+      "real_world_use": "Every major login system (Google, GitHub, banks) throttles attempts; OWASP lists it as essential authentication control.",
+      "suggested_types": [
+        "rate_limiter",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "session-store-ttl",
+      "name": "Session Store with TTL",
+      "concept": "Server-side sessions keep only an opaque id in the cookie and the data in a store with per-session TTLs. The store supports sliding expiration (activity extends the session), absolute caps (force re-login daily), and instant invalidation on logout or password change. Eviction of expired sessions must be cheap even with millions of rows.",
+      "key_params": {
+        "ttl": "idle timeout seconds",
+        "absolute_ttl": "max session lifetime",
+        "eviction_batch": "expired-session cleanup batch size"
+      },
+      "data_idea": "Creates seeded sessions with random activity patterns and verifies sliding renewal, absolute expiry, and logout invalidation behave correctly.",
+      "real_world_use": "Redis-backed sessions in Django, Rails, and Spring; database session tables in smaller apps.",
+      "suggested_types": [
+        "lru_cache",
+        "rest_api",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "remember-me-token-rotation",
+      "name": "Remember-Me Token Rotation",
+      "concept": "Remember-me cookies trade convenience for risk, so secure designs use rotating token series: a persistent series id plus a one-time token, where each use issues a fresh token and invalidates the old one. If a stolen token is replayed, the series mismatch reveals theft and the whole series is revoked. This gives long-lived login with theft detection built in.",
+      "key_params": {
+        "series_bytes": "series identifier entropy",
+        "token_bytes": "one-time token entropy",
+        "lifetime_days": "remember-me duration"
+      },
+      "data_idea": "Simulates seeded login sessions including token theft and replay, verifying rotation succeeds and replay triggers full-series revocation.",
+      "real_world_use": "OWASP's persistent-login guidance and frameworks like Spring Security implement rotating remember-me tokens.",
+      "suggested_types": [
+        "encryption_tool",
+        "simulation",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "security-headers-middleware",
+      "name": "Security Headers Middleware",
+      "concept": "A handful of response headers close whole classes of browser attacks: Content-Security-Policy, Strict-Transport-Security, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy. The middleware assembles them from a policy config, with report-only mode for safe CSP rollouts. Getting CSP right without breaking inline scripts is the classic deployment puzzle.",
+      "key_params": {
+        "csp_directives": "allowed sources per directive",
+        "hsts_max_age": "HSTS duration seconds",
+        "report_only": "enforce vs report-only CSP"
+      },
+      "data_idea": "Applies the middleware to seeded responses and verifies each header is present, syntactically valid, and matches the configured policy.",
+      "real_world_use": "Securityheaders.com scanning, Mozilla Observatory, and every hardened production site rely on these headers.",
+      "suggested_types": [
+        "rest_api",
+        "config_manager",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cors-policy-engine",
+      "name": "CORS Policy Engine",
+      "concept": "Browsers block cross-origin reads by default; CORS lets servers opt in per origin, method, and header. The engine answers preflight OPTIONS requests with Access-Control-Allow-* headers, decides when credentials may ride along, and caches preflight results via max-age. An overly permissive policy (reflecting any origin with credentials) silently voids the whole protection.",
+      "key_params": {
+        "allowed_origins": "exact origins or patterns permitted",
+        "allow_credentials": "whether cookies/auth may be sent",
+        "preflight_max_age": "OPTIONS cache seconds"
+      },
+      "data_idea": "Feeds seeded cross-origin requests (simple, preflighted, credentialed) and checks the engine allows exactly the policy's intent.",
+      "real_world_use": "Every SPA calling a separate API domain (React front end + API back end) configures CORS; misconfigurations are a top audit finding.",
+      "suggested_types": [
+        "rest_api",
+        "api_client_sim",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "content-security-policy-builder",
+      "name": "Content Security Policy Builder",
+      "concept": "CSP is a whitelist telling the browser exactly where scripts, styles, images, and frames may load from, which neuters most XSS payloads. The builder composes directives from an asset inventory, generates nonces or hashes for legitimate inline scripts, and parses violation reports to find what would break. Rolling it out in report-only mode first avoids self-inflicted outages.",
+      "key_params": {
+        "asset_inventory": "scripts/styles/images the app loads",
+        "inline_strategy": "nonce vs hash vs none for inline code",
+        "report_uri": "endpoint receiving violation reports"
+      },
+      "data_idea": "Builds policies from seeded asset inventories, simulates page loads with injected scripts, and verifies legit assets pass while injections are blocked.",
+      "real_world_use": "Google, GitHub, and banks deploy strict CSP; report-uri services exist to triage violation reports.",
+      "suggested_types": [
+        "config_manager",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "clickjacking-defense",
+      "name": "Clickjacking Defense",
+      "concept": "Clickjacking overlays an invisible iframe of a victim site so clicks land on attacker-chosen buttons. The defense sends X-Frame-Options: DENY/SAMEORIGIN or CSP frame-ancestors to control who may embed the page, and sensitive actions add confirmation steps. Legacy browsers need both headers since support varies.",
+      "key_params": {
+        "frame_policy": "deny, sameorigin, or allowlist",
+        "csp_frame_ancestors": "CSP directive mirroring the policy",
+        "sensitive_actions": "flows requiring step-up confirmation"
+      },
+      "data_idea": "Renders seeded pages under the policy and verifies framing decisions for same-origin, whitelisted, and hostile parents.",
+      "real_world_use": "Banking portals and OAuth consent screens universally forbid framing to stop UI-redress attacks.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "html-input-sanitizer",
+      "name": "HTML Input Sanitizer",
+      "concept": "User-supplied HTML is an XSS vector, so a sanitizer parses it and keeps only an allowlist of tags, attributes, and URL schemes. It must handle nested tags, entity encoding tricks, and event-handler attributes that smuggle scripts. Context matters too: escaping rules differ inside HTML text, attributes, JavaScript, and CSS.",
+      "key_params": {
+        "allowed_tags": "tag allowlist like b, i, a, p",
+        "allowed_schemes": "URL schemes like http, https, mailto",
+        "strip_comments": "whether HTML comments are removed"
+      },
+      "data_idea": "Feeds seeded payloads (benign formatting plus classic XSS vectors) and verifies the output keeps formatting while neutralizing every attack.",
+      "real_world_use": "Comment systems, rich-text editors, and CMS platforms sanitize HTML with libraries like DOMPurify or bleach.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "parameterized-query-guard",
+      "name": "Parameterized Query Guard",
+      "concept": "SQL injection happens when user input is concatenated into queries; parameterized queries keep code and data separate so input can never become SQL. The guard demonstrates the vulnerable pattern versus bound parameters, logs rejected suspicious inputs, and enforces that every query path uses placeholders. It is the single most important database security control.",
+      "key_params": {
+        "db": "sqlite-backed demo database",
+        "placeholder_style": "qmark vs named parameters",
+        "audit_mode": "log-only vs block on suspicious patterns"
+      },
+      "data_idea": "Runs seeded login-form inputs (normal plus injection strings) against both vulnerable and guarded paths, showing the guard neutralizes all injections.",
+      "real_world_use": "OWASP ranks injection #3 in the Top 10; every ORM and DB driver implements parameterization as the fix.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "file-upload-validator",
+      "name": "File Upload Validator",
+      "concept": "File uploads are dangerous because extensions lie: the validator checks magic bytes against the claimed type, enforces size limits, scans for polyglot and double-extension tricks, and stores files outside the web root with random names. Image uploads get re-encoded to strip embedded payloads. Each layer catches what the previous one missed.",
+      "key_params": {
+        "allowed_types": "MIME types accepted",
+        "max_bytes": "upload size cap",
+        "scan_depth": "how many magic-byte signatures checked"
+      },
+      "data_idea": "Generates seeded files (valid, renamed executables, oversized, polyglots) and verifies the validator accepts only genuine allowed files.",
+      "real_world_use": "Avatar uploads, document portals, and CMS media libraries all validate uploads; breaches from malicious uploads are common.",
+      "suggested_types": [
+        "file_organizer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "multipart-form-parser",
+      "name": "Multipart Form Parser",
+      "concept": "File uploads arrive as multipart/form-data: the parser splits the body on the boundary delimiter, extracts each part's headers and disposition, and streams file parts to disk without loading them fully into memory. It must enforce per-part and total size limits and handle boundary edge cases. Getting streaming right is what separates production parsers from tutorials.",
+      "key_params": {
+        "boundary": "delimiter from the Content-Type header",
+        "max_part_bytes": "per-file size cap",
+        "stream_to_disk": "spool threshold before disk buffering"
+      },
+      "data_idea": "Builds seeded multipart bodies (text fields plus files of random sizes) and verifies the parser extracts every part byte-identically with limits enforced.",
+      "real_world_use": "Every web framework's upload handling (Express multer, Django, Flask) implements multipart parsing.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "csv-upload-importer",
+      "name": "CSV Upload Importer",
+      "concept": "Bulk data arrives as CSV, and importing it safely means detecting dialect and encoding, validating each row against a schema, collecting per-row errors without aborting the whole file, and inserting in batches inside a transaction. The importer reports a summary: rows accepted, rejected with reasons, and duplicates skipped. Idempotent re-imports prevent double-processing the same file.",
+      "key_params": {
+        "schema": "column names, types, and required flags",
+        "batch_size": "rows per insert batch",
+        "error_policy": "collect-all vs fail-fast"
+      },
+      "data_idea": "Generates seeded CSVs with random defects (bad dates, wrong types, dupes) and verifies the importer reports exact per-row outcomes and correct final counts.",
+      "real_world_use": "Admin panels, CRM imports, and data-onboarding flows all funnel bulk uploads through validated CSV importers.",
+      "suggested_types": [
+        "data_pipeline",
+        "file_organizer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "range-request-server",
+      "name": "Range Request (Resume) Server",
+      "concept": "Large downloads should survive interruption: the server advertises Accept-Ranges, parses Range headers, and answers 206 Partial Content with Content-Range for the requested byte span. Clients resume by asking for bytes after what they already have, and multipart ranges serve several spans at once. Video players depend on this for seeking.",
+      "key_params": {
+        "file_size": "served file sizes in the demo",
+        "unit": "bytes ranges supported",
+        "multipart": "whether multi-span requests are honored"
+      },
+      "data_idea": "Serves seeded files, simulates interrupted downloads that resume mid-byte, and verifies reassembled content is byte-identical.",
+      "real_world_use": "Video streaming, podcast apps, and download managers all resume via Range requests; S3 and CDNs implement them.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "etag-conditional-get",
+      "name": "ETag Conditional GET Cache",
+      "concept": "Conditional GETs let caches revalidate cheaply: the client sends If-None-Match with its cached ETag and the server replies 304 when the representation is unchanged. Strong ETags change on any byte difference; weak ETags ignore insignificant changes. The cache layer must also forward revalidation correctly and respect Vary.",
+      "key_params": {
+        "etag_mode": "strong vs weak generation",
+        "revalidate": "always vs heuristic freshness",
+        "vary_headers": "headers included in cache key"
+      },
+      "data_idea": "Simulates seeded resource mutations and client caches, counting 304 vs 200 responses and verifying stale content is never served.",
+      "real_world_use": "CDN edge caches and browser HTTP caches implement conditional revalidation to cut origin traffic.",
+      "suggested_types": [
+        "lru_cache",
+        "rest_api",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mini-template-engine",
+      "name": "Mini Template Engine",
+      "concept": "Template engines turn markup with placeholders into finished pages: the engine lexes {{variables}}, {%for%} loops, and {%if%} branches, compiles them to render functions, and auto-escapes variables to prevent XSS. Caching compiled templates avoids re-parsing per request. Building one reveals exactly what Jinja and Handlebars do under the hood.",
+      "key_params": {
+        "delimiters": "variable/tag delimiter style",
+        "autoescape": "whether output is escaped by default",
+        "cache_compiled": "compiled-template cache size"
+      },
+      "data_idea": "Renders seeded templates with random data contexts and verifies output matches expected HTML including escaping and loop/if semantics.",
+      "real_world_use": "Jinja2, Django templates, Handlebars, and EJS all compile templates to fast render functions with autoescaping.",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "markdown-to-html-renderer",
+      "name": "Markdown to HTML Renderer",
+      "concept": "Markdown gives writers plain-text formatting that renders to HTML: the renderer tokenizes headings, emphasis, links, code spans, lists, and blockquotes, then emits sanitized HTML. It must escape raw HTML by default and handle nested constructs like links inside emphasis. A table extension shows how renderers grow new syntax.",
+      "key_params": {
+        "flavor": "which extensions are enabled (tables, strikethrough)",
+        "sanitize": "whether raw HTML is escaped or stripped",
+        "heading_ids": "whether headings get anchor ids"
+      },
+      "data_idea": "Converts seeded Markdown documents (including adversarial nesting and raw HTML) and verifies the HTML structure and sanitization are correct.",
+      "real_world_use": "GitHub READMEs, static site generators (Hugo, Jekyll), and docs platforms all render Markdown to HTML.",
+      "suggested_types": [
+        "cli_tool",
+        "file_organizer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rss-feed-generator",
+      "name": "RSS Feed Generator",
+      "concept": "RSS lets readers follow sites without algorithms: the generator serializes posts into well-formed XML with titles, links, pubDates in RFC 822, GUIDs, and content excerpts. It handles feed-level metadata, pagination of large archives, and conditional GETs via feed ETags. Validity matters because strict readers reject malformed feeds.",
+      "key_params": {
+        "max_items": "items per feed page",
+        "excerpt_len": "content excerpt characters",
+        "include_full": "full text vs excerpt feeds"
+      },
+      "data_idea": "Builds feeds from seeded post collections and validates the XML structure, date formats, and GUID stability across regenerations.",
+      "real_world_use": "Blogs, podcasts (RSS with enclosures), and news sites publish feeds consumed by Feedly, Inoreader, and podcast apps.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sitemap-xml-builder",
+      "name": "Sitemap XML Builder",
+      "concept": "Search engines discover pages through sitemap.xml: the builder lists URLs with lastmod, changefreq, and priority, splits large sites into sitemap index files capped at 50k URLs each, and gzips the output. It should only include canonical, indexable URLs. A clean sitemap shortens the time from publish to indexed.",
+      "key_params": {
+        "url_cap": "URLs per sitemap file",
+        "include_policy": "which pages qualify (canonical, 200, indexable)",
+        "gzip": "whether output is compressed"
+      },
+      "data_idea": "Generates sitemaps from seeded page inventories (including noindex and redirect pages) and verifies only eligible URLs appear within size caps.",
+      "real_world_use": "Every SEO-conscious site (WordPress, Shopify, news publishers) auto-generates sitemaps for Google Search Console.",
+      "suggested_types": [
+        "cli_tool",
+        "file_organizer",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "robots-txt-parser",
+      "name": "Robots.txt Parser",
+      "concept": "Robots.txt tells crawlers which paths they may fetch: the parser reads user-agent groups, Allow/Disallow rules with longest-match precedence, Crawl-delay, and Sitemap pointers. It answers can-fetch queries for any crawler and URL. Respecting it is voluntary but universal among legitimate search engines.",
+      "key_params": {
+        "user_agents": "crawler identities to evaluate",
+        "default_policy": "allow vs disallow when no rule matches",
+        "crawl_delay": "per-agent delay seconds honored"
+      },
+      "data_idea": "Parses seeded robots.txt files and checks can-fetch verdicts against a brute-force rule matcher for random agent/URL pairs.",
+      "real_world_use": "Googlebot, Bingbot, and every SEO crawler consult robots.txt; sites use it to keep staging and admin paths uncrawled.",
+      "suggested_types": [
+        "cli_tool",
+        "api_client_sim",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "url-shortener-service",
+      "name": "URL Shortener Service",
+      "concept": "URL shorteners map long URLs to compact codes: the service generates collision-free short ids, stores the mapping with click counters and expiry, and redirects with 301/302. Custom aliases need uniqueness checks, and analytics roll up clicks by referrer and day. The interesting engineering is id generation at scale without coordination.",
+      "key_params": {
+        "code_len": "short code length",
+        "alphabet": "characters used in codes",
+        "expiry_days": "link lifetime before cleanup"
+      },
+      "data_idea": "Creates seeded URLs, shortens them, simulates click streams, and verifies redirect correctness, uniqueness, and analytics aggregation.",
+      "real_world_use": "Bitly, TinyURL, and internal marketing-link services run this exact architecture with analytics on top.",
+      "suggested_types": [
+        "rest_api",
+        "web_dashboard",
+        "lru_cache"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "slug-generator-service",
+      "name": "Slug Generator Service",
+      "concept": "Slugs turn titles into URL-safe identifiers: the generator lowercases, strips accents, replaces spaces with hyphens, removes unsafe characters, and appends counters for uniqueness. It must handle Unicode titles, reserved words, and length caps. Good slugs are readable, stable, and permanent once published.",
+      "key_params": {
+        "max_len": "slug character cap",
+        "transliterate": "whether accents are folded to ASCII",
+        "unique_scope": "uniqueness per site vs per section"
+      },
+      "data_idea": "Feeds seeded multilingual titles (including duplicates and edge cases) and verifies slugs are URL-safe, readable, and unique in scope.",
+      "real_world_use": "WordPress, Medium, and every CMS generate slugs for posts; GitHub uses them for readable issue URLs.",
+      "suggested_types": [
+        "cli_tool",
+        "rest_api",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "breadcrumb-builder",
+      "name": "Breadcrumb Builder",
+      "concept": "Breadcrumbs show users where they are in a site hierarchy and give search engines structured navigation: the builder walks the page's ancestor chain, renders linked crumbs with schema.org markup, and handles dynamic segments like product names. Truncation rules keep deep paths readable on mobile.",
+      "key_params": {
+        "max_crumbs": "visible crumb cap before truncation",
+        "schema": "whether JSON-LD breadcrumb markup is emitted",
+        "home_label": "label for the root crumb"
+      },
+      "data_idea": "Builds breadcrumbs for seeded site trees with deep and dynamic paths, verifying ancestor order, links, and schema validity.",
+      "real_world_use": "E-commerce category pages and documentation sites use breadcrumbs for navigation and rich search results.",
+      "suggested_types": [
+        "web_dashboard",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pagination-ui-helper",
+      "name": "Pagination UI Helper",
+      "concept": "Page controls need more than prev/next: the helper computes the visible page window with ellipses, first/last links, and result-range text like 'showing 21-40 of 312'. It preserves filters and sort in page URLs and emits rel=next/prev for crawlers. Edge cases are page 1, the last partial page, and empty results.",
+      "key_params": {
+        "window": "visible page numbers around current",
+        "preserve_params": "query params carried across pages",
+        "seo_links": "whether rel next/prev are emitted"
+      },
+      "data_idea": "Runs seeded result counts and page requests, verifying window math, URL preservation, and correct behavior at boundaries.",
+      "real_world_use": "Search results, product listings, and admin tables all render smart pagination controls.",
+      "suggested_types": [
+        "web_dashboard",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "form-validation-engine",
+      "name": "Form Validation Engine",
+      "concept": "Server-side validation is the real gatekeeper: the engine declares per-field rules (required, type, length, pattern, cross-field matches), runs them in order, and returns structured per-field errors the UI can render. It distinguishes missing vs malformed vs business-rule failures and never trusts client-side checks. Sanitization runs alongside validation, not instead of it.",
+      "key_params": {
+        "fields": "field definitions with rule chains",
+        "stop_on_first": "fail-fast vs collect-all errors",
+        "cross_rules": "rules spanning multiple fields"
+      },
+      "data_idea": "Validates seeded submissions (valid plus every defect class) and verifies error maps pinpoint exactly the failing fields and rules.",
+      "real_world_use": "Every signup, checkout, and settings form validates server-side; libraries like Joi, Zod, and Pydantic encode the same idea.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "multi-step-form-wizard",
+      "name": "Multi-Step Form Wizard",
+      "concept": "Long forms convert better split into steps: the wizard persists partial state per step, validates each step before advancing, allows back-navigation without data loss, and submits atomically at the end. State lives server-side keyed by a wizard token so refreshes do not lose progress. The final review step shows everything before commit.",
+      "key_params": {
+        "steps": "ordered step definitions with fields",
+        "state_ttl": "abandoned wizard expiry",
+        "allow_back": "whether completed steps are editable"
+      },
+      "data_idea": "Drives seeded wizards through valid, invalid, backtrack, and abandon flows, verifying state persistence and atomic final submission.",
+      "real_world_use": "Checkout flows, loan applications, and onboarding questionnaires all use multi-step wizards to lift completion rates.",
+      "suggested_types": [
+        "web_dashboard",
+        "rest_api",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "search-autocomplete-trie",
+      "name": "Search Autocomplete Trie",
+      "concept": "Autocomplete needs prefix lookups in milliseconds over millions of phrases: a trie stores completions keyed by prefix with popularity weights, returning the top-k matches per keystroke. The service debounces input, caches hot prefixes, and personalizes with recent queries. Memory-efficient variants compress shared suffixes for huge vocabularies.",
+      "key_params": {
+        "top_k": "suggestions returned per prefix",
+        "min_prefix": "characters before suggesting",
+        "weight_fn": "popularity vs recency ranking"
+      },
+      "data_idea": "Builds a trie from a seeded phrase corpus with random popularity, then checks top-k prefix queries against a brute-force ranking.",
+      "real_world_use": "Google Suggest, e-commerce search boxes, and IDE completions all serve prefix matches from trie-like structures.",
+      "suggested_types": [
+        "rest_api",
+        "lru_cache",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "faceted-search-filters",
+      "name": "Faceted Search Filters",
+      "concept": "Faceted search lets users narrow results by computed dimensions (brand, price band, rating): the engine aggregates facet counts over the current result set so each filter shows how many items it would match. Selecting facets intersects the sets, and counts update live. The challenge is computing counts fast without re-running the full query per facet.",
+      "key_params": {
+        "facets": "facet definitions and bucketing rules",
+        "count_strategy": "exact vs sampled counts",
+        "multi_select": "OR-within-facet vs AND semantics"
+      },
+      "data_idea": "Indexes seeded product catalogs, runs faceted queries, and verifies counts match brute-force filtering for every facet combination.",
+      "real_world_use": "Amazon, eBay, and Airbnb filter panels are faceted search; Solr and Elasticsearch compute the aggregations.",
+      "suggested_types": [
+        "rest_api",
+        "web_dashboard",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "full-text-search-index",
+      "name": "Full-Text Search Inverted Index",
+      "concept": "Full-text search starts with an inverted index: tokenize documents, build term-to-posting-lists, and rank matches with TF-IDF or BM25. The index handles stemming, stop words, and phrase queries via positional postings. Sharding splits huge indexes while merging ranked results across shards.",
+      "key_params": {
+        "ranking": "TF-IDF vs BM25 scoring",
+        "stemming": "whether terms are stemmed",
+        "phrase_slop": "allowed distance for phrase matches"
+      },
+      "data_idea": "Indexes seeded document collections, runs keyword and phrase queries, and verifies ranking order matches a reference BM25 implementation.",
+      "real_world_use": "Elasticsearch, Postgres full-text search, and site-search tools (Algolia) all build on inverted indexes.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "typo-tolerant-search",
+      "name": "Typo-Tolerant Search",
+      "concept": "Users mistype, so typo-tolerant search matches within an edit distance: Levenshtein automata or n-gram indexes find candidates, then ranking prefers closer matches and popular terms. Prefix search with one typo allowed covers most real mistakes. The trade-off is index size and query latency against recall.",
+      "key_params": {
+        "max_edits": "edit distance tolerated (1 or 2)",
+        "index": "levenshtein automaton vs n-gram index",
+        "prefix_len": "exact prefix required before fuzz"
+      },
+      "data_idea": "Indexes seeded dictionaries, queries them with seeded typos, and measures recall of intended terms vs latency.",
+      "real_world_use": "Algolia, Elasticsearch fuzziness, and e-commerce search ('did you mean') tolerate typos this way.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "recommendation-widget",
+      "name": "Recommendation Widget (Also Viewed)",
+      "concept": "Also-viewed widgets mine co-occurrence: items frequently viewed in the same sessions get linked, scored by lift over random chance. The batch job builds the item graph nightly while the widget serves precomputed neighbors with fallbacks to popular items for cold starts. It is the simplest recommender that actually lifts conversion.",
+      "key_params": {
+        "min_cooccur": "minimum shared sessions to link items",
+        "top_n": "recommendations shown",
+        "half_life_days": "recency decay of sessions"
+      },
+      "data_idea": "Simulates seeded browsing sessions with planted affinities and verifies the widget surfaces the planted pairs above noise.",
+      "real_world_use": "Amazon's 'frequently bought together', Netflix rows, and news 'related stories' all use co-occurrence signals.",
+      "suggested_types": [
+        "web_dashboard",
+        "rest_api",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ab-test-middleware",
+      "name": "A/B Test Middleware",
+      "concept": "A/B testing routes users into experiment variants consistently: the middleware hashes a user id into buckets, serves the assigned variant, and logs exposures for analysis. Sticky bucketing keeps users in one variant across sessions, and mutual exclusion prevents overlapping experiments from confounding. Guardrails pause tests on metric regressions.",
+      "key_params": {
+        "experiments": "experiment definitions with traffic splits",
+        "hash_salt": "salt isolating bucketing per experiment",
+        "sticky": "cookie vs id-based stickiness"
+      },
+      "data_idea": "Assigns seeded users across experiments and verifies bucket proportions, stickiness across requests, and exclusion rules.",
+      "real_world_use": "Optimizely, LaunchDarkly experimentation, and in-house platforms (Google, Meta) bucket and log exposures this way.",
+      "suggested_types": [
+        "rest_api",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "feature-flag-service",
+      "name": "Feature Flag Service",
+      "concept": "Feature flags decouple deploy from release: the service evaluates flag rules (percentage rollouts, user targeting, kill switches) per request and returns variant values to clients. Flags support gradual rollouts, A/B assignment, and instant rollback without redeploying. Flag hygiene (retiring stale flags) is the ongoing cost.",
+      "key_params": {
+        "flags": "flag definitions with rollout rules",
+        "targeting": "user-attribute targeting clauses",
+        "default": "value when evaluation fails"
+      },
+      "data_idea": "Evaluates seeded flag configs against random user populations and verifies rollout percentages and targeting match expected assignments.",
+      "real_world_use": "LaunchDarkly, Unleash, and every large deploy pipeline gate releases behind feature flags.",
+      "suggested_types": [
+        "rest_api",
+        "config_manager",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "analytics-event-collector",
+      "name": "Analytics Event Collector",
+      "concept": "Product analytics starts with an event collector: a lightweight beacon endpoint accepts batched events, validates schemas, dedupes by event id, and appends to a durable log for downstream pipelines. It must stay fast under spikes and never lose events on deploy. Sampling and rate limits protect it from runaway clients.",
+      "key_params": {
+        "schema": "event schemas validated on ingest",
+        "batch_max": "events accepted per request",
+        "dedupe_window": "event-id dedupe retention"
+      },
+      "data_idea": "Fires seeded event streams (including duplicates and malformed events) and verifies exactly-once durable logging with schema rejects counted.",
+      "real_world_use": "Segment, Snowplow, and in-house collectors (Google Analytics backend) ingest billions of events this way.",
+      "suggested_types": [
+        "rest_api",
+        "data_pipeline",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dashboard-metrics-aggregator",
+      "name": "Dashboard Metrics Aggregator",
+      "concept": "Dashboards need precomputed numbers, not raw events: the aggregator rolls event streams into minute/hour/day rollups (counts, sums, uniques via HyperLogLog) and serves them to charts. Late-arriving events trigger corrections, and rollups chain from fine to coarse grains. Pre-aggregation is what makes dashboards load in milliseconds.",
+      "key_params": {
+        "grains": "rollup granularities (minute, hour, day)",
+        "metrics": "count, sum, unique definitions",
+        "late_window": "how late events still correct rollups"
+      },
+      "data_idea": "Streams seeded events with late arrivals through the aggregator and verifies rollup values match brute-force recomputation.",
+      "real_world_use": "Grafana, Metabase, and product dashboards query pre-aggregated rollups; Druid and ClickHouse are built for this.",
+      "suggested_types": [
+        "web_dashboard",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "real-time-visitor-counter",
+      "name": "Real-Time Visitor Counter",
+      "concept": "Live visitor counts need approximate distinct counting: HyperLogLog sketches estimate uniques in kilobytes of memory, while sliding windows expire old activity. The counter merges sketches from edge nodes for a global number. Exact counts would need unbounded memory, so the error bound is the design parameter.",
+      "key_params": {
+        "error_rate": "HyperLogLog precision target",
+        "window": "sliding window minutes",
+        "merge": "how edge sketches combine"
+      },
+      "data_idea": "Simulates seeded visitor streams across nodes and verifies the estimated uniques stay within the error bound of exact counts.",
+      "real_world_use": "'X people online' badges, live analytics (Chartbeat), and ad impression deduplication use probabilistic counting.",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "uptime-monitor",
+      "name": "Uptime Monitor (Synthetic Checks)",
+      "concept": "Synthetic monitoring probes endpoints on a schedule from multiple regions, recording status, latency, and content matches. Alerting fires after consecutive failures to avoid flapping, and status pages aggregate region results. Check design (what 'up' means) matters more than frequency: a 200 with an error page is still down.",
+      "key_params": {
+        "targets": "URLs with expected status/content",
+        "interval": "check frequency seconds",
+        "fail_threshold": "consecutive failures before alert"
+      },
+      "data_idea": "Runs seeded targets with random outages against the prober and verifies detection latency and alert correctness.",
+      "real_world_use": "Pingdom, Datadog Synthetics, and Better Uptime sell exactly this; SRE teams run their own for critical flows.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "log-tailing-web-ui",
+      "name": "Log Tailing Web UI",
+      "concept": "Developers tail logs in the browser: the server streams new log lines over SSE or WebSocket, the UI filters by level and keyword, pauses the stream, and highlights matches. Backpressure handling keeps a flood of logs from freezing the browser. It is a small app that teaches streaming, filtering, and UI state.",
+      "key_params": {
+        "sources": "log files or streams tailed",
+        "filter": "level and keyword filter syntax",
+        "buffer": "lines retained in the browser"
+      },
+      "data_idea": "Streams seeded log generators (including bursts) to the UI and verifies filtering, pause/resume, and no dropped lines under backpressure.",
+      "real_world_use": "Papertrail, Datadog Live Tail, and kubectl log dashboards all stream filtered logs to browsers.",
+      "suggested_types": [
+        "web_dashboard",
+        "log_analyzer",
+        "chat_server"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "error-tracking-aggregator",
+      "name": "Error Tracking Aggregator",
+      "concept": "Raw exceptions are noise until grouped: the aggregator fingerprints stack traces (normalizing line numbers and memory addresses), counts occurrences per issue, and tracks first-seen, regression, and release correlation. Grouping quality decides whether developers see ten real bugs or ten thousand duplicates.",
+      "key_params": {
+        "fingerprint": "stack-trace normalization rules",
+        "grouping": "exact vs fuzzy issue matching",
+        "regression_window": "resolved-then-seen-again detection"
+      },
+      "data_idea": "Feeds seeded exception streams with duplicates and variants, verifying grouping collapses true dupes while keeping distinct bugs apart.",
+      "real_world_use": "Sentry, Rollbar, and Bugsnag fingerprint and group errors exactly this way.",
+      "suggested_types": [
+        "log_analyzer",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "performance-budget-checker",
+      "name": "Performance Budget Checker",
+      "concept": "Performance budgets cap page weight and timing: the checker parses resource timing data, sums bytes per type, and fails the build when budgets are exceeded. Budgets cover total JavaScript, image weight, and timing milestones like largest contentful paint. Enforcing in CI stops regressions before they ship.",
+      "key_params": {
+        "budgets": "byte and timing limits per category",
+        "baseline": "comparison against previous build",
+        "fail_mode": "warn vs fail the check"
+      },
+      "data_idea": "Analyzes seeded resource-timing payloads against budgets and verifies pass/fail verdicts plus regression deltas vs baseline.",
+      "real_world_use": "Lighthouse CI, SpeedCurve, and Calibre enforce performance budgets in deploy pipelines.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "lighthouse-lite-scorer",
+      "name": "Page Quality Scorer (Lighthouse-lite)",
+      "concept": "Page quality can be scored heuristically: the scorer audits a page's resources, render-blocking scripts, image sizing, caching headers, and accessibility basics, then weights them into a 0-100 score with actionable failures. It is a simplified Lighthouse that runs offline on captured page data. The value is the prioritized fix list, not the number.",
+      "key_params": {
+        "weights": "category weights in the final score",
+        "audits": "which audits run",
+        "thresholds": "pass/warn/fail cutoffs per audit"
+      },
+      "data_idea": "Scores seeded page captures with known defects and verifies the score penalizes exactly the planted issues with correct remediation hints.",
+      "real_world_use": "Lighthouse, WebPageTest, and agency audit tools score pages to prioritize optimization work.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "broken-link-crawler",
+      "name": "Broken Link Crawler",
+      "concept": "Link rot erodes trust, so the crawler fetches a site's pages, extracts links, and checks each target's status with HEAD requests, respecting robots.txt and rate limits. It reports broken links grouped by source page and distinguishes 404s from timeouts and redirect chains. Politeness (crawl delay, concurrency caps) keeps it from becoming an accidental DDoS.",
+      "key_params": {
+        "start_urls": "seed URLs for the crawl",
+        "max_pages": "crawl budget cap",
+        "concurrency": "parallel fetch limit"
+      },
+      "data_idea": "Crawls seeded site graphs with planted broken links and verifies the report lists every broken link with its source pages.",
+      "real_world_use": "Screaming Frog, Ahrefs site audit, and Dr. Link Check all crawl for broken links and redirect issues.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "meta-tag-preview-generator",
+      "name": "Meta Tag Preview Generator",
+      "concept": "Social previews come from meta tags: the generator parses Open Graph and Twitter Card tags, validates required fields and image dimensions, and renders a text mock of how the link card will look. Missing or oversized tags produce specific warnings. It catches the 'why does my share look wrong' class of bugs before publishing.",
+      "key_params": {
+        "required_tags": "og:title, og:image, etc. required",
+        "image_rules": "min dimensions and aspect checks",
+        "fallbacks": "behavior when tags are absent"
+      },
+      "data_idea": "Parses seeded pages with complete, partial, and broken tag sets, verifying the preview mock and warning list for each.",
+      "real_world_use": "Social-share debuggers (Meta, X, LinkedIn) and CMS SEO plugins validate these tags pre-publish.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "canonical-url-resolver",
+      "name": "Canonical URL Resolver",
+      "concept": "Duplicate content hurts rankings, so pages declare their canonical URL: the resolver follows redirect chains, reads canonical tags, and collapses URL variants (trailing slash, tracking params, case) to one canonical form. Conflicts (redirect says A, tag says B) get flagged. Clean canonicalization consolidates ranking signals onto one URL.",
+      "key_params": {
+        "param_strip": "tracking params removed (utm_*)",
+        "trailing_slash": "normalization policy",
+        "conflict_policy": "which signal wins on disagreement"
+      },
+      "data_idea": "Resolves seeded URL sets with redirects, tags, and parameter variants, verifying each collapses to the expected canonical.",
+      "real_world_use": "SEO platforms (Screaming Frog, Sitebulb) audit canonicalization; Google consolidates signals per canonical.",
+      "suggested_types": [
+        "cli_tool",
+        "api_client_sim",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "redirect-chain-inspector",
+      "name": "Redirect Chain Inspector",
+      "concept": "Redirect chains slow pages and leak link equity: the inspector follows each URL's redirects, records status codes and latency per hop, and flags chains, loops, and mixed http/https hops. It reports the final destination and total added latency. One hop is ideal; more than three is a fix ticket.",
+      "key_params": {
+        "max_hops": "follow limit before abort",
+        "timeout": "per-hop timeout seconds",
+        "flag_mixed": "whether http/https mixing is flagged"
+      },
+      "data_idea": "Follows seeded redirect graphs (chains, loops, mixed schemes) and verifies hop records, loop detection, and final-destination reporting.",
+      "real_world_use": "SEO audits and site migrations use redirect inspection to preserve rankings during URL changes.",
+      "suggested_types": [
+        "cli_tool",
+        "api_client_sim",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "trailing-slash-normalizer",
+      "name": "Trailing Slash Normalizer",
+      "concept": "Inconsistent trailing slashes create duplicate URLs (/page vs /page/): the normalizer picks one convention, 301-redirects the other, and updates internal links to the canonical form. It must exempt file paths and API routes where slashes change semantics. The rule is simple; the exceptions are the work.",
+      "key_params": {
+        "convention": "always vs never trailing slash",
+        "exemptions": "path patterns skipped",
+        "redirect_code": "301 vs 308 for the redirect"
+      },
+      "data_idea": "Applies the normalizer to seeded URL sets with exemptions and verifies redirects and exemptions are exactly right.",
+      "real_world_use": "Next.js, Django (APPEND_SLASH), and SEO guides enforce one trailing-slash convention site-wide.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "i18n-translation-service",
+      "name": "i18n Translation Service",
+      "concept": "Internationalization serves each user their language: the service parses Accept-Language with q-values, falls back through locale hierarchies (fr-CA to fr to default), interpolates pluralized messages, and formats dates/numbers per locale. Missing translations fall back gracefully and get logged for translators. ICU message format handles the gnarly plural rules.",
+      "key_params": {
+        "locales": "supported locale list with fallbacks",
+        "plural_rules": "per-locale plural categories",
+        "missing_policy": "fallback vs key-display vs log"
+      },
+      "data_idea": "Resolves seeded translation catalogs against random Accept-Language headers, verifying fallback chains and plural interpolation.",
+      "real_world_use": "Every global product (Airbnb, Shopify, government portals) localizes with ICU-style message catalogs.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "timezone-aware-scheduler",
+      "name": "Timezone-Aware Scheduler",
+      "concept": "Scheduling across timezones is a DST minefield: the scheduler stores instants in UTC, renders them in the user's zone, and handles ambiguous/nonexistent local times during transitions. Recurring rules (cron-like) expand correctly across DST changes. Getting this wrong double-books or skips appointments twice a year.",
+      "key_params": {
+        "zones": "IANA zones supported",
+        "dst_policy": "how ambiguous times resolve",
+        "recurrence": "cron vs interval recurrence rules"
+      },
+      "data_idea": "Schedules seeded events across DST boundaries in multiple zones and verifies UTC instants and local renderings are correct.",
+      "real_world_use": "Calendly, airline booking, and calendar apps (Google Calendar) all store UTC and render zoned.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "email-template-renderer",
+      "name": "Email Template Renderer",
+      "concept": "Transactional emails render from templates with user data: the renderer merges variables, inlines CSS (email clients strip style tags), generates plain-text fallbacks, and validates against spam-trigger patterns. Previewing across clients matters because Gmail and Outlook render differently. Template versioning lets content change without code deploys.",
+      "key_params": {
+        "templates": "named templates with variables",
+        "inline_css": "whether CSS is inlined for clients",
+        "spam_check": "spam-score heuristics applied"
+      },
+      "data_idea": "Renders seeded templates with random user data, verifying variable merging, CSS inlining, and plain-text fallback generation.",
+      "real_world_use": "SendGrid, Postmark, and Braze template engines render and inline transactional email.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "task_queue"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "contact-form-spam-filter",
+      "name": "Contact Form Spam Filter",
+      "concept": "Contact forms attract bots, so layered defenses filter them: honeypot fields invisible to humans, submission-timing analysis (bots are instant), link-count heuristics, and content blocklists. Legitimate messages must never be silently dropped, so suspicious ones queue for review. Each layer is cheap; together they stop most spam.",
+      "key_params": {
+        "honeypot": "hidden field name used",
+        "min_seconds": "minimum human-like fill time",
+        "review_queue": "whether suspects queue vs reject"
+      },
+      "data_idea": "Submits seeded messages (human-paced, bot-fast, honeypot-filled) and verifies classification with zero false drops of legit mail.",
+      "real_world_use": "WordPress (Akismet), HubSpot forms, and SaaS contact pages layer these bot defenses.",
+      "suggested_types": [
+        "simulation",
+        "rest_api",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "comment-moderation-queue",
+      "name": "Comment Moderation Queue",
+      "concept": "User comments need review at scale: the queue auto-approves trusted users, holds suspicious content (links, blocklisted words, rapid posting) for moderators, and learns from moderator decisions. SLA timers escalate stale items, and audit trails record every decision. The balance is safety without strangling conversation.",
+      "key_params": {
+        "auto_approve": "trust thresholds for auto-approval",
+        "hold_rules": "patterns triggering review",
+        "sla_hours": "escalation deadline"
+      },
+      "data_idea": "Processes seeded comment streams with moderator decisions and verifies routing, SLA escalation, and trust-score updates.",
+      "real_world_use": "Disqus, Reddit mod queues, and news-site comments all triage through moderation queues.",
+      "suggested_types": [
+        "task_queue",
+        "web_dashboard",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "user-profile-service",
+      "name": "User Profile Service",
+      "concept": "Profiles aggregate identity: the service stores usernames with uniqueness and reserved-word rules, avatars, bios with length limits, and privacy flags per field. Updates validate and version, and public views filter to visible fields. Username squatting and impersonation rules are policy encoded as code.",
+      "key_params": {
+        "username_rules": "charset, length, reserved words",
+        "visibility": "per-field public/friends/private",
+        "versioning": "whether history is kept"
+      },
+      "data_idea": "Runs seeded profile lifecycles (create, update, privacy changes) and verifies public views expose exactly the permitted fields.",
+      "real_world_use": "Twitter/X, GitHub, and LinkedIn profiles all enforce username rules and field-level visibility.",
+      "suggested_types": [
+        "rest_api",
+        "web_dashboard",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "avatar-initials-generator",
+      "name": "Avatar Initials Generator (SVG)",
+      "concept": "Default avatars from initials are everywhere: the generator picks a deterministic background color from the name hash, renders 1-2 initials in SVG with proper contrast, and sizes for retina displays. Deterministic colors mean the same user always gets the same avatar. It is a tiny service with outsized visual impact.",
+      "key_params": {
+        "palette": "background color set",
+        "contrast_min": "minimum text/background contrast",
+        "sizes": "output sizes generated"
+      },
+      "data_idea": "Generates avatars for seeded names and verifies determinism, contrast ratios, and valid SVG output.",
+      "real_world_use": "Slack, Gmail, and GitHub render initial avatars for users without photos.",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gravatar-hash-service",
+      "name": "Gravatar Hash Service",
+      "concept": "Gravatar maps emails to avatars via MD5: the service normalizes (trim, lowercase), hashes, and builds avatar URLs with size and default-image parameters. It handles the 404-vs-default fallback choice and caches lookups. The privacy trade-off is that email hashes are enumerable, which is why many sites moved to initials.",
+      "key_params": {
+        "size": "avatar pixel size",
+        "default": "fallback style (identicon, 404, etc.)",
+        "rating": "max content rating allowed"
+      },
+      "data_idea": "Processes seeded emails and verifies URL construction, normalization, and fallback behavior.",
+      "real_world_use": "WordPress comments and legacy forums historically pulled avatars from Gravatar hashes.",
+      "suggested_types": [
+        "api_client_sim",
+        "cli_tool",
+        "lru_cache"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "activity-feed-aggregator",
+      "name": "Activity Feed Aggregator",
+      "concept": "Social feeds merge many actors' actions into one timeline: the fan-out service collects events, ranks them (recency, affinity, type weights), dedupes, and paginates per user. Push fan-out precomputes feeds for active users while pull computes on read for the long tail. Ranking quality is the product.",
+      "key_params": {
+        "ranking": "recency vs affinity weight blend",
+        "fanout": "push vs pull vs hybrid",
+        "dedupe_window": "duplicate suppression window"
+      },
+      "data_idea": "Simulates seeded user graphs and event streams, verifying feed ordering, dedupe, and pagination stability.",
+      "real_world_use": "Twitter/X home timeline, LinkedIn feed, and GitHub activity feeds all aggregate and rank events.",
+      "suggested_types": [
+        "rest_api",
+        "data_pipeline",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "notification-dispatcher",
+      "name": "Multi-Channel Notification Dispatcher",
+      "concept": "Notifications span email, SMS, push, and in-app: the dispatcher routes each notification by user preference and urgency, batches digestible ones, respects quiet hours per timezone, and tracks delivery and open rates. Preference centers let users tune per category. Over-notifying is the fastest way to lose a user.",
+      "key_params": {
+        "channels": "email, sms, push, in-app support",
+        "quiet_hours": "per-user do-not-disturb windows",
+        "digest": "batching window for low-urgency items"
+      },
+      "data_idea": "Dispatches seeded notifications across preferences and timezones, verifying channel choice, quiet-hour deferral, and digest batching.",
+      "real_world_use": "Slack, Duolingo, and banking apps route notifications across channels with preference and quiet-hour logic.",
+      "suggested_types": [
+        "task_queue",
+        "scheduler",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "email-queue-worker",
+      "name": "Email Queue Worker",
+      "concept": "Sending email synchronously blocks requests, so a queue worker dequeues jobs, renders templates, and sends with per-domain throttling and bounce handling. Failed sends retry with backoff; hard bounces suppress future sends to protect sender reputation. Dead-letter review catches template bugs before they burn the list.",
+      "key_params": {
+        "concurrency": "parallel send workers",
+        "throttle": "per-domain sends per minute",
+        "bounce_policy": "hard vs soft bounce handling"
+      },
+      "data_idea": "Processes seeded email jobs with random bounces and failures, verifying throttling, retry timing, and suppression-list updates.",
+      "real_world_use": "Sidekiq/ActionMailer, Celery email tasks, and SES-backed workers all queue transactional email.",
+      "suggested_types": [
+        "task_queue",
+        "scheduler",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sms-gateway-simulator",
+      "name": "SMS Gateway Simulator",
+      "concept": "SMS delivery has real-world quirks the simulator models: per-carrier throughput limits, delivery receipts with latency, opt-out (STOP) handling required by law, and concatenated multi-part messages for long texts. It validates E.164 numbers and tracks cost per segment. Simulating this lets apps test messaging flows without sending real texts.",
+      "key_params": {
+        "throughput": "messages per second per carrier",
+        "dlr_latency": "delivery-receipt delay distribution",
+        "opt_out": "STOP keyword handling"
+      },
+      "data_idea": "Sends seeded message batches through the simulator, verifying throttling, opt-out suppression, and receipt correlation.",
+      "real_world_use": "Twilio, Vonage, and AWS SNS implement carrier throughput, DLRs, and compliance opt-outs.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "push-subscription-manager",
+      "name": "Web Push Subscription Manager",
+      "concept": "Web push delivers notifications even when the tab is closed: the manager stores push subscriptions (endpoint + VAPID keys), encrypts payloads per the Web Push protocol, and prunes expired (410) subscriptions. It batches sends and tracks per-subscription failure. VAPID identifies the sender so push services can throttle abuse.",
+      "key_params": {
+        "vapid": "sender key pair management",
+        "ttl": "message time-to-live seconds",
+        "prune_on": "410/404 cleanup policy"
+      },
+      "data_idea": "Manages seeded subscriptions through send cycles with expirations, verifying encryption, batching, and dead-subscription pruning.",
+      "real_world_use": "News sites, PWAs, and e-commerce back-in-stock alerts use Web Push via Firebase Cloud Messaging and APNs.",
+      "suggested_types": [
+        "rest_api",
+        "scheduler",
+        "encryption_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "in-app-inbox-service",
+      "name": "In-App Inbox Service",
+      "concept": "An in-app inbox gives users a durable message list: the service stores notifications per user, tracks read/unread, supports archiving and categories, and syncs read state across devices. Pagination and unread badges complete it. Unlike email, delivery is guaranteed once the app is opened.",
+      "key_params": {
+        "retention_days": "message lifetime",
+        "categories": "inbox categories (orders, alerts, promos)",
+        "badge_rule": "what counts toward the unread badge"
+      },
+      "data_idea": "Drives seeded notification lifecycles across devices, verifying read-state sync, retention expiry, and badge counts.",
+      "real_world_use": "Banking apps, marketplaces (order updates), and SaaS products all ship in-app inboxes.",
+      "suggested_types": [
+        "rest_api",
+        "web_dashboard",
+        "lru_cache"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "read-receipt-tracker",
+      "name": "Read Receipt Tracker",
+      "concept": "Read receipts confirm delivery and reading: the tracker records sent/delivered/read transitions per message per recipient, handles group-chat partial reads, and respects users who disable receipts. Timestamps on each transition feed 'seen by' UIs. Privacy settings complicate the state machine in interesting ways.",
+      "key_params": {
+        "transitions": "sent->delivered->read state machine",
+        "privacy": "per-user receipt visibility",
+        "group_rule": "how group reads aggregate"
+      },
+      "data_idea": "Replays seeded message flows with mixed privacy settings, verifying state transitions and 'seen by' lists.",
+      "real_world_use": "WhatsApp blue ticks, iMessage, and Slack all track read receipts with per-user privacy controls.",
+      "suggested_types": [
+        "chat_server",
+        "rest_api",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "typing-indicator-broker",
+      "name": "Typing Indicator Broker",
+      "concept": "Typing indicators are ephemeral presence: the broker relays typing-started/stopped events within a conversation, expires stale indicators when clients disconnect mid-type, and throttles event rates. It never persists them. Small detail, big perceived liveness.",
+      "key_params": {
+        "expiry": "seconds before a stale indicator clears",
+        "throttle_ms": "min interval between events per user",
+        "scope": "conversation vs thread granularity"
+      },
+      "data_idea": "Simulates seeded typing sessions with disconnects, verifying indicators appear, throttle, and expire correctly.",
+      "real_world_use": "Every chat app (Slack, WhatsApp, Discord) broadcasts typing indicators over its realtime channel.",
+      "suggested_types": [
+        "chat_server",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "presence-service",
+      "name": "Presence Service (Online Status)",
+      "concept": "Presence tracks who is online: clients heartbeat, the service marks users online/away/offline with last-seen timestamps, and broadcasts changes to contacts. Stale heartbeats expire users to offline, and granular privacy (invisible mode) overrides broadcast. At scale, presence is sharded by user with pub/sub fan-out.",
+      "key_params": {
+        "heartbeat": "client heartbeat seconds",
+        "away_after": "idle seconds before away",
+        "privacy": "who may see each user's presence"
+      },
+      "data_idea": "Simulates seeded users with heartbeats, idles, and disconnects, verifying status transitions and privacy-filtered broadcasts.",
+      "real_world_use": "Slack, Discord, and WhatsApp presence all run on heartbeat expiry with pub/sub updates.",
+      "suggested_types": [
+        "chat_server",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "collaborative-cursor-broker",
+      "name": "Collaborative Cursor Broker",
+      "concept": "Shared cursors show where collaborators are: the broker relays cursor positions and selections per document at throttled rates, assigns deterministic colors per user, and removes cursors on disconnect. Positions reference document versions so they stay meaningful during concurrent edits. It is presence applied to a document.",
+      "key_params": {
+        "throttle_ms": "position update interval",
+        "colors": "per-user color assignment",
+        "versioning": "document version cursor positions bind to"
+      },
+      "data_idea": "Relays seeded cursor movements with concurrent edits, verifying throttling, color stability, and disconnect cleanup.",
+      "real_world_use": "Google Docs, Figma, and Notion all broadcast collaborator cursors over realtime channels.",
+      "suggested_types": [
+        "chat_server",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "operational-transform-lite",
+      "name": "Operational Transform (Lite)",
+      "concept": "Collaborative editing needs conflict resolution: operational transform rewrites concurrent operations (insert/delete) so all clients converge on the same text. The core is the transform function adjusting positions when operations overlap. A central server orders operations, and clients transform their pending ops against incoming ones.",
+      "key_params": {
+        "op_types": "insert/delete/retain supported",
+        "server": "centralized ordering vs peer-to-peer",
+        "undo": "whether undo transforms correctly"
+      },
+      "data_idea": "Applies seeded concurrent edit scripts from multiple clients and verifies all replicas converge to identical text.",
+      "real_world_use": "Google Docs originally used OT; ShareDB and Etherpad implement transform-based collaboration.",
+      "suggested_types": [
+        "simulation",
+        "chat_server",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "crdt-gcounter-demo",
+      "name": "CRDT Counter Demo (G-Counter)",
+      "concept": "CRDTs let replicas merge without coordination: a G-counter keeps a per-replica vector and merge takes the element-wise max, so increments commute and all replicas converge. The demo shows increments on partitioned replicas merging to the exact total. PN-counters extend this to decrements with two G-counters.",
+      "key_params": {
+        "replicas": "number of simulated replicas",
+        "partition": "network partition scenarios",
+        "merge_fn": "max-based merge semantics"
+      },
+      "data_idea": "Runs seeded increment workloads under partitions and verifies merged totals are exact regardless of merge order.",
+      "real_world_use": "Riak, Redis CRDTs, and collaborative apps (Figma multiplayer) use CRDTs for coordination-free convergence.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "chat_server"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "document-version-history",
+      "name": "Document Version History",
+      "concept": "Version history lets users rewind: the service snapshots or diffs document states on each save, attributes versions to authors, and supports restore and compare. Diff-based storage keeps history cheap; snapshots make restore instant. Retention policies bound the growth.",
+      "key_params": {
+        "strategy": "full snapshot vs diff chain",
+        "retention": "versions kept per document",
+        "attribution": "author metadata per version"
+      },
+      "data_idea": "Applies seeded edit histories and verifies restore returns exact past states and diffs reconstruct correctly.",
+      "real_world_use": "Google Docs version history, Notion page history, and wikis all store restorable revision chains.",
+      "suggested_types": [
+        "file_organizer",
+        "backup_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "autosave-draft-service",
+      "name": "Autosave Draft Service",
+      "concept": "Autosave protects work from crashes: the client debounces edits, the service stores drafts keyed by user and document, and on reopen offers to restore the newer draft. Conflict handling decides when the draft diverges from a collaborator's newer save. Debounce tuning balances write load against data-loss windows.",
+      "key_params": {
+        "debounce_ms": "idle time before saving",
+        "conflict": "draft-vs-newer-save resolution",
+        "draft_ttl": "abandoned draft expiry"
+      },
+      "data_idea": "Simulates seeded editing sessions with crashes and concurrent saves, verifying drafts capture work and restore offers are correct.",
+      "real_world_use": "Gmail compose, Notion, and Google Docs all autosave drafts with debounce and conflict handling.",
+      "suggested_types": [
+        "rest_api",
+        "scheduler",
+        "lru_cache"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "optimistic-ui-conflict-resolver",
+      "name": "Optimistic UI Conflict Resolver",
+      "concept": "Optimistic UI applies changes instantly and reconciles with the server after: the resolver tracks pending mutations, rolls back on server rejection, and merges when the server state moved underneath. Version vectors or etags detect the conflicts. Done well, apps feel instant; done poorly, user edits vanish mysteriously.",
+      "key_params": {
+        "strategy": "last-write-wins vs merge vs rollback",
+        "versioning": "etag vs vector-clock conflict detection",
+        "retry": "whether rejected mutations retry"
+      },
+      "data_idea": "Replays seeded concurrent mutations with server rejections, verifying UI state always converges to a correct, explainable result.",
+      "real_world_use": "Linear, Notion, and mobile apps use optimistic updates with rollback for perceived performance.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "shopping-cart-service",
+      "name": "Shopping Cart Service",
+      "concept": "Carts bridge browsing and checkout: the service holds items with quantities, validates price and availability at each mutation, merges anonymous and logged-in carts on sign-in, and expires abandoned carts. Price snapshots at add-time versus live pricing is a real business decision. Inventory holds start at checkout, not before.",
+      "key_params": {
+        "merge_policy": "anonymous-to-user cart merge rules",
+        "price_policy": "snapshot vs live pricing",
+        "abandon_ttl": "cart expiry hours"
+      },
+      "data_idea": "Drives seeded shopping sessions (add, merge on login, abandon, checkout) verifying totals, merges, and expiry.",
+      "real_world_use": "Every e-commerce platform (Shopify, Amazon) implements cart merge, pricing policy, and abandonment flows.",
+      "suggested_types": [
+        "rest_api",
+        "web_dashboard",
+        "lru_cache"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "checkout-state-machine",
+      "name": "Checkout State Machine",
+      "concept": "Checkout is a state machine (cart, address, shipping, payment, review, placed) where each transition validates its step and the machine guards against skipping or replaying steps. Payment attempts are idempotent so double-clicks cannot double-charge. Failed payments return to the payment step with the error, never losing the cart.",
+      "key_params": {
+        "steps": "ordered checkout steps with validators",
+        "idempotency": "payment attempt dedupe keys",
+        "resume": "abandoned checkout resume policy"
+      },
+      "data_idea": "Walks seeded checkouts through valid, skipped, failed-payment, and double-submit paths, verifying only legal transitions occur.",
+      "real_world_use": "Shopify, Stripe Checkout, and Amazon all model checkout as guarded state machines with idempotent payment.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "inventory-reservation",
+      "name": "Inventory Reservation (Hold with TTL)",
+      "concept": "Selling the last item twice is a classic bug: reservation places a TTL hold on stock at checkout start, decrements on payment success, and releases on timeout or cancellation. The hold table must handle concurrency with atomic compare-and-set. Oversell protection is the whole point.",
+      "key_params": {
+        "hold_ttl": "reservation lifetime minutes",
+        "stock": "per-SKU stock counts",
+        "concurrency": "atomicity mechanism simulated"
+      },
+      "data_idea": "Simulates seeded concurrent checkouts racing for limited stock, verifying sold units never exceed stock and holds release on timeout.",
+      "real_world_use": "Ticketing (Ticketmaster), flash sales, and airline seat holds all reserve inventory with expiring holds.",
+      "suggested_types": [
+        "simulation",
+        "rest_api",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "price-calculator",
+      "name": "Price Calculator (Tax and Discounts)",
+      "concept": "Pricing stacks rules: base price, tiered quantity discounts, coupon codes, and jurisdiction tax rates combine in a defined order. The calculator applies them deterministically, rounds per currency rules, and itemizes every line so customers can audit the total. Rule ordering (discount before vs after tax) changes the result legally.",
+      "key_params": {
+        "tax_tables": "jurisdiction tax rates",
+        "discount_stack": "order of discount application",
+        "rounding": "per-currency rounding mode"
+      },
+      "data_idea": "Prices seeded carts across jurisdictions and discount combos, verifying itemized totals match an independent reference computation.",
+      "real_world_use": "Stripe Tax, Avalara, and every checkout totals engine compute stacked pricing with audit trails.",
+      "suggested_types": [
+        "cli_tool",
+        "rest_api",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "coupon-code-validator",
+      "name": "Coupon Code Validator",
+      "concept": "Coupons encode marketing rules: the validator checks code existence, expiry, usage caps, minimum order, product eligibility, and stacking limits. Single-use codes need atomic redemption to prevent double-spend. Clear rejection reasons ('expired', 'minimum not met') reduce support tickets.",
+      "key_params": {
+        "rules": "per-coupon constraint sets",
+        "redemption": "atomic single-use enforcement",
+        "stacking": "how many coupons combine"
+      },
+      "data_idea": "Validates seeded coupon applications (valid, expired, over-cap, ineligible cart) verifying accept/reject with exact reasons.",
+      "real_world_use": "Shopify discounts, airline promo codes, and SaaS referral credits all validate against rule sets.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "order-tracking-timeline",
+      "name": "Order Tracking Timeline",
+      "concept": "Order tracking turns fulfillment events into a customer-facing timeline: placed, paid, packed, shipped, out-for-delivery, delivered, each with timestamps and location. The service maps carrier scan codes to friendly statuses and handles exceptions (delayed, failed attempt). Proactive notifications on exceptions cut 'where is my order' tickets.",
+      "key_params": {
+        "stages": "fulfillment stage definitions",
+        "carrier_map": "scan-code to status mapping",
+        "notify_on": "which transitions trigger alerts"
+      },
+      "data_idea": "Replays seeded fulfillment event streams and verifies timeline rendering, exception flagging, and notification triggers.",
+      "real_world_use": "Amazon, UPS/FedEx tracking, and Shopify order status pages map scan events to timelines.",
+      "suggested_types": [
+        "web_dashboard",
+        "rest_api",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "refund-workflow-engine",
+      "name": "Refund Workflow Engine",
+      "concept": "Refunds are money movement with policy: the engine validates eligibility (window, item condition, payment method), computes partial amounts with restocking fees, routes approvals by amount threshold, and issues the refund idempotently to the original method. Each step is auditable because money is involved.",
+      "key_params": {
+        "policy": "refund windows and fee rules",
+        "approval_tiers": "amount thresholds needing approval",
+        "idempotency": "dedupe keys on refund issuance"
+      },
+      "data_idea": "Processes seeded refund requests (eligible, late, partial, duplicate) verifying amounts, approvals, and no double-refunds.",
+      "real_world_use": "Stripe refunds, Amazon returns, and airline refund desks all run policy-driven refund workflows.",
+      "suggested_types": [
+        "rest_api",
+        "task_queue",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "subscription-billing-sim",
+      "name": "Subscription Billing Simulator",
+      "concept": "Subscription billing prorates everything: mid-cycle upgrades charge the difference, downgrades credit, trials convert, and failed payments dunning-retry before cancellation. The simulator models billing periods, proration math, and dunning schedules. Getting proration right is a legal and trust requirement.",
+      "key_params": {
+        "plans": "plan tiers and prices",
+        "proration": "prorate vs full-period on change",
+        "dunning": "retry schedule before cancel"
+      },
+      "data_idea": "Simulates seeded subscriber lifecycles (upgrades, downgrades, failed cards) verifying invoices match proration math.",
+      "real_world_use": "Stripe Billing, Chargebee, and Recurly implement proration, trials, and dunning exactly this way.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "invoice-number-generator",
+      "name": "Invoice Number Generator",
+      "concept": "Invoice numbers must be sequential, gapless-per-series, and tamper-evident: the generator issues numbers per series (per year, per entity) with check digits, reserves ranges for offline issuance, and detects gaps for audit. Concurrency-safe sequencing is the core challenge.",
+      "key_params": {
+        "series": "numbering series definitions",
+        "check_digit": "checksum algorithm on numbers",
+        "gap_policy": "how gaps are detected/reported"
+      },
+      "data_idea": "Issues seeded invoice streams concurrently, verifying uniqueness, sequence integrity, and check-digit validity.",
+      "real_world_use": "ERP systems (NetSuite, SAP) and tax-compliant invoicing (EU sequential numbering rules) require gapless series.",
+      "suggested_types": [
+        "cli_tool",
+        "rest_api",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "multi-currency-formatter",
+      "name": "Multi-Currency Formatter",
+      "concept": "Money formatting is locale-specific: the formatter applies currency symbols or codes, decimal and grouping separators, and per-currency minor-unit rules (JPY has no cents). It converts with explicit rates and timestamps, never silently. Rounding mode on conversion is a financial decision, not a default.",
+      "key_params": {
+        "locales": "locale to currency mappings",
+        "rates": "conversion rates with timestamps",
+        "rounding": "bankers vs half-up rounding"
+      },
+      "data_idea": "Formats and converts seeded amounts across currencies/locales, verifying symbol placement, minor units, and rounding.",
+      "real_world_use": "Stripe, Wise, and every international checkout format and convert currencies with explicit rounding.",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "address-validator",
+      "name": "Address Validator",
+      "concept": "Addresses follow country-specific formats: the validator checks postal-code patterns per country, required fields (state for US, province for CA), and normalizes casing and abbreviations. It flags undeliverable combos without claiming deliverability. Good validation happens before the shipping label, not after.",
+      "key_params": {
+        "countries": "per-country field and postal rules",
+        "normalize": "casing/abbreviation normalization",
+        "strictness": "reject vs warn on anomalies"
+      },
+      "data_idea": "Validates seeded addresses across countries (valid, malformed postal codes, missing fields) verifying verdicts and normalization.",
+      "real_world_use": "Checkout address forms, SmartyStreets, and Loqate validate formats before shipping.",
+      "suggested_types": [
+        "cli_tool",
+        "rest_api",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "shipping-rate-calculator",
+      "name": "Shipping Rate Calculator",
+      "concept": "Shipping rates come from zone tables: the calculator maps origin/destination postal codes to zones, looks up weight-bracket rates per service level, and adds surcharges (residential, fuel, oversize). Free-shipping thresholds short-circuit the math. The tables are the product; the code is the lookup.",
+      "key_params": {
+        "zones": "postal-code to zone mapping",
+        "rate_cards": "weight brackets per service",
+        "surcharges": "conditional surcharge rules"
+      },
+      "data_idea": "Prices seeded shipments across zones and weights, verifying zone lookup, bracket selection, and surcharge application.",
+      "real_world_use": "UPS/FedEx/USPS rate engines and Shopify shipping zones compute from zone/weight tables.",
+      "suggested_types": [
+        "cli_tool",
+        "rest_api",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "booking-calendar-availability",
+      "name": "Booking Calendar Availability",
+      "concept": "Availability is interval math: the calendar stores busy blocks, generates free slots from working hours minus busy minus buffers, and books atomically to prevent double-booking. Timezone rendering and minimum-notice rules complete it. The concurrency control on booking is what makes it correct.",
+      "key_params": {
+        "hours": "working hours per weekday",
+        "slot_len": "appointment slot minutes",
+        "buffer": "buffer minutes around bookings"
+      },
+      "data_idea": "Books seeded calendars concurrently, verifying slot generation and that no slot is ever double-booked.",
+      "real_world_use": "Calendly, salon booking, and doctor-scheduling systems all compute availability from busy intervals.",
+      "suggested_types": [
+        "scheduler",
+        "rest_api",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "appointment-reminder-scheduler",
+      "name": "Appointment Reminder Scheduler",
+      "concept": "Reminders cut no-shows: the scheduler queues reminders at configured offsets (24h email, 2h SMS), personalizes with appointment details, handles reschedules by re-queuing, and tracks confirmations. Quiet hours per timezone bound the send times. Delivery receipts feed no-show analytics.",
+      "key_params": {
+        "offsets": "reminder offsets per channel",
+        "channels": "email/sms/push per reminder",
+        "reschedule": "re-queue policy on changes"
+      },
+      "data_idea": "Schedules seeded appointments with reschedules and cancellations, verifying reminder timing, channel choice, and quiet-hour compliance.",
+      "real_world_use": "Dental/medical offices, salons, and service businesses run reminder sequences to reduce no-shows.",
+      "suggested_types": [
+        "scheduler",
+        "task_queue",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "waitlist-manager",
+      "name": "Waitlist Manager",
+      "concept": "Waitlists allocate scarce capacity fairly: the manager queues signups FIFO with optional priority tiers, notifies in order with claim windows, and backfills from the next in line on expiry. Position updates keep users informed. The claim-window expiry is what keeps the line moving.",
+      "key_params": {
+        "priority": "tier definitions overriding FIFO",
+        "claim_window": "minutes to claim an offered spot",
+        "notify": "notification channel per offer"
+      },
+      "data_idea": "Simulates seeded waitlists with expiries and declines, verifying offer order, backfill, and position reporting.",
+      "real_world_use": "Restaurant waitlists, course enrollment, and product launches (Supabase, Linear) manage scarce spots this way.",
+      "suggested_types": [
+        "task_queue",
+        "scheduler",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ticketing-queue-fairness",
+      "name": "Virtual Ticketing Queue (Fairness)",
+      "concept": "High-demand sales need orderly queues: the virtual waiting room assigns randomized queue positions at sale start (fairer than first-click), admits in batches matched to checkout throughput, and holds positions through refreshes with signed tokens. Bots get filtered by challenge. Fairness perception is the product.",
+      "key_params": {
+        "admit_rate": "users admitted per minute",
+        "randomize": "lottery vs first-come ordering",
+        "token_ttl": "queue-position token lifetime"
+      },
+      "data_idea": "Simulates seeded sale rushes, verifying position assignment fairness, admission pacing, and token persistence.",
+      "real_world_use": "Ticketmaster queues, sneaker drops, and GPU launch sales all use virtual waiting rooms.",
+      "suggested_types": [
+        "simulation",
+        "rate_limiter",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "poll-voting-service",
+      "name": "Poll Voting Service",
+      "concept": "Online polls need one-person-one-vote-ish: the service dedupes by voter id with cookie/IP fallbacks, supports single vs ranked vs approval ballots, and tallies with methods like instant-runoff. It detects ballot stuffing via rate anomalies. Transparency of the tally method is what makes results trusted.",
+      "key_params": {
+        "ballot": "single-choice vs ranked vs approval",
+        "tally": "plurality vs instant-runoff counting",
+        "dedupe": "voter identity strategy"
+      },
+      "data_idea": "Runs seeded elections (including duplicate-vote attempts) verifying dedupe and tally correctness per method.",
+      "real_world_use": "Strawpoll, Doodle, and DAO governance votes implement ballot types with dedupe and transparent tallies.",
+      "suggested_types": [
+        "rest_api",
+        "web_dashboard",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "leaderboard-service",
+      "name": "Leaderboard Service",
+      "concept": "Leaderboards rank millions of players: sorted-set storage gives O(log n) rank queries, tiers bucket players (bronze to diamond), and seasons reset with rewards. Percentile and friend-relative views need different queries than global top-100. Anti-cheat flags impossible score jumps.",
+      "key_params": {
+        "scoring": "score accumulation rules",
+        "tiers": "tier boundaries",
+        "season": "reset cadence and carryover"
+      },
+      "data_idea": "Simulates seeded player score streams, verifying ranks, tier assignments, and season resets.",
+      "real_world_use": "Mobile games, Duolingo leagues, and Kaggle leaderboards all rank via sorted sets (Redis ZSET).",
+      "suggested_types": [
+        "rest_api",
+        "web_dashboard",
+        "lru_cache"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "badge-achievement-engine",
+      "name": "Badge Achievement Engine",
+      "concept": "Gamification awards badges for actions: the engine defines badge rules (first post, 100-day streak, helpful answer), evaluates events against them, and grants badges idempotently with notifications. Progress toward badges ('3 of 5') drives engagement. Rules must be backfillable for historical actions.",
+      "key_params": {
+        "badges": "badge definitions with trigger rules",
+        "progress": "whether partial progress is shown",
+        "backfill": "historical grant policy"
+      },
+      "data_idea": "Replays seeded user action histories, verifying badges grant exactly when criteria are met, once each.",
+      "real_world_use": "Stack Overflow badges, Duolingo achievements, and GitHub achievements run rule-based grant engines.",
+      "suggested_types": [
+        "task_queue",
+        "web_dashboard",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "referral-code-tracker",
+      "name": "Referral Code Tracker",
+      "concept": "Referral programs attribute signups: the tracker issues per-user codes, attributes new signups via code or cookie with a lookback window, and credits rewards after fraud checks (self-referral, duplicate devices). Leaderboards of top referrers add virality. Fraud rules are what keep the program solvent.",
+      "key_params": {
+        "lookback_days": "attribution window",
+        "reward": "reward rules per referral",
+        "fraud_rules": "self-referral and velocity checks"
+      },
+      "data_idea": "Simulates seeded signup flows with fraud attempts, verifying attribution and reward gating.",
+      "real_world_use": "Dropbox, Uber, and fintech referral programs attribute via codes with fraud checks.",
+      "suggested_types": [
+        "rest_api",
+        "data_pipeline",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "affiliate-click-attributor",
+      "name": "Affiliate Click Attributor",
+      "concept": "Affiliate marketing pays for driven sales: the attributor logs clicks with affiliate ids, attributes purchases within the cookie window (last-click usually wins), and splits commissions on multi-touch per policy. It handles returns by clawing back commissions. Accurate attribution is the money.",
+      "key_params": {
+        "window_days": "cookie attribution window",
+        "model": "last-click vs multi-touch split",
+        "clawback": "return-triggered commission reversal"
+      },
+      "data_idea": "Replays seeded click/purchase/return streams, verifying attribution and commission math including clawbacks.",
+      "real_world_use": "Amazon Associates, ShareASale, and SaaS affiliate programs attribute and pay commissions this way.",
+      "suggested_types": [
+        "data_pipeline",
+        "rest_api",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "utm-campaign-parser",
+      "name": "UTM Campaign Parser",
+      "concept": "Marketing attribution starts with UTM tags: the parser extracts utm_source/medium/campaign from URLs, normalizes naming conventions, attributes sessions to campaigns, and reports spend efficiency per campaign. Consistent taxonomy is enforced because 'Email' vs 'email' splits reports. It is unglamorous and essential.",
+      "key_params": {
+        "taxonomy": "enforced naming conventions",
+        "attribution": "first vs last touch session credit",
+        "normalization": "case/whitespace rules"
+      },
+      "data_idea": "Parses seeded URLs with messy UTM variants, verifying normalization and campaign rollup correctness.",
+      "real_world_use": "Every marketing team (HubSpot, Marketo users) standardizes UTMs for campaign ROI reporting.",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cookie-consent-manager",
+      "name": "Cookie Consent Manager",
+      "concept": "Privacy law requires consent before tracking: the manager shows a banner, records granular choices (necessary, analytics, marketing), blocks non-essential scripts until consent, and stores proof of consent per user. Consent must be revocable and re-prompted on policy change. The audit trail is the legal artifact.",
+      "key_params": {
+        "categories": "cookie categories with defaults",
+        "blocking": "script-blocking until consent",
+        "proof": "consent receipt fields stored"
+      },
+      "data_idea": "Simulates seeded visitor consent flows (accept, reject, granular, revoke) verifying script gating and receipt records.",
+      "real_world_use": "OneTrust, Cookiebot, and every EU-facing site implement consent banners with audit trails.",
+      "suggested_types": [
+        "web_dashboard",
+        "config_manager",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "privacy-data-export",
+      "name": "Privacy Data Export Tool",
+      "concept": "Data-portability law lets users download their data: the export tool collects a user's records across services, packages them in machine-readable formats, and delivers a secure expiring download. It must include everything, exclude others' data, and complete within legal deadlines. Completeness is the compliance risk.",
+      "key_params": {
+        "scope": "data categories included",
+        "format": "JSON/CSV packaging",
+        "expiry_hours": "download link lifetime"
+      },
+      "data_idea": "Exports seeded multi-service user datasets, verifying completeness, others'-data exclusion, and format validity.",
+      "real_world_use": "Google Takeout, Apple Data & Privacy, and GDPR Article 20 exports all package user data portably.",
+      "suggested_types": [
+        "data_pipeline",
+        "file_organizer",
+        "backup_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "data-retention-sweeper",
+      "name": "Data Retention Sweeper",
+      "concept": "Retention policies say how long data lives: the sweeper applies per-category TTLs (logs 90 days, sessions 30), deletes or anonymizes expired rows in batches, and logs proof of deletion for audits. Legal holds pause deletion for litigation. Batch sizing keeps deletes from locking tables.",
+      "key_params": {
+        "policies": "per-category retention periods",
+        "batch": "delete batch size",
+        "legal_hold": "hold mechanism pausing deletion"
+      },
+      "data_idea": "Ages seeded datasets past their TTLs, verifying correct rows are deleted/anonymized and holds are respected.",
+      "real_world_use": "Healthcare (HIPAA), finance, and GDPR storage-limitation compliance all run retention sweeping.",
+      "suggested_types": [
+        "scheduler",
+        "data_pipeline",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "audit-log-service",
+      "name": "Audit Log Service",
+      "concept": "Audit logs answer 'who did what when': the service appends immutable, tamper-evident records (hash-chained) of sensitive actions with actor, action, target, and before/after values. Retention and restricted read access complete it. Hash chaining makes silent tampering detectable.",
+      "key_params": {
+        "actions": "audited action catalog",
+        "chaining": "hash-chain tamper evidence",
+        "retention_years": "audit retention period"
+      },
+      "data_idea": "Replays seeded admin actions (including a tamper attempt) verifying chain integrity detection and complete records.",
+      "real_world_use": "SOC 2, HIPAA, and financial regulators require tamper-evident audit trails (AWS CloudTrail model).",
+      "suggested_types": [
+        "log_analyzer",
+        "encryption_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "role-based-access-control",
+      "name": "Role-Based Access Control (RBAC)",
+      "concept": "RBAC manages permissions through roles: users get roles, roles get permissions, and checks ask 'does this user have permission X'. Role hierarchies and separation-of-duties constraints (no single user may both request and approve) encode policy. Reviews prune stale grants. It scales where per-user ACLs collapse.",
+      "key_params": {
+        "roles": "role to permission mappings",
+        "hierarchy": "role inheritance",
+        "sod": "separation-of-duties constraints"
+      },
+      "data_idea": "Evaluates seeded users, roles, and requests, verifying allow/deny decisions and SoD enforcement.",
+      "real_world_use": "AWS IAM, Kubernetes RBAC, and enterprise apps all authorize through roles.",
+      "suggested_types": [
+        "config_manager",
+        "rest_api",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "permission-policy-engine",
+      "name": "Attribute-Based Policy Engine",
+      "concept": "ABAC decides with attributes, not just roles: policies combine user, resource, action, and context attributes ('managers can approve expenses under 5k in their department'). The engine evaluates policy sets with deny-overrides combining. It is more expressive than RBAC and harder to audit, so policy simulation matters.",
+      "key_params": {
+        "policies": "allow/deny policy rules",
+        "combining": "deny-overrides vs permit-overrides",
+        "attributes": "available attribute vocabularies"
+      },
+      "data_idea": "Evaluates seeded requests against policies, verifying decisions and testing policy changes in simulation before deploy.",
+      "real_world_use": "AWS IAM policies, OPA/Rego, and Google Zanzibar-style systems evaluate attribute-based policies.",
+      "suggested_types": [
+        "config_manager",
+        "simulation",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "api-scope-enforcer",
+      "name": "API Scope Enforcer",
+      "concept": "OAuth scopes limit what a token can do: the enforcer maps endpoints to required scopes, checks the token's scope set per request, and returns 403 with insufficient-scope hints. Scope design (coarse vs fine) trades security against developer friction. It is authorization at the API boundary.",
+      "key_params": {
+        "scope_map": "endpoint to required-scope mapping",
+        "hierarchy": "whether scopes imply narrower ones",
+        "error_shape": "403 response detail level"
+      },
+      "data_idea": "Sends seeded requests with various token scopes, verifying each endpoint enforces exactly its required scopes.",
+      "real_world_use": "GitHub, Google, and Slack APIs all gate endpoints on OAuth scopes.",
+      "suggested_types": [
+        "rest_api",
+        "config_manager",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tenant-isolation-middleware",
+      "name": "Tenant Isolation Middleware",
+      "concept": "Multi-tenant SaaS serves many customers from one deployment: the middleware resolves the tenant from subdomain, header, or token, scopes every query to the tenant id, and blocks cross-tenant access even on bugs. Row-level scoping plus connection-pool hygiene prevents leaks. A single missing WHERE tenant_id is a breach.",
+      "key_params": {
+        "resolution": "subdomain vs header vs token tenant id",
+        "scoping": "query-rewrite vs separate-schema",
+        "leak_tests": "negative tests for cross-tenant reads"
+      },
+      "data_idea": "Runs seeded multi-tenant request streams, verifying strict data separation including adversarial missing-scope attempts.",
+      "real_world_use": "Salesforce, HubSpot, and every B2B SaaS isolate tenants; the middleware is the enforcement point.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "config_manager"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "subdomain-router",
+      "name": "Subdomain Router",
+      "concept": "Subdomains route to tenants or services: the router parses the host, matches wildcard patterns (*.app.example.com), and dispatches to tenant contexts or service handlers. It handles apex domains, reserved subdomains (www, api), and TLS certificate matching. Correct parsing must survive punycode and port suffixes.",
+      "key_params": {
+        "patterns": "subdomain to handler mappings",
+        "reserved": "subdomains with special handling",
+        "default": "behavior for unmatched subdomains"
+      },
+      "data_idea": "Routes seeded Host headers (wildcards, apex, punycode, ports) verifying correct tenant/service dispatch.",
+      "real_world_use": "SaaS tenant subdomains (acme.app.com), GitHub Pages, and Vercel preview URLs all route on subdomains.",
+      "suggested_types": [
+        "rest_api",
+        "config_manager",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "white-label-theme-service",
+      "name": "White-Label Theme Service",
+      "concept": "White-label products reskin per customer: the theme service resolves the tenant's brand (colors, logos, fonts, copy overrides), serves themed assets with caching, and falls back to defaults for missing keys. Theme validation keeps contrast accessible. It lets one codebase wear many brands.",
+      "key_params": {
+        "themes": "per-tenant theme definitions",
+        "fallback": "default theme for missing keys",
+        "cache": "theme asset cache TTL"
+      },
+      "data_idea": "Resolves seeded tenant themes (complete, partial, missing) verifying fallback correctness and asset URLs.",
+      "real_world_use": "Agency platforms, franchise software, and embedded fintech (banking-as-a-service) white-label per client.",
+      "suggested_types": [
+        "web_dashboard",
+        "config_manager",
+        "lru_cache"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "maintenance-mode-middleware",
+      "name": "Maintenance Mode Middleware",
+      "concept": "Deploys and incidents need a maintenance page: the middleware flips a flag (config, file, or env), serves 503 with Retry-After to all traffic except allowlisted IPs, and shows a branded status page. Health checks stay green so orchestrators do not kill the instance mid-maintenance. Fast flip-off matters as much as on.",
+      "key_params": {
+        "trigger": "flag source (file, env, config)",
+        "allowlist": "IPs bypassing maintenance",
+        "retry_after": "Retry-After seconds advertised"
+      },
+      "data_idea": "Toggles maintenance under seeded traffic, verifying 503s, allowlist bypass, and health-check exemption.",
+      "real_world_use": "Rails maintenance pages, Vercel, and status-page integrations all gate traffic during deploys.",
+      "suggested_types": [
+        "rest_api",
+        "config_manager",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "deploy-preview-router",
+      "name": "Deploy Preview Router",
+      "concept": "Preview deployments give every pull request a live URL: the router maps branch-based subdomains to ephemeral environments, tears them down on merge, and protects them with auth. Routing must isolate preview traffic from production data. It shortens review cycles from days to minutes.",
+      "key_params": {
+        "naming": "preview URL scheme per branch",
+        "ttl": "environment lifetime after inactivity",
+        "protection": "password vs SSO gating"
+      },
+      "data_idea": "Routes seeded branch deployments through create/preview/merge/teardown, verifying isolation and cleanup.",
+      "real_world_use": "Vercel, Netlify, and Railway preview deployments spin per-PR environments with branch URLs.",
+      "suggested_types": [
+        "config_manager",
+        "rest_api",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "blue-green-traffic-splitter",
+      "name": "Blue-Green Traffic Splitter",
+      "concept": "Blue-green deploys run two environments and switch traffic: the splitter shifts percentages from blue to green, monitors error rates during the shift, and auto-rolls back on regression. Sticky sessions drain gracefully. Instant rollback is the payoff for the doubled capacity cost.",
+      "key_params": {
+        "shift_steps": "percentage steps in the ramp",
+        "guardrails": "error-rate thresholds pausing the shift",
+        "drain": "session drain timeout"
+      },
+      "data_idea": "Shifts seeded traffic with injected green regressions, verifying ramp progression and automatic rollback.",
+      "real_world_use": "AWS CodeDeploy, Spinnaker, and Kubernetes progressive delivery all shift traffic with guardrails.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "request-coalescing-singleflight",
+      "name": "Request Coalescing (Singleflight)",
+      "concept": "When a cache entry expires, hundreds of concurrent requests can stampede the backend recomputing it: singleflight coalescing lets the first request do the work while the rest wait on the same in-flight call and share its result. The registry keys in-flight calls, attaches waiters, and propagates errors or cancellations to all of them. It turns a thundering herd into one backend call.",
+      "key_params": {
+        "key_fn": "how requests are grouped into one flight",
+        "timeout": "max wait before waiters give up",
+        "share_errors": "whether failures propagate to waiters"
+      },
+      "data_idea": "Fires seeded concurrent request bursts at expiring cache keys and verifies backend call counts collapse to one per key with all waiters served.",
+      "real_world_use": "Go's singleflight, GraphQL dataloaders, and CDN origin shields coalesce duplicate in-flight requests.",
+      "suggested_types": [
+        "simulation",
+        "lru_cache",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "signed-url-generator",
+      "name": "Signed URL Generator (Presigned URLs)",
+      "concept": "Presigned URLs grant time-limited access to private objects without proxying bytes: the server signs the object key, expiry, and allowed method with HMAC, and the storage backend verifies the signature on arrival. The generator sets content-disposition and content-type constraints inside the signature so they cannot be tampered with. Leaked URLs simply expire.",
+      "key_params": {
+        "secret": "signing secret",
+        "expiry": "URL lifetime seconds",
+        "constraints": "signed response-header overrides"
+      },
+      "data_idea": "Generates seeded signed URLs (valid, expired, tampered) and verifies the verifier accepts only genuine unexpired ones with constraints honored.",
+      "real_world_use": "S3 presigned URLs, Google Cloud signed URLs, and private file downloads all use HMAC-signed time-limited URLs.",
+      "suggested_types": [
+        "encryption_tool",
+        "rest_api",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "jsonapi-relationship-expander",
+      "name": "JSON:API Relationship Expander",
+      "concept": "JSON:API standardizes compound documents: primary data plus an included section with related resources, sparse fieldsets limiting attributes, and links for pagination. The expander resolves relationship paths, dedupes included resources by type+id, and applies fieldset filtering. It eliminates both over-fetching and N+1 client round trips.",
+      "key_params": {
+        "include_depth": "relationship nesting depth allowed",
+        "fieldsets": "per-type sparse field selections",
+        "dedupe": "included-section dedupe by type and id"
+      },
+      "data_idea": "Builds seeded resource graphs and verifies compound documents contain exactly the requested relationships with no duplicates.",
+      "real_world_use": "JSON:API backends (Ember Data, some Rails APIs) standardize compound documents and sparse fieldsets.",
+      "suggested_types": [
+        "rest_api",
+        "api_client_sim",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "content-addressable-asset-store",
+      "name": "Content-Addressable Asset Store",
+      "concept": "Content addressing names files by their hash: identical content dedupes automatically, and the hash doubles as an integrity check on every read. The store shards blobs by hash prefix, serves them with immutable cache headers, and garbage-collects unreferenced blobs. It is how CDNs and caches get infinite cache lifetimes safely.",
+      "key_params": {
+        "hash": "hash function used for addressing",
+        "shards": "hash-prefix shard count",
+        "gc": "unreferenced-blob collection policy"
+      },
+      "data_idea": "Stores seeded file sets with duplicates and verifies dedupe ratios, hash integrity on read, and immutable caching headers.",
+      "real_world_use": "Git objects, Docker layers, IPFS, and CDN hashed-asset pipelines all address content by hash.",
+      "suggested_types": [
+        "file_organizer",
+        "lru_cache",
+        "backup_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "graphql-query-planner",
+      "name": "GraphQL Query Planner (Lite)",
+      "concept": "GraphQL lets clients ask for exactly the fields they need: the planner parses queries into an AST, validates them against the schema (types, arguments, depth limits), and plans batched resolver execution to avoid N+1 fetches. Query complexity scoring rejects abusive queries before execution. The planner is what makes 'ask for anything' safe.",
+      "key_params": {
+        "schema": "type definitions with resolvers",
+        "max_depth": "query depth limit",
+        "complexity_cap": "cost budget rejecting heavy queries"
+      },
+      "data_idea": "Executes seeded queries (valid, too-deep, over-complex, N+1-prone) verifying validation rejects and batching collapses fetches.",
+      "real_world_use": "Apollo Server, Hasura, and GitHub's GraphQL API parse, validate, and plan queries with complexity limits.",
+      "suggested_types": [
+        "rest_api",
+        "api_client_sim",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "edge-request-mutator",
+      "name": "Edge Request Mutator (Edge Workers)",
+      "concept": "Edge workers run code at CDN points of presence before requests reach the origin: the mutator rewrites URLs, injects geo headers, runs A/B bucketing, and serves cached variants per segment. It executes in isolates with tight CPU limits, so the programming model is event-driven and stateless. Personalization moves from origin to edge.",
+      "key_params": {
+        "routes": "URL patterns triggering workers",
+        "limits": "CPU and memory caps per invocation",
+        "geo": "geo headers injected (country, city)"
+      },
+      "data_idea": "Runs seeded requests through worker scripts, verifying rewrites, geo injection, and variant serving at simulated edge nodes.",
+      "real_world_use": "Cloudflare Workers, Fastly Compute, and AWS Lambda@Edge execute request mutation at the edge.",
+      "suggested_types": [
+        "simulation",
+        "rest_api",
+        "config_manager"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "distributed-tracing-sampler",
+      "name": "Distributed Tracing Sampler",
+      "concept": "Tracing every request is too expensive, so samplers decide which traces to keep: head-based sampling decides at request start (fast, but misses interesting tails), tail-based sampling buffers and keeps traces with errors or high latency. The sampler propagates trace context (traceparent) across services either way. Sampling strategy determines what you can debug later.",
+      "key_params": {
+        "strategy": "head vs tail based sampling",
+        "rate": "fraction of traces kept",
+        "tail_rules": "error/latency rules keeping tail traces"
+      },
+      "data_idea": "Replays seeded multi-service traces with errors and verifies kept-trace sets match the strategy's intent within the budget.",
+      "real_world_use": "OpenTelemetry collectors, Jaeger, and Honeycomb implement head/tail sampling with context propagation.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "shadow-traffic-mirroring",
+      "name": "Shadow Traffic Mirroring",
+      "concept": "Shadow traffic duplicates production requests to a staging environment so new code proves itself on real traffic without affecting users: the mirror copies requests, strips PII, compares responses against production, and diffs divergences. Write requests get sandboxed so shadows never mutate real state. It catches bugs load tests miss.",
+      "key_params": {
+        "mirror_rate": "fraction of traffic shadowed",
+        "pii_scrub": "fields redacted before mirroring",
+        "diff": "response comparison strictness"
+      },
+      "data_idea": "Mirrors seeded production traffic to a candidate build, verifying PII scrubbing, write sandboxing, and divergence diffs.",
+      "real_world_use": "Diffy (Twitter), Goreplay, and Envoy traffic shadowing validate deploys against real production load.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "api_client_sim"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bff-request-aggregator",
+      "name": "Backend-for-Frontend Request Aggregator",
+      "concept": "Mobile and web clients need different data shapes, so a BFF aggregates: one client call fans out to several microservices in parallel, and the aggregator merges, reshapes, and trims the responses into the exact payload the UI needs. Timeouts and partial-failure policies decide what the client sees when one service is slow. It trades backend chattiness for client simplicity.",
+      "key_params": {
+        "services": "downstream services fanned out to",
+        "timeout": "per-service timeout ms",
+        "partial": "fail-whole vs degrade on partial failure"
+      },
+      "data_idea": "Fans seeded client requests out to fake services with random latencies/failures, verifying merged payloads and partial-failure behavior.",
+      "real_world_use": "SoundCloud, mobile BFFs, and GraphQL gateways all aggregate microservice responses per client.",
+      "suggested_types": [
+        "rest_api",
+        "api_client_sim",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "double-submit-csrf",
+      "name": "Double-Submit Cookie CSRF Defense",
+      "concept": "The double-submit pattern avoids server-side CSRF state: the server sets a random token in a cookie and the client must echo the same value in a header or form field, which a cross-site attacker cannot read due to the same-origin policy. Validation compares the two values in constant time. It pairs naturally with JWT-based stateless auth.",
+      "key_params": {
+        "token_bytes": "CSRF token entropy",
+        "transport": "header vs form-field echo",
+        "rotate_on": "login vs per-request rotation"
+      },
+      "data_idea": "Simulates seeded cross-site posts with missing/mismatched pairs, verifying only requests with matching cookie-and-echo pass.",
+      "real_world_use": "Angular's XSRF-TOKEN cookie/header pair and stateless SPA backends use double-submit CSRF defense.",
+      "suggested_types": [
+        "encryption_tool",
+        "rest_api",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "websocket-backpressure-controller",
+      "name": "WebSocket Backpressure Controller",
+      "concept": "Fast producers overwhelm slow consumers: the backpressure controller monitors per-connection send buffers, applies pause/resume signals or drops to best-effort for stale data, and sheds load by disconnecting the slowest consumers first. High/low watermarks prevent oscillation. Without it, one slow client can OOM the server.",
+      "key_params": {
+        "high_water": "buffer bytes triggering pause",
+        "low_water": "buffer bytes resuming flow",
+        "shed_policy": "which connections get dropped first"
+      },
+      "data_idea": "Streams seeded producer/consumer pairs with mismatched speeds, verifying pause/resume engages and memory stays bounded.",
+      "real_world_use": "Socket.IO, MQTT brokers, and game servers all apply backpressure so slow clients cannot exhaust server memory.",
+      "suggested_types": [
+        "chat_server",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "http3-quic-concept-sim",
+      "name": "HTTP/3 QUIC Concept Simulator",
+      "concept": "QUIC rebuilds transport on UDP: independent streams eliminate head-of-line blocking, connection migration survives network switches, and TLS 1.3 is integrated into the handshake for faster setup. The simulator models streams multiplexed over one connection with per-stream flow control and packet-loss recovery. It shows why HTTP/3 helps lossy mobile networks most.",
+      "key_params": {
+        "streams": "concurrent stream count",
+        "loss": "simulated packet loss rate",
+        "migration": "whether network-switch events occur"
+      },
+      "data_idea": "Simulates seeded transfers over lossy links for QUIC-like vs TCP-like transports, comparing completion times and stall behavior.",
+      "real_world_use": "Google, Cloudflare, and Meta serve HTTP/3 over QUIC; mobile apps benefit from connection migration.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

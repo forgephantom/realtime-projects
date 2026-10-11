@@ -1,0 +1,766 @@
+{
+  "domain": "computer_science",
+  "subdomain": "game_development",
+  "topics": [
+    {
+      "slug_base": "game-loop-timer",
+      "name": "Game Loop Timer",
+      "concept": "Game loops update simulation and render frames, with fixed timesteps keeping physics deterministic across hardware. The timer implements variable and fixed-step loops measuring spiral-of-death protection. Every game runs on this heartbeat.",
+      "key_params": {
+        "timestep_ms": "fixed update step",
+        "max_steps": "spiral protection",
+        "render": "interpolation",
+        "measure": "frame time stats"
+      },
+      "data_idea": "Frame timings derive from simulated workloads.",
+      "real_world_use": "Used in every game engine.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sprite-animation-controller",
+      "name": "Sprite Animation Controller",
+      "concept": "Sprite animation cycles frames with timing, transitions, and blending between states. The controller plays clips with frame durations and state machines. Characters come alive.",
+      "key_params": {
+        "clips": "animation definitions",
+        "fps": "playback rate",
+        "transitions": "state graph",
+        "blend": "crossfade"
+      },
+      "data_idea": "A seeded RNG drives state changes.",
+      "real_world_use": "Used in 2D games.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "tilemap-renderer",
+      "name": "Tilemap Renderer",
+      "concept": "Tilemaps build worlds from reusable tiles with layers and culling for performance. The renderer draws visible tiles from ASCII or index maps. Retro worlds, efficient rendering.",
+      "key_params": {
+        "map": "tile grid",
+        "tileset": "tile definitions",
+        "cull": "viewport clipping",
+        "layers": "parallax"
+      },
+      "data_idea": "A seeded RNG generates tilemaps.",
+      "real_world_use": "Used in 2D platformers.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "aabb-collision-detector",
+      "name": "AABB Collision Detector",
+      "concept": "Axis-aligned bounding boxes give cheap overlap tests, the first pass of collision detection. The detector checks box intersections with swept variants for fast movers. Broadphase before narrowphase.",
+      "key_params": {
+        "boxes": "entity bounds",
+        "swept": "continuous collision",
+        "resolve": "push-out response",
+        "grid": "spatial partition"
+      },
+      "data_idea": "A seeded RNG moves boxes with collisions.",
+      "real_world_use": "Used in 2D physics.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "spatial-hash-grid",
+      "name": "Spatial Hash Grid",
+      "concept": "Spatial hashing buckets entities into grid cells so collision checks only test neighbors. The grid inserts and queries with cell sizing tradeoffs. O(n) neighbor queries for crowds.",
+      "key_params": {
+        "cell_size": "bucket dimensions",
+        "entities": "moving bodies",
+        "query": "neighbor radius",
+        "dynamic": "resizing"
+      },
+      "data_idea": "A seeded RNG swarms entities.",
+      "real_world_use": "Used in particle and crowd sims.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "terminal_game"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "quadtree-collider",
+      "name": "Quadtree Collider",
+      "concept": "Quadtrees recursively subdivide space so sparse regions stay cheap and dense regions get detail. The collider builds the tree querying potential collisions. Adaptive spatial indexing.",
+      "key_params": {
+        "capacity": "per-node limit",
+        "depth": "max subdivision",
+        "entities": "inserted bodies",
+        "query": "range search"
+      },
+      "data_idea": "A seeded RNG clusters entities unevenly.",
+      "real_world_use": "Used in 2D games with varied density.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "astar-pathfinder-game",
+      "name": "A-Star Pathfinder Game",
+      "concept": "Game units pathfind on grids with A-star, smoothing paths and avoiding dynamic obstacles. The tool animates open and closed sets with path string-pulling. RTS movement in a box.",
+      "key_params": {
+        "grid": "map with obstacles",
+        "units": "pathing agents",
+        "smooth": "string pulling",
+        "repath": "dynamic obstacles"
+      },
+      "data_idea": "A seeded RNG places obstacles and goals.",
+      "real_world_use": "Used in strategy games.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "steering-behaviors",
+      "name": "Steering Behaviors",
+      "concept": "Steering combines seek, flee, arrive, and avoidance forces into lifelike movement. The simulator blends behaviors with weights showing emergent motion. Autonomy from simple rules.",
+      "key_params": {
+        "behaviors": "seek, flee, wander, avoid",
+        "weights": "blend factors",
+        "agents": "steered entities",
+        "obstacles": "avoidance field"
+      },
+      "data_idea": "A seeded RNG steers agents to goals.",
+      "real_world_use": "Used in game AI movement.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "boids-flocking",
+      "name": "Boids Flocking",
+      "concept": "Three rules, separation, alignment, cohesion, produce flocking birds and schooling fish. The simulator tunes rule weights showing phase transitions. Emergence from simplicity.",
+      "key_params": {
+        "boids": "agent count",
+        "weights": "rule strengths",
+        "perception": "neighbor radius",
+        "bounds": "world wrap"
+      },
+      "data_idea": "A seeded RNG initializes boid velocities.",
+      "real_world_use": "Used in ambient wildlife.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "projectile-physics",
+      "name": "Projectile Physics",
+      "concept": "Projectiles fly with gravity, drag, and bounces, needing integration stable at game framerates. The simulator compares Euler and Verlet integration. Angry trajectories, computed right.",
+      "key_params": {
+        "gravity": "acceleration",
+        "drag": "air resistance",
+        "bounce": "restitution",
+        "integrator": "euler or verlet"
+      },
+      "data_idea": "Launch parameters derive from gameplay.",
+      "real_world_use": "Used in artillery and sports games.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "particle-system",
+      "name": "Particle System",
+      "concept": "Particles fake fire, smoke, and sparks with hundreds of short-lived sprites. The system spawns, updates, and renders particles with emitters. Juice for every explosion.",
+      "key_params": {
+        "emitters": "spawn definitions",
+        "count": "particle budget",
+        "forces": "gravity, wind",
+        "lifetime": "fade curves"
+      },
+      "data_idea": "Emission derives from effect triggers.",
+      "real_world_use": "Used in game VFX.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "screen-shake-controller",
+      "name": "Screen Shake Controller",
+      "concept": "Screen shake sells impacts with trauma-based decay, avoiding motion sickness. The controller applies rotational and translational noise scaled by trauma. Feel the hit.",
+      "key_params": {
+        "trauma": "shake intensity",
+        "decay": "recovery rate",
+        "noise": "perlin offsets",
+        "cap": "max displacement"
+      },
+      "data_idea": "Shake triggers derive from impacts.",
+      "real_world_use": "Used in action games.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "damage-number-popups",
+      "name": "Damage Number Popups",
+      "concept": "Floating damage numbers give combat feedback with crit styling and stacking. The system spawns, animates, and pools popup labels. Numbers go up, dopamine follows.",
+      "key_params": {
+        "pool": "label reuse",
+        "crit": "threshold styling",
+        "stack": "merge window",
+        "animate": "rise and fade"
+      },
+      "data_idea": "Damage events derive from combat.",
+      "real_world_use": "Used in RPGs.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "health-damage-system",
+      "name": "Health Damage System",
+      "concept": "Health systems apply damage with armor, resistances, and invulnerability frames. The system computes mitigated damage with death events. Combat math, centralized.",
+      "key_params": {
+        "armor": "mitigation formula",
+        "resist": "damage type modifiers",
+        "iframes": "invulnerability windows",
+        "events": "death hooks"
+      },
+      "data_idea": "A seeded RNG deals damage types.",
+      "real_world_use": "Used in combat games.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "inventory-system",
+      "name": "Inventory System",
+      "concept": "Inventories manage items with stacking, equipment slots, and weight limits. The system handles add, remove, and equip with capacity rules. Loot finds a home.",
+      "key_params": {
+        "slots": "capacity",
+        "stack": "max per stack",
+        "equip": "slot types",
+        "weight": "encumbrance"
+      },
+      "data_idea": "A seeded RNG loots items.",
+      "real_world_use": "Used in RPGs.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "file_organizer",
+        "terminal_game"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "loot-drop-tables",
+      "name": "Loot Drop Tables",
+      "concept": "Drop tables turn kill rewards into weighted random tables with rarity tiers and pity timers. The designer simulates drops verifying rates. Fair randomness, tuned.",
+      "key_params": {
+        "tables": "weighted entries",
+        "rarity": "tier probabilities",
+        "pity": "guarantee timer",
+        "simulate": "drop verification"
+      },
+      "data_idea": "A seeded RNG rolls loot drops.",
+      "real_world_use": "Used in loot games.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "xp-level-curve",
+      "name": "XP Level Curve",
+      "concept": "Level curves map cumulative XP to levels with pacing that feels rewarding. The designer plots curves tuning time-to-level. Progression, graphed.",
+      "key_params": {
+        "curve": "xp per level formula",
+        "target_hours": "pacing goal",
+        "sources": "xp income",
+        "plot": "curve visualization"
+      },
+      "data_idea": "XP income derives from gameplay rates.",
+      "real_world_use": "Used in RPG progression design.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "skill-tree",
+      "name": "Skill Tree",
+      "concept": "Skill trees gate abilities behind prerequisites with point budgets. The system validates allocations and computes build stats. Choices matter.",
+      "key_params": {
+        "nodes": "skill definitions",
+        "prereq": "dependency edges",
+        "points": "budget",
+        "validate": "legality checks"
+      },
+      "data_idea": "Builds derive from player choices.",
+      "real_world_use": "Used in RPGs.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "terminal_game",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "quest-tracker",
+      "name": "Quest Tracker",
+      "concept": "Quests chain objectives with branching and completion tracking. The tracker manages active quests with objective states. Adventure stays organized.",
+      "key_params": {
+        "quests": "definitions",
+        "objectives": "checklist items",
+        "branch": "choice points",
+        "track": "active display"
+      },
+      "data_idea": "Quest progress derives from gameplay.",
+      "real_world_use": "Used in adventure games.",
+      "suggested_types": [
+        "task_queue",
+        "cli_tool",
+        "simulation",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dialogue-tree-engine",
+      "name": "Dialogue Tree Engine",
+      "concept": "Dialogue trees branch conversations with conditions and memory of past choices. The engine traverses nodes evaluating flags. Stories branch.",
+      "key_params": {
+        "nodes": "dialogue lines",
+        "choices": "player options",
+        "flags": "memory variables",
+        "conditions": "availability rules"
+      },
+      "data_idea": "Conversations derive from scripts.",
+      "real_world_use": "Used in narrative games.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "terminal_game",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "npc-schedule-sim",
+      "name": "NPC Schedule Sim",
+      "concept": "Believable NPCs follow daily schedules: work, eat, sleep, with reactions to disruptions. The simulator runs schedules with needs and interruptions. Worlds feel alive.",
+      "key_params": {
+        "schedule": "time blocks",
+        "needs": "hunger, rest meters",
+        "interrupt": "event handling",
+        "locations": "waypoints"
+      },
+      "data_idea": "A seeded RNG drives days with events.",
+      "real_world_use": "Used in open-world games.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "terminal_game",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "day-night-cycle",
+      "name": "Day Night Cycle",
+      "concept": "Day-night cycles drive lighting, NPC behavior, and gameplay with smooth transitions. The system advances time scaling with events at thresholds. Time passes visibly.",
+      "key_params": {
+        "length": "day duration",
+        "phases": "dawn to night",
+        "events": "threshold triggers",
+        "scale": "time multiplier"
+      },
+      "data_idea": "Time advances deterministically.",
+      "real_world_use": "Used in survival games.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "cli_tool",
+        "terminal_game"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "weather-system",
+      "name": "Weather System",
+      "concept": "Weather affects visibility, movement, and mood with transitioning states. The system blends conditions with gameplay modifiers. Storms change plans.",
+      "key_params": {
+        "states": "clear to storm",
+        "transition": "markov probabilities",
+        "effects": "gameplay modifiers",
+        "forecast": "prediction display"
+      },
+      "data_idea": "A seeded RNG evolves weather.",
+      "real_world_use": "Used in open worlds.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "terminal_game"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "save-load-manager",
+      "name": "Save Load Manager",
+      "concept": "Saves serialize game state with versioning for backward compatibility. The manager snapshots, versions, and migrates saves. Progress persists.",
+      "key_params": {
+        "snapshot": "state capture",
+        "version": "schema tracking",
+        "migrate": "old save upgrades",
+        "slots": "multiple saves"
+      },
+      "data_idea": "Game states derive from play sessions.",
+      "real_world_use": "Used in all saveable games.",
+      "suggested_types": [
+        "backup_tool",
+        "cli_tool",
+        "file_organizer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "checkpoint-system",
+      "name": "Checkpoint System",
+      "concept": "Checkpoints save progress at milestones with respawn state. The system records checkpoints restoring on death. Failure stings less.",
+      "key_params": {
+        "points": "checkpoint locations",
+        "state": "captured snapshot",
+        "respawn": "restore logic",
+        "validate": "integrity checks"
+      },
+      "data_idea": "Checkpoints derive from level progress.",
+      "real_world_use": "Used in platformers.",
+      "suggested_types": [
+        "backup_tool",
+        "simulation",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "input-remapper",
+      "name": "Input Remapper",
+      "concept": "Remappable controls let players customize bindings with conflict detection. The remapper maps actions to inputs validating overlaps. Accessibility and preference.",
+      "key_params": {
+        "actions": "game verbs",
+        "bindings": "key mappings",
+        "conflicts": "overlap detection",
+        "profiles": "saved layouts"
+      },
+      "data_idea": "Bindings derive from user config.",
+      "real_world_use": "Used in PC games.",
+      "suggested_types": [
+        "config_manager",
+        "cli_tool",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "combo-detector",
+      "name": "Combo Detector",
+      "concept": "Fighting games detect input sequences within timing windows for special moves. The detector matches buffered inputs against move lists. Skill gets recognized.",
+      "key_params": {
+        "moves": "input sequences",
+        "window_ms": "timing tolerance",
+        "buffer": "input queue",
+        "priority": "overlap resolution"
+      },
+      "data_idea": "A seeded RNG presses buttons with combos.",
+      "real_world_use": "Used in fighting games.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cooldown-manager",
+      "name": "Cooldown Manager",
+      "concept": "Ability cooldowns gate powerful actions with visual timers and charge systems. The manager tracks per-ability readiness. Power gets paced.",
+      "key_params": {
+        "abilities": "cooldown definitions",
+        "charges": "stock systems",
+        "reduce": "haste effects",
+        "display": "timer states"
+      },
+      "data_idea": "Cooldowns derive from ability use.",
+      "real_world_use": "Used in MOBAs and RPGs.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "cli_tool",
+        "terminal_game"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "status-effects-engine",
+      "name": "Status Effects Engine",
+      "concept": "Poison, burn, and stun tick over time with stacking rules and cleanses. The engine applies effect instances with durations. Battles gain texture.",
+      "key_params": {
+        "effects": "dot and cc definitions",
+        "stack": "refresh versus stack",
+        "tick": "damage intervals",
+        "cleanse": "removal"
+      },
+      "data_idea": "A seeded RNG applies effects in combat.",
+      "real_world_use": "Used in RPG combat.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "terminal_game",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "turn-based-battle-engine",
+      "name": "Turn Based Battle Engine",
+      "concept": "Turn-based combat orders actions by speed with menus and animations. The engine runs rounds with AI opponents. Strategy over reflexes.",
+      "key_params": {
+        "combatants": "party stats",
+        "order": "speed-based turns",
+        "actions": "attack, skill, item",
+        "ai": "opponent logic"
+      },
+      "data_idea": "A seeded RNG drives battles.",
+      "real_world_use": "Used in JRPGs.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "card-deck-shuffler",
+      "name": "Card Deck Shuffler",
+      "concept": "Card games need fair shuffles and hand evaluation, from Fisher-Yates to poker ranks. The shuffler deals with verifiable randomness. Luck, fairly distributed.",
+      "key_params": {
+        "shuffle": "fisher-yates",
+        "hands": "evaluation",
+        "deal": "distribution",
+        "verify": "fairness tests"
+      },
+      "data_idea": "A seeded RNG shuffles decks.",
+      "real_world_use": "Used in card games.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "terminal_game",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dice-roller",
+      "name": "Dice Roller",
+      "concept": "Dice with advantage, exploding dice, and modifiers power tabletop mechanics. The roller parses notation like 4d6kh3. Probability, dramatized.",
+      "key_params": {
+        "notation": "dice expressions",
+        "advantage": "roll twice keep",
+        "explode": "reroll maxes",
+        "stats": "distribution"
+      },
+      "data_idea": "Rolls derive from seeded RNG.",
+      "real_world_use": "Used in tabletop RPGs.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "roguelike-dungeon-generator",
+      "name": "Roguelike Dungeon Generator",
+      "concept": "Procedural dungeons carve rooms and corridors with connectivity guarantees. The generator places rooms, connects them, and populates encounters. Infinite replayability.",
+      "key_params": {
+        "rooms": "count and sizes",
+        "connect": "corridor carving",
+        "validate": "connectivity check",
+        "populate": "encounter placement"
+      },
+      "data_idea": "A seeded RNG carves dungeons.",
+      "real_world_use": "Used in roguelikes.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "wave-spawner",
+      "name": "Wave Spawner",
+      "concept": "Wave spawners escalate enemy counts and composition keeping tension. The spawner schedules waves with budgets and breaks. Survival gets structured.",
+      "key_params": {
+        "waves": "escalation curve",
+        "budget": "spawn points",
+        "composition": "enemy mix",
+        "breaks": "rest intervals"
+      },
+      "data_idea": "Waves derive from difficulty curves.",
+      "real_world_use": "Used in tower defense and horde modes.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "terminal_game",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "tower-defense-pathing",
+      "name": "Tower Defense Pathing",
+      "concept": "Enemies follow paths that towers attack in range, with pathing updates when players build. The simulator routes waves with tower DPS. Mazes meet firepower.",
+      "key_params": {
+        "path": "waypoint route",
+        "towers": "range and dps",
+        "waves": "enemy stats",
+        "rebuild": "dynamic repath"
+      },
+      "data_idea": "A seeded RNG sends waves.",
+      "real_world_use": "Used in tower defense games.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hitstop-controller",
+      "name": "Hitstop Controller",
+      "concept": "Hitstop freezes frames on impact for punch, a staple of game feel. The controller pauses simulation briefly scaling with damage. Impact gets weight.",
+      "key_params": {
+        "frames": "freeze duration",
+        "scale": "damage mapping",
+        "exempt": "UI keeps running",
+        "tune": "feel presets"
+      },
+      "data_idea": "Hits derive from combat events.",
+      "real_world_use": "Used in action games.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "replay-recorder",
+      "name": "Replay Recorder",
+      "concept": "Replays record inputs deterministically for playback and highlights. The recorder captures input streams with checksums. Epic moments, relived.",
+      "key_params": {
+        "inputs": "captured stream",
+        "checksum": "desync detection",
+        "playback": "deterministic sim",
+        "clip": "highlight export"
+      },
+      "data_idea": "Inputs derive from play sessions.",
+      "real_world_use": "Used in fighting and racing games.",
+      "suggested_types": [
+        "backup_tool",
+        "simulation",
+        "cli_tool",
+        "file_organizer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "leaderboard-manager",
+      "name": "Leaderboard Manager",
+      "concept": "Leaderboards rank scores with seasons and anti-cheat sanity checks. The manager maintains rankings with percentile bands. Competition, quantified.",
+      "key_params": {
+        "scores": "submitted entries",
+        "seasons": "reset cadence",
+        "sanity": "impossible score flags",
+        "ranks": "percentile tiers"
+      },
+      "data_idea": "A seeded RNG submits scores with cheaters.",
+      "real_world_use": "Used in competitive games.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "rest_api",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    }
+  ]
+}

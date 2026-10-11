@@ -1,0 +1,2107 @@
+{
+  "domain": "computer_science",
+  "subdomain": "cybersecurity",
+  "topics": [
+    {
+      "slug_base": "syn-flood-detector",
+      "name": "SYN Flood Detector",
+      "concept": "A SYN flood abuses the TCP three-way handshake by sending many SYN packets and never completing the connection, filling the server backlog queue with half-open sockets until legitimate clients are refused. A detector watches the ratio of SYNs to completed handshakes per source and flags sources whose half-open count crosses a threshold within a sliding window. Mitigations the tool can model include SYN cookies, backlog tuning, and upstream rate limiting.",
+      "key_params": {
+        "window_seconds": "sliding window over which half-open SYNs are counted",
+        "syn_threshold": "number of incomplete handshakes that triggers an alert",
+        "syn_ack_ratio_limit": "allowed ratio of SYNs to SYN-ACKs before flagging",
+        "cooldown_seconds": "how long a flagged source stays on the blocklist"
+      },
+      "data_idea": "A seeded RNG synthesizes a packet stream mixing normal handshake completions with bursts of unanswered SYNs from attacker IPs.",
+      "real_world_use": "Used by network operations teams and DDoS mitigation services to spot handshake-abuse floods early.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "ssh-brute-force-log-detector",
+      "name": "SSH Brute-Force Log Detector",
+      "concept": "Attackers guess SSH credentials by trying many username and password pairs against port 22, which leaves a trail of failed password lines in the auth log. The detector parses those log lines, groups failures by source IP and username, and raises an alert when the failure rate exceeds a policy, distinguishing slow stealthy guessing from noisy bursts. It can emit ready-to-use blocklist entries for fail2ban style tooling.",
+      "key_params": {
+        "failure_threshold": "failed attempts that trigger an alert",
+        "window_minutes": "time window for counting failures",
+        "distinct_user_threshold": "usernames per IP that signals credential spraying",
+        "whitelist_cidrs": "trusted networks excluded from alerting"
+      },
+      "data_idea": "A seeded RNG fabricates auth log lines with normal admin logins plus brute-force bursts from rotating attacker IPs.",
+      "real_world_use": "Used by sysadmins and SOC analysts to catch credential-guessing campaigns against Linux servers.",
+      "suggested_types": [
+        "log_analyzer",
+        "cli_tool",
+        "report_generator",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "http-rate-anomaly-monitor",
+      "name": "HTTP Rate Anomaly Monitor",
+      "concept": "Web servers under scraping or application-layer floods show request rates that deviate sharply from their learned baseline. This monitor builds an hourly baseline of requests per minute from access logs and flags windows where the rate exceeds the baseline by a configurable number of standard deviations. It separates single-IP floods from distributed low-and-slow patterns using per-IP and global counters.",
+      "key_params": {
+        "baseline_days": "days of history used to learn the normal rate",
+        "sigma_threshold": "standard deviations above baseline that trigger alerts",
+        "min_requests": "floor that avoids alerting on tiny traffic volumes",
+        "per_ip_limit": "per-source requests per minute cap"
+      },
+      "data_idea": "A seeded RNG generates access-log traffic with daily seasonality plus injected scraping floods and quiet bot patterns.",
+      "real_world_use": "Used by web operations teams to detect scraping, credential stuffing, and layer-7 DDoS against web apps.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "log_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sql-injection-payload-screener",
+      "name": "SQL Injection Payload Screener",
+      "concept": "SQL injection happens when untrusted input is concatenated into database queries, letting an attacker alter the query logic with quotes, comments, and stacked statements. The screener is a defensive input validator that scores incoming parameters against patterns for tautologies, union selects, stacked queries, and time-based blind probes without ever executing them. It reports which rule fired and a risk score so developers can find weak validation before attackers do.",
+      "key_params": {
+        "strictness": "how aggressively borderline patterns are flagged",
+        "max_length": "input length cap that catches oversized payloads",
+        "blocked_keywords": "extra database keywords to treat as suspicious",
+        "allowlist_fields": "fields skipped because they legitimately contain code"
+      },
+      "data_idea": "A seeded RNG synthesizes form inputs mixing benign text with classic injection probe strings.",
+      "real_world_use": "Used by application security teams to test input validation and WAF rules during development.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "unit_converter",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "xss-payload-screener",
+      "name": "XSS Payload Screener",
+      "concept": "Cross-site scripting injects attacker-controlled JavaScript into pages other users view, letting the attacker steal sessions or deface the site. This defensive screener scans user-supplied strings for script tags, event-handler attributes, javascript URIs, and encoded variants, then reports whether output encoding would neutralize each finding. It never runs the payload; it only classifies it, making it safe for CI pipelines.",
+      "key_params": {
+        "check_encoded": "whether to decode entities and URL encoding before scanning",
+        "allowed_tags": "safe markup tags permitted in rich-text fields",
+        "context": "html body, attribute, or script context to tune the rules",
+        "severity_weights": "scoring per finding class"
+      },
+      "data_idea": "A seeded RNG generates user comments mixing harmless markup with reflected and stored XSS probe strings.",
+      "real_world_use": "Used by developers and AppSec engineers to validate sanitization in web forms and APIs.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "localhost-port-scan-detector",
+      "name": "Localhost Port Scan Detector",
+      "concept": "Port scans probe many ports to map which services are listening, and the scan itself is visible as a burst of short connections across a port range. This localhost-only detector binds no remote targets: it watches connection attempts against the local machine, counts distinct ports touched per source within a window, and classifies the pattern as a horizontal scan, a vertical scan, or normal churn. It is strictly defensive and never scans anyone else.",
+      "key_params": {
+        "port_threshold": "distinct local ports that mark a scan",
+        "window_seconds": "window for counting probed ports",
+        "stealth_gap_seconds": "max gap that still links probes into one scan",
+        "ignore_ports": "local service ports excluded from counting"
+      },
+      "data_idea": "A seeded RNG synthesizes localhost connection attempts mixing normal service traffic with scan sweeps.",
+      "real_world_use": "Used by host-based intrusion detection on workstations and servers to spot reconnaissance.",
+      "suggested_types": [
+        "port_scanner",
+        "monitoring_agent",
+        "log_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "password-strength-auditor",
+      "name": "Password Strength Auditor",
+      "concept": "Weak passwords fall to guessing and to cracking rigs that try billions of candidates per second, so strength must be measured rather than assumed. The auditor scores passwords on length, character classes, dictionary words, keyboard walks, and repetition, then estimates cracking time under several attacker speeds. It reports actionable feedback like add length or drop the dictionary word instead of a bare pass or fail.",
+      "key_params": {
+        "min_length": "minimum acceptable password length",
+        "attacker_guesses_per_sec": "assumed cracking speed for time estimates",
+        "dictionary_path": "wordlist used for dictionary checks",
+        "require_classes": "how many character classes are required"
+      },
+      "data_idea": "A seeded RNG fabricates a user password list mixing strong passphrases with common weak choices.",
+      "real_world_use": "Used by IT teams during password audits and by developers building signup validation.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "password-hash-algorithm-auditor",
+      "name": "Password Hash Algorithm Auditor",
+      "concept": "Storing passwords with fast hashes like MD5 or SHA-256 lets attackers test billions of guesses per second after a breach, while memory-hard functions like Argon2id and bcrypt slow them dramatically. This auditor inspects a password database dump format, identifies the algorithm and parameters behind each hash prefix, and flags anything below the current policy bar. It never cracks anything; it grades the storage hygiene.",
+      "key_params": {
+        "policy_min": "minimum acceptable algorithm tier",
+        "bcrypt_cost_floor": "lowest bcrypt cost factor considered safe",
+        "flag_unsalted": "whether unsalted legacy hashes are critical findings",
+        "sample_size": "hashes sampled from large dumps"
+      },
+      "data_idea": "A seeded RNG generates synthetic hash entries across MD5, SHA-1, bcrypt, and Argon2id with varied parameters.",
+      "real_world_use": "Used by security engineers auditing credential storage before and after migrations.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tls-certificate-expiry-monitor",
+      "name": "TLS Certificate Expiry Monitor",
+      "concept": "Expired TLS certificates break trust for browsers and APIs, and outages from forgotten renewals are depressingly common. The monitor keeps an inventory of hostnames with their certificate not-after dates, computes days remaining, and escalates through warning and critical thresholds. It models renewal lead time so teams get paged early enough to actually rotate the certificate.",
+      "key_params": {
+        "warning_days": "days before expiry that raise a warning",
+        "critical_days": "days before expiry that page on-call",
+        "check_interval_hours": "how often certificates are re-checked",
+        "include_chain": "whether intermediate expiry is also tracked"
+      },
+      "data_idea": "A seeded RNG builds a certificate inventory with staggered expiry dates, including a few about to lapse.",
+      "real_world_use": "Used by platform teams to prevent outages from expired certificates on public endpoints.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dns-tunneling-detector",
+      "name": "DNS Tunneling Detector",
+      "concept": "DNS tunneling smuggles data out of a network by encoding it in subdomain labels of DNS queries, abusing a protocol that firewalls almost always allow. The detector scores queries on label entropy, query length, request frequency, and the rarity of the queried domain, because tunneled traffic looks random and chatty compared with human browsing. High-scoring domains get quarantined for analyst review.",
+      "key_params": {
+        "entropy_threshold": "Shannon entropy of labels that looks encoded",
+        "qps_threshold": "queries per second per domain that looks automated",
+        "label_length_limit": "label length that triggers suspicion",
+        "allowlist_domains": "known-good domains skipped by the scorer"
+      },
+      "data_idea": "A seeded RNG synthesizes DNS query logs mixing normal lookups with encoded high-entropy tunnel queries.",
+      "real_world_use": "Used by SOC analysts and DNS firewall vendors to catch data exfiltration over DNS.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "phishing-url-feature-scorer",
+      "name": "Phishing URL Feature Scorer",
+      "concept": "Phishing pages live at URLs engineered to look trustworthy: long hostnames, misleading subdomains, punycode tricks, and fresh registrations. The scorer extracts lexical features such as URL length, digit ratio, hyphen count, subdomain depth, and suspicious tokens, then combines them into a risk score with an explainable breakdown. It judges the string only, never fetching the page, so it is safe to run on untrusted input.",
+      "key_params": {
+        "suspicious_tokens": "words like verify or login that raise the score",
+        "length_threshold": "URL length that starts adding risk",
+        "subdomain_depth_limit": "depth considered deceptive",
+        "score_cutoff": "score above which a URL is flagged"
+      },
+      "data_idea": "A seeded RNG fabricates URLs mixing legitimate links with phishing-style lookalikes.",
+      "real_world_use": "Used in email security gateways and browser toolbars to triage suspicious links.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "naive_bayes",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "file-integrity-monitor",
+      "name": "File Integrity Monitor",
+      "concept": "Rootkits and intruders modify system binaries and configs, so a file integrity monitor keeps cryptographic hashes of watched files and re-checks them on a schedule. Any hash mismatch, permission change, or unexpected new file in a watched directory raises an alert with the diff of what changed. The baseline database itself is checksummed so tampering with the monitor is detectable.",
+      "key_params": {
+        "watch_paths": "directories and files under surveillance",
+        "hash_algorithm": "digest used for the baseline",
+        "check_interval_minutes": "how often the tree is re-scanned",
+        "alert_on_new_files": "whether unexpected new files raise alerts"
+      },
+      "data_idea": "A seeded RNG builds a file tree with hashes, then simulates legitimate edits and malicious tampering.",
+      "real_world_use": "Used on servers to detect unauthorized modification of binaries and configuration.",
+      "suggested_types": [
+        "monitoring_agent",
+        "cli_tool",
+        "backup_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "login-session-anomaly-detector",
+      "name": "Login Session Anomaly Detector",
+      "concept": "Compromised accounts often reveal themselves through impossible travel, odd hours, or new devices rather than through the password itself. This detector builds a per-user profile of usual login hours, locations, and devices, then scores each new session against that profile. Sessions that break several profile norms at once are flagged for step-up verification.",
+      "key_params": {
+        "max_travel_kmh": "impossible-travel speed threshold",
+        "new_device_weight": "risk added by an unseen device",
+        "off_hours_weight": "risk added by unusual login times",
+        "profile_days": "history used to learn the user baseline"
+      },
+      "data_idea": "A seeded RNG synthesizes login events with normal commuter patterns plus hijacked sessions from odd places.",
+      "real_world_use": "Used by identity teams to trigger step-up authentication on suspicious sign-ins.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "log_analyzer",
+        "kmeans_clustering"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "firewall-rule-simulator",
+      "name": "Firewall Rule Simulator",
+      "concept": "Firewall policies are ordered rule lists where the first match wins, and a misplaced permissive rule can silently shadow stricter ones below it. The simulator evaluates packets against a rule set, shows exactly which rule matched and why, and audits the policy for shadowed rules, overly broad allows, and default-deny gaps. It lets engineers test policy changes safely before pushing them to production.",
+      "key_params": {
+        "default_policy": "allow or deny when no rule matches",
+        "rule_order": "ordered list of match criteria and actions",
+        "test_packets": "packets to trace through the policy",
+        "audit_shadowing": "whether to report rules that can never fire"
+      },
+      "data_idea": "A seeded RNG generates firewall rulesets with planted misconfigurations plus packets to trace.",
+      "real_world_use": "Used by network engineers to validate firewall changes without touching production.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "config_manager",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "honeypot-log-analyzer",
+      "name": "Honeypot Log Analyzer",
+      "concept": "Honeypots are decoy systems with no legitimate users, so every interaction with them is suspicious by definition. The analyzer ingests honeypot logs, clusters attacker sessions, extracts tried usernames, passwords, and commands, and ranks the most aggressive sources. The output feeds blocklists and threat-intel reports with zero false positives from real users, since there are none.",
+      "key_params": {
+        "session_gap_minutes": "idle gap that splits attacker sessions",
+        "top_n_attackers": "how many top sources to profile",
+        "extract_commands": "whether to pull executed command strings",
+        "min_interactions": "interactions needed before a source is profiled"
+      },
+      "data_idea": "A seeded RNG synthesizes honeypot sessions with brute-force logins and probe commands.",
+      "real_world_use": "Used by threat-intel teams to harvest attacker tactics and build blocklists.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "credential-stuffing-detector",
+      "name": "Credential Stuffing Detector",
+      "concept": "Credential stuffing replays username and password pairs stolen from other breaches, producing login attempts with high failure rates spread across many accounts from few IPs. The detector watches the failure rate per source, the number of distinct usernames attempted, and the success pattern, separating stuffing waves from normal user typos. Flagged waves can trigger CAPTCHAs or temporary throttling.",
+      "key_params": {
+        "failure_rate_threshold": "failure share that signals stuffing",
+        "usernames_per_ip": "distinct accounts per source that looks automated",
+        "window_minutes": "observation window",
+        "success_spike_limit": "unexpected successes that escalate the alert"
+      },
+      "data_idea": "A seeded RNG fabricates login attempts mixing typo-prone users with stuffing waves from bot IPs.",
+      "real_world_use": "Used by consumer web platforms to protect login endpoints from breached-credential replay.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "statistical_analyzer",
+        "rate_limiter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "malware-hash-reputation-checker",
+      "name": "Malware Hash Reputation Checker",
+      "concept": "Antivirus and EDR tools identify known malware by file hashes, so a reputation checker compares observed hashes against a local threat database instead of uploading files anywhere. It supports exact SHA-256 matches plus fuzzy matching on import hashes to catch repacked variants. Unknown hashes are queued for sandbox submission rather than trusted.",
+      "key_params": {
+        "db_path": "local hash reputation database",
+        "fuzzy_threshold": "import-hash similarity that counts as a variant",
+        "quarantine_unknown": "whether unknown executables are held",
+        "batch_size": "hashes checked per run"
+      },
+      "data_idea": "A seeded RNG generates file inventories mixing benign software hashes with known-bad and fuzzy-variant hashes.",
+      "real_world_use": "Used by incident responders triaging suspicious binaries on endpoints.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "endpoint-process-behavior-profiler",
+      "name": "Endpoint Process Behavior Profiler",
+      "concept": "Malware often hides behind legitimate process names while behaving abnormally, spawning odd children or touching unusual files. The profiler builds a baseline of normal parent-child process trees, file access, and network behavior per host, then flags processes that deviate. It focuses on behavior rather than signatures, catching novel threats.",
+      "key_params": {
+        "baseline_days": "days used to learn normal process trees",
+        "rare_child_weight": "risk of an unusual child process",
+        "network_weight": "risk of unexpected outbound connections",
+        "min_occurrences": "times a pattern must appear to be baseline"
+      },
+      "data_idea": "A seeded RNG synthesizes process trees with normal office workloads plus injected anomalous chains.",
+      "real_world_use": "Used by EDR analysts hunting living-off-the-land and fileless attack techniques.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "network-traffic-baseliner",
+      "name": "Network Traffic Baseliner",
+      "concept": "You cannot spot abnormal traffic without knowing what normal looks like, so a baseliner records bytes, flows, ports, and peer counts per host over time. It stores hourly profiles and compares live traffic against them with simple statistical distance, producing a ranked list of the most deviant hosts. Analysts start investigations from the top of that list.",
+      "key_params": {
+        "profile_granularity": "hourly or daily baseline buckets",
+        "deviation_sigma": "z-score that marks a host deviant",
+        "top_n": "deviant hosts reported per cycle",
+        "min_bytes": "traffic floor to ignore trivial hosts"
+      },
+      "data_idea": "A seeded RNG generates per-host flow summaries with weekly seasonality plus exfiltration-like spikes.",
+      "real_world_use": "Used by NOC and SOC teams as the first pass of network anomaly hunting.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "report_generator",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vulnerability-scan-report-parser",
+      "name": "Vulnerability Scan Report Parser",
+      "concept": "Vulnerability scanners dump thousands of findings that nobody can read raw, so a parser normalizes them into a ranked, deduplicated list. It groups by CVE, attaches severity and affected assets, suppresses duplicates across scans, and highlights newly appeared or worsened findings. The output is a prioritized remediation queue instead of a phone book.",
+      "key_params": {
+        "severity_floor": "minimum severity included in the queue",
+        "dedupe_window_days": "how long a finding counts as already known",
+        "asset_criticality": "weighting of internet-facing assets",
+        "new_findings_days": "recency window for new highlights"
+      },
+      "data_idea": "A seeded RNG fabricates scanner findings across hosts with CVEs, severities, and repeat appearances.",
+      "real_world_use": "Used by vulnerability management teams turning scanner output into patch plans.",
+      "suggested_types": [
+        "log_analyzer",
+        "report_generator",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "csp-header-analyzer",
+      "name": "CSP Header Analyzer",
+      "concept": "Content Security Policy headers tell the browser which sources may load scripts, styles, and frames, and a weak policy leaves XSS exploitable. The analyzer parses deployed CSP headers, flags unsafe-inline, unsafe-eval, wildcard sources, and missing directives like object-src and base-uri. It grades each policy and suggests a tightened version.",
+      "key_params": {
+        "require_directives": "directives that must be present",
+        "forbid_unsafe_inline": "whether script unsafe-inline is a failure",
+        "max_source_count": "sources per directive before it looks sloppy",
+        "grade_weights": "scoring per weakness class"
+      },
+      "data_idea": "A seeded RNG generates CSP headers ranging from strict nonced policies to wide-open wildcards.",
+      "real_world_use": "Used by web security teams auditing response headers across their sites.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "secrets-in-code-scanner",
+      "name": "Secrets in Code Scanner",
+      "concept": "API keys and passwords committed to repositories get scraped by attackers within minutes of a public push. The scanner walks a codebase looking for high-entropy strings, known key prefixes, and assignment patterns like password equals, then filters out test fixtures and placeholders. Findings include the file, line, and secret type so rotation can start immediately.",
+      "key_params": {
+        "entropy_threshold": "Shannon entropy that marks a string secret-like",
+        "key_prefixes": "known prefixes like sk-live or AKIA to match",
+        "ignore_tests": "whether test directories are skipped",
+        "min_length": "shortest string considered"
+      },
+      "data_idea": "A seeded RNG builds a fake repo mixing clean code with committed keys and tokens.",
+      "real_world_use": "Used in CI pipelines to block commits that leak credentials.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "report_generator",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "log-anonymizer",
+      "name": "Log Anonymizer",
+      "concept": "Logs needed for debugging often contain emails, IPs, and tokens that privacy rules forbid sharing. The anonymizer scans log text for PII patterns and replaces them with consistent pseudonyms, so john at example stays the same fake identity across lines while the real address never leaves the building. Format-preserving replacement keeps the logs parseable by existing tooling.",
+      "key_params": {
+        "pii_patterns": "regexes for emails, IPs, cards, and tokens",
+        "consistent_mapping": "whether the same value maps to the same token",
+        "salt": "secret salt for the pseudonym hash",
+        "keep_structure": "whether timestamps and levels stay intact"
+      },
+      "data_idea": "A seeded RNG generates application logs laced with emails, IPs, and fake tokens.",
+      "real_world_use": "Used by support and analytics teams sharing logs under privacy constraints.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "data_pipeline",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "incident-timeline-builder",
+      "name": "Incident Timeline Builder",
+      "concept": "Incident response lives or dies on a clear timeline of who did what when, assembled from firewall, auth, EDR, and ticket logs. The builder normalizes timestamps across sources, merges events into one chronological view, and highlights gaps and bursts. Analysts annotate the timeline as the investigation proceeds, and it exports into the postmortem.",
+      "key_params": {
+        "timezone": "normalization target for all timestamps",
+        "merge_window_seconds": "gap that joins nearby events into episodes",
+        "source_weights": "reliability ranking per log source",
+        "annotate": "whether analyst notes attach to events"
+      },
+      "data_idea": "A seeded RNG fabricates multi-source incident logs around a staged intrusion scenario.",
+      "real_world_use": "Used by incident responders reconstructing attack sequences for reports.",
+      "suggested_types": [
+        "log_analyzer",
+        "report_generator",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ransomware-behavior-detector",
+      "name": "Ransomware Behavior Detector",
+      "concept": "Ransomware announces itself through behavior: mass file renames, entropy spikes as files encrypt, ransom notes dropped, and shadow copy deletion. The detector watches file-system event streams for these combined signals rather than any single one, because backups and compression can each look suspicious alone. Correlated signals trigger immediate isolation recommendations.",
+      "key_params": {
+        "rename_burst": "renames per minute that look like encryption",
+        "entropy_delta": "average entropy jump across modified files",
+        "note_filenames": "ransom note names to watch for",
+        "correlation_window": "minutes over which signals must co-occur"
+      },
+      "data_idea": "A seeded RNG synthesizes file events mixing normal editing with staged ransomware-like bursts.",
+      "real_world_use": "Used by endpoint protection teams for early ransomware detection before encryption completes.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "ddos-traffic-visualizer",
+      "name": "DDoS Traffic Visualizer",
+      "concept": "During a flood, responders need to see attack shape at a glance: which vectors, which sources, how the volume ramps. The visualizer turns flow summaries into ASCII and dashboard charts of packets per second by protocol, top talkers, and geographic spread. Seeing a SYN flood versus a UDP amplification at a glance drives the right mitigation choice.",
+      "key_params": {
+        "bucket_seconds": "time bucket for rate charts",
+        "top_n_talkers": "sources shown in the breakdown",
+        "vector_split": "whether to split charts by attack vector",
+        "baseline_overlay": "whether normal traffic is drawn underneath"
+      },
+      "data_idea": "A seeded RNG generates flow summaries with normal diurnal traffic plus multi-vector flood episodes.",
+      "real_world_use": "Used by NOC teams during active DDoS mitigation to pick countermeasures.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "auth-failure-heatmap",
+      "name": "Auth Failure Heatmap",
+      "concept": "Failed logins cluster by hour, by source country, and by targeted account, and a heatmap makes those clusters obvious. The tool bins authentication failures across time and dimensions and renders intensity maps that reveal brute-force campaigns and password-spray waves. Analysts pivot from a hot cell straight into the underlying events.",
+      "key_params": {
+        "bin_hours": "time bucket size for the map",
+        "dimensions": "axes such as hour versus source ASN",
+        "intensity_scale": "linear or log scaling for hot cells",
+        "min_failures": "floor that hides noise"
+      },
+      "data_idea": "A seeded RNG fabricates auth failures with diurnal user noise plus attacker campaign clusters.",
+      "real_world_use": "Used by SOC analysts visualizing where authentication attacks concentrate.",
+      "suggested_types": [
+        "web_dashboard",
+        "log_analyzer",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ip-reputation-scorer",
+      "name": "IP Reputation Scorer",
+      "concept": "Not every IP deserves equal trust: some subnets host bulletproof providers while others are pristine corporate ranges. The scorer combines local signals like past abuse reports, failed-auth counts, and honeypot hits into a reputation score per IP or ASN. Scores feed block, challenge, or allow decisions at the edge.",
+      "key_params": {
+        "abuse_weight": "weight of historical abuse reports",
+        "honeypot_weight": "weight of honeypot interactions",
+        "decay_days": "how fast old offenses fade",
+        "score_bands": "cutoffs for block, challenge, and allow"
+      },
+      "data_idea": "A seeded RNG synthesizes IP histories mixing clean corporate ranges with repeat offenders.",
+      "real_world_use": "Used by WAF and email gateways to triage traffic before deep inspection.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "log_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ssl-config-grader",
+      "name": "SSL Config Grader",
+      "concept": "Weak TLS settings like old protocol versions and export ciphers let attackers downgrade or decrypt traffic. The grader evaluates a simulated server configuration against modern best practice, checking protocol versions, cipher suites, key exchange, HSTS, and certificate chain issues. Each weakness deducts points with a plain-language explanation and a remediation hint.",
+      "key_params": {
+        "min_tls_version": "oldest protocol version accepted",
+        "forbidden_ciphers": "cipher families that fail the grade",
+        "require_hsts": "whether missing HSTS deducts points",
+        "key_size_floor": "minimum RSA key size in bits"
+      },
+      "data_idea": "A seeded RNG fabricates server TLS configs from hardened modern to legacy export-grade.",
+      "real_world_use": "Used by security engineers auditing public-facing TLS before compliance reviews.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "access-policy-evaluator",
+      "name": "Access Policy Evaluator",
+      "concept": "Role-based access policies grow into tangled allow and deny rules where nobody can tell what a user can actually do. The evaluator takes users, roles, and resource rules, computes the effective permission set per user, and flags violations like dormant admin accounts or separation-of-duties conflicts. It answers the audit question of who can touch what in seconds.",
+      "key_params": {
+        "roles": "role definitions with permission sets",
+        "sod_pairs": "permission pairs that must never combine",
+        "dormant_days": "inactivity that flags an account",
+        "deny_overrides": "whether explicit denies beat allows"
+      },
+      "data_idea": "A seeded RNG generates users, roles, and permission grants with planted violations.",
+      "real_world_use": "Used by IAM teams and auditors proving least-privilege compliance.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "token-expiry-auditor",
+      "name": "Token Expiry Auditor",
+      "concept": "Long-lived API tokens and service credentials are a breach waiting to happen, yet they accumulate silently. The auditor inventories tokens with their issue dates, scopes, and last-used timestamps, then flags expired, over-scoped, and never-used credentials for rotation or revocation. It models blast radius by counting what each token can reach.",
+      "key_params": {
+        "max_age_days": "token age that triggers rotation",
+        "unused_days": "inactivity that marks a token stale",
+        "scope_risk_weights": "risk per scope like admin or billing",
+        "grace_days": "warning period before flagging"
+      },
+      "data_idea": "A seeded RNG builds a token inventory with varied ages, scopes, and last-used dates.",
+      "real_world_use": "Used by platform teams running credential hygiene programs.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "brute-force-timing-analyzer",
+      "name": "Brute-Force Timing Analyzer",
+      "concept": "Humans type passwords with irregular pauses while guessing tools hammer attempts at machine rhythm, and timing betrays the difference. The analyzer studies inter-attempt intervals in auth logs, measuring regularity and burst structure to separate manual typos from automated guessing. Even slow distributed guessing shows statistical regularity over enough samples.",
+      "key_params": {
+        "min_attempts": "attempts needed before timing analysis",
+        "regularity_threshold": "coefficient of variation that looks automated",
+        "burst_gap_seconds": "gap that splits attempt bursts",
+        "window_hours": "observation window per source"
+      },
+      "data_idea": "A seeded RNG synthesizes attempt timestamps mixing human-like irregularity with metronomic bot timing.",
+      "real_world_use": "Used by fraud teams distinguishing manual account takeover from scripted attacks.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "log_analyzer",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "web-shell-signature-scanner",
+      "name": "Web Shell Signature Scanner",
+      "concept": "Attackers who breach a web server often drop a web shell, a small script that gives them remote command execution through the browser. The defensive scanner walks web directories looking for obfuscation patterns like long base64 blobs, eval chains, and suspicious function names in uploaded or modified files. Matches are quarantined for review rather than deleted outright.",
+      "key_params": {
+        "scan_extensions": "file types inspected",
+        "entropy_threshold": "blob entropy that looks obfuscated",
+        "suspicious_functions": "function names that raise suspicion",
+        "quarantine_dir": "where matches are moved"
+      },
+      "data_idea": "A seeded RNG builds a web root mixing clean CMS files with obfuscated shell-like scripts.",
+      "real_world_use": "Used by incident responders checking compromised web servers for backdoors.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "file_organizer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "data-exfiltration-rate-detector",
+      "name": "Data Exfiltration Rate Detector",
+      "concept": "Stealing a database means moving a lot of bytes out, and that volume anomaly is often the first detectable sign. The detector tracks outbound bytes per host and per destination, comparing against learned baselines to flag unusual uploads. It distinguishes legitimate bulk transfers like backups through allowlisted destinations and schedules.",
+      "key_params": {
+        "upload_sigma": "standard deviations that flag an upload",
+        "baseline_days": "history used to learn normal volumes",
+        "allowlisted_dests": "backup and CDN endpoints excluded",
+        "min_bytes": "floor that ignores trivial transfers"
+      },
+      "data_idea": "A seeded RNG generates outbound transfer logs with nightly backups plus slow-drip exfiltration.",
+      "real_world_use": "Used by DLP programs catching large unauthorized data movement.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "log_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "privileged-command-auditor",
+      "name": "Privileged Command Auditor",
+      "concept": "Commands run as root or administrator deserve scrutiny, because one typo or one intruder can be catastrophic. The auditor parses sudo and admin command logs, flags dangerous patterns like recursive deletes on system paths or disabled auditing, and builds a per-admin risk profile. It turns an unreadable sudo log into an accountability record.",
+      "key_params": {
+        "dangerous_patterns": "command patterns that always alert",
+        "risk_weights": "scoring per command class",
+        "admin_baseline_days": "history for per-admin norms",
+        "alert_threshold": "score that pages security"
+      },
+      "data_idea": "A seeded RNG fabricates sudo logs mixing routine admin work with risky and malicious commands.",
+      "real_world_use": "Used by security teams reviewing privileged access for compliance.",
+      "suggested_types": [
+        "log_analyzer",
+        "cli_tool",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "patch-lag-tracker",
+      "name": "Patch Lag Tracker",
+      "concept": "The window between a patch release and its installation is when attackers strike, so measuring that lag matters. The tracker records CVE publish dates against installation dates per host, computes lag in days, and ranks teams by their exposure window. Chronic laggards get escalated before the next Patch Tuesday.",
+      "key_params": {
+        "sla_days": "allowed lag per severity tier",
+        "severity_weights": "criticality multiplier per CVE rating",
+        "scan_interval_days": "how often patch state is refreshed",
+        "exclude_hosts": "decommissioned systems skipped"
+      },
+      "data_idea": "A seeded RNG synthesizes CVE disclosures and per-host patch dates with varied team speeds.",
+      "real_world_use": "Used by vulnerability management proving patch SLAs to auditors.",
+      "suggested_types": [
+        "monitoring_agent",
+        "report_generator",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "localhost-asset-inventory",
+      "name": "Localhost Asset Inventory",
+      "concept": "You cannot defend what you cannot see, so an asset inventory maps every listening service on the local machine. This localhost-only scanner enumerates open local ports, grabs service banners, and records versions into an inventory with last-seen timestamps. Unexpected new listeners trigger alerts, catching rogue services and forgotten debug ports.",
+      "key_params": {
+        "scan_ports": "local port ranges inventoried",
+        "banner_grab": "whether service banners are captured",
+        "alert_on_new": "whether new listeners raise alerts",
+        "rescan_interval_minutes": "inventory refresh cadence"
+      },
+      "data_idea": "A seeded RNG simulates localhost port states with services appearing and disappearing.",
+      "real_world_use": "Used by sysadmins maintaining an accurate picture of exposed local services.",
+      "suggested_types": [
+        "port_scanner",
+        "cli_tool",
+        "monitoring_agent",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "beaconing-detector",
+      "name": "Beaconing Detector",
+      "concept": "Malware that phones home on a schedule creates eerily regular outbound connections, unlike human browsing. The beaconing detector analyzes connection timestamps per destination for periodicity using interval statistics, flagging destinations with metronomic timing even when the interval jitters. It catches command-and-control heartbeats hiding in normal traffic.",
+      "key_params": {
+        "min_connections": "connections needed for periodicity analysis",
+        "jitter_tolerance": "timing variation still counted as periodic",
+        "period_range": "min and max beacon intervals of interest",
+        "score_threshold": "periodicity score that alerts"
+      },
+      "data_idea": "A seeded RNG synthesizes connection logs mixing human browsing with jittered periodic beacons.",
+      "real_world_use": "Used by threat hunters finding C2 channels in netflow data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "log_analyzer",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "entropy-payload-analyzer",
+      "name": "Entropy Payload Analyzer",
+      "concept": "Encrypted, compressed, or encoded payloads have high Shannon entropy compared with plain text, which makes entropy a cheap triage signal. The analyzer scores request bodies, DNS labels, and file blobs by entropy and byte distribution, flagging outliers for deeper inspection. It is a first-pass filter, not a verdict, since legitimate encryption also scores high.",
+      "key_params": {
+        "entropy_threshold": "bits per byte that marks a blob suspicious",
+        "min_length": "shortest payload analyzed",
+        "context_weights": "adjustments per protocol or field",
+        "top_n": "highest-entropy samples reported"
+      },
+      "data_idea": "A seeded RNG generates payloads mixing plain text with encoded and encrypted blobs.",
+      "real_world_use": "Used by analysts triaging suspicious network payloads and uploaded files.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "log_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "header-injection-screener",
+      "name": "Header Injection Screener",
+      "concept": "CRLF injection lets attackers smuggle extra HTTP headers or split responses by sneaking carriage returns into input reflected in headers. The defensive screener inspects values destined for response headers, rejecting or encoding control characters and flagging suspicious patterns. It protects redirect targets, filenames, and cookie values.",
+      "key_params": {
+        "strip_chars": "control characters removed or rejected",
+        "strict_mode": "reject versus sanitize on detection",
+        "watched_headers": "headers whose values are screened",
+        "log_attempts": "whether blocked attempts are logged"
+      },
+      "data_idea": "A seeded RNG fabricates header values mixing benign strings with CRLF probe payloads.",
+      "real_world_use": "Used by developers hardening response-header construction in web apps.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "csrf-token-validator",
+      "name": "CSRF Token Validator",
+      "concept": "Cross-site request forgery tricks a logged-in browser into submitting attacker-crafted requests, and the standard defense is an unpredictable per-session token. This simulator issues tokens, validates them on state-changing requests, and demonstrates failure modes like missing, reused, or predictable tokens. It teaches why the token must be tied to the session and rotated.",
+      "key_params": {
+        "token_bytes": "entropy length of generated tokens",
+        "rotate_on_login": "whether tokens rotate at login",
+        "same_site": "cookie SameSite policy simulated",
+        "check_origin": "whether origin headers are also verified"
+      },
+      "data_idea": "A seeded RNG simulates form submissions with valid, missing, and forged CSRF tokens.",
+      "real_world_use": "Used by developers learning and testing CSRF defenses in training apps.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "session-fixation-checker",
+      "name": "Session Fixation Checker",
+      "concept": "In session fixation, the attacker plants a known session ID in the victim's browser and waits for them to log in, hijacking the authenticated session. The checker audits login flows to verify the session identifier is regenerated at authentication and that old IDs are invalidated. It flags any flow where a pre-login session survives login.",
+      "key_params": {
+        "regenerate_on_login": "required session rotation behavior",
+        "invalidate_old": "whether pre-login IDs must die",
+        "cookie_flags": "secure and httponly expectations",
+        "test_flows": "login flows exercised"
+      },
+      "data_idea": "A seeded RNG simulates login flows with correct rotation and with fixation-vulnerable behavior.",
+      "real_world_use": "Used by AppSec testers auditing authentication flows.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "directory-traversal-guard-tester",
+      "name": "Directory Traversal Guard Tester",
+      "concept": "Path traversal attacks escape the intended directory with dot-dot sequences to read sensitive files. The defensive tester feeds file-serving code a battery of traversal probes including encoded variants and absolute paths, verifying every one is confined to the allowed root. It checks the guard, never real files.",
+      "key_params": {
+        "allowed_root": "directory all access must stay inside",
+        "probe_set": "traversal variants tested",
+        "follow_symlinks": "whether symlink escapes are tested",
+        "os_mode": "windows, posix, or both path styles"
+      },
+      "data_idea": "A seeded RNG generates file request paths mixing legitimate names with traversal probes.",
+      "real_world_use": "Used by developers validating file-download handlers before release.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "command-injection-screener",
+      "name": "Command Injection Screener",
+      "concept": "Passing user input to a system shell lets attackers chain extra commands with semicolons, pipes, and backticks. The defensive screener inspects inputs bound for shell execution, flags metacharacters and command separators, and recommends parameterized APIs instead. It is a code-review aid, not an exploit tool.",
+      "key_params": {
+        "shell_metachars": "characters treated as dangerous",
+        "recommend_fix": "whether to suggest safe alternatives",
+        "context": "which inputs reach a shell",
+        "severity_map": "scoring per metachar class"
+      },
+      "data_idea": "A seeded RNG fabricates inputs mixing filenames with shell metacharacter probes.",
+      "real_world_use": "Used by AppSec reviewers finding unsafe shell usage in codebases.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "open-redirect-checker",
+      "name": "Open Redirect Checker",
+      "concept": "Open redirects bounce users through a trusted domain to an attacker site, making phishing links look legitimate. The checker tests redirect endpoints against allowlists, verifying that only approved hosts and relative paths are permitted. It catches prefix-matching bugs where evil example slips past an allowlist for example.",
+      "key_params": {
+        "allowlist_hosts": "approved redirect destinations",
+        "allow_relative": "whether relative paths are permitted",
+        "block_protocol_switch": "whether javascript and data URIs are rejected",
+        "test_vectors": "redirect values exercised"
+      },
+      "data_idea": "A seeded RNG generates redirect targets mixing safe paths with allowlist-bypass attempts.",
+      "real_world_use": "Used by developers testing login and logout redirect handlers.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "clickjacking-header-checker",
+      "name": "Clickjacking Header Checker",
+      "concept": "Clickjacking overlays invisible frames to trick users into clicking something they cannot see. The checker verifies that pages set X-Frame-Options or frame-ancestors directives correctly, including on error pages that teams forget. Missing framing protection on sensitive pages is reported as a finding.",
+      "key_params": {
+        "required_pages": "sensitive pages that must be protected",
+        "policy": "deny, sameorigin, or allow-from expectations",
+        "check_error_pages": "whether 404 and 500 pages are included",
+        "report_only": "whether report-only mode counts as protected"
+      },
+      "data_idea": "A seeded RNG fabricates response headers with correct, missing, and contradictory framing policies.",
+      "real_world_use": "Used by web security teams auditing framing protections site-wide.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "http-security-headers-auditor",
+      "name": "HTTP Security Headers Auditor",
+      "concept": "A handful of response headers, HSTS, CSP, X-Content-Type-Options, Referrer-Policy, and others, form cheap defense in depth. The auditor fetches header sets for a list of hosts, scores each against a baseline policy, and produces a graded report with per-header findings. It tracks scores over time so regressions get caught.",
+      "key_params": {
+        "baseline_policy": "expected header set and values",
+        "grade_weights": "points per header",
+        "hosts": "endpoints audited",
+        "trend_days": "history kept for regression detection"
+      },
+      "data_idea": "A seeded RNG generates header sets from locked-down to completely bare.",
+      "real_world_use": "Used by security teams running continuous header hygiene checks.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dns-spoof-guard-simulator",
+      "name": "DNS Spoof Guard Simulator",
+      "concept": "DNS spoofing feeds victims forged answers that redirect them to attacker servers, classically via cache poisoning. The simulator models a resolver with and without defenses like randomized source ports, DNSSEC validation, and 0x20 randomization, showing how each raises the attacker's work factor. It demonstrates why layered DNS defenses matter.",
+      "key_params": {
+        "defenses": "which protections are enabled",
+        "attacker_rate": "forged responses per second the attacker can send",
+        "query_volume": "legitimate queries modeled",
+        "dnssec": "whether validation is enforced"
+      },
+      "data_idea": "A seeded RNG simulates resolver races between legitimate answers and spoofed packets.",
+      "real_world_use": "Used in security training to teach DNS cache-poisoning defenses.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "arp-spoof-detector",
+      "name": "ARP Spoof Detector",
+      "concept": "ARP has no authentication, so an attacker can poison a LAN's ARP tables and position themselves as man in the middle. The detector watches ARP traffic for red flags: gratuitous replies, MAC address flapping for one IP, and replies that were never requested. On a healthy LAN, ARP is boring and predictable.",
+      "key_params": {
+        "gratuitous_threshold": "unsolicited replies that trigger alerts",
+        "flap_window_seconds": "window for MAC-to-IP change detection",
+        "trusted_gateways": "known-good gateway MAC bindings",
+        "alert_cooldown": "suppression between repeat alerts"
+      },
+      "data_idea": "A seeded RNG synthesizes LAN ARP traffic mixing normal resolution with spoofing attacks.",
+      "real_world_use": "Used by network defenders on untrusted or shared LAN segments.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mac-flooding-detector",
+      "name": "MAC Flooding Detector",
+      "concept": "MAC flooding overflows a switch's CAM table with fake source addresses, forcing it to broadcast traffic like a hub so the attacker can sniff. The detector monitors the rate of new MAC addresses per switch port, flagging ports whose learning rate explodes beyond physical plausibility. Port-security recommendations follow each alert.",
+      "key_params": {
+        "macs_per_port_limit": "addresses per port considered normal",
+        "learning_rate_threshold": "new MACs per second that alert",
+        "window_seconds": "measurement window",
+        "quarantine_action": "simulated response like port shutdown"
+      },
+      "data_idea": "A seeded RNG simulates switch CAM tables with normal device churn plus flooding bursts.",
+      "real_world_use": "Used in network security labs teaching layer-2 attack detection.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "log-tampering-detector",
+      "name": "Log Tampering Detector",
+      "concept": "Attackers delete or edit logs to hide their tracks, so tamper-evident logging chains each entry's hash to the previous one. The detector verifies the hash chain, flags gaps in sequence numbers, and detects timestamp rewinding. A broken chain proves tampering even when the content looks plausible.",
+      "key_params": {
+        "hash_algorithm": "digest chaining the entries",
+        "max_gap_seconds": "allowed silence before a gap alerts",
+        "check_monotonic": "whether timestamps must never go backward",
+        "anchor_interval": "how often checkpoints are anchored"
+      },
+      "data_idea": "A seeded RNG builds hash-chained logs, then simulates deletions and edits by an intruder.",
+      "real_world_use": "Used for compliance-grade audit logging in finance and healthcare.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "monitoring_agent",
+        "backup_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "backup-restore-verifier",
+      "name": "Backup Restore Verifier",
+      "concept": "Backups that have never been restored are just hope, and ransomware crews count on that. The verifier performs automated test restores into an isolated area, checksums the restored files against the source manifest, and measures restore time against the recovery objective. Failed verifications page before the real disaster strikes.",
+      "key_params": {
+        "test_scope": "files or datasets restored per check",
+        "rto_minutes": "recovery time objective to beat",
+        "checksum_sample": "fraction of files hash-verified",
+        "isolated_dir": "sandbox location for test restores"
+      },
+      "data_idea": "A seeded RNG simulates backup jobs with manifests, including corrupted and incomplete sets.",
+      "real_world_use": "Used by operations teams proving backups actually work.",
+      "suggested_types": [
+        "backup_tool",
+        "scheduler",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mfa-adoption-tracker",
+      "name": "MFA Adoption Tracker",
+      "concept": "Accounts without multi-factor authentication are the first to fall in credential attacks, so tracking enrollment matters. The tracker inventories users with their MFA status, method strength, and last verification, then reports adoption rates by team and names the holdouts. It also flags weak methods like SMS where stronger options exist.",
+      "key_params": {
+        "method_strength": "ranking of MFA methods",
+        "target_rate": "adoption percentage goal",
+        "grace_days": "time given to new hires",
+        "exclude_service": "service accounts handled separately"
+      },
+      "data_idea": "A seeded RNG generates a user directory with varied MFA enrollment and methods.",
+      "real_world_use": "Used by identity teams driving MFA rollout to completion.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "password-reuse-risk-simulator",
+      "name": "Password Reuse Risk Simulator",
+      "concept": "Reusing one password across sites means a single breach hands attackers the keys to everything else. The simulator models a user population with reuse patterns, then simulates a breach at one service and counts how many other accounts become crackable. It quantifies why password managers and SSO matter in dollars-and-accounts terms.",
+      "key_params": {
+        "population": "number of simulated users",
+        "reuse_rate": "share of users reusing passwords",
+        "breach_size": "accounts exposed in the simulated breach",
+        "mitigation": "password manager or SSO adoption modeled"
+      },
+      "data_idea": "A seeded RNG builds user credential sets with realistic reuse clustering.",
+      "real_world_use": "Used in security awareness programs to make reuse risk concrete.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rogue-dhcp-detector",
+      "name": "Rogue DHCP Detector",
+      "concept": "A rogue DHCP server hands out malicious gateway and DNS settings, silently rerouting a LAN's traffic through the attacker. The detector listens for DHCP offers and compares responding server identities against the authorized list, flagging any unknown server instantly. It also watches for offers with suspiciously short leases or odd options.",
+      "key_params": {
+        "authorized_servers": "known-good DHCP server identities",
+        "watch_options": "DHCP options inspected like gateway and DNS",
+        "alert_immediately": "whether first sighting pages",
+        "lease_floor_seconds": "minimum sane lease time"
+      },
+      "data_idea": "A seeded RNG synthesizes DHCP traffic with legitimate servers plus a rogue offering bad gateways.",
+      "real_world_use": "Used by network teams on large or shared LANs.",
+      "suggested_types": [
+        "monitoring_agent",
+        "simulation",
+        "log_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "wireless-rogue-ap-analyzer",
+      "name": "Wireless Rogue AP Analyzer",
+      "concept": "Evil-twin access points mimic corporate SSIDs to harvest credentials from connecting devices. The analyzer compares observed access points against the authorized inventory on BSSID, signal behavior, and security settings, flagging twins that broadcast the right name from the wrong radio. It works from survey data, never transmitting itself.",
+      "key_params": {
+        "authorized_aps": "known-good BSSID inventory",
+        "ssid_watchlist": "corporate SSIDs protected",
+        "signal_anomaly": "unexpected signal strength patterns",
+        "open_ap_alert": "whether open twins of secure SSIDs alert"
+      },
+      "data_idea": "A seeded RNG generates wireless survey data mixing real APs with evil twins.",
+      "real_world_use": "Used during wireless security assessments of office spaces.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "email-header-forensic-analyzer",
+      "name": "Email Header Forensic Analyzer",
+      "concept": "Phishing emails betray themselves in their headers: mismatched from and return-path, failed SPF and DKIM, suspicious received chains, and odd reply-to addresses. The analyzer parses full headers, checks authentication results, traces the relay path, and scores the message for spoofing. It gives analysts a structured verdict instead of raw header soup.",
+      "key_params": {
+        "check_spf": "whether SPF results are evaluated",
+        "check_dkim": "whether DKIM signatures are validated",
+        "check_dmarc": "whether DMARC alignment is required",
+        "header_anomalies": "extra heuristics like reply-to mismatch"
+      },
+      "data_idea": "A seeded RNG fabricates email headers mixing legitimate mail with spoofed phishing.",
+      "real_world_use": "Used by SOC analysts triaging reported phishing emails.",
+      "suggested_types": [
+        "log_analyzer",
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "attachment-risk-scorer",
+      "name": "Attachment Risk Scorer",
+      "concept": "Malicious attachments remain a top intrusion vector, hiding macros and exploits in familiar document types. The scorer evaluates attachments by file type, extension mismatches, macro presence indicators, and embedded object counts from metadata alone, without executing anything. High-risk attachments are routed to sandbox detonation.",
+      "key_params": {
+        "risky_types": "extensions scored as dangerous",
+        "macro_weight": "risk added by macro indicators",
+        "double_ext_weight": "risk of invoice.pdf.exe tricks",
+        "size_anomaly": "unexpected sizes for the claimed type"
+      },
+      "data_idea": "A seeded RNG generates attachment metadata mixing benign docs with risky macro-laden files.",
+      "real_world_use": "Used by email security gateways prioritizing attachments for sandboxing.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "log_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "typosquat-domain-detector",
+      "name": "Typosquat Domain Detector",
+      "concept": "Attackers register lookalike domains one typo away from real brands to catch misdirected traffic and phish. The detector generates typo variants of protected brand names using common models like omission, swap, and homoglyph substitution, then checks which are registered in a simulated zone feed. Newly registered hits become takedown candidates.",
+      "key_params": {
+        "brands": "protected domain names",
+        "typo_models": "omission, insertion, swap, homoglyph",
+        "tld_watchlist": "TLDs monitored for registrations",
+        "alert_on_new": "whether fresh registrations page"
+      },
+      "data_idea": "A seeded RNG synthesizes zone data with legitimate domains and planted typosquats.",
+      "real_world_use": "Used by brand-protection teams finding phishing domains early.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "homograph-domain-detector",
+      "name": "Homograph Domain Detector",
+      "concept": "Homograph attacks swap Latin letters for identical-looking Unicode characters, making fake domains visually indistinguishable from real ones. The detector scans domain lists for mixed-script labels and confusable characters, flagging anything that renders like a protected brand. It explains exactly which characters are suspicious.",
+      "key_params": {
+        "protected_brands": "names defended against spoofing",
+        "allowed_scripts": "Unicode scripts considered legitimate",
+        "confusable_map": "character equivalence table",
+        "flag_mixed_script": "whether mixed scripts always alert"
+      },
+      "data_idea": "A seeded RNG fabricates domain lists with clean names and Cyrillic or Greek lookalikes.",
+      "real_world_use": "Used by browser vendors and registrars fighting IDN abuse.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "log_analyzer",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "certificate-transparency-monitor",
+      "name": "Certificate Transparency Monitor",
+      "concept": "Certificate Transparency logs record every publicly issued certificate, so a monitor watching them spots rogue certs for your domains within hours. The simulator ingests a CT-like feed, matches entries against owned domains including wildcards, and alerts on unexpected issuances. It catches mis-issuance and attacker-obtained certs alike.",
+      "key_params": {
+        "owned_domains": "domains and wildcards watched",
+        "alert_on_wildcard": "whether unexpected wildcards page",
+        "issuer_allowlist": "approved certificate authorities",
+        "lookback_hours": "feed window scanned per run"
+      },
+      "data_idea": "A seeded RNG synthesizes CT log entries with legitimate renewals and rogue issuances.",
+      "real_world_use": "Used by security teams detecting unauthorized certificates for their domains.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "subdomain-takeover-checker",
+      "name": "Subdomain Takeover Checker",
+      "concept": "Dangling DNS records that point at expired cloud services let attackers claim the resource and serve content on your subdomain. The checker resolves subdomains, follows CNAME chains, and flags records pointing at unclaimed or claimable external services. Each finding includes the takeover pattern and remediation.",
+      "key_params": {
+        "resolvers": "DNS resolvers used for checks",
+        "claimable_services": "fingerprints of takeover-prone platforms",
+        "check_https": "whether dangling web endpoints are probed",
+        "report_evidence": "whether response bodies are captured"
+      },
+      "data_idea": "A seeded RNG builds DNS zones mixing healthy records with dangling CNAMEs.",
+      "real_world_use": "Used in external attack-surface assessments.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cors-policy-auditor",
+      "name": "CORS Policy Auditor",
+      "concept": "Cross-Origin Resource Sharing headers decide which websites may read your API responses, and a wildcard with credentials is effectively no protection. The auditor tests endpoints with various Origin headers, checking for reflected origins, null origin acceptance, and overly broad allowlists. Misconfigurations that leak authenticated data are flagged.",
+      "key_params": {
+        "test_origins": "origin values probed",
+        "flag_null": "whether null origin acceptance fails",
+        "credentials_check": "whether credentialed wildcards are critical",
+        "endpoints": "API routes tested"
+      },
+      "data_idea": "A seeded RNG simulates API CORS responses from strict to reflected-origin.",
+      "real_world_use": "Used by API security testers validating cross-origin policies.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "report_generator",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "jwt-claims-validator",
+      "name": "JWT Claims Validator",
+      "concept": "JSON Web Tokens carry signed claims, but sloppy validation like accepting the none algorithm or skipping expiry turns them into forgery passes. The simulator mints tokens with correct and broken properties, then runs them through a strict validator that checks signature, algorithm allowlist, expiry, issuer, and audience. It demonstrates each failure mode safely.",
+      "key_params": {
+        "allowed_algs": "signature algorithms accepted",
+        "require_exp": "whether missing expiry fails",
+        "issuers": "trusted token issuers",
+        "audiences": "accepted audience values",
+        "clock_skew_seconds": "tolerance for clock differences"
+      },
+      "data_idea": "A seeded RNG mints tokens with valid signatures, expired claims, and algorithm tricks.",
+      "real_world_use": "Used by developers learning secure JWT validation.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "encryption_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "oauth-scope-analyzer",
+      "name": "OAuth Scope Analyzer",
+      "concept": "OAuth scopes define what a third-party app may do on a user's behalf, and over-broad grants turn a compromised app into a full account takeover. The analyzer inventories granted scopes per application, flags sensitive combinations like read plus delete, and recommends least-privilege reductions. It also spots apps that have not been used in months.",
+      "key_params": {
+        "sensitive_scopes": "scopes weighted as high risk",
+        "combo_rules": "dangerous scope combinations",
+        "unused_days": "inactivity that flags an app",
+        "recommend_least": "whether reductions are suggested"
+      },
+      "data_idea": "A seeded RNG builds OAuth grants mixing minimal apps with over-scoped ones.",
+      "real_world_use": "Used by identity teams auditing third-party app permissions.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "statistical_analyzer",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "api-abuse-rate-detector",
+      "name": "API Abuse Rate Detector",
+      "concept": "Legitimate API clients behave predictably while scrapers and attackers hammer endpoints at inhuman rates or probe for IDOR patterns. The detector profiles per-key request rates, endpoint entropy, and error ratios, flagging keys whose behavior diverges from their historical norm. It separates a viral launch from an attack by looking at error and spread patterns.",
+      "key_params": {
+        "rate_sigma": "deviation that flags a key",
+        "error_ratio_limit": "4xx share that looks like probing",
+        "endpoint_spread": "distinct endpoints touched per window",
+        "window_minutes": "observation window"
+      },
+      "data_idea": "A seeded RNG synthesizes API gateway logs with normal clients plus scraping and probing keys.",
+      "real_world_use": "Used by API platform teams protecting public endpoints.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "rate_limiter",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "graphql-depth-limiter",
+      "name": "GraphQL Depth Limiter",
+      "concept": "GraphQL lets clients request deeply nested data, and malicious queries can nest circular relationships until the server exhausts itself. The simulator parses queries, measures nesting depth and breadth, estimates resolution cost, and rejects queries beyond configured complexity budgets. It shows how depth limiting and cost analysis complement each other.",
+      "key_params": {
+        "max_depth": "nesting depth permitted",
+        "max_cost": "computed complexity budget",
+        "cost_weights": "per-field resolution costs",
+        "introspection": "whether introspection queries are allowed"
+      },
+      "data_idea": "A seeded RNG generates GraphQL queries from simple to deeply nested attack shapes.",
+      "real_world_use": "Used by API teams hardening GraphQL endpoints against resource exhaustion.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "rate_limiter",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "request-smuggling-detector",
+      "name": "Request Smuggling Detector",
+      "concept": "HTTP request smuggling exploits disagreements between front-end and back-end servers about where one request ends and the next begins. The detector crafts test request pairs with conflicting Content-Length and Transfer-Encoding headers against a simulated server pair, reporting desyncs that would let an attacker poison the queue. It tests the parsing, never a real server.",
+      "key_params": {
+        "test_vectors": "CL.TE and TE.CL probe shapes",
+        "timeout_ms": "response timing measured for desync",
+        "strict_parsing": "whether ambiguous requests are rejected",
+        "report_evidence": "whether timing diffs are captured"
+      },
+      "data_idea": "A seeded RNG simulates front and back-end parsers with matched and mismatched behaviors.",
+      "real_world_use": "Used by AppSec engineers testing HTTP parsing consistency.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "slowloris-connection-monitor",
+      "name": "Slowloris Connection Monitor",
+      "concept": "Slowloris keeps many connections open by sending headers at a trickle, starving the server's connection pool without high bandwidth. The monitor tracks connection duration, bytes-per-second, and header completion rates, flagging connections that look deliberately stalled. It distinguishes slow legitimate clients on bad networks from attack patterns.",
+      "key_params": {
+        "min_duration_seconds": "connection age before analysis",
+        "bytes_per_sec_floor": "throughput that looks stalled",
+        "incomplete_ratio": "share of unfinished headers that alerts",
+        "per_ip_limit": "slow connections allowed per source"
+      },
+      "data_idea": "A seeded RNG synthesizes web server connections mixing slow mobile clients with trickle attacks.",
+      "real_world_use": "Used by web server admins defending against slow-rate denial of service.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "syn-cookie-simulator",
+      "name": "SYN Cookie Simulator",
+      "concept": "SYN cookies let a server survive SYN floods by encoding connection state into the sequence number instead of storing it, trading some TCP options for statelessness. The simulator models a server under flood with cookies off and on, showing backlog exhaustion versus graceful degradation. It makes the mitigation's trade-offs tangible.",
+      "key_params": {
+        "backlog_size": "half-open queue capacity",
+        "flood_rate": "attack SYNs per second",
+        "legit_rate": "real client SYNs per second",
+        "cookies_on": "whether SYN cookies are enabled"
+      },
+      "data_idea": "A seeded RNG drives SYN arrivals with configurable flood intensity.",
+      "real_world_use": "Used in networking courses teaching flood mitigation mechanics.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ids-rule-tester",
+      "name": "IDS Rule Tester",
+      "concept": "Intrusion detection rules are only as good as their last test, and untested rules miss real attacks or drown analysts in noise. The tester replays synthetic attack traffic and benign traffic through a rule engine, measuring true positives, false positives, and detection latency per rule. Rules that never fire on attacks get flagged for tuning.",
+      "key_params": {
+        "rule_set": "detection rules under test",
+        "attack_pcaps": "synthetic malicious traffic",
+        "benign_pcaps": "synthetic normal traffic",
+        "fp_budget": "acceptable false positive rate"
+      },
+      "data_idea": "A seeded RNG generates labeled traffic mixing attacks with everyday noise.",
+      "real_world_use": "Used by detection engineers validating IDS and SIEM rules.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "siem-correlation-engine",
+      "name": "SIEM Correlation Engine",
+      "concept": "Single alerts rarely tell the story; correlated sequences like a scan followed by a login followed by data staging reveal the campaign. The engine applies time-ordered correlation rules over normalized events, building incident cases from related alerts. It suppresses the noise of isolated events while escalating real chains.",
+      "key_params": {
+        "correlation_rules": "ordered event sequences to match",
+        "window_minutes": "max span of a correlated case",
+        "min_severity": "floor for case creation",
+        "dedupe": "whether repeat sequences merge"
+      },
+      "data_idea": "A seeded RNG synthesizes normalized security events with planted multi-stage attack chains.",
+      "real_world_use": "Used by SOC teams turning alert floods into manageable cases.",
+      "suggested_types": [
+        "log_analyzer",
+        "monitoring_agent",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "mitre-attack-coverage-mapper",
+      "name": "MITRE ATT&CK Coverage Mapper",
+      "concept": "Security teams map their detections to adversary tactics so they can see which techniques are covered and which are blind spots. The mapper takes a detection inventory tagged by technique, renders coverage across the tactic matrix, and highlights the riskiest gaps. It turns a vague we need better detection into a prioritized roadmap.",
+      "key_params": {
+        "techniques": "tactic and technique catalog modeled",
+        "detections": "detection-to-technique mappings",
+        "risk_weights": "technique criticality scores",
+        "gap_threshold": "coverage that counts as a blind spot"
+      },
+      "data_idea": "A seeded RNG builds detection inventories with realistic coverage gaps.",
+      "real_world_use": "Used by detection engineering teams planning their roadmap.",
+      "suggested_types": [
+        "report_generator",
+        "web_dashboard",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "threat-intel-feed-aggregator",
+      "name": "Threat Intel Feed Aggregator",
+      "concept": "Threat feeds arrive in different formats with overlapping indicators and wildly varying quality. The aggregator normalizes indicators of compromise into one schema, deduplicates across feeds, scores source reliability, and expires stale entries. Analysts query one clean feed instead of five messy ones.",
+      "key_params": {
+        "feed_formats": "input formats normalized",
+        "dedupe_fields": "keys used to merge indicators",
+        "expiry_days": "indicator time-to-live",
+        "source_weights": "reliability per feed"
+      },
+      "data_idea": "A seeded RNG fabricates threat feeds with overlaps, conflicts, and stale entries.",
+      "real_world_use": "Used by threat-intel teams operationalizing commercial and open feeds.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "log_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vulnerability-prioritizer",
+      "name": "Vulnerability Prioritizer",
+      "concept": "Severity scores alone mislead: a critical CVE on an isolated test box matters less than a medium one on internet-facing production. The prioritizer blends severity, exploit availability, asset exposure, and business criticality into a single remediation rank. Patch teams work the top of the list first.",
+      "key_params": {
+        "severity_weight": "influence of the base score",
+        "exploit_weight": "boost for known exploits",
+        "exposure_weight": "boost for internet-facing assets",
+        "sla_days": "remediation deadlines per tier"
+      },
+      "data_idea": "A seeded RNG synthesizes vulnerabilities across assets with varied exposure.",
+      "real_world_use": "Used by vulnerability management focusing patch effort where risk is highest.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "asset-criticality-scorer",
+      "name": "Asset Criticality Scorer",
+      "concept": "Not all servers are equal: the billing database outranks a print server when incident triage gets brutal. The scorer rates assets on data sensitivity, revenue impact, internet exposure, and dependency count, producing tiers that drive alert priority and patch order. It makes triage decisions explicit instead of gut-feel.",
+      "key_params": {
+        "sensitivity_weights": "data classification scoring",
+        "revenue_weights": "business impact scoring",
+        "exposure_weights": "network position scoring",
+        "tier_cutoffs": "score bands for critical, high, medium, low"
+      },
+      "data_idea": "A seeded RNG builds an asset inventory with varied business contexts.",
+      "real_world_use": "Used by risk teams tiering assets for incident response.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "incident-severity-classifier",
+      "name": "Incident Severity Classifier",
+      "concept": "Incidents need a severity in the first minutes, but tired analysts classify inconsistently at 3 AM. The classifier scores scope, data impact, customer visibility, and attacker persistence into a severity recommendation with its reasoning shown. Humans still decide, but they start from a consistent proposal.",
+      "key_params": {
+        "scope_weight": "hosts and users affected",
+        "data_weight": "sensitivity of touched data",
+        "visibility_weight": "customer-facing impact",
+        "persistence_weight": "signs the attacker is entrenched"
+      },
+      "data_idea": "A seeded RNG fabricates incident summaries from minor malware to full breaches.",
+      "real_world_use": "Used by SOC teams standardizing severity calls.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "decision_tree",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "playbook-runner",
+      "name": "Playbook Runner",
+      "concept": "Incident playbooks are checklists that responders should follow the same way every time, but paper playbooks get skipped under pressure. The runner executes playbook steps against simulated systems: isolate host, capture memory, block IOCs, notify stakeholders, tracking completion and timing. It trains muscle memory before the real incident.",
+      "key_params": {
+        "playbooks": "step sequences per incident type",
+        "step_timeout": "max minutes per step",
+        "require_evidence": "whether steps need artifacts",
+        "dry_run": "simulate versus act"
+      },
+      "data_idea": "A seeded RNG simulates infrastructure state that playbook steps act upon.",
+      "real_world_use": "Used by incident response teams drilling their procedures.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "forensic-timeline-parser",
+      "name": "Forensic Timeline Parser",
+      "concept": "Disk forensics reconstructs what happened from file timestamps, but raw timestamp dumps are unreadable. The parser ingests file metadata, sorts by modified, accessed, created, and entry-modified times, and highlights clusters of suspicious activity like mass timestomping. It builds the super-timeline analysts actually investigate.",
+      "key_params": {
+        "time_range": "window of interest",
+        "timestomp_detect": "whether timestamp anomalies are flagged",
+        "cluster_gap_minutes": "gap splitting activity clusters",
+        "suspicious_paths": "directories weighted as interesting"
+      },
+      "data_idea": "A seeded RNG fabricates file metadata with normal use plus intruder activity clusters.",
+      "real_world_use": "Used by forensic analysts reconstructing intrusions from disk images.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "persistence-scanner",
+      "name": "Persistence Scanner",
+      "concept": "Attackers survive reboots through scheduled tasks, startup entries, services, and registry run keys, and defenders must inventory them all. The scanner enumerates simulated persistence locations, baselines the legitimate entries, and flags new or suspicious ones with context about what they launch. It is the first check on a potentially compromised host.",
+      "key_params": {
+        "locations": "persistence mechanisms enumerated",
+        "baseline": "known-good entries",
+        "suspicion_rules": "heuristics like obfuscated commands",
+        "alert_on_new": "whether unknown entries page"
+      },
+      "data_idea": "A seeded RNG builds persistence stores mixing legitimate entries with attacker implants.",
+      "real_world_use": "Used by incident responders hunting footholds on endpoints.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "log_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lateral-movement-detector",
+      "name": "Lateral Movement Detector",
+      "concept": "After the first foothold, attackers move laterally with stolen credentials, creating login patterns no legitimate user shows. The detector graphs authentication events between hosts, flagging unusual edges like a workstation logging into a domain controller or rapid fan-out to many hosts. It catches the spread phase of intrusions.",
+      "key_params": {
+        "fanout_threshold": "distinct hosts per source that alerts",
+        "rare_edge_weight": "risk of never-before-seen host pairs",
+        "privileged_targets": "hosts weighted as sensitive",
+        "window_hours": "observation window"
+      },
+      "data_idea": "A seeded RNG synthesizes auth graphs with normal admin paths plus attacker fan-out.",
+      "real_world_use": "Used by threat hunters detecting intrusion spread.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "log_analyzer",
+        "monitoring_agent",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "privilege-escalation-path-mapper",
+      "name": "Privilege Escalation Path Mapper",
+      "concept": "Misconfigurations chain together: a writable service binary plus a service account plus an admin group membership equals domain admin. The mapper builds a graph of users, groups, permissions, and misconfigurations, then finds the shortest paths from low-privilege users to high-value targets. Each path becomes a remediation ticket.",
+      "key_params": {
+        "start_users": "low-privilege principals analyzed",
+        "target_roles": "high-value goals like domain admin",
+        "misconfig_types": "weaknesses modeled in the graph",
+        "max_path_length": "longest chain reported"
+      },
+      "data_idea": "A seeded RNG generates directory graphs with planted misconfiguration chains.",
+      "real_world_use": "Used by Active Directory security teams prioritizing hardening.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "storage-bucket-policy-auditor",
+      "name": "Storage Bucket Policy Auditor",
+      "concept": "Public cloud storage buckets have caused some of the largest data breaches, usually from a policy that drifted open. The auditor evaluates bucket policies and ACLs, flagging public read or write, overly broad principals, and missing encryption defaults. It simulates policy changes before they are applied.",
+      "key_params": {
+        "policies": "bucket policies evaluated",
+        "forbid_public": "whether any public access fails",
+        "require_encryption": "whether default encryption is mandatory",
+        "principal_allowlist": "approved grantee patterns"
+      },
+      "data_idea": "A seeded RNG fabricates bucket policies from locked-down to world-readable.",
+      "real_world_use": "Used by cloud security teams preventing storage data leaks.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "iam-least-privilege-checker",
+      "name": "IAM Least Privilege Checker",
+      "concept": "Cloud IAM policies accumulate wildcard permissions that nobody dares remove, violating least privilege. The checker compares granted permissions against actually used actions from access logs, recommending precise removals. It quantifies the privilege gap per role so teams can trim safely.",
+      "key_params": {
+        "granted": "permissions each role holds",
+        "used_actions": "actions observed in logs",
+        "lookback_days": "usage history window",
+        "risky_actions": "actions weighted like iam star"
+      },
+      "data_idea": "A seeded RNG generates IAM policies and access logs with realistic over-provisioning.",
+      "real_world_use": "Used by cloud teams implementing least-privilege programs.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "key-rotation-tracker",
+      "name": "Key Rotation Tracker",
+      "concept": "Encryption and signing keys should rotate on a schedule, but stale keys linger for years in forgotten corners. The tracker inventories keys with creation dates, rotation policies, and usage counts, escalating keys past their rotation deadline. It distinguishes active keys from deprecated-but-still-valid ones during transitions.",
+      "key_params": {
+        "rotation_days": "max key age per key class",
+        "grace_days": "overlap window during rotation",
+        "key_classes": "data, signing, and TLS keys tracked",
+        "alert_on_stale": "whether overdue keys page"
+      },
+      "data_idea": "A seeded RNG builds a key inventory with fresh, due, and long-overdue keys.",
+      "real_world_use": "Used by security engineering running key hygiene programs.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "encryption-at-rest-auditor",
+      "name": "Encryption at Rest Auditor",
+      "concept": "Regulations and common sense demand stored data be encrypted, yet unencrypted volumes and databases slip through. The auditor inventories storage resources with their encryption status, algorithm, and key management, flagging anything plaintext or using deprecated ciphers. Findings roll up by team for accountability.",
+      "key_params": {
+        "resources": "volumes and databases inventoried",
+        "approved_ciphers": "algorithms considered compliant",
+        "require_cmk": "whether customer-managed keys are expected",
+        "exemptions": "approved plaintext exceptions"
+      },
+      "data_idea": "A seeded RNG fabricates storage inventories with mixed encryption states.",
+      "real_world_use": "Used by compliance teams proving encryption coverage.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "data-classification-tagger",
+      "name": "Data Classification Tagger",
+      "concept": "Protection starts with knowing which data is sensitive, so classification tags content as public, internal, confidential, or restricted. The tagger scans text samples for patterns like card numbers, health terms, and internal project names, assigning the highest matching tier with evidence. Tags drive handling rules downstream.",
+      "key_params": {
+        "patterns": "regexes per classification tier",
+        "tier_order": "public through restricted precedence",
+        "context_window": "surrounding text considered",
+        "min_confidence": "score needed to apply a tag"
+      },
+      "data_idea": "A seeded RNG generates documents mixing public text with sensitive patterns.",
+      "real_world_use": "Used by DLP programs deciding what protections each dataset needs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dlp-pattern-scanner",
+      "name": "DLP Pattern Scanner",
+      "concept": "Data loss prevention starts with finding sensitive data where it should not be: card numbers in chat logs, SSNs in tickets. The scanner applies validated patterns with checksum verification like Luhn for cards, reducing false positives from random digit strings. Matches include context so reviewers can judge quickly.",
+      "key_params": {
+        "patterns": "PII patterns with validators",
+        "context_chars": "surrounding text shown per hit",
+        "min_confidence": "score threshold for findings",
+        "exclusions": "test data and docs skipped"
+      },
+      "data_idea": "A seeded RNG fabricates text corpora with embedded PII-like strings.",
+      "real_world_use": "Used by DLP teams discovering sensitive data in the wrong places.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "log_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "privacy-request-tracker",
+      "name": "Privacy Request Tracker",
+      "concept": "Privacy laws give users the right to access or delete their data, with strict deadlines that are easy to miss. The tracker manages data-subject requests through intake, identity verification, search, and fulfillment stages, escalating as deadlines approach. It produces the audit trail regulators expect.",
+      "key_params": {
+        "request_types": "access, deletion, portability handled",
+        "sla_days": "deadline per request type",
+        "verification": "identity proofing steps",
+        "escalation_days": "warning lead time"
+      },
+      "data_idea": "A seeded RNG generates privacy requests with varied types and due dates.",
+      "real_world_use": "Used by privacy teams meeting regulatory response deadlines.",
+      "suggested_types": [
+        "scheduler",
+        "report_generator",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "secure-backup-encryptor",
+      "name": "Secure Backup Encryptor",
+      "concept": "Backups concentrate an organization's most sensitive data, making their encryption non-negotiable. The tool encrypts backup archives with authenticated encryption, manages key versions, and verifies integrity on every restore test. It demonstrates the full lifecycle from backup creation to verified recovery.",
+      "key_params": {
+        "algorithm": "authenticated cipher used",
+        "key_versioning": "how keys rotate across backups",
+        "verify_on_restore": "whether integrity is checked",
+        "retention_copies": "generations kept"
+      },
+      "data_idea": "A seeded RNG fabricates file sets that get backed up, encrypted, and test-restored.",
+      "real_world_use": "Used by operations teams securing backup pipelines.",
+      "suggested_types": [
+        "backup_tool",
+        "encryption_tool",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "incident-communication-logger",
+      "name": "Incident Communication Logger",
+      "concept": "During incidents, scattered chat messages become the official record nobody can reconstruct later. The logger captures timestamped status updates, decisions, and action assignments into a structured incident log, distinguishing facts from speculation. It exports the clean narrative leadership and postmortems need.",
+      "key_params": {
+        "roles": "commander, scribe, and liaison roles",
+        "decision_tags": "how decisions are marked",
+        "export_format": "timeline or narrative output",
+        "retention_days": "log retention policy"
+      },
+      "data_idea": "A seeded RNG simulates incident chatter mixing facts, questions, and decisions.",
+      "real_world_use": "Used by incident commanders keeping a defensible record.",
+      "suggested_types": [
+        "log_analyzer",
+        "report_generator",
+        "cli_tool",
+        "chat_server"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "usb-device-policy-enforcer",
+      "name": "USB Device Policy Enforcer",
+      "concept": "Removable media walk malware in and sensitive data out, so device policies need enforcement and auditing. The tool maintains an allowlist of approved device IDs, logs every insertion with user and timestamp, and flags unknown devices or mass file copies to removable drives. It balances security with legitimate field-work needs.",
+      "key_params": {
+        "allowlisted_devices": "approved device identifiers",
+        "copy_threshold_mb": "volume that triggers review",
+        "log_retention_days": "device event history kept",
+        "exceptions": "approved temporary exemptions"
+      },
+      "data_idea": "A seeded RNG synthesizes device insertion and file-copy events with policy violations.",
+      "real_world_use": "Used by endpoint teams controlling removable media risk.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "service-account-privilege-auditor",
+      "name": "Service Account Privilege Auditor",
+      "concept": "Service accounts often hold sweeping permissions with passwords that never rotate and nobody monitoring them. The auditor inventories service accounts, their privileges, password ages, and interactive-login flags, scoring each by risk. Findings drive the unglamorous but critical cleanup of forgotten credentials.",
+      "key_params": {
+        "max_password_age_days": "rotation expectation",
+        "privilege_weights": "risk per granted right",
+        "flag_interactive": "whether interactive logon is a finding",
+        "owner_required": "whether every account needs an owner"
+      },
+      "data_idea": "A seeded RNG builds service account inventories with stale and over-privileged entries.",
+      "real_world_use": "Used by IAM teams reducing the service-account attack surface.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "statistical_analyzer",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "kerberos-ticket-analyzer",
+      "name": "Kerberos Ticket Analyzer",
+      "concept": "Kerberos tickets grant access across the domain, and anomalies like weak encryption types or odd lifetimes hint at attacks. The analyzer inspects ticket metadata for deprecated encryption, unusual lifetimes, and service tickets to sensitive targets, flagging deviations from the domain baseline. It watches the authentication fabric itself.",
+      "key_params": {
+        "allowed_enctypes": "approved encryption types",
+        "max_lifetime_hours": "sane ticket lifetime",
+        "sensitive_services": "high-value ticket targets",
+        "baseline_days": "history for normal patterns"
+      },
+      "data_idea": "A seeded RNG synthesizes ticket logs with normal traffic plus weak-enctype anomalies.",
+      "real_world_use": "Used by AD security teams monitoring authentication health.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "webhook-signature-verifier",
+      "name": "Webhook Signature Verifier",
+      "concept": "Webhooks from payment processors and CI systems trigger real actions, so forged webhooks mean forged orders or deployments. The verifier checks HMAC signatures against shared secrets with constant-time comparison, rejects replayed timestamps, and logs verification failures. It is the receiving end done right.",
+      "key_params": {
+        "secret_rotation": "how secrets roll over",
+        "timestamp_tolerance": "allowed clock skew",
+        "replay_cache": "seen nonce tracking",
+        "fail_closed": "deny on any verification error"
+      },
+      "data_idea": "A seeded RNG generates webhook deliveries with valid, expired, and forged signatures.",
+      "real_world_use": "Used by developers securing inbound webhook endpoints.",
+      "suggested_types": [
+        "encryption_tool",
+        "cli_tool",
+        "api_client_sim",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "container-image-policy-checker",
+      "name": "Container Image Policy Checker",
+      "concept": "Running containers from untrusted or outdated images imports vulnerabilities straight into production. The checker evaluates image references against policy: approved registries, digest pinning, maximum age, and signature requirements. Violations block deployment in the simulated pipeline.",
+      "key_params": {
+        "approved_registries": "registries allowed",
+        "require_digest": "whether tags alone are rejected",
+        "max_age_days": "oldest acceptable image",
+        "require_signature": "whether signed images are mandatory"
+      },
+      "data_idea": "A seeded RNG fabricates image references from pristine to sketchy.",
+      "real_world_use": "Used by platform teams enforcing supply-chain policy.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "security-awareness-quiz-engine",
+      "name": "Security Awareness Quiz Engine",
+      "concept": "Training sticks when people practice spotting phishing and social engineering, not when they watch slides. The quiz engine serves scenario questions with realistic lures, explains each answer, and tracks scores by topic to target weak areas. It turns annual training into measurable skill.",
+      "key_params": {
+        "question_bank": "scenarios per topic",
+        "passing_score": "mastery threshold",
+        "explain_answers": "whether rationales are shown",
+        "retake_policy": "how failures are handled"
+      },
+      "data_idea": "A seeded RNG shuffles and serves quiz questions with distractor answers.",
+      "real_world_use": "Used by security teams running phishing-awareness programs.",
+      "suggested_types": [
+        "quiz_engine",
+        "report_generator",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vulnerability-disclosure-tracker",
+      "name": "Vulnerability Disclosure Tracker",
+      "concept": "Bug bounty and disclosure reports need triage, or researchers go public with unpatched bugs. The tracker manages reports from intake through validation, severity assignment, fix tracking, and researcher communication, with SLA clocks per severity. It keeps the disclosure process trustworthy.",
+      "key_params": {
+        "sla_days": "response deadlines per severity",
+        "triage_steps": "validation workflow",
+        "bounty_tiers": "payout bands",
+        "researcher_updates": "communication cadence"
+      },
+      "data_idea": "A seeded RNG generates disclosure reports with varied severities and states.",
+      "real_world_use": "Used by product security teams running bounty programs.",
+      "suggested_types": [
+        "task_queue",
+        "scheduler",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "red-team-finding-tracker",
+      "name": "Red Team Finding Tracker",
+      "concept": "Penetration tests produce findings that must be tracked to remediation, not filed away. The tracker records each finding with affected systems, exploitation difficulty, business impact, and retest status, aging anything past its fix deadline. It measures whether testing actually reduces risk.",
+      "key_params": {
+        "severity_model": "scoring rubric",
+        "retest_required": "whether fixes need verification",
+        "sla_days": "fix deadlines per severity",
+        "trend_reports": "risk-over-time views"
+      },
+      "data_idea": "A seeded RNG synthesizes pentest findings across systems and severities.",
+      "real_world_use": "Used by security teams ensuring test findings get fixed.",
+      "suggested_types": [
+        "report_generator",
+        "scheduler",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dns-query-log-retention",
+      "name": "DNS Query Log Retention",
+      "concept": "DNS logs are gold for investigations but a liability if kept forever, so retention policy needs enforcement. The tool applies tiered retention to query logs, aggregates old data into summaries, and purges raw entries past policy. It balances investigative value with privacy obligations.",
+      "key_params": {
+        "raw_retention_days": "how long full queries are kept",
+        "summary_retention_days": "aggregated data lifetime",
+        "aggregation": "what summaries replace raw logs",
+        "purge_schedule": "when cleanup runs"
+      },
+      "data_idea": "A seeded RNG generates DNS logs that age through retention tiers.",
+      "real_world_use": "Used by network teams meeting log-retention compliance.",
+      "suggested_types": [
+        "scheduler",
+        "log_analyzer",
+        "data_pipeline",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "endpoint-quarantine-orchestrator",
+      "name": "Endpoint Quarantine Orchestrator",
+      "concept": "When EDR flags a host, responders must isolate it fast without losing forensic evidence. The orchestrator simulates the isolation workflow: block network except the management channel, snapshot volatile state, preserve logs, and track the quarantine ticket. It rehearses the response before the real alert.",
+      "key_params": {
+        "isolate_except": "management IPs that stay reachable",
+        "evidence_steps": "forensic capture checklist",
+        "auto_isolate_severity": "severity triggering automatic action",
+        "ticket_sla_minutes": "response deadline"
+      },
+      "data_idea": "A seeded RNG simulates endpoint states and detection alerts driving quarantine steps.",
+      "real_world_use": "Used by SOC teams standardizing host isolation.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "threat-hunting-hypothesis-tracker",
+      "name": "Threat Hunting Hypothesis Tracker",
+      "concept": "Threat hunting starts with hypotheses like attackers abuse WMI for persistence, which need tracking from idea through data collection to verdict. The tracker manages hypotheses with their data sources, queries, findings, and outcomes, building an institutional memory of what was hunted and found. It turns ad-hoc hunts into a program.",
+      "key_params": {
+        "hypothesis_fields": "structured hunt definition",
+        "data_sources": "logs each hunt needs",
+        "verdicts": "confirmed, refuted, inconclusive",
+        "review_cadence": "how often open hunts are reviewed"
+      },
+      "data_idea": "A seeded RNG generates hunt hypotheses with investigation progress.",
+      "real_world_use": "Used by threat-hunting teams running hypothesis-driven programs.",
+      "suggested_types": [
+        "task_queue",
+        "report_generator",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "security-control-effectiveness-scorer",
+      "name": "Security Control Effectiveness Scorer",
+      "concept": "Security budgets need proof that controls actually work, not just that they exist. The scorer maps controls to the threats they mitigate, ingests test results from assessments and incidents, and grades each control's real effectiveness. Weak controls get improvement plans instead of renewed contracts.",
+      "key_params": {
+        "controls": "control inventory with threat mappings",
+        "test_sources": "assessments feeding scores",
+        "weighting": "how test types combine",
+        "review_cycle": "re-grading cadence"
+      },
+      "data_idea": "A seeded RNG synthesizes control test results across quarters.",
+      "real_world_use": "Used by CISOs justifying security investments.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "zero-trust-policy-simulator",
+      "name": "Zero Trust Policy Simulator",
+      "concept": "Zero trust removes implicit trust by verifying every access request against identity, device, and context signals. The simulator evaluates access decisions for users, devices, and resources under configurable policies, showing which requests pass and which get stepped up or denied. It lets teams preview policy impact before enforcing it.",
+      "key_params": {
+        "signals": "identity, device, network, behavior inputs",
+        "policy_rules": "allow, step-up, deny conditions",
+        "risk_thresholds": "scores driving decisions",
+        "simulate_users": "population tested"
+      },
+      "data_idea": "A seeded RNG generates access requests with varied trust signals.",
+      "real_world_use": "Used by identity architects rolling out zero-trust policies.",
+      "suggested_types": [
+        "simulation",
+        "decision_tree",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "supply-chain-risk-scorer",
+      "name": "Supply Chain Risk Scorer",
+      "concept": "Compromised vendors and libraries are how attackers reach well-defended targets, so supplier risk needs scoring. The scorer rates dependencies and vendors on maintenance health, known vulnerabilities, provenance signals, and access granted, producing a ranked risk list. It prioritizes which third parties deserve scrutiny.",
+      "key_params": {
+        "maint_health": "commit cadence and issue response",
+        "vuln_weight": "known CVE exposure",
+        "provenance": "signatures and reproducible builds",
+        "access_weight": "permissions the vendor holds"
+      },
+      "data_idea": "A seeded RNG builds dependency trees with varied health signals.",
+      "real_world_use": "Used by security teams managing third-party risk.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator",
+        "log_analyzer"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

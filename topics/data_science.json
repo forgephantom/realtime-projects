@@ -1,0 +1,2112 @@
+{
+  "domain": "computer_science",
+  "subdomain": "data_science",
+  "topics": [
+    {
+      "slug_base": "descriptive-stats-profiler",
+      "name": "Descriptive Statistics Profiler",
+      "concept": "Descriptive statistics summarize a dataset's shape: mean, median, mode for center; variance, IQR, range for spread; skewness and kurtosis for shape. The profiler computes them per column, flags heavy skew, and suggests whether the mean or median better represents center. It is the mandatory first pass on any new dataset.",
+      "key_params": {
+        "columns": "numeric vs categorical handling",
+        "skew_flag": "skewness threshold for warnings",
+        "top_n": "most frequent values shown for categoricals"
+      },
+      "data_idea": "Generates seeded columns with known skew, outliers, and categoricals, then verifies every statistic matches an independent computation.",
+      "real_world_use": "Exploratory data analysis in pandas-profiling style reports used by every data team.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "distribution-fitter",
+      "name": "Distribution Fitter",
+      "concept": "Fitting distributions means estimating parameters (normal's mean/sd, Poisson's lambda, lognormal's shape) by maximum likelihood and testing goodness of fit. The fitter tries candidate families, compares AIC, and runs KS tests. Knowing the true distribution unlocks correct confidence intervals and simulations.",
+      "key_params": {
+        "candidates": "normal, lognormal, poisson, exponential, etc.",
+        "criterion": "AIC vs KS for selection",
+        "sample_n": "observations fitted"
+      },
+      "data_idea": "Samples seeded data from known distributions and verifies the fitter recovers the right family and parameters.",
+      "real_world_use": "Risk modeling, queueing analysis, and reliability engineering fit distributions to data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "qq-plot-generator",
+      "name": "Q-Q Plot Generator",
+      "concept": "A Q-Q plot compares sample quantiles against theoretical ones: points on the diagonal mean the distribution matches, curves reveal skew, S-shapes reveal heavy tails. It is the visual companion to formal tests, often more informative. The generator computes both axes and reference bands.",
+      "key_params": {
+        "distribution": "theoretical reference distribution",
+        "bands": "confidence bands around the diagonal",
+        "n_quantiles": "quantile resolution"
+      },
+      "data_idea": "Generates seeded samples from known distributions and verifies the plot diagnostics identify the true family.",
+      "real_world_use": "Normality checks before t-tests and residual diagnostics in regression use Q-Q plots.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "histogram-bin-selector",
+      "name": "Histogram Bin Selector",
+      "concept": "Bin count shapes what a histogram says: too few bins hide structure, too many show noise. Freedman-Diaconis uses IQR for a robust width, Sturges assumes normality, and square-root is the quick rule. The selector computes all three and explains the disagreement.",
+      "key_params": {
+        "rule": "freedman-diaconis vs sturges vs sqrt",
+        "data_n": "sample size",
+        "skew": "skewness of demo data"
+      },
+      "data_idea": "Generates seeded skewed and normal samples, verifying bin counts follow each rule's formula exactly.",
+      "real_world_use": "Every histogram in reports and dashboards implicitly chose a binning rule.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "kde-bandwidth-demo",
+      "name": "KDE Bandwidth Demo",
+      "concept": "Kernel density estimation smooths a histogram into a continuous curve: the bandwidth controls smoothness, with Silverman's rule as the default and cross-validation as the careful choice. Too small gives spikes, too large merges modes. The demo shows the bias-variance trade-off visually.",
+      "key_params": {
+        "bandwidth": "smoothing width",
+        "kernel": "gaussian vs epanechnikov",
+        "modes": "planted modes in the data"
+      },
+      "data_idea": "Estimates densities on seeded multimodal data across bandwidths, verifying mode recovery at good bandwidths.",
+      "real_world_use": "Seaborn/matplotlib density plots and anomaly-score smoothing use KDE.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "boxplot-outlier-rules",
+      "name": "Boxplot Outlier Rules",
+      "concept": "Boxplots encode Tukey's fences: the box spans Q1-Q3, whiskers extend to 1.5 IQR, and points beyond are plotted as outliers. The rule assumes rough symmetry; on skewed data it over-flags. Notched boxes add median confidence intervals for comparing groups.",
+      "key_params": {
+        "fence": "IQR multiplier (1.5 standard)",
+        "notched": "whether median notches are drawn",
+        "groups": "grouped comparison boxplots"
+      },
+      "data_idea": "Generates seeded grouped data with planted outliers, verifying fence math and outlier flagging.",
+      "real_world_use": "Exploratory analysis and executive dashboards use boxplots for group comparisons.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "correlation-matrix-analyzer",
+      "name": "Correlation Matrix Analyzer",
+      "concept": "Correlation matrices show pairwise linear relationships, but the analyzer goes further: significance stars per cell, hierarchical reordering to reveal blocks, and warnings for spurious high correlations in small samples. It distinguishes correlation worth investigating from noise.",
+      "key_params": {
+        "method": "pearson vs spearman",
+        "sig_level": "significance threshold for stars",
+        "reorder": "hierarchical clustering of variables"
+      },
+      "data_idea": "Generates seeded correlated blocks and verifies the analyzer recovers the block structure with correct significance.",
+      "real_world_use": "Feature screening and portfolio analysis start with correlation matrices.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "partial-correlation",
+      "name": "Partial Correlation Analyzer",
+      "concept": "Partial correlation measures the X-Y relationship controlling for Z, exposing whether a correlation is direct or mediated. The analyzer computes it via inverse covariance or residual regression and compares against raw correlations. It is the observational hint of causal structure.",
+      "key_params": {
+        "controls": "variables controlled for",
+        "method": "inverse-covariance vs residuals",
+        "sig": "significance testing of partial r"
+      },
+      "data_idea": "Generates seeded chain structures (X->Z->Y) and verifies partial correlation correctly kills the spurious X-Y link.",
+      "real_world_use": "Epidemiology and social science use partial correlations to test mediation hypotheses.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "covariance-explainer",
+      "name": "Covariance Explainer",
+      "concept": "Covariance is correlation unstandardized: the explainer shows how it measures joint deviation from means, why its units make it hard to interpret, and how dividing by standard deviations yields correlation. Ellipse visualizations connect covariance matrices to data clouds. It grounds the matrix algebra in geometry.",
+      "key_params": {
+        "dims": "2D vs 3D visualization",
+        "standardize": "covariance vs correlation view",
+        "ellipse": "confidence ellipse levels drawn"
+      },
+      "data_idea": "Generates seeded correlated 2D data and verifies the covariance math matches the scatter geometry.",
+      "real_world_use": "Portfolio theory and PCA foundations rest on covariance intuition.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "simpsons-paradox-demo",
+      "name": "Simpson's Paradox Demo",
+      "concept": "Simpson's paradox flips conclusions when groups combine: a treatment can look worse overall yet better within every subgroup, when group sizes and base rates differ. The demo constructs the paradox numerically and shows the correct stratified analysis. It is the canonical warning against naive aggregation.",
+      "key_params": {
+        "groups": "subgroup sizes and rates",
+        "effect": "planted within-group effect",
+        "confound": "group composition imbalance"
+      },
+      "data_idea": "Builds seeded paradoxical tables and verifies stratified analysis recovers the true within-group effect.",
+      "real_world_use": "Medical trials, hiring audits, and A/B test subgroup analyses must check for Simpson reversals.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ttest-one-sample",
+      "name": "One-Sample t-Test",
+      "concept": "The one-sample t-test asks whether a sample mean differs from a hypothesized value, accounting for sample size and variance via the t-distribution. Assumptions (rough normality, independence) get checked, not assumed. Effect size (Cohen's d) accompanies the p-value so significance is not confused with importance.",
+      "key_params": {
+        "hypothesis": "null mean value tested",
+        "alpha": "significance level",
+        "effect": "planted true difference"
+      },
+      "data_idea": "Samples seeded data with known means and verifies rejection rates match the test's power at the planted effect.",
+      "real_world_use": "Quality control (is the batch mean on spec) and before/after comparisons use t-tests.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ttest-two-sample",
+      "name": "Two-Sample t-Test",
+      "concept": "The two-sample t-test compares means of two independent groups: Student's version assumes equal variances, Welch's does not (and is the safer default). The demo shows variance heterogeneity breaking Student's test. Confidence intervals for the difference are more useful than the p-value alone.",
+      "key_params": {
+        "variant": "student vs welch",
+        "alpha": "significance level",
+        "variance_ratio": "planted variance heterogeneity"
+      },
+      "data_idea": "Generates seeded group pairs with unequal variances and verifies Welch holds its size while Student's inflates.",
+      "real_world_use": "A/B testing with continuous metrics and clinical group comparisons use two-sample tests.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "paired-ttest",
+      "name": "Paired t-Test",
+      "concept": "Paired tests compare within-subject differences (before/after), removing between-subject variance that would swamp an unpaired test. The analysis reduces to a one-sample test on the differences. Pairing is a design choice that buys power when subjects vary widely.",
+      "key_params": {
+        "alpha": "significance level",
+        "subject_var": "between-subject variance planted",
+        "effect": "true within-subject effect"
+      },
+      "data_idea": "Generates seeded paired data with large subject variance and shows the paired test detects effects the unpaired misses.",
+      "real_world_use": "Before/after studies, crossover trials, and matched-pair experiments use paired tests.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "chi-square-independence",
+      "name": "Chi-Square Test of Independence",
+      "concept": "The chi-square test asks whether two categorical variables are associated by comparing observed cell counts to expected-under-independence counts. Expected counts below 5 warn of unreliability. Cramer's V turns significance into effect size. It is the workhorse for contingency tables.",
+      "key_params": {
+        "alpha": "significance level",
+        "min_expected": "expected-count warning threshold",
+        "association": "planted association strength"
+      },
+      "data_idea": "Builds seeded contingency tables with known associations and verifies test decisions and Cramer's V.",
+      "real_world_use": "Survey analysis, genetics, and conversion-by-segment analyses use chi-square tests.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "anova-one-way",
+      "name": "One-Way ANOVA",
+      "concept": "ANOVA compares means across three or more groups with one F-test instead of many t-tests (which would inflate false positives). A significant F leads to post-hoc pairwise tests with correction. The demo checks the equal-variance assumption and shows Welch's ANOVA as the robust alternative.",
+      "key_params": {
+        "groups": "number of groups",
+        "alpha": "significance level",
+        "posthoc": "tukey vs bonferroni pairwise tests"
+      },
+      "data_idea": "Generates seeded multi-group data with planted differences and verifies F-test and post-hoc recovery.",
+      "real_world_use": "Agricultural trials, multi-variant experiments, and manufacturing comparisons use ANOVA.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mann-whitney-u",
+      "name": "Mann-Whitney U Test",
+      "concept": "The Mann-Whitney U test compares two groups by ranks instead of means, needing no normality: it tests whether one group's values tend to exceed the other's. It is the safe choice for skewed data and ordinal scales. Rank-biserial correlation gives the effect size.",
+      "key_params": {
+        "alpha": "significance level",
+        "skew": "planted skewness",
+        "shift": "true location shift"
+      },
+      "data_idea": "Generates seeded skewed groups and verifies U holds size and power where the t-test struggles.",
+      "real_world_use": "Non-normal A/B metrics (revenue, latencies) and ordinal survey data use rank tests.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "wilcoxon-signed-rank",
+      "name": "Wilcoxon Signed-Rank Test",
+      "concept": "The signed-rank test is the paired, nonparametric counterpart: it ranks absolute differences and sums signed ranks, testing median difference without normality. Ties and zeros need careful handling. It rescues paired analyses on skewed outcomes.",
+      "key_params": {
+        "alpha": "significance level",
+        "skew": "difference distribution skew",
+        "effect": "planted median shift"
+      },
+      "data_idea": "Generates seeded paired skewed data and verifies the test's power vs the paired t-test.",
+      "real_world_use": "Paired before/after studies with skewed outcomes (pain scores, incomes) use signed-rank.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "permutation-test",
+      "name": "Permutation Test",
+      "concept": "Permutation tests build the null distribution by shuffling labels thousands of times: no distributional assumptions, exact p-values, and any test statistic works (difference in means, medians, even custom ones). The price is computation. It is the 'what would the null look like' made literal.",
+      "key_params": {
+        "permutations": "shuffle count",
+        "statistic": "mean diff vs median diff vs custom",
+        "alpha": "significance level"
+      },
+      "data_idea": "Runs seeded two-group comparisons, verifying permutation p-values match theory where theory exists.",
+      "real_world_use": "Small-sample studies and custom metrics with no known null distribution use permutation tests.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "bootstrap-confidence-intervals",
+      "name": "Bootstrap Confidence Intervals",
+      "concept": "Bootstrapping resamples the data with replacement thousands of times, computing the statistic on each resample to form its sampling distribution: percentile intervals read straight off. It works for medians, ratios, and anything without a formula. The demo validates coverage on known distributions.",
+      "key_params": {
+        "resamples": "bootstrap replications",
+        "statistic": "mean vs median vs ratio",
+        "level": "confidence level"
+      },
+      "data_idea": "Bootstraps seeded samples and verifies empirical coverage approaches the nominal level.",
+      "real_world_use": "Confidence intervals for complex statistics in business analytics and science use bootstrapping.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "power-analysis-simulator",
+      "name": "Power Analysis Simulator",
+      "concept": "Power analysis answers 'how many samples do I need': the simulator sweeps sample sizes, simulating the test many times per size to estimate power at a given effect. It shows why underpowered studies waste effort and how effect size, alpha, and variance trade off. Every experiment should run one before collecting data.",
+      "key_params": {
+        "effect": "minimum detectable effect",
+        "alpha": "significance level",
+        "target_power": "usually 0.8"
+      },
+      "data_idea": "Simulates seeded tests across sample sizes and verifies the recommended n achieves the target power.",
+      "real_world_use": "Clinical trials, A/B test planning, and grant proposals require power analyses.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bonferroni-correction",
+      "name": "Bonferroni Correction",
+      "concept": "Testing many hypotheses inflates false positives: Bonferroni divides alpha by the number of tests, controlling the family-wise error rate simply and conservatively. The demo shows uncorrected testing finding 'significant' noise and Bonferroni silencing it. Holm's step-down is the slightly sharper sibling.",
+      "key_params": {
+        "m": "number of hypotheses",
+        "alpha": "family-wise level",
+        "true_effects": "planted real effects"
+      },
+      "data_idea": "Simulates seeded multiple testing with mostly nulls and verifies error-rate control with and without correction.",
+      "real_world_use": "Genomics (GWAS) and any large-scale screening apply multiple-testing corrections.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "benjamini-hochberg-fdr",
+      "name": "Benjamini-Hochberg FDR Control",
+      "concept": "When thousands of tests run, controlling false discovery rate (expected fraction of false positives among rejections) beats family-wise control for power: BH sorts p-values and finds the largest k with p_k <= k/m * q. The demo shows BH discovering real effects Bonferroni would miss.",
+      "key_params": {
+        "m": "hypothesis count",
+        "q": "FDR level",
+        "pi0": "fraction of true nulls"
+      },
+      "data_idea": "Simulates seeded large-scale testing and verifies FDR control plus power gains over Bonferroni.",
+      "real_world_use": "Differential expression, neuroimaging, and large A/B test suites use BH FDR control.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "ab-test-designer",
+      "name": "A/B Test Designer",
+      "concept": "Designing an A/B test means picking the metric, minimum detectable effect, power, and significance, then computing required sample size and runtime from traffic. The designer also plans ramp schedules and guardrail metrics. Skipping this step is how teams run inconclusive tests for months.",
+      "key_params": {
+        "mde": "minimum detectable effect",
+        "power": "target power (0.8)",
+        "traffic": "visitors per day"
+      },
+      "data_idea": "Computes seeded designs and verifies sample-size math plus runtime estimates against traffic.",
+      "real_world_use": "Every experimentation platform (Optimizely, in-house) starts tests with this design step.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ab-test-analyzer",
+      "name": "A/B Test Analyzer",
+      "concept": "Analyzing an A/B test goes beyond the p-value: the analyzer computes the lift with confidence intervals, checks sample-ratio mismatch (randomization health), runs sequential-valid methods if peeking occurred, and segments by platform. SRM detection catches the broken experiments before anyone celebrates.",
+      "key_params": {
+        "metric": "conversion vs continuous metric",
+        "alpha": "significance level",
+        "srm_check": "sample-ratio-mismatch detection"
+      },
+      "data_idea": "Analyzes seeded test results (real lifts, nulls, broken randomization) and verifies verdicts and SRM flags.",
+      "real_world_use": "Growth teams and experimentation platforms analyze every test with these checks.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sequential-peeking-demo",
+      "name": "Sequential Peeking Demo (Why Not To)",
+      "concept": "Peeking at A/B results and stopping when significant inflates false positives dramatically: the demo simulates peeking schedules and shows the true Type I error far above nominal alpha. Sequential methods (alpha spending, always-valid p-values) fix it properly. It is the most expensive 'common sense' mistake in experimentation.",
+      "key_params": {
+        "peeks": "number of interim looks",
+        "alpha": "nominal level",
+        "method": "naive vs alpha-spending vs always-valid"
+      },
+      "data_idea": "Simulates seeded null A/B tests with peeking and measures the actual false-positive rate per method.",
+      "real_world_use": "Experimentation best practices at Netflix, Airbnb, and Optimizely warn against naive peeking.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cuped-variance-reduction",
+      "name": "CUPED Variance Reduction",
+      "concept": "CUPED uses pre-experiment data as a covariate to reduce metric variance, shrinking required sample sizes without bias: regress the metric on its pre-period value and analyze residuals. The variance reduction equals what the covariate explains. It is free power from data you already have.",
+      "key_params": {
+        "covariate": "pre-period metric used",
+        "theta": "estimated regression coefficient",
+        "correlation": "pre/post correlation strength"
+      },
+      "data_idea": "Runs seeded A/B tests with correlated pre-period data and verifies variance reduction and unbiased lifts.",
+      "real_world_use": "Microsoft, Netflix, and large experimentation platforms apply CUPED to continuous metrics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bandit-allocation-ab",
+      "name": "Bandit Allocation for A/B Tests",
+      "concept": "Bandits adapt traffic toward winning variants during the test, reducing opportunity cost: Thompson sampling reallocates as evidence accumulates. The trade-off is biased estimation versus fixed-horizon tests, so the demo compares regret against statistical power. It suits optimization more than learning.",
+      "key_params": {
+        "arms": "variant count",
+        "horizon": "test duration",
+        "prior": "prior strength"
+      },
+      "data_idea": "Simulates seeded variant true rates and compares bandit regret vs fixed-split power.",
+      "real_world_use": "Dynamic creative optimization and always-on testing use bandit allocation.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "novelty-effect-detector",
+      "name": "Novelty Effect Detector",
+      "concept": "New features get curiosity clicks that fade: the detector compares early vs late treatment effects over the test horizon, flagging novelty when the lift decays. Cool-down analysis excludes the novelty window. Ignoring it ships features whose 'win' evaporates.",
+      "key_params": {
+        "horizon": "test days",
+        "decay": "planted novelty decay rate",
+        "cooldown": "days excluded as novelty window"
+      },
+      "data_idea": "Analyzes seeded tests with planted novelty and verifies the detector flags decay and re-estimates the steady effect.",
+      "real_world_use": "Experimentation teams at Meta and Google check novelty/primacy before shipping UI changes.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ols-diagnostics",
+      "name": "OLS Diagnostics Suite",
+      "concept": "Fitting OLS is half the job; diagnostics validate it: residual-vs-fitted plots catch nonlinearity, Q-Q plots check normality, scale-location plots reveal heteroscedasticity, and leverage/Cook's distance flag influential points. The suite runs all four and prescribes fixes. Unchecked models lie confidently.",
+      "key_params": {
+        "n": "sample size",
+        "violation": "planted violation type",
+        "threshold": "Cook's distance flag level"
+      },
+      "data_idea": "Fits seeded regressions with planted violations and verifies each diagnostic flags exactly its violation.",
+      "real_world_use": "Econometrics and applied regression workflows require diagnostic checks before trusting coefficients.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vif-multicollinearity",
+      "name": "VIF Multicollinearity Checker",
+      "concept": "Multicollinearity inflates coefficient variances: VIF measures how much each feature is explained by the others, with values above 5-10 flagging trouble. The checker suggests remedies (drop, combine, ridge). It explains why significant-looking models can have meaningless individual coefficients.",
+      "key_params": {
+        "threshold": "VIF flag level",
+        "corr": "planted feature correlation",
+        "remedy": "drop vs ridge suggestion"
+      },
+      "data_idea": "Builds seeded correlated designs and verifies VIF flags the right features and remedies stabilize estimates.",
+      "real_world_use": "Regression modeling in finance and marketing checks VIF before interpreting coefficients.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "logistic-odds-interpreter",
+      "name": "Logistic Odds Interpreter",
+      "concept": "Logistic coefficients are log-odds: exponentiating gives odds ratios, and the interpreter converts them to probability changes at representative values. It also shows why odds ratios mislead when baseline risk is high. Clear interpretation turns a black-box score into a decision tool.",
+      "key_params": {
+        "baseline": "reference probability levels",
+        "features": "binary and continuous predictors",
+        "ci": "confidence intervals on odds ratios"
+      },
+      "data_idea": "Fits seeded logistic models with known effects and verifies the interpreted probability changes match truth.",
+      "real_world_use": "Medical risk communication and credit underwriting interpret logistic outputs as odds.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "interaction-effects-model",
+      "name": "Interaction Effects Model",
+      "concept": "Interactions let one variable's effect depend on another's level (drug efficacy by age group): the model adds product terms and the interpreter plots marginal effects across moderator values. Omitting real interactions biases everything else. The demo shows main effects reversing under interaction.",
+      "key_params": {
+        "moderator": "moderating variable",
+        "strength": "planted interaction strength",
+        "plot": "marginal-effect visualization"
+      },
+      "data_idea": "Fits seeded data with planted interactions and verifies the recovered interaction matches and main effects are correctly contextualized.",
+      "real_world_use": "Clinical trials (subgroup effects) and marketing (channel synergies) model interactions.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "segmented-regression",
+      "name": "Segmented (Breakpoint) Regression",
+      "concept": "Relationships change regime at breakpoints: segmented regression fits separate lines per segment and estimates the breakpoint location by grid search. The demo finds structural breaks in time series and policy changes. Chow tests formalize 'did the slope change'.",
+      "key_params": {
+        "breaks": "number of breakpoints",
+        "search": "breakpoint grid resolution",
+        "true_break": "planted break location"
+      },
+      "data_idea": "Fits seeded broken-line data and verifies breakpoint recovery and segment slopes.",
+      "real_world_use": "Policy evaluation, sales regime changes, and engineering phase transitions use breakpoint models.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "quantile-regression-lite",
+      "name": "Quantile Regression (Lite)",
+      "concept": "OLS models the mean; quantile regression models any quantile (median, 90th percentile) via pinball loss, revealing how effects differ across the distribution. It is robust to outliers by construction. The lite version implements single-quantile linear fitting.",
+      "key_params": {
+        "quantile": "tau level modeled",
+        "hetero": "planted heteroscedasticity",
+        "n": "sample size"
+      },
+      "data_idea": "Fits seeded heteroscedastic data and verifies quantile lines track the conditional quantiles.",
+      "real_world_use": "Wage studies (effects at top vs bottom), risk modeling (VaR), and robust analytics use quantile regression.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "kaplan-meier-estimator",
+      "name": "Kaplan-Meier Survival Estimator",
+      "concept": "Kaplan-Meier estimates survival curves with censored data: at each event time, survival multiplies by (1 - deaths/at-risk), and censored subjects just leave the risk set. Greenwood's formula gives confidence bands. It handles the reality that not every subject is observed to the event.",
+      "key_params": {
+        "censoring": "censoring fraction",
+        "groups": "strata compared",
+        "times": "observation window"
+      },
+      "data_idea": "Estimates seeded survival with known hazards and censoring, verifying curve recovery and band coverage.",
+      "real_world_use": "Clinical trials, churn analysis, and reliability engineering estimate survival with Kaplan-Meier.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hazard-ratio-estimator",
+      "name": "Hazard Ratio Estimator",
+      "concept": "Hazard ratios compare event rates between groups over time: the estimator fits a Cox-like proportional-hazards model via partial likelihood on the lite path, or compares log-rank statistics. Proportional-hazards diagnostics check the key assumption. HR=2 means twice the instantaneous risk.",
+      "key_params": {
+        "groups": "treatment vs control",
+        "hr": "planted hazard ratio",
+        "censoring": "censoring fraction"
+      },
+      "data_idea": "Estimates seeded proportional-hazards data and verifies HR recovery plus assumption diagnostics.",
+      "real_world_use": "Clinical trial reporting and epidemiology quantify treatment effects as hazard ratios.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "trend-seasonality-decomposer",
+      "name": "Trend-Seasonality Decomposer",
+      "concept": "Classical decomposition separates trend, seasonal, and residual with moving averages: the trend smooths, seasonal averages by period position, and the residual holds the unexplained. Strength metrics quantify how seasonal or trended a series is. It is the EDA starting point for time series.",
+      "key_params": {
+        "period": "season length",
+        "model": "additive vs multiplicative",
+        "trend_window": "smoothing window"
+      },
+      "data_idea": "Decomposes seeded series with known components and verifies each extracted component matches.",
+      "real_world_use": "Business forecasting EDA and anomaly triage decompose before modeling.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "acf-pacf-analyzer",
+      "name": "ACF/PACF Analyzer",
+      "concept": "Autocorrelation plots diagnose time-series structure: ACF tails reveal MA components, PACF cutoffs reveal AR order, and seasonal spikes reveal periods. The analyzer adds significance bands and automated pattern hints. Reading them is the Box-Jenkins identification step.",
+      "key_params": {
+        "max_lag": "lags shown",
+        "pattern": "AR vs MA vs seasonal planted",
+        "bands": "significance level"
+      },
+      "data_idea": "Computes plots on seeded processes and verifies the diagnosed structure matches the planted one.",
+      "real_world_use": "ARIMA order selection in econometrics and engineering uses ACF/PACF.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stationarity-tester",
+      "name": "Stationarity Tester",
+      "concept": "Stationarity (stable mean/variance) underpins ARMA modeling: the tester combines rolling statistics visualization with ADF-style unit-root logic on the lite path, then recommends differencing orders. It distinguishes trend-stationary from difference-stationary, which need different treatment.",
+      "key_params": {
+        "d": "differences tried",
+        "window": "rolling window",
+        "trend": "planted trend type"
+      },
+      "data_idea": "Tests seeded stationary, trend, and random-walk series, verifying correct classification and differencing advice.",
+      "real_world_use": "ARIMA preprocessing pipelines test stationarity before fitting.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "granger-causality-lite",
+      "name": "Granger Causality (Lite)",
+      "concept": "Granger causality tests whether X's past improves forecasts of Y beyond Y's own past, via nested VAR comparisons with F-tests. It is predictive causality, not true causality, and the demo stresses the difference. Lag selection drives the result.",
+      "key_params": {
+        "lags": "VAR lag order",
+        "direction": "planted causal direction",
+        "confound": "common-driver confounding planted"
+      },
+      "data_idea": "Tests seeded coupled series and verifies detection of true direction plus failure under confounding.",
+      "real_world_use": "Economics and neuroscience use Granger tests for predictive-causality screening.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "regime-switch-detector",
+      "name": "Regime Switch Detector",
+      "concept": "Time series switch regimes (bull/bear markets): the detector fits rolling means/variances or a lite Markov-switching model and flags change points where parameters jump. It distinguishes gradual drift from abrupt switches. Trading and monitoring systems act on regime labels.",
+      "key_params": {
+        "window": "rolling window size",
+        "threshold": "switch detection threshold",
+        "regimes": "planted regime count"
+      },
+      "data_idea": "Detects seeded regime switches and measures detection delay and false-switch rate.",
+      "real_world_use": "Quantitative finance (market regimes) and industrial monitoring detect regime changes.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "event-impact-analyzer",
+      "name": "Event Impact Analyzer (Interrupted Time Series)",
+      "concept": "Interrupted time series estimates an event's impact: fit the pre-event trend, project the counterfactual, and compare against actuals with confidence bands. It is causal inference for single treated units without a control group. Placebo dates validate the method.",
+      "key_params": {
+        "event": "intervention date",
+        "pre_window": "pre-event fitting window",
+        "effect": "planted impact size"
+      },
+      "data_idea": "Analyzes seeded series with planted interventions and verifies impact recovery plus placebo-date nulls.",
+      "real_world_use": "Marketing campaign measurement and policy evaluation use interrupted time series.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "missingness-pattern-analyzer",
+      "name": "Missingness Pattern Analyzer",
+      "concept": "Missing data comes in flavors: MCAR (random), MAR (explained by observed data), MNAR (explained by the missing values themselves). The analyzer tests MCAR via Little-style logic on the lite path, visualizes missingness correlations, and recommends strategies per pattern. The pattern decides what is fixable.",
+      "key_params": {
+        "mechanism": "planted MCAR/MAR/MNAR",
+        "pattern_plot": "missingness correlation heatmap",
+        "recommend": "strategy per pattern"
+      },
+      "data_idea": "Analyzes seeded missingness under known mechanisms and verifies correct classification and recommendations.",
+      "real_world_use": "Clinical and survey data pipelines diagnose missingness before imputing.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fuzzy-duplicate-matcher",
+      "name": "Fuzzy Duplicate Matcher",
+      "concept": "Real duplicates differ slightly ('Jon Smith' vs 'John Smith'): the matcher blocks candidates by cheap keys, scores pairs with string similarity (Jaro-Winkler, token sets), and clusters matches transitively. Threshold tuning trades missed dupes against false merges. Deduplication quality compounds downstream.",
+      "key_params": {
+        "threshold": "match score cutoff",
+        "block": "blocking key strategy",
+        "metric": "jaro-winkler vs token-set"
+      },
+      "data_idea": "Matches seeded record sets with planted near-duplicates and measures precision/recall of the dedupe.",
+      "real_world_use": "CRM dedup, voter rolls, and entity resolution pipelines use fuzzy matching.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "schema-inferrer",
+      "name": "Schema Inferrer",
+      "concept": "Schema inference scans raw files and guesses column types: integers vs floats vs dates vs booleans vs strings, with nullability and sample values. It handles dirty data (mixed types, odd date formats) with confidence scores per guess. It is the first step of every data-onboarding flow.",
+      "key_params": {
+        "sample_rows": "rows scanned for inference",
+        "date_formats": "date patterns recognized",
+        "confidence": "minimum confidence to commit"
+      },
+      "data_idea": "Infers schemas of seeded messy files and verifies type guesses against ground truth.",
+      "real_world_use": "Pandas read_csv dtype inference, data catalogs, and ETL onboarding infer schemas.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "data-type-coercer",
+      "name": "Data Type Coercer",
+      "concept": "Coercion converts messy columns to target types with explicit rules: currency strings to decimals, mixed date formats to ISO, 'yes/no' to boolean. Failures collect into an error report instead of silently becoming nulls. Strict vs lenient modes control the trade-off.",
+      "key_params": {
+        "rules": "per-column coercion specs",
+        "on_error": "null vs raise vs keep-original",
+        "locale": "number/date locale conventions"
+      },
+      "data_idea": "Coerces seeded messy columns and verifies values plus the error report's accuracy.",
+      "real_world_use": "ETL pipelines and spreadsheet imports coerce types with error tracking.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "outlier-treatment-workbench",
+      "name": "Outlier Treatment Workbench",
+      "concept": "Outliers need decisions, not defaults: the workbench compares treatments (keep, winsorize, trim, transform) on downstream model impact, so the choice is evidence-based. It visualizes each treatment's effect on distributions and model metrics. The right answer depends on whether outliers are errors or signal.",
+      "key_params": {
+        "treatments": "keep/winsorize/trim/log compared",
+        "metric": "downstream metric tracked",
+        "contamination": "outlier fraction"
+      },
+      "data_idea": "Applies treatments to seeded data with known outlier types and recommends the treatment maximizing the metric.",
+      "real_world_use": "Data-science preprocessing and robust modeling pipelines choose treatments empirically.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "skew-transform-advisor",
+      "name": "Skew Transform Advisor",
+      "concept": "Skewed features hurt linear models: the advisor tries log, square-root, and Box-Cox-style power transforms, scoring each by resulting symmetry and model lift. It warns when transforms complicate interpretation. The recommendation comes with before/after skew numbers.",
+      "key_params": {
+        "transforms": "log/sqrt/box-cox candidates",
+        "lambda_grid": "power transform grid",
+        "skew": "planted skewness"
+      },
+      "data_idea": "Transforms seeded skewed features and verifies the advisor picks the symmetrizing transform.",
+      "real_world_use": "Regression preprocessing and pricing models transform skewed monetary features.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "text-cleaning-pipeline",
+      "name": "Text Cleaning Pipeline",
+      "concept": "Text preprocessing chains steps: lowercase, strip HTML/URLs, normalize unicode, remove stopwords, stem or lemmatize. Order matters (strip HTML before tokenizing). The pipeline is configurable per task because aggressive cleaning can destroy signal (e.g., in sentiment). Each step is inspectable.",
+      "key_params": {
+        "steps": "ordered cleaning operations",
+        "aggressive": "light vs heavy cleaning presets",
+        "keep": "protected tokens (emails, numbers)"
+      },
+      "data_idea": "Cleans seeded messy documents and verifies each step's output plus final token quality.",
+      "real_world_use": "NLP preprocessing before TF-IDF or embeddings runs cleaning pipelines.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "datetime-parser-robust",
+      "name": "Robust Datetime Parser",
+      "concept": "Real timestamps arrive in dozens of formats: the parser tries format cascades, infers day-first vs month-first from data, handles timezones and epoch variants, and reports unparseable values instead of guessing. Ambiguity resolution is explicit and logged.",
+      "key_params": {
+        "formats": "format cascade tried",
+        "dayfirst": "DMY vs MDY inference",
+        "tz": "timezone handling policy"
+      },
+      "data_idea": "Parses seeded mixed-format timestamps and verifies correct instants plus the unparseable report.",
+      "real_world_use": "Log ingestion and spreadsheet imports parse heterogeneous timestamps.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "unit-normalizer",
+      "name": "Unit Normalizer",
+      "concept": "Measurements arrive in mixed units (kg/lb, km/mi, USD/EUR): the normalizer detects units from column patterns, converts to canonical units with explicit factors, and flags unparseable entries. Dimensional analysis guards catch category errors (adding meters to seconds).",
+      "key_params": {
+        "canonical": "target unit per dimension",
+        "detect": "unit detection patterns",
+        "factors": "conversion factor table"
+      },
+      "data_idea": "Normalizes seeded mixed-unit columns and verifies converted values and flagged anomalies.",
+      "real_world_use": "IoT sensor pipelines and international datasets normalize units on ingest.",
+      "suggested_types": [
+        "unit_converter",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "postal-code-validator",
+      "name": "Postal Code Validator",
+      "concept": "Postal codes follow country patterns: the validator checks formats per country (US ZIP+4, UK outward/inward, Canadian ANA NAN), normalizes spacing and case, and maps codes to regions for analysis. Invalid codes get specific reasons, not just rejections.",
+      "key_params": {
+        "countries": "supported country formats",
+        "normalize": "spacing/case normalization",
+        "region_map": "code-to-region lookup"
+      },
+      "data_idea": "Validates seeded international postal codes and verifies verdicts, normalization, and region mapping.",
+      "real_world_use": "Address validation, geo-analysis, and shipping systems validate postal formats.",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cardinality-reducer",
+      "name": "Cardinality Reducer",
+      "concept": "High-cardinality categoricals (millions of distinct values) break one-hot encoding: the reducer applies frequency thresholds, top-N keeping, hashing, or target-guided grouping. It reports information retained per strategy. The choice shapes everything downstream.",
+      "key_params": {
+        "strategy": "top-n vs frequency vs hash",
+        "top_n": "categories kept",
+        "min_freq": "frequency floor"
+      },
+      "data_idea": "Reduces seeded high-cardinality columns and compares strategy impact on a downstream model.",
+      "real_world_use": "Ad-tech, e-commerce SKU, and geo features get cardinality-reduced before modeling.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "imbalance-sampler",
+      "name": "Class Imbalance Sampler",
+      "concept": "Imbalanced classes need sampling strategy: random oversampling duplicates, SMOTE-lite interpolates synthetic minority points, undersampling drops majority rows, and class weights avoid resampling entirely. The sampler compares strategies on validation F1. Naive accuracy lies; the sampler proves it.",
+      "key_params": {
+        "strategy": "over vs under vs smote-lite vs weights",
+        "ratio": "target minority ratio",
+        "imbalance": "planted imbalance"
+      },
+      "data_idea": "Samples seeded imbalanced data and verifies which strategy maximizes validation F1.",
+      "real_world_use": "Fraud detection and rare-disease modeling handle imbalance with these strategies.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "funnel-analysis",
+      "name": "Funnel Analysis",
+      "concept": "Funnels track conversion through ordered steps: the analyzer computes step-to-step conversion, drop-off, and time-between-steps, segmenting by channel or cohort. It distinguishes where users leave from why, and flags steps with anomalous drop. Funnel math underpins growth work.",
+      "key_params": {
+        "steps": "ordered funnel stages",
+        "segment": "segmentation dimensions",
+        "window": "conversion time window"
+      },
+      "data_idea": "Analyzes seeded user journeys with planted drop-offs and verifies conversion math per step and segment.",
+      "real_world_use": "Growth teams, e-commerce checkout, and SaaS onboarding run funnel analyses.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cohort-retention-curves",
+      "name": "Cohort Retention Curves",
+      "concept": "Retention curves group users by signup week and track what fraction returns each subsequent week: the analyzer builds the triangle, computes retention per cohort-period, and fits decay curves. Flattening curves signal product-market fit; steep ones signal churn. It is the health metric for subscription products.",
+      "key_params": {
+        "period": "day/week/month cohorts",
+        "periods_out": "periods tracked",
+        "decay": "planted retention decay"
+      },
+      "data_idea": "Builds seeded retention triangles and verifies curve computation and decay-fit parameters.",
+      "real_world_use": "Mobile apps, SaaS, and media subscriptions track cohort retention as the core metric.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rfm-segmentation",
+      "name": "RFM Segmentation",
+      "concept": "RFM scores customers on recency, frequency, and monetary value, quintiling each to form segments (champions, at-risk, hibernating). The segmenter computes scores, labels segments, and suggests plays per segment. It turns transaction logs into a marketing plan.",
+      "key_params": {
+        "quintiles": "scoring bins per dimension",
+        "labels": "segment naming rules",
+        "window": "analysis lookback"
+      },
+      "data_idea": "Segments seeded customers with planted behaviors and verifies segment assignment matches the planted profiles.",
+      "real_world_use": "E-commerce CRM and retail marketing segment with RFM.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "churn-cohort-analyzer",
+      "name": "Churn Cohort Analyzer",
+      "concept": "Churn analysis asks who leaves and when: the analyzer computes churn rates by cohort and tenure, fits survival curves, and identifies at-risk segments by early behavior. Leading indicators (usage drops) become intervention triggers. Retention economics follow from the curves.",
+      "key_params": {
+        "definition": "churn event definition",
+        "tenure": "tenure buckets",
+        "segments": "segmentation dimensions"
+      },
+      "data_idea": "Analyzes seeded subscription histories with planted churn drivers and verifies rate computation and driver identification.",
+      "real_world_use": "SaaS finance and telecom model churn with cohort survival analysis.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "activation-metric-finder",
+      "name": "Activation Metric Finder",
+      "concept": "Activation is the 'aha moment' quantified: the finder correlates early user actions with long-term retention to identify which behaviors predict staying. It tests candidate actions as classifiers of retained users. The winning metric becomes the onboarding team's north star input.",
+      "key_params": {
+        "candidates": "early actions tested",
+        "horizon": "retention horizon (e.g., 90 days)",
+        "min_lift": "predictive lift threshold"
+      },
+      "data_idea": "Correlates seeded early actions with planted retention drivers and verifies the finder surfaces the true drivers.",
+      "real_world_use": "Growth teams (Facebook's '7 friends in 10 days') define activation from this analysis.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "north-star-decomposer",
+      "name": "North Star Metric Decomposer",
+      "concept": "A north-star metric decomposes into inputs: the decomposer breaks it multiplicatively (users x activation x frequency x monetization) and attributes changes to components. Waterfall charts show which lever moved. It turns one number into an operating plan.",
+      "key_params": {
+        "formula": "multiplicative decomposition",
+        "levers": "input metrics tracked",
+        "attribution": "change attribution method"
+      },
+      "data_idea": "Decomposes seeded metric movements and verifies attribution matches the planted driver.",
+      "real_world_use": "Product leadership (Amplitude's north-star framework) decomposes the headline metric.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "habit-moment-finder",
+      "name": "Habit Moment Finder",
+      "concept": "Habit formation shows in frequency distributions: the finder clusters users by usage cadence and finds the frequency threshold where retention jumps (the habit moment). It is correlational but powerfully directional for product design. Weekly-vs-daily patterns emerge from the data.",
+      "key_params": {
+        "cadence": "usage frequency buckets",
+        "retention": "retention definition",
+        "threshold": "habit-moment detection"
+      },
+      "data_idea": "Analyzes seeded usage with planted habit thresholds and verifies the finder locates them.",
+      "real_world_use": "Consumer apps (Duolingo streaks, fitness apps) design around habit moments.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "kmeans_clustering",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "engagement-scoring",
+      "name": "Engagement Scoring",
+      "concept": "Engagement scores combine actions into one number: the scorer weights events by value, decays with inactivity, and normalizes per segment. It powers health dashboards and churn models. Weight choice is product judgment encoded as numbers.",
+      "key_params": {
+        "weights": "per-event value weights",
+        "decay": "inactivity half-life",
+        "normalize": "per-segment normalization"
+      },
+      "data_idea": "Scores seeded user activity with planted engagement tiers and verifies score ordering matches.",
+      "real_world_use": "SaaS health scores (Gainsight-style) and community platforms score engagement.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sessionization-engine",
+      "name": "Sessionization Engine",
+      "concept": "Raw events become sessions via inactivity timeouts: the engine groups events by user with gap thresholds, computes session duration, bounce, and pages per session. Timeout choice shapes every downstream metric. It is the foundational transform of web analytics.",
+      "key_params": {
+        "timeout": "inactivity gap defining new session",
+        "attribution": "source attribution per session",
+        "bot_filter": "bot-traffic exclusion rules"
+      },
+      "data_idea": "Sessionizes seeded event streams with known sessions and verifies boundary accuracy.",
+      "real_world_use": "Google Analytics sessions and product analytics all sessionize event streams.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "path-transition-matrix",
+      "name": "Path Transition Matrix",
+      "concept": "User paths form a Markov chain: the analyzer builds transition matrices between pages/actions, finds the most common paths, and computes absorption (conversion/exit) probabilities. It shows where journeys actually go versus the designed flow. Drop-off paths get prioritized for fixes.",
+      "key_params": {
+        "states": "page/action vocabulary",
+        "order": "first vs second-order Markov",
+        "top_paths": "paths reported"
+      },
+      "data_idea": "Builds matrices from seeded journeys with planted common paths and verifies path recovery.",
+      "real_world_use": "UX research and conversion optimization analyze navigation paths as Markov chains.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "multi-touch-attribution",
+      "name": "Multi-Touch Attribution",
+      "concept": "Last-click gives all credit to the final touch; multi-touch splits it: linear, time-decay, position-based (U-shaped), and data-driven (Markov removal) models each tell a different story. The analyzer compares models on the same journeys so marketers see the sensitivity. Model choice is budget allocation.",
+      "key_params": {
+        "model": "linear vs decay vs U-shaped vs markov",
+        "window": "lookback window",
+        "decay": "time-decay half-life"
+      },
+      "data_idea": "Attributes seeded journeys with known touch influence and compares model credit assignments.",
+      "real_world_use": "Marketing mix modeling and ad platforms allocate spend via attribution models.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "geo-experiment-analyzer",
+      "name": "Geo Experiment Analyzer",
+      "concept": "Geo experiments randomize by region when user randomization is impossible (ad spend): the analyzer pairs similar geos, measures pre-period fit, and estimates lift with appropriate wide confidence intervals. Fewer units means less power, which the analysis is honest about.",
+      "key_params": {
+        "geos": "region count",
+        "pairing": "matched-pair design",
+        "pre_window": "pre-period for matching"
+      },
+      "data_idea": "Analyzes seeded geo experiments with planted lifts and verifies lift recovery and interval coverage.",
+      "real_world_use": "Google's GeoX and advertiser incrementality tests use geo experimentation.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "kpi-dashboard-builder",
+      "name": "KPI Dashboard Data Builder",
+      "concept": "Dashboards need trustworthy numbers: the builder defines KPI specs (definition, grain, filters), computes them from event tables, and attaches data-quality badges (freshness, completeness). Consistent definitions kill metric disputes. The output feeds any chart renderer.",
+      "key_params": {
+        "kpis": "KPI definitions",
+        "grain": "daily/weekly aggregation",
+        "quality": "freshness/completeness checks"
+      },
+      "data_idea": "Builds seeded KPI series and verifies values match brute-force computation plus quality flags.",
+      "real_world_use": "Metabase, Looker, and executive dashboards consume builder-style KPI pipelines.",
+      "suggested_types": [
+        "web_dashboard",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "executive-summary-generator",
+      "name": "Executive Summary Generator",
+      "concept": "Executives want the story, not the spreadsheet: the generator selects top movers (biggest changes), contextualizes with comparisons (WoW, YoY), and writes plain-language bullets with numbers. It prioritizes by business impact, not statistical curiosity. The template keeps it consistent week to week.",
+      "key_params": {
+        "metrics": "metrics summarized",
+        "movers": "top-N changes reported",
+        "context": "WoW/YoY/baseline comparisons"
+      },
+      "data_idea": "Generates seeded summaries from metric deltas and verifies the top movers and numbers are correct.",
+      "real_world_use": "Automated business reviews and Monday-morning metric emails use summary generation.",
+      "suggested_types": [
+        "report_generator",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "automated-insight-finder",
+      "name": "Automated Insight Finder",
+      "concept": "Insight finders scan metric slices for surprising changes: the finder computes z-scores of changes across segments, ranks by surprise times impact, and suppresses correlated duplicates. It surfaces what humans would miss in a hundred dashboards. Explanation accompanies each insight.",
+      "key_params": {
+        "segments": "slice dimensions scanned",
+        "surprise": "z-score threshold",
+        "dedupe": "correlated-insight suppression"
+      },
+      "data_idea": "Scans seeded metrics with planted segment anomalies and verifies the finder surfaces them ranked by impact.",
+      "real_world_use": "ThoughtSpot, PowerBI insights, and automated analytics scan for surprising slices.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "anomaly-narrator",
+      "name": "Anomaly Narrator",
+      "concept": "Anomalies need explanations: the narrator takes a flagged metric spike, drills into segments to find contributors, checks calendar events and deploys for causes, and writes a plain-language incident note. It turns 'revenue dropped 8%' into 'caused by checkout errors in EU after deploy X'.",
+      "key_params": {
+        "drill": "segmentation dimensions",
+        "causes": "event/deploy correlation",
+        "threshold": "anomaly flag level"
+      },
+      "data_idea": "Narrates seeded anomalies with planted causes and verifies the explanation names the true driver.",
+      "real_world_use": "AIOps incident notes and business-anomaly triage generate these narratives.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "report-scheduler-lite",
+      "name": "Report Scheduler (Lite)",
+      "concept": "Scheduled reports deliver the right numbers on cadence: the scheduler runs queries on cron, renders to configured formats, distributes to subscriber lists, and retries failures with alerts. It tracks delivery receipts so 'I never got the report' is answerable. Boring and essential.",
+      "key_params": {
+        "cadence": "cron schedules per report",
+        "formats": "csv/html/text outputs",
+        "subscribers": "distribution lists"
+      },
+      "data_idea": "Schedules seeded reports and verifies on-time generation, distribution, and failure alerting.",
+      "real_world_use": "Cron-emailed reports, BI subscriptions, and regulatory filings run on schedulers.",
+      "suggested_types": [
+        "scheduler",
+        "report_generator",
+        "task_queue"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "chart-spec-builder",
+      "name": "Chart Spec Builder",
+      "concept": "Charts should be data, not screenshots: the builder emits declarative specs (vega-lite style JSON) from tidy data with encodings for x, y, color, and facets. Validation catches mismatched types before rendering. Specs are versionable and reproducible unlike GUI charts.",
+      "key_params": {
+        "mark": "bar/line/point/area",
+        "encodings": "field-to-channel mappings",
+        "validate": "type checking of encodings"
+      },
+      "data_idea": "Builds seeded specs and verifies the JSON is valid and encodings match field types.",
+      "real_world_use": "Vega-Lite, Altair, and Observable Plot all use declarative chart specs.",
+      "suggested_types": [
+        "web_dashboard",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pivot-table-engine",
+      "name": "Pivot Table Engine",
+      "concept": "Pivot tables reshape long data into cross-tab summaries: the engine groups by row/column fields, aggregates values, and computes margins and subtotals. It handles multi-level headers and sparse combinations. It is the analyst's Swiss knife in code form.",
+      "key_params": {
+        "rows": "row grouping fields",
+        "cols": "column grouping fields",
+        "agg": "sum/mean/count aggregations"
+      },
+      "data_idea": "Pivots seeded long data and verifies cell values and margins against brute-force grouping.",
+      "real_world_use": "Excel pivots, pandas pivot_table, and BI tools all implement this reshape.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cross-tab-analyzer",
+      "name": "Cross-Tab Analyzer",
+      "concept": "Cross-tabs show joint distributions of two categoricals with row/column percentages and chi-square tests of independence. The analyzer adds expected counts and residuals to show which cells drive association. It is the standard first look at categorical relationships.",
+      "key_params": {
+        "normalize": "row vs column vs total percentages",
+        "test": "chi-square with effect size",
+        "min_n": "small-cell warnings"
+      },
+      "data_idea": "Analyzes seeded categorical pairs with planted associations and verifies percentages and test results.",
+      "real_world_use": "Survey analysis and market research cross-tabulate demographics against responses.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "drill-down-explorer",
+      "name": "Drill-Down Explorer",
+      "concept": "Drill-down navigates hierarchies (year > quarter > month, country > region > city): the explorer rolls metrics up and down levels, keeping filters consistent and showing contribution at each step. It answers 'which part drove the change' interactively. Path tracking makes exploration reproducible.",
+      "key_params": {
+        "hierarchy": "drill levels defined",
+        "metric": "metric drilled",
+        "contribution": "change attribution per level"
+      },
+      "data_idea": "Drills seeded hierarchical data with planted drivers and verifies the explorer surfaces them at the right level.",
+      "real_world_use": "BI tools (Tableau, PowerBI) implement drill-down; analysts live in it.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "benchmark-comparator",
+      "name": "Benchmark Comparator",
+      "concept": "Benchmarks compare your metrics against peers or past self: the comparator normalizes for size and mix, computes percentile ranks, and tracks rank changes over time. Fair comparison needs comparable cohorts, which the tool enforces. It turns envy into action items.",
+      "key_params": {
+        "peers": "comparison cohort",
+        "normalize": "size/mix adjustments",
+        "metrics": "benchmarked metrics"
+      },
+      "data_idea": "Compares seeded entities with known standings and verifies percentile math and normalization.",
+      "real_world_use": "Industry reports (SaaS benchmarks), sports analytics, and fund performance use peer benchmarking.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "data-contract-validator",
+      "name": "Data Contract Validator",
+      "concept": "Data contracts are executable agreements between producers and consumers: the validator checks schemas, value ranges, freshness, and volume against the contract on every batch, quarantining violations. Contract versioning manages evolution. It moves data quality left, to the producer.",
+      "key_params": {
+        "contract": "schema + range + freshness clauses",
+        "on_violation": "quarantine vs block vs warn",
+        "version": "contract versioning"
+      },
+      "data_idea": "Validates seeded batches (clean and violating) and verifies verdicts plus quarantine routing.",
+      "real_world_use": "Great Expectations, dbt contracts, and data-mesh contracts enforce producer agreements.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "freshness-monitor",
+      "name": "Data Freshness Monitor",
+      "concept": "Stale data silently poisons decisions: the monitor tracks each table's last successful update against its SLA, alerting on misses with escalation. It distinguishes late from missing and handles backfills gracefully. Freshness is the most basic data-quality dimension.",
+      "key_params": {
+        "sla": "per-table freshness SLAs",
+        "escalate": "alert escalation chain",
+        "backfill": "how backfills reset status"
+      },
+      "data_idea": "Simulates seeded pipeline runs with delays and verifies alert timing and escalation.",
+      "real_world_use": "Monte Carlo, Bigeye, and dbt source-freshness checks monitor data SLAs.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "volume-anomaly-monitor",
+      "name": "Volume Anomaly Monitor",
+      "concept": "Row-count anomalies signal broken pipelines: the monitor learns per-table volume patterns (daily seasonality included) and alerts on unexpected drops or spikes. It separates real incidents from holidays and growth. Counts are cheap; the modeling makes them smart.",
+      "key_params": {
+        "baseline": "seasonal baseline model",
+        "threshold": "alert z-score",
+        "calendar": "holiday awareness"
+      },
+      "data_idea": "Monitors seeded table volumes with planted drops and verifies detection with holiday suppression.",
+      "real_world_use": "Data observability platforms alert on volume anomalies as pipeline-break signals.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "schema-drift-detector",
+      "name": "Schema Drift Detector",
+      "concept": "Schemas evolve and break consumers: the detector diffs each batch's schema against the registered version, classifying changes as additive (safe), renames (risky), or type changes (breaking). It gates deployments on the classification. Silent schema changes are a top pipeline-break cause.",
+      "key_params": {
+        "registered": "registered schema versions",
+        "classify": "additive/rename/breaking rules",
+        "gate": "block vs warn on breaking"
+      },
+      "data_idea": "Diffs seeded schema evolutions and verifies classification and gating decisions.",
+      "real_world_use": "Confluent Schema Registry, BigQuery schema updates, and data contracts manage drift.",
+      "suggested_types": [
+        "data_pipeline",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "referential-integrity-checker",
+      "name": "Referential Integrity Checker",
+      "concept": "Orphaned foreign keys corrupt joins: the checker verifies every FK value exists in its parent table, reports orphan counts and samples, and can quarantine or null them per policy. It runs incrementally on new batches. Integrity checks catch upstream deletes that forgot dependents.",
+      "key_params": {
+        "relations": "FK to parent mappings",
+        "policy": "quarantine vs null vs report",
+        "incremental": "full vs new-batch checking"
+      },
+      "data_idea": "Checks seeded tables with planted orphans and verifies counts, samples, and policy actions.",
+      "real_world_use": "dbt tests, warehouse constraints, and ETL validation enforce referential integrity.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dedup-merge-pipeline",
+      "name": "Dedup Merge Pipeline",
+      "concept": "Duplicates arrive from retries and double-ingests: the pipeline fingerprints records (exact or fuzzy keys), keeps the survivor per dedupe rule (latest, most complete), and logs merge decisions. Idempotent pipelines make replays safe. Dedupe keys are the design decision.",
+      "key_params": {
+        "keys": "dedupe key definitions",
+        "survivor": "latest vs most-complete rule",
+        "log": "merge decision audit"
+      },
+      "data_idea": "Processes seeded streams with planted duplicates and verifies exactly-once output plus the audit log.",
+      "real_world_use": "Streaming pipelines (Kafka exactly-once) and ETL dedupe with merge logic.",
+      "suggested_types": [
+        "data_pipeline",
+        "task_queue",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "scd-type2-loader",
+      "name": "Slowly Changing Dimension (Type 2) Loader",
+      "concept": "Type 2 SCDs preserve history: on attribute change, the loader closes the current row (end-date) and inserts a new version with a surrogate key, keeping effective date ranges gapless. Current-flag queries stay fast. It is the standard for auditable dimensions.",
+      "key_params": {
+        "tracked": "attributes triggering new versions",
+        "surrogate": "surrogate key generation",
+        "gap_check": "date-range continuity validation"
+      },
+      "data_idea": "Loads seeded dimension changes and verifies history rows, current flags, and gapless ranges.",
+      "real_world_use": "Data warehouses (Kimball methodology) implement SCD Type 2 for customer/product history.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "snapshot-diff-engine",
+      "name": "Snapshot Diff Engine",
+      "concept": "Snapshot diffs compare full table snapshots to produce change sets (inserts, updates, deletes) without CDC: the engine hashes rows, joins on keys, and emits typed changes. It handles late-arriving snapshots and schema drift. It is the batch world's change capture.",
+      "key_params": {
+        "keys": "primary key for matching",
+        "hash": "row hash for change detection",
+        "tolerance": "float comparison tolerance"
+      },
+      "data_idea": "Diffs seeded snapshot pairs with planted changes and verifies change-set completeness and typing.",
+      "real_world_use": "Warehouse CDC emulation, slowly-changing feeds, and audit comparisons use snapshot diffs.",
+      "suggested_types": [
+        "data_pipeline",
+        "file_organizer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "lineage-tracker-lite",
+      "name": "Data Lineage Tracker (Lite)",
+      "concept": "Lineage answers 'where did this number come from': the tracker records dataset-to-dataset dependencies from pipeline runs, building a graph supporting impact analysis (what breaks if this changes) and root-cause (why is this wrong). Column-level lineage is the aspiration; table-level is the start.",
+      "key_params": {
+        "granularity": "table vs column lineage",
+        "capture": "run-metadata parsing",
+        "queries": "impact vs root-cause traversal"
+      },
+      "data_idea": "Records seeded pipeline runs and verifies impact and root-cause queries on the lineage graph.",
+      "real_world_use": "OpenLineage, Marquez, and data catalogs track lineage for governance.",
+      "suggested_types": [
+        "data_pipeline",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stratified-sampler",
+      "name": "Stratified Sampler",
+      "concept": "Stratified sampling preserves subgroup proportions: the sampler allocates per stratum (proportional or Neyman-optimal), samples within strata, and computes weighted estimates. It guarantees small groups are represented, which plain random sampling does not. Survey statistics depend on it.",
+      "key_params": {
+        "strata": "stratification variables",
+        "allocation": "proportional vs optimal",
+        "n": "total sample size"
+      },
+      "data_idea": "Samples seeded populations with rare strata and verifies representation plus weighted estimate accuracy.",
+      "real_world_use": "Polling, auditing, and A/B test bucketing use stratified sampling.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "reservoir-sampler",
+      "name": "Reservoir Sampler",
+      "concept": "Reservoir sampling draws a uniform sample from a stream of unknown length in one pass: keep the first k, then replace entries with decreasing probability. Memory stays constant regardless of stream size. It is the streaming answer to 'give me a random sample'.",
+      "key_params": {
+        "k": "reservoir size",
+        "stream_n": "stream length",
+        "weighted": "uniform vs weighted variant"
+      },
+      "data_idea": "Samples seeded streams and verifies uniformity via chi-square tests on selection frequencies.",
+      "real_world_use": "Stream processing (Flink, Spark) and log sampling use reservoir sampling.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "post-stratification-weighter",
+      "name": "Post-Stratification Weighter",
+      "concept": "Surveys rarely match the population: post-stratification reweights respondents to known population margins (raking iterates to match multiple margins). The weighter computes weights, trims extremes, and reports design effects on variance. Unweighted convenience samples mislead; weighting fixes the known biases.",
+      "key_params": {
+        "margins": "population margin targets",
+        "trim": "weight trimming cap",
+        "rake_iter": "raking iterations"
+      },
+      "data_idea": "Reweights seeded biased samples and verifies weighted estimates recover population truth.",
+      "real_world_use": "Pollsters and census surveys rake weights to population margins.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "nonresponse-bias-checker",
+      "name": "Nonresponse Bias Checker",
+      "concept": "Nonrespondents differ from respondents: the checker compares early vs late responders (late as proxy for nonrespondents), benchmarks against known population totals, and bounds the bias. It quantifies the survey's biggest unfixable risk. Response-rate reporting alone hides it.",
+      "key_params": {
+        "waves": "early vs late responder split",
+        "benchmarks": "known population totals",
+        "bound": "bias bounding method"
+      },
+      "data_idea": "Analyzes seeded surveys with planted nonresponse and verifies bias detection and bounds.",
+      "real_world_use": "Survey methodology (Pew, Census) analyzes nonresponse bias explicitly.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "margin-of-error-calculator",
+      "name": "Margin of Error Calculator",
+      "concept": "Margins of error quantify poll uncertainty: the calculator handles proportions and means, applies finite-population corrections, and adjusts for design effects from weighting/clustering. It explains why 400 and 4000 respondents differ less than intuition says. Every poll number needs one.",
+      "key_params": {
+        "n": "sample size",
+        "design_effect": "weighting/clustering inflation",
+        "fpc": "finite population correction"
+      },
+      "data_idea": "Computes seeded poll margins and verifies formula correctness including corrections.",
+      "real_world_use": "Poll reporting and survey toplines always pair estimates with margins of error.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "propensity-score-matcher",
+      "name": "Propensity Score Matcher",
+      "concept": "Observational causal inference starts with propensity scores: model treatment probability from covariates, match or weight treated and control units to balance them, then compare outcomes. Balance diagnostics (standardized differences) validate the matching. It mimics randomization when experiments are impossible.",
+      "key_params": {
+        "model": "propensity model (logistic)",
+        "match": "nearest vs caliper vs weighting",
+        "balance": "standardized-difference diagnostics"
+      },
+      "data_idea": "Matches seeded observational data with known treatment effects and verifies bias reduction and effect recovery.",
+      "real_world_use": "Epidemiology and economics estimate treatment effects from observational data with propensity methods.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "diff-in-diff-estimator",
+      "name": "Difference-in-Differences Estimator",
+      "concept": "Diff-in-diff compares the treated group's before/after change against a control group's: the double difference removes shared trends, isolating the treatment effect. Parallel-trends diagnostics (pre-period placebos) validate the key assumption. It is the workhorse of policy evaluation.",
+      "key_params": {
+        "treated": "treated unit/group",
+        "periods": "pre/post periods",
+        "placebo": "pre-period placebo tests"
+      },
+      "data_idea": "Estimates seeded policy impacts with shared trends and verifies effect recovery plus placebo nulls.",
+      "real_world_use": "Minimum-wage studies and policy evaluations use diff-in-diff as the standard design.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "regression-discontinuity-lite",
+      "name": "Regression Discontinuity (Lite)",
+      "concept": "RD exploits sharp cutoffs: units just above a threshold get treated, just below do not, so comparing near-cutoff outcomes identifies the causal effect quasi-experimentally. Bandwidth choice trades bias against variance; donut variants exclude manipulators at the cutoff. It is credible causality from administrative rules.",
+      "key_params": {
+        "cutoff": "treatment threshold",
+        "bandwidth": "window around cutoff",
+        "donut": "excluded manipulation zone"
+      },
+      "data_idea": "Estimates seeded cutoff designs with known effects and verifies recovery across bandwidths.",
+      "real_world_use": "Education (scholarship cutoffs) and policy (age thresholds) use RD designs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "iv-wald-estimator",
+      "name": "Instrumental Variable (Wald) Estimator",
+      "concept": "Instruments solve confounding: a variable affecting treatment but not the outcome directly (draft lottery numbers, distance to college) identifies causal effects via the Wald ratio (reduced form over first stage). Weak instruments inflate variance, which first-stage F-statistics diagnose. It is causality's cleverest trick.",
+      "key_params": {
+        "instrument": "instrument strength planted",
+        "confound": "unobserved confounding strength",
+        "first_stage_f": "weak-instrument diagnostic"
+      },
+      "data_idea": "Estimates seeded IV designs and verifies effect recovery plus weak-instrument warnings.",
+      "real_world_use": "Economics (returns to schooling, draft-lottery studies) relies on instrumental variables.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "synthetic-control-lite",
+      "name": "Synthetic Control (Lite)",
+      "concept": "With one treated unit (a state, a country), synthetic control builds a weighted donor pool matching pre-treatment outcomes, then reads the effect off the post-treatment gap. Donor weights are the model; placebo permutations test significance. It is diff-in-diff for N=1 treated.",
+      "key_params": {
+        "donors": "donor pool size",
+        "pre_window": "pre-treatment fit window",
+        "effect": "planted treatment effect"
+      },
+      "data_idea": "Builds synthetic controls for seeded treated units and verifies effect recovery and placebo inference.",
+      "real_world_use": "Policy evaluation (tobacco taxes, reunification studies) uses synthetic controls.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "uplift-t-learner",
+      "name": "Uplift Model (T-Learner)",
+      "concept": "Uplift modeling predicts who benefits from treatment, not just who converts: the T-learner fits separate models per arm and differences their predictions. Qini curves evaluate ranking quality. It targets the persuadable, avoiding wasted treatment on sure-things and lost causes.",
+      "key_params": {
+        "arms": "treatment/control models",
+        "hetero": "planted heterogeneous effects",
+        "evaluate": "qini curve computation"
+      },
+      "data_idea": "Fits seeded heterogeneous treatment data and verifies uplift ranking beats response ranking on Qini.",
+      "real_world_use": "Marketing (who to discount) and medicine (who benefits) use uplift modeling.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "price-elasticity-estimator",
+      "name": "Price Elasticity Estimator",
+      "concept": "Elasticity measures demand's price sensitivity: the estimator fits log-log demand models where the coefficient is the elasticity directly, handling promotions and seasonality as controls. It drives pricing: |elasticity|>1 means cut prices to grow revenue. Identification needs price variation, which the demo plants.",
+      "key_params": {
+        "variation": "planted price variation",
+        "controls": "promo/seasonality controls",
+        "model": "log-log specification"
+      },
+      "data_idea": "Estimates seeded demand with known elasticity and verifies recovery plus revenue-optimal price computation.",
+      "real_world_use": "Revenue management (airlines, retail pricing) estimates elasticities for pricing.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "demand-forecaster",
+      "name": "Demand Forecaster",
+      "concept": "Demand forecasting blends baselines (seasonal naive), regressors (price, promo), and reconciliation across product hierarchies. The forecaster evaluates with bias-aware metrics (not just MAPE) and produces intervals for safety stock. Forecast value added tracks whether complexity beats naive.",
+      "key_params": {
+        "horizon": "forecast periods",
+        "regressors": "price/promo/holiday features",
+        "fva": "forecast-value-added tracking"
+      },
+      "data_idea": "Forecasts seeded demand with promos and seasonality, verifying accuracy vs naive baselines.",
+      "real_world_use": "Retail replenishment and supply-chain planning run demand forecasters.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "newsvendor-optimizer",
+      "name": "Newsvendor Optimizer",
+      "concept": "The newsvendor problem sets order quantity under uncertain demand: the critical fractile (underage cost / total) gives the optimal service level, mapping to the demand quantile. It balances stockout margin against overstock cost. The demo shows the fractile logic beating gut feel.",
+      "key_params": {
+        "underage": "lost-margin cost per unit short",
+        "overage": "holding cost per unit excess",
+        "demand": "demand distribution"
+      },
+      "data_idea": "Optimizes seeded newsvendor instances and verifies the fractile quantity maximizes expected profit.",
+      "real_world_use": "Inventory management (fashion, perishables) sets order quantities via newsvendor logic.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "clv-cohort-projector",
+      "name": "CLV Cohort Projector",
+      "concept": "Customer lifetime value projects future profit per cohort: the projector fits retention curves and spend-per-survivor, discounts cash flows, and segments CLV by acquisition channel. It tells marketing what a customer is worth paying to acquire. Cohort curves keep it honest.",
+      "key_params": {
+        "horizon": "projection months",
+        "discount": "discount rate",
+        "segments": "acquisition channels"
+      },
+      "data_idea": "Projects seeded cohort economics and verifies CLV math against brute-force simulation.",
+      "real_world_use": "Subscription businesses and e-commerce compute CLV for acquisition budgeting.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "apriori-market-basket",
+      "name": "Apriori Market Basket Miner",
+      "concept": "Apriori finds frequent itemsets with the downward-closure trick (supersets of infrequent sets cannot be frequent), then derives association rules with support, confidence, and lift. Lift over 1 means real affinity. It is the classic 'beer and diapers' analysis.",
+      "key_params": {
+        "min_support": "frequency threshold",
+        "min_confidence": "rule threshold",
+        "max_len": "itemset size cap"
+      },
+      "data_idea": "Mines seeded transactions with planted affinities and verifies the planted rules top the lift rankings.",
+      "real_world_use": "Retail assortment, cross-sell, and web clickstream analysis mine association rules.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sequential-pattern-miner",
+      "name": "Sequential Pattern Miner",
+      "concept": "Order matters in behavior: the miner finds frequent sequences (viewed A then bought B) with GSP-style candidate generation over event sequences. It powers next-best-action models. Timing constraints (max gap) keep patterns actionable.",
+      "key_params": {
+        "min_support": "sequence frequency threshold",
+        "max_gap": "max events between pattern steps",
+        "max_len": "pattern length cap"
+      },
+      "data_idea": "Mines seeded event sequences with planted patterns and verifies pattern recovery.",
+      "real_world_use": "Clickstream analysis, care-pathway mining, and next-best-action engines use sequential patterns.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "text-topic-tracker",
+      "name": "Text Topic Tracker (Over Time)",
+      "concept": "Topics evolve: the tracker runs topic models per time slice, aligns topics across slices by term overlap, and charts topic rise and fall. It reveals emerging themes and dying ones. Alignment quality decides whether the story is real.",
+      "key_params": {
+        "slices": "time periods",
+        "topics": "topics per slice",
+        "align": "cross-slice topic matching"
+      },
+      "data_idea": "Tracks seeded corpora with planted emerging topics and verifies the tracker surfaces their rise.",
+      "real_world_use": "Social listening, research-trend analysis, and news monitoring track topics over time.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sentiment-trend-monitor",
+      "name": "Sentiment Trend Monitor",
+      "concept": "Brand sentiment moves: the monitor scores documents with a lexicon, aggregates by day with confidence bands, and alarms on significant shifts. Volume weighting prevents ten angry tweets from looking like a crisis. Aspect splitting (price vs quality) adds depth.",
+      "key_params": {
+        "window": "aggregation window",
+        "alarm": "shift detection threshold",
+        "aspects": "aspect keywords tracked"
+      },
+      "data_idea": "Monitors seeded review streams with planted sentiment shifts and verifies detection timing.",
+      "real_world_use": "Brand monitoring (Brandwatch-style) and product teams track sentiment trends.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "geospatial-hotspot-grid",
+      "name": "Geospatial Hotspot Grid",
+      "concept": "Hotspots emerge from point density: the grid aggregates events into cells, smooths with kernels, and flags statistically significant clusters against a baseline. It maps where things concentrate. Cell size trades resolution against noise.",
+      "key_params": {
+        "cell": "grid resolution",
+        "smooth": "kernel smoothing bandwidth",
+        "baseline": "expected-rate baseline"
+      },
+      "data_idea": "Aggregates seeded point patterns with planted hotspots and verifies cluster detection.",
+      "real_world_use": "Crime mapping, epidemiology, and retail site selection analyze hotspots.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "grid-density-aggregator",
+      "name": "Grid Density Aggregator",
+      "concept": "Density aggregation bins points into grid cells for fast rendering and analysis: the aggregator counts per cell, normalizes by area, and supports zoom-level re-aggregation. It is the data behind heatmaps. Efficient binning handles millions of points.",
+      "key_params": {
+        "resolution": "grid cells per axis",
+        "normalize": "per-area normalization",
+        "zoom": "multi-resolution support"
+      },
+      "data_idea": "Aggregates seeded point clouds and verifies cell counts match brute force plus zoom consistency.",
+      "real_world_use": "Map visualizations (Uber movement, Strava heatmaps) aggregate density grids.",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "network-centrality-lite",
+      "name": "Network Centrality (Lite)",
+      "concept": "Centrality finds important nodes: degree counts connections, betweenness counts shortest paths through a node, PageRank models random walks. The lite version computes all three on small graphs and compares rankings. Different centralities crown different nodes.",
+      "key_params": {
+        "metric": "degree vs betweenness vs pagerank",
+        "graph": "seeded graph structure",
+        "top_n": "nodes reported"
+      },
+      "data_idea": "Computes centralities on seeded graphs with planted hubs and verifies each metric surfaces the right nodes.",
+      "real_world_use": "Social network analysis, fraud rings, and infrastructure criticality use centrality.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "label-propagation-communities",
+      "name": "Label Propagation Communities",
+      "concept": "Communities are dense subgraphs: label propagation lets nodes adopt their neighbors' most common label iteratively until convergence, finding communities without pre-set counts. It is fast and simple; oscillation handling (async updates) stabilizes it. Modularity scores the result.",
+      "key_params": {
+        "iterations": "propagation rounds",
+        "async": "async vs sync updates",
+        "planted": "planted community structure"
+      },
+      "data_idea": "Detects seeded communities and measures recovery via adjusted mutual information.",
+      "real_world_use": "Social community detection and fraud-ring discovery use propagation methods.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "kmeans_clustering"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "root-cause-driller",
+      "name": "Root Cause Driller",
+      "concept": "When a metric moves, the driller finds why: it segments the change across dimensions, ranks segments by contribution, and recurses into the top contributors. It distinguishes volume mix effects from rate changes. The output is a ranked explanation tree, not a single answer.",
+      "key_params": {
+        "dimensions": "segmentation dimensions",
+        "depth": "drill recursion depth",
+        "min_contrib": "contribution threshold"
+      },
+      "data_idea": "Drills seeded metric changes with planted drivers and verifies the explanation tree names them.",
+      "real_world_use": "Business analytics (why did revenue drop) and SRE incident triage drill into changes.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "log_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "forecast-backtester",
+      "name": "Forecast Backtester",
+      "concept": "Backtesting evaluates forecasters honestly: rolling origins retrain on expanding windows and forecast forward, so every prediction is truly out-of-sample. The backtester compares methods on equal footing with multiple metrics. It prevents the lookahead bias that flatters bad models.",
+      "key_params": {
+        "origins": "rolling origin count",
+        "horizon": "forecast horizon",
+        "methods": "forecasters compared"
+      },
+      "data_idea": "Backtests seeded forecasters on known series and verifies the ranking matches true skill.",
+      "real_world_use": "Forecasting competitions (M-competitions) and model selection use rolling-origin backtests.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "forecast-accuracy-metrics",
+      "name": "Forecast Accuracy Metrics",
+      "concept": "Forecast errors need the right ruler: MAPE breaks near zero, sMAPE symmetrizes, MASE scales by naive error (making it comparable across series). The metrics module computes all three and explains when each lies. Metric choice changes model rankings.",
+      "key_params": {
+        "metrics": "mape vs smape vs mase",
+        "zero_handling": "near-zero actual treatment",
+        "scale": "per-series vs aggregate reporting"
+      },
+      "data_idea": "Scores seeded forecasts with known error profiles and verifies each metric's value and caveats.",
+      "real_world_use": "Demand planning and forecasting teams standardize on MASE/sMAPE over MAPE.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "what-if-scenario-simulator",
+      "name": "What-If Scenario Simulator",
+      "concept": "Scenarios ask 'what if price drops 10%': the simulator perturbs drivers through an estimated response model, propagating uncertainty via Monte Carlo to show outcome distributions, not points. Sensitivity tornado charts rank driver importance. It turns models into decision tools.",
+      "key_params": {
+        "shocks": "driver perturbations",
+        "draws": "monte carlo draws",
+        "model": "response model used"
+      },
+      "data_idea": "Simulates seeded scenarios through known response functions and verifies outcome distributions.",
+      "real_world_use": "Pricing, budgeting, and policy planning run what-if scenarios.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "monte-carlo-risk-model",
+      "name": "Monte Carlo Risk Model",
+      "concept": "Risk is a distribution: the model samples correlated inputs (prices, rates, demand), pushes them through the business logic, and reports VaR, expected shortfall, and loss exceedance curves. Correlation modeling (Gaussian copula lite) matters more than marginals. It quantifies what could go wrong.",
+      "key_params": {
+        "draws": "simulation count",
+        "inputs": "correlated input distributions",
+        "risk": "VaR vs expected shortfall"
+      },
+      "data_idea": "Simulates seeded portfolios with known risk and verifies VaR estimates converge to truth.",
+      "real_world_use": "Finance risk (VaR), project estimation, and insurance price risk with Monte Carlo.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "expected-value-decision",
+      "name": "Expected Value Decision Analyzer",
+      "concept": "Decisions under uncertainty reduce to expected values: the analyzer builds decision trees with chance nodes, computes EV per branch, and finds the value of perfect information. Sensitivity analysis shows which probabilities actually swing the choice. It disciplines gut decisions.",
+      "key_params": {
+        "options": "decision alternatives",
+        "uncertainties": "chance node probabilities",
+        "payoffs": "outcome payoffs"
+      },
+      "data_idea": "Analyzes seeded decisions with known optima and verifies the recommended choice plus VOI.",
+      "real_world_use": "Business cases, medical decisions, and bidding strategy use EV analysis.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "markowitz-optimizer",
+      "name": "Markowitz Portfolio Optimizer",
+      "concept": "Markowitz balances return against risk: the optimizer finds minimum-variance portfolios for target returns via quadratic programming (lite: grid over weights or analytical two-asset), tracing the efficient frontier. The Sharpe-maximizing tangency portfolio is the headline result. Estimation error is the practical enemy.",
+      "key_params": {
+        "assets": "asset count",
+        "target": "target return",
+        "rf": "risk-free rate for Sharpe"
+      },
+      "data_idea": "Optimizes seeded asset universes with known moments and verifies frontier math.",
+      "real_world_use": "Asset allocation, robo-advisors, and fund construction use mean-variance optimization.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "linear_regression"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "kelly-bet-sizer",
+      "name": "Kelly Criterion Bet Sizer",
+      "concept": "Kelly sizes bets to maximize long-run growth: fraction = edge/odds, betting the proportion where expected log wealth peaks. Fractional Kelly tempers the volatility. The demo shows Kelly beating fixed sizing over many bets and blowing up when edges are overestimated.",
+      "key_params": {
+        "edge": "estimated advantage",
+        "odds": "payoff odds",
+        "fraction": "full vs fractional kelly"
+      },
+      "data_idea": "Simulates seeded betting with known edges and compares bankroll growth across sizing rules.",
+      "real_world_use": "Trading position sizing and professional gambling use Kelly (fractional) sizing.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rice-prioritizer",
+      "name": "RICE Prioritizer",
+      "concept": "RICE scores initiatives by Reach x Impact x Confidence / Effort: the prioritizer takes estimates, computes scores, and ranks the backlog with sensitivity to confidence. It forces explicit trade-offs instead of loudest-voice prioritization. Score components stay visible so the ranking is auditable.",
+      "key_params": {
+        "items": "initiatives scored",
+        "scales": "reach/impact/confidence/effort scales",
+        "sensitivity": "ranking stability analysis"
+      },
+      "data_idea": "Scores seeded backlogs and verifies rankings plus sensitivity to confidence changes.",
+      "real_world_use": "Product management (Intercom's RICE) prioritizes roadmaps with structured scoring.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    }
+  ]
+}

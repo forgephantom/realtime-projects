@@ -1,0 +1,1212 @@
+{
+  "domain": "computer_science",
+  "subdomain": "databases",
+  "topics": [
+    {
+      "slug_base": "btree-index-simulator",
+      "name": "B-Tree Index Simulator",
+      "concept": "B-trees keep data sorted for range queries: the simulator implements node splits and merges on insert/delete, showing how the tree stays balanced and shallow. Fanout determines height; height determines disk reads. It is the data structure behind nearly every database index.",
+      "key_params": {
+        "order": "max children per node",
+        "ops": "insert/delete/search sequences",
+        "fill": "node fill factor"
+      },
+      "data_idea": "Runs seeded insert/delete workloads and verifies tree invariants (sorted order, balance, height bounds).",
+      "real_world_use": "PostgreSQL, MySQL InnoDB, and SQLite all store indexes as B-trees.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hash-index-buckets",
+      "name": "Hash Index Buckets",
+      "concept": "Hash indexes map keys to buckets for O(1) point lookups: the demo implements chaining, tracks load factor, and resizes by rehashing. They cannot do range scans, which is the trade-off against B-trees. Load factor tuning balances memory against collisions.",
+      "key_params": {
+        "buckets": "initial bucket count",
+        "load_factor": "resize trigger",
+        "chain": "chaining vs open addressing"
+      },
+      "data_idea": "Inserts seeded keys and verifies lookup correctness plus resize behavior at load thresholds.",
+      "real_world_use": "In-memory stores (Redis hashes) and database hash indexes use bucketed hashing.",
+      "suggested_types": [
+        "simulation",
+        "lru_cache",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bitmap-index-demo",
+      "name": "Bitmap Index Demo",
+      "concept": "Bitmap indexes shine on low-cardinality columns: one bitset per value makes AND/OR/NOT queries into fast bitwise operations. The demo builds bitmaps for seeded columns and answers multi-predicate queries by bit-twiddling. Compression (Roaring-style runs) keeps them small.",
+      "key_params": {
+        "cardinality": "distinct values indexed",
+        "rows": "row count",
+        "compress": "run-length compression"
+      },
+      "data_idea": "Answers seeded multi-predicate queries via bitmaps, verifying results match brute-force filtering.",
+      "real_world_use": "Data warehouses (Oracle, ClickHouse) index low-cardinality columns with bitmaps.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fulltext-inverted-index",
+      "name": "Full-Text Inverted Index",
+      "concept": "Inverted indexes map terms to posting lists of document ids: the builder tokenizes documents, merges postings, and answers boolean and phrase queries. Ranking (TF-IDF) orders results. It is search-engine core in miniature.",
+      "key_params": {
+        "tokenize": "tokenization rules",
+        "rank": "TF-IDF vs boolean",
+        "phrase": "positional phrase support"
+      },
+      "data_idea": "Indexes seeded documents and verifies query results match brute-force text search.",
+      "real_world_use": "Elasticsearch, PostgreSQL FTS, and every search box build inverted indexes.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lsm-tree-memtable-sstable",
+      "name": "LSM Tree (MemTable + SSTable)",
+      "concept": "Log-structured merge trees buffer writes in a memory MemTable, flush sorted runs (SSTables) to disk, and merge them in the background: writes are sequential and fast, reads check levels newest-first. It trades read amplification for write throughput. Leveling vs tiering compaction shapes the trade-off.",
+      "key_params": {
+        "memtable": "flush threshold size",
+        "levels": "level count and growth factor",
+        "compaction": "leveling vs tiering"
+      },
+      "data_idea": "Runs seeded write/read workloads and verifies read-your-writes plus compaction invariants.",
+      "real_world_use": "Cassandra, RocksDB, and Bigtable all store data in LSM trees.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "compaction-simulator",
+      "name": "Compaction Simulator",
+      "concept": "Compaction merges SSTables to bound read amplification: the simulator models leveling (one sorted run per level) vs tiering (multiple runs), showing write amplification, space amplification, and read cost per strategy. It makes the LSM trade-off space quantitative and visual.",
+      "key_params": {
+        "strategy": "leveling vs tiering",
+        "growth": "level size ratio",
+        "workload": "write/read mix"
+      },
+      "data_idea": "Simulates seeded workloads under both strategies and reports amplification metrics.",
+      "real_world_use": "RocksDB tuning and ScyllaDB compaction strategy selection use these trade-offs.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bloom-filter-sstable",
+      "name": "Bloom Filter for SSTables",
+      "concept": "Bloom filters answer 'definitely not present' for SSTable lookups, skipping disk reads for missing keys: the demo sizes filters by expected elements and false-positive rate, then measures actual FPs. It is the probabilistic gatekeeper in front of every LSM read path.",
+      "key_params": {
+        "n": "expected elements",
+        "fp_rate": "target false-positive rate",
+        "hashes": "hash function count"
+      },
+      "data_idea": "Builds filters over seeded key sets and verifies the measured FP rate matches theory.",
+      "real_world_use": "Cassandra, RocksDB, and Bigtable check Bloom filters before SSTable reads.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "write-ahead-log",
+      "name": "Write-Ahead Log (WAL)",
+      "concept": "Durability starts with the WAL: changes append to the log before touching data pages, so crashes replay the log to recover. The demo implements append, checkpoint, and replay, then crash-tests recovery. Group commit batches the fsync cost. No WAL, no durability guarantees.",
+      "key_params": {
+        "batch": "group-commit batching",
+        "checkpoint": "checkpoint interval",
+        "crash_at": "crash injection point"
+      },
+      "data_idea": "Crashes seeded workloads mid-write and verifies replay restores exactly the committed state.",
+      "real_world_use": "PostgreSQL, MySQL redo log, and etcd all persist via write-ahead logging.",
+      "suggested_types": [
+        "simulation",
+        "backup_tool",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "checkpoint-recovery-aries",
+      "name": "Checkpoint and Recovery (ARIES-lite)",
+      "concept": "ARIES recovery replays the WAL in three passes: analysis finds dirty pages and active transactions, redo repeats history, undo rolls back losers. Checkpoints bound the replay work. The lite version implements the three passes on a page model. It is the algorithm that made crash recovery boring (in a good way).",
+      "key_params": {
+        "pages": "buffer page count",
+        "checkpoint": "checkpoint frequency",
+        "crash": "crash timing scenarios"
+      },
+      "data_idea": "Crashes seeded transaction mixes and verifies recovered state equals committed-prefix semantics.",
+      "real_world_use": "SQL Server, PostgreSQL, and MySQL implement ARIES-style recovery.",
+      "suggested_types": [
+        "simulation",
+        "backup_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "mvcc-snapshot-isolation",
+      "name": "MVCC Snapshot Isolation",
+      "concept": "MVCC gives each transaction a snapshot: writers create new row versions, readers see versions committed before their start timestamp, and old versions get vacuumed. Readers never block writers. Write-write conflicts abort via first-committer-wins. It is how modern databases do concurrency.",
+      "key_params": {
+        "txns": "concurrent transaction mix",
+        "versions": "version chain retention",
+        "conflict": "write-write detection"
+      },
+      "data_idea": "Runs seeded concurrent transactions and verifies snapshot reads plus write-conflict aborts.",
+      "real_world_use": "PostgreSQL, InnoDB, and CockroachDB implement MVCC for non-blocking reads.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "lock-manager-2pl",
+      "name": "Lock Manager (Two-Phase Locking)",
+      "concept": "Two-phase locking guarantees serializability: transactions acquire locks as needed (growing) then release them all at once (shrinking), with shared locks for reads and exclusive for writes. Lock upgrades and intention locks handle hierarchies. Deadlock detection pairs with it.",
+      "key_params": {
+        "granularity": "row vs table locks",
+        "upgrade": "shared-to-exclusive upgrades",
+        "timeout": "lock wait timeout"
+      },
+      "data_idea": "Runs seeded transaction schedules and verifies serializable outcomes plus lock compatibility.",
+      "real_world_use": "Traditional RDBMS concurrency (SQL Server, DB2) uses 2PL with lock managers.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "deadlock-detector-waits-for",
+      "name": "Deadlock Detector (Waits-For Graph)",
+      "concept": "Deadlocks need detection: the detector maintains a waits-for graph of transactions blocked on locks and finds cycles, aborting a victim (usually the youngest or cheapest to roll back). Timeouts are the crude alternative. The demo visualizes the cycle that kills.",
+      "key_params": {
+        "txns": "transaction count",
+        "victim": "youngest vs cheapest victim policy",
+        "check_interval": "detection frequency"
+      },
+      "data_idea": "Runs seeded deadlock-prone schedules and verifies detection finds cycles and victim abort breaks them.",
+      "real_world_use": "InnoDB, PostgreSQL deadlock detectors abort victims on waits-for cycles.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "isolation-level-anomalies",
+      "name": "Isolation Levels and Anomalies",
+      "concept": "Isolation levels trade correctness for concurrency: read-uncommitted allows dirty reads, read-committed allows non-repeatable reads, repeatable-read allows phantoms, serializable allows none. The simulator runs classic anomaly schedules under each level and shows exactly which anomalies each permits. It makes the SQL standard's table concrete.",
+      "key_params": {
+        "level": "isolation level simulated",
+        "anomaly": "dirty/nonrepeatable/phantom schedules",
+        "mix": "concurrent transaction mix"
+      },
+      "data_idea": "Executes seeded anomaly schedules per level and verifies the permitted/forbidden matrix.",
+      "real_world_use": "Application developers choose isolation levels (Postgres, MySQL) with these trade-offs.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "optimistic-concurrency-control",
+      "name": "Optimistic Concurrency Control",
+      "concept": "OCC assumes conflicts are rare: transactions execute freely, then validate (no overlapping writes with concurrent committers) before commit, aborting on conflict. Timestamps order the validation. It shines in low-contention workloads and collapses under hotspots, which the demo quantifies.",
+      "key_params": {
+        "contention": "hotspot contention level",
+        "validate": "validation phase logic",
+        "retry": "abort-and-retry policy"
+      },
+      "data_idea": "Runs seeded workloads across contention levels and compares OCC throughput vs locking.",
+      "real_world_use": "HyPer, some in-memory databases, and mobile sync engines use OCC.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "acid-transaction-manager",
+      "name": "ACID Transaction Manager",
+      "concept": "ACID is the contract: atomicity (all or nothing), consistency (constraints hold), isolation (concurrent safety), durability (survives crashes). The manager implements begin/commit/rollback over a page store with WAL, demonstrating each property with failure injection. It is the database promise in code.",
+      "key_params": {
+        "properties": "which ACID property each test targets",
+        "failures": "crash/abort injection",
+        "store": "page-store model"
+      },
+      "data_idea": "Runs seeded transactions with failures and verifies each ACID property holds.",
+      "real_world_use": "Every relational database (Postgres, MySQL, SQLite) implements the ACID contract.",
+      "suggested_types": [
+        "simulation",
+        "backup_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "query-parser-lite",
+      "name": "SQL Query Parser (Lite)",
+      "concept": "Parsing turns SQL text into an AST: the lite parser tokenizes, then recursive-descent parses SELECT with WHERE, JOIN, GROUP BY, and ORDER BY. It validates against a schema and reports syntax errors with positions. It is the front door of every query engine.",
+      "key_params": {
+        "dialect": "SQL subset supported",
+        "errors": "error message quality",
+        "schema": "tables validated against"
+      },
+      "data_idea": "Parses seeded queries (valid and malformed) and verifies ASTs and error positions.",
+      "real_world_use": "Calcite, sqlglot, and every database frontend parse SQL to ASTs.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "query-planner-cost-based",
+      "name": "Cost-Based Query Planner",
+      "concept": "The planner picks join orders and access paths by cost: it estimates cardinalities, prices plans with a cost model (I/O + CPU), and searches the plan space with dynamic programming. Good estimates make good plans; bad estimates make infamous ones. The demo shows a bad plan's cost.",
+      "key_params": {
+        "tables": "table sizes and stats",
+        "model": "cost model weights",
+        "search": "exhaustive vs greedy join order"
+      },
+      "data_idea": "Plans seeded multi-join queries and verifies the chosen plan is near-optimal by cost.",
+      "real_world_use": "PostgreSQL, Spark Catalyst, and commercial optimizers plan by cost.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "join-algorithms",
+      "name": "Join Algorithms (Nested Loop / Hash / Merge)",
+      "concept": "Joins execute three ways: nested loop (fine for tiny inputs), hash join (build hash on smaller side, probe), and sort-merge (for sorted inputs). The demo implements all three and benchmarks across input sizes and orderings. Algorithm choice is why the planner exists.",
+      "key_params": {
+        "algorithm": "nested-loop vs hash vs merge",
+        "sizes": "input table sizes",
+        "sorted": "whether inputs are pre-sorted"
+      },
+      "data_idea": "Joins seeded tables per algorithm and verifies identical results plus timing comparisons.",
+      "real_world_use": "Every query engine (Postgres, DuckDB, Spark) implements all three join strategies.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "aggregation-group-by-engine",
+      "name": "GROUP BY Aggregation Engine",
+      "concept": "Aggregation groups rows by keys and computes sums, counts, averages: the engine implements hash aggregation (one pass, memory-heavy) and sort aggregation, with spilling for large groups. It handles DISTINCT aggregates and HAVING filters. It is the engine behind every dashboard rollup.",
+      "key_params": {
+        "agg": "sum/count/avg/min/max",
+        "strategy": "hash vs sort aggregation",
+        "spill": "disk spill threshold"
+      },
+      "data_idea": "Aggregates seeded data and verifies results match brute-force grouping including edge cases.",
+      "real_world_use": "OLAP engines (DuckDB, ClickHouse) and MapReduce aggregations group this way.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "window-functions-engine",
+      "name": "Window Functions Engine",
+      "concept": "Window functions compute across row frames without collapsing groups: ROW_NUMBER, RANK, running sums, and LAG/LEAD over PARTITION BY and ORDER BY. The engine sorts partitions and evaluates frames. They answer 'top-N per group' and period-over-period in one pass.",
+      "key_params": {
+        "functions": "row_number/rank/sum/lag/lead",
+        "frame": "rows vs range frames",
+        "partition": "partition keys"
+      },
+      "data_idea": "Evaluates seeded window queries and verifies results against brute-force per-partition computation.",
+      "real_world_use": "Analytics SQL (Postgres, BigQuery, Snowflake) leans on window functions.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "external-merge-sort",
+      "name": "External Merge Sort",
+      "concept": "Bigger-than-memory sorts chunk data into sorted runs on disk, then k-way merge them: the demo implements run generation with replacement selection and multi-pass merging under a memory budget. It is how databases sort terabytes with megabytes of RAM.",
+      "key_params": {
+        "memory": "memory budget (rows)",
+        "runs": "initial run generation",
+        "k": "merge fan-in"
+      },
+      "data_idea": "Sorts seeded oversized datasets and verifies sorted output with bounded memory.",
+      "real_world_use": "PostgreSQL ORDER BY, Spark shuffles, and Unix sort all external-merge.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "query-result-cache",
+      "name": "Query Result Cache",
+      "concept": "Result caches memoize query outputs by normalized query text: hits skip execution entirely, and invalidation (on table writes) keeps results fresh. TTL vs write-invalidation is the design choice. It is the cheapest speedup for repeated analytical queries.",
+      "key_params": {
+        "key": "query normalization for keys",
+        "invalidate": "write-triggered vs TTL",
+        "size": "cache capacity"
+      },
+      "data_idea": "Runs seeded query mixes with writes and verifies hit rates and never-stale results.",
+      "real_world_use": "MySQL query cache (historical), Redis-backed caches, and BI tools cache results.",
+      "suggested_types": [
+        "lru_cache",
+        "data_pipeline",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "prepared-statement-cache",
+      "name": "Prepared Statement Cache",
+      "concept": "Preparing a statement parses and plans once, then executes many times with new parameters: the cache keys by query text and reuses plans, skipping parse/plan overhead per execution. It also separates code from data (injection defense). OLTP workloads live on prepared statements.",
+      "key_params": {
+        "cache_size": "plan cache capacity",
+        "params": "parameter type handling",
+        "replan": "when plans get re-validated"
+      },
+      "data_idea": "Executes seeded parameterized workloads and verifies plan reuse counts and correctness.",
+      "real_world_use": "JDBC/ODBC prepared statements and Postgres extended protocol use plan caching.",
+      "suggested_types": [
+        "lru_cache",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "connection-pool-manager",
+      "name": "Connection Pool Manager",
+      "concept": "Connection pools amortize connection setup: the manager keeps warm connections, hands them out with timeouts, validates health on checkout, and sizes min/max with idle eviction. Pool exhaustion manifests as queueing, which the demo makes visible. Sizing is the operational art.",
+      "key_params": {
+        "min": "minimum idle connections",
+        "max": "maximum connections",
+        "checkout_timeout": "wait timeout ms"
+      },
+      "data_idea": "Runs seeded concurrent workloads and verifies queueing behavior and health-check eviction.",
+      "real_world_use": "PgBouncer, HikariCP, and every app server pool database connections.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "read-replica-router",
+      "name": "Read Replica Router",
+      "concept": "Read scaling routes queries to replicas: the router sends writes to primary, balances reads across replicas by lag and load, and pins reads-after-writes to primary for consistency. Replica lag monitoring drives routing decisions. It is the standard relational scaling pattern.",
+      "key_params": {
+        "replicas": "replica count",
+        "lag": "replication lag per replica",
+        "pin": "read-your-writes pinning window"
+      },
+      "data_idea": "Routes seeded read/write mixes and verifies consistency guarantees and lag-aware balancing.",
+      "real_world_use": "MySQL/Postgres read replicas and RDS routing implement primary/replica splits.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sharding-consistent-hash",
+      "name": "Sharding with Consistent Hashing",
+      "concept": "Sharding splits data across nodes: consistent hashing maps keys to a ring so adding nodes moves minimal data, with virtual nodes smoothing distribution. The demo rebalances on node changes and measures data movement. Hot keys still need separate handling.",
+      "key_params": {
+        "nodes": "shard count",
+        "vnodes": "virtual nodes per physical",
+        "keys": "key distribution"
+      },
+      "data_idea": "Adds/removes seeded nodes and verifies minimal key movement and balanced distribution.",
+      "real_world_use": "Cassandra, DynamoDB, and Memcached clients shard with consistent hashing.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "range-partitioner",
+      "name": "Range Partitioner",
+      "concept": "Range partitioning splits tables by key ranges (dates, ids): the partitioner routes rows to partitions, prunes irrelevant partitions per query, and handles splits when partitions grow. Time-series tables partition by time almost universally. Pruning is the query-speed payoff.",
+      "key_params": {
+        "key": "partition key",
+        "ranges": "partition boundaries",
+        "prune": "query partition pruning"
+      },
+      "data_idea": "Partitions seeded tables and verifies routing plus that queries touch only relevant partitions.",
+      "real_world_use": "Postgres declarative partitioning, BigQuery, and time-series DBs partition by range.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "two-phase-commit",
+      "name": "Two-Phase Commit (2PC)",
+      "concept": "2PC coordinates atomic commit across nodes: prepare phase collects votes, commit phase broadcasts the decision, with participants logging to survive crashes. Blocking on coordinator failure is its famous weakness (hence 3PC and consensus alternatives). The demo shows the protocol and the blocking scenario.",
+      "key_params": {
+        "participants": "node count",
+        "failures": "crash injection points",
+        "timeout": "prepare-phase timeout"
+      },
+      "data_idea": "Runs seeded distributed transactions with crashes and verifies atomicity or correct blocking detection.",
+      "real_world_use": "XA transactions and Spanner's commit protocol build on 2PC ideas.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "raft-lite-consensus",
+      "name": "Raft Consensus (Lite)",
+      "concept": "Raft elects a leader to replicate a log: followers vote on timeouts, the leader appends entries and commits on majority replication, and terms order everything. The lite version simulates elections, log replication, and leader failure. It makes consensus understandable where Paxos was not.",
+      "key_params": {
+        "nodes": "cluster size",
+        "election_timeout": "follower timeout range",
+        "failures": "leader crash scenarios"
+      },
+      "data_idea": "Simulates seeded clusters with failures and verifies single-leader safety and log consistency.",
+      "real_world_use": "etcd, Consul, and CockroachDB use Raft for coordination.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "quorum-read-write",
+      "name": "Quorum Reads and Writes",
+      "concept": "Quorums trade availability for consistency: with N replicas, write to W and read from R where R+W>N guarantees overlap and fresh reads. The demo tunes (N,W,R) showing the latency/consistency frontier. Sloppy quorums and hinted handoff handle failures.",
+      "key_params": {
+        "n": "replica count",
+        "w": "write quorum",
+        "r": "read quorum"
+      },
+      "data_idea": "Runs seeded read/write workloads under quorums and verifies consistency guarantees per configuration.",
+      "real_world_use": "Cassandra, DynamoDB, and Riak expose tunable quorum consistency.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vector-clock-causality",
+      "name": "Vector Clocks (Causality Tracking)",
+      "concept": "Vector clocks track causality across replicas: each node counts its own events, merges take element-wise max, and comparison reveals happened-before, concurrent, or comparable. Concurrent writes become siblings to resolve. It is the honest alternative to wall-clock ordering.",
+      "key_params": {
+        "nodes": "replica count",
+        "events": "seeded event patterns",
+        "resolve": "sibling resolution policy"
+      },
+      "data_idea": "Replays seeded distributed event histories and verifies causality classification.",
+      "real_world_use": "Riak, Cassandra (lite), and collaborative editing track causality with vector clocks.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "chat_server"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "crdt-registers-sets",
+      "name": "CRDT Registers and Sets",
+      "concept": "CRDTs merge without coordination: LWW registers resolve by timestamp, G-sets only grow, 2P-sets add tombstones for removal, and OR-sets tag adds uniquely. The demo merges partitioned replicas and verifies convergence. They trade coordination for careful semantics.",
+      "key_params": {
+        "types": "lww/g-set/2p-set/or-set",
+        "replicas": "replica count",
+        "partitions": "network partition scenarios"
+      },
+      "data_idea": "Merges seeded concurrent updates under partitions and verifies convergence per type.",
+      "real_world_use": "Riak, Redis Enterprise, and offline-first apps (Figma) use CRDTs.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "chat_server"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cap-theorem-simulator",
+      "name": "CAP Theorem Simulator",
+      "concept": "CAP says partitions force a choice between consistency and availability: the simulator partitions a replicated store and shows CP systems rejecting writes while AP systems accept and reconcile later. It makes the trade-off experiential rather than slogan. PACELC adds the latency dimension.",
+      "key_params": {
+        "nodes": "cluster size",
+        "partition": "partition scenarios",
+        "mode": "CP vs AP behavior"
+      },
+      "data_idea": "Partitions seeded clusters and verifies each mode's behavior matches its guarantees.",
+      "real_world_use": "System design interviews and database selection (CP vs AP) reason with CAP.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "schema-migration-runner",
+      "name": "Schema Migration Runner",
+      "concept": "Schema changes version like code: the runner applies ordered migration scripts, tracks applied versions, and supports rollback, with locking against concurrent runners. It is the database half of deploy safety. Expand/contract patterns keep deploys zero-downtime.",
+      "key_params": {
+        "scripts": "ordered migration list",
+        "lock": "distributed lock",
+        "dry_run": "preview mode"
+      },
+      "data_idea": "Applies seeded migrations (including a failing one) and verifies ordering, state, and rollback.",
+      "real_world_use": "Flyway, Alembic, and Rails migrations version schemas.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "expand-contract-migrator",
+      "name": "Expand-Contract Migrator",
+      "concept": "Zero-downtime schema changes expand then contract: add the new column/table, dual-write, backfill, switch readers, then drop the old. The migrator orchestrates the phases with verification gates between them. It turns scary migrations into routine ones.",
+      "key_params": {
+        "phases": "expand/migrate/contract steps",
+        "gates": "verification between phases",
+        "rollback": "per-phase rollback"
+      },
+      "data_idea": "Migrates seeded schemas through phases with checks, verifying data integrity at each gate.",
+      "real_world_use": "Large-scale MySQL/Postgres shops (GitHub, Shopify) use expand/contract for online DDL.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "normalization-analyzer",
+      "name": "Normalization Analyzer (1NF-3NF)",
+      "concept": "Normalization removes redundancy: the analyzer checks 1NF (atomic values), 2NF (no partial dependencies), 3NF (no transitive dependencies) and suggests decompositions with dependency preservation. It teaches why normalized schemas avoid update anomalies. Denormalization is then a conscious choice.",
+      "key_params": {
+        "form": "1NF/2NF/3NF checks",
+        "fds": "functional dependencies given",
+        "suggest": "decomposition suggestions"
+      },
+      "data_idea": "Analyzes seeded schemas with planted violations and verifies the reported normal form and fixes.",
+      "real_world_use": "Database design courses and schema reviews apply normalization analysis.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "denormalization-advisor",
+      "name": "Denormalization Advisor",
+      "concept": "Denormalization trades redundancy for read speed: the advisor profiles query patterns, estimates join costs, and recommends precomputed columns or tables with staleness budgets. It quantifies the trade instead of guessing. Every recommendation carries its consistency cost.",
+      "key_params": {
+        "queries": "workload query patterns",
+        "budget": "staleness tolerance",
+        "cost": "join vs storage cost model"
+      },
+      "data_idea": "Advises on seeded workloads and verifies recommendations match cost-model optima.",
+      "real_world_use": "Data warehouses and high-read OLTP systems denormalize deliberately.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "constraint-enforcer",
+      "name": "Constraint Enforcer",
+      "concept": "Constraints are correctness as code: the enforcer checks NOT NULL, UNIQUE, CHECK, and FOREIGN KEY on writes, with deferred options for tricky orderings. Violations produce specific errors, not silent corruption. Constraints are the cheapest tests a database has.",
+      "key_params": {
+        "constraints": "not-null/unique/check/fk",
+        "defer": "immediate vs deferred checking",
+        "errors": "violation error detail"
+      },
+      "data_idea": "Applies seeded writes (valid and violating) and verifies enforcement with precise errors.",
+      "real_world_use": "Every RDBMS enforces constraints; ORMs map them to validations.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "trigger-engine",
+      "name": "Trigger Engine",
+      "concept": "Triggers run logic on data changes: the engine fires BEFORE/AFTER INSERT/UPDATE/DELETE hooks for auditing, denormalized maintenance, and validation. Ordering and recursion guards keep them sane. Overuse turns the database into hidden application logic, which the demo warns about.",
+      "key_params": {
+        "events": "insert/update/delete triggers",
+        "timing": "before vs after",
+        "recursion": "recursion depth guard"
+      },
+      "data_idea": "Fires seeded data changes through triggers and verifies effects and recursion protection.",
+      "real_world_use": "Audit trails and legacy business logic commonly live in triggers.",
+      "suggested_types": [
+        "data_pipeline",
+        "log_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "materialized-view-refresher",
+      "name": "Materialized View Refresher",
+      "concept": "Materialized views precompute expensive queries: the refresher rebuilds on schedule or incrementally from change logs, tracking staleness per view. It picks full vs incremental by change volume. Dashboards get fast reads; the refresher pays the write cost.",
+      "key_params": {
+        "views": "view definitions",
+        "strategy": "full vs incremental refresh",
+        "schedule": "refresh cadence"
+      },
+      "data_idea": "Refreshes seeded views over changing base tables and verifies correctness and staleness tracking.",
+      "real_world_use": "Postgres, Snowflake, and BI tools materialize aggregations for speed.",
+      "suggested_types": [
+        "data_pipeline",
+        "scheduler",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "procedure-runner-lite",
+      "name": "Stored Procedure Runner (Lite)",
+      "concept": "Stored procedures push logic into the database: the lite runner executes parameterized procedure definitions with control flow against the demo store. It shows the encapsulation benefit and the testability/versioning costs. Transactional atomicity comes free inside the database.",
+      "key_params": {
+        "procedures": "procedure definitions",
+        "params": "parameter binding",
+        "atomic": "transactional execution"
+      },
+      "data_idea": "Executes seeded procedures and verifies results and atomic rollback on error.",
+      "real_world_use": "Banking and ERP systems run business logic as stored procedures.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "upsert-merge-engine",
+      "name": "Upsert/Merge Engine",
+      "concept": "Upserts insert-or-update atomically: the engine matches on conflict targets, updates specified columns, and handles concurrent upserts without lost updates. It is the idempotent-write primitive for sync pipelines. Conflict-target choice is the design decision.",
+      "key_params": {
+        "target": "conflict target columns",
+        "update": "columns updated on conflict",
+        "concurrent": "concurrent upsert handling"
+      },
+      "data_idea": "Runs seeded concurrent upserts and verifies exactly-once row state.",
+      "real_world_use": "Postgres ON CONFLICT, MySQL ON DUPLICATE KEY power idempotent ingestion.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "task_queue"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bulk-loader-csv",
+      "name": "Bulk CSV Loader",
+      "concept": "Bulk loading beats row-by-row inserts by orders of magnitude: the loader streams CSV in batches inside one transaction, validates per row with error quarantine, and uses the fastest path available. It reports throughput and rejects. ETL lands data with bulk loaders.",
+      "key_params": {
+        "batch": "rows per batch",
+        "validate": "per-row validation",
+        "quarantine": "bad-row handling"
+      },
+      "data_idea": "Loads seeded CSVs with planted bad rows and verifies throughput, counts, and quarantine.",
+      "real_world_use": "COPY (Postgres), LOAD DATA (MySQL), and ETL pipelines bulk-load flat files.",
+      "suggested_types": [
+        "data_pipeline",
+        "file_organizer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bloat-estimator",
+      "name": "Table Bloat Estimator",
+      "concept": "Dead tuples bloat tables: the estimator samples pages, compares live vs dead tuple space, and recommends VACUUM (or autovacuum tuning) when bloat crosses thresholds. It explains why tables grow without new data. Bloat slows scans and wastes cache.",
+      "key_params": {
+        "sample": "page sampling rate",
+        "threshold": "vacuum recommendation level",
+        "autovacuum": "tuning suggestions"
+      },
+      "data_idea": "Estimates seeded bloated tables and verifies bloat math and recommendations.",
+      "real_world_use": "Postgres DBAs monitor bloat and tune autovacuum; pgstattuple measures it.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "index-advisor-workload",
+      "name": "Index Advisor (Workload-Driven)",
+      "concept": "Choosing indexes by gut fails: the advisor analyzes a query workload, hypothesizes candidate indexes, estimates benefit via cost modeling, and recommends the set maximizing benefit under a storage budget. It also flags unused indexes to drop. It turns indexing into optimization.",
+      "key_params": {
+        "workload": "query mix analyzed",
+        "budget": "index storage budget",
+        "candidates": "candidate index generation"
+      },
+      "data_idea": "Advises on seeded workloads and verifies recommended indexes match cost-model optima.",
+      "real_world_use": "Postgres hypopg, SQL Server Database Tuning Advisor recommend indexes.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "slow-query-log-analyzer",
+      "name": "Slow Query Log Analyzer",
+      "concept": "Slow logs reveal pain: the analyzer parses query logs, normalizes queries into fingerprints (literals replaced), aggregates by total time, and ranks offenders with EXPLAIN hints. Fingerprinting turns a million log lines into a top-10 list. It prioritizes optimization work.",
+      "key_params": {
+        "fingerprint": "query normalization",
+        "rank": "total-time vs avg-time ranking",
+        "threshold": "slow-query cutoff"
+      },
+      "data_idea": "Analyzes seeded slow logs and verifies fingerprinting groups variants and ranking is correct.",
+      "real_world_use": "pt-query-digest and pg_stat_statements analyze slow queries this way.",
+      "suggested_types": [
+        "log_analyzer",
+        "report_generator",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "explain-plan-visualizer",
+      "name": "EXPLAIN Plan Visualizer",
+      "concept": "EXPLAIN output is a tree: the visualizer parses plan text into nodes (scans, joins, sorts) with costs and row estimates, rendering an indented tree highlighting the expensive nodes. It teaches reading plans: the biggest cost node is where to look first. Estimate-vs-actual gaps flag stale statistics.",
+      "key_params": {
+        "plan": "parsed plan nodes",
+        "highlight": "expensive-node flagging",
+        "estimates": "rows-estimate vs actual"
+      },
+      "data_idea": "Visualizes seeded plans and verifies tree structure and cost highlighting.",
+      "real_world_use": "All databases EXPLAIN; tools like explain.dalibo.com visualize plans.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hyperloglog-cardinality",
+      "name": "HyperLogLog Cardinality Estimator",
+      "concept": "HyperLogLog estimates distinct counts in kilobytes: hashing, register maxima, and harmonic-mean math yield ~2% error on billions of items. The demo implements it and validates the error bound empirically. It is the algorithm behind 'unique visitors' at scale.",
+      "key_params": {
+        "precision": "register bits (error target)",
+        "n": "distinct items estimated",
+        "merge": "sketch merging"
+      },
+      "data_idea": "Estimates seeded distinct counts and verifies error stays within the theoretical bound.",
+      "real_world_use": "Redis PFCOUNT, BigQuery APPROX_COUNT_DISTINCT, and ad-tech use HLL.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "quantile-sketch",
+      "name": "Quantile Sketch (t-Digest-lite)",
+      "concept": "Quantile sketches estimate percentiles over streams in small memory: the lite version implements t-digest-style centroid compression, accurate at the tails where it matters. Merging sketches parallelizes. It answers p99 latency without storing every sample.",
+      "key_params": {
+        "compression": "centroid budget",
+        "quantiles": "p50/p99/p999 estimated",
+        "merge": "parallel sketch merging"
+      },
+      "data_idea": "Estimates seeded stream quantiles and verifies tail accuracy within bounds.",
+      "real_world_use": "Prometheus, Druid, and BigQuery estimate quantiles with sketches.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "count-min-sketch",
+      "name": "Count-Min Sketch",
+      "concept": "Count-min sketches estimate frequencies in sublinear memory: d hash rows of w counters, increment all, query the minimum. It never underestimates; error bounds depend on width. Heavy-hitter detection builds on it. It counts the uncountable.",
+      "key_params": {
+        "width": "counter columns",
+        "depth": "hash rows",
+        "stream": "seeded frequency distribution"
+      },
+      "data_idea": "Estimates seeded item frequencies and verifies error bounds hold.",
+      "real_world_use": "Network flow monitoring and trending-topic detection use count-min sketches.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "top-k-heavy-hitters",
+      "name": "Top-K Heavy Hitters",
+      "concept": "Heavy hitters are items exceeding a frequency threshold: the demo implements space-saving counters tracking candidates with error bounds, exact for true heavy hitters. It finds trending items in one pass. The threshold trades recall against memory.",
+      "key_params": {
+        "k": "top items tracked",
+        "threshold": "heavy-hitter fraction",
+        "stream": "seeded skewed stream"
+      },
+      "data_idea": "Finds seeded heavy hitters and verifies all true hitters are reported.",
+      "real_world_use": "Trending topics, DDoS source detection, and ad-tech find heavy hitters in streams.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "document-store-json",
+      "name": "JSON Document Store",
+      "concept": "Document stores persist schemaless JSON: the store supports nested documents, collection scans with predicate pushdown, and secondary indexes on paths. It trades schema rigidity for flexibility. The demo implements the core CRUD plus path indexing.",
+      "key_params": {
+        "collections": "document collections",
+        "paths": "indexed JSON paths",
+        "query": "predicate language subset"
+      },
+      "data_idea": "Stores seeded documents and verifies queries use path indexes correctly.",
+      "real_world_use": "MongoDB and CouchDB persist JSON documents with path indexing.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "columnar-storage-demo",
+      "name": "Columnar Storage Demo",
+      "concept": "Columnar layouts store each column contiguously: scans over few columns touch little data, and same-type values compress well (RLE, dictionary). The demo builds column chunks with encodings and runs analytical queries against them. It is why warehouses are fast at aggregations.",
+      "key_params": {
+        "encoding": "RLE vs dictionary vs plain",
+        "chunks": "row-group sizing",
+        "queries": "aggregation queries run"
+      },
+      "data_idea": "Runs seeded analytical queries and verifies results plus I/O savings vs row layout.",
+      "real_world_use": "Parquet, ClickHouse, and Snowflake store columns for analytics.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "graph-store-adjacency",
+      "name": "Graph Store (Adjacency)",
+      "concept": "Graph stores model nodes and edges: the demo implements adjacency lists, multi-hop traversals, and shortest-path (BFS), with indexes on labels. It answers 'friends of friends' naturally. Traversal performance beats relational joins for connected data.",
+      "key_params": {
+        "traversal": "BFS/DFS multi-hop",
+        "index": "label indexes",
+        "pattern": "seeded graph shape"
+      },
+      "data_idea": "Traverses seeded graphs and verifies path correctness and traversal counts.",
+      "real_world_use": "Neo4j and Neptune store graphs as adjacency structures.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "time-series-downsampling",
+      "name": "Time-Series Downsampling",
+      "concept": "Raw metrics are too fine to keep forever: the downsampler aggregates (avg/max/min) into coarser rollups per retention tier, preserving extremes via min/max alongside means. It implements tiered retention (raw 7d, hourly 1y). Queries pick the finest tier covering the range.",
+      "key_params": {
+        "tiers": "retention tiers defined",
+        "agg": "avg/min/max per tier",
+        "query": "tier selection for ranges"
+      },
+      "data_idea": "Downsamples seeded metric streams and verifies rollup accuracy and tier selection.",
+      "real_world_use": "Prometheus, InfluxDB, and Graphite downsample with tiered retention.",
+      "suggested_types": [
+        "data_pipeline",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ttl-expiry-engine",
+      "name": "TTL Expiry Engine",
+      "concept": "TTL deletes data automatically: the engine tracks per-record expiry, lazily expires on read, and sweeps expired records in background batches. It implements cache and compliance retention in one mechanism. Clock skew handling keeps it honest.",
+      "key_params": {
+        "ttl": "per-record lifetimes",
+        "sweep": "background sweep interval",
+        "lazy": "read-time expiry checks"
+      },
+      "data_idea": "Expires seeded records and verifies no expired data is ever returned.",
+      "real_world_use": "Redis EXPIRE, Cassandra TTL, and session stores expire by TTL.",
+      "suggested_types": [
+        "lru_cache",
+        "scheduler",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "geohash-index",
+      "name": "Geohash Spatial Index",
+      "concept": "Geohashes encode locations as strings where shared prefixes mean proximity: the index maps points to geohashes and answers radius queries by covering the circle with cells. Precision sets cell size. It turns 2D search into prefix matching.",
+      "key_params": {
+        "precision": "geohash length",
+        "radius": "query radius",
+        "cover": "cell covering strategy"
+      },
+      "data_idea": "Indexes seeded points and verifies radius queries return exactly the points within range.",
+      "real_world_use": "Redis GEO, Elasticsearch geo, and ride-share apps index locations with geohashes.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vector-similarity-index",
+      "name": "Vector Similarity Index (IVF-lite)",
+      "concept": "Vector search finds nearest embeddings: the lite IVF index clusters vectors, then searches only the nearest clusters, trading recall for speed. It demonstrates the partitioning idea behind production ANN indexes. Recall-vs-speed curves guide the probe count.",
+      "key_params": {
+        "clusters": "IVF centroid count",
+        "probes": "clusters searched per query",
+        "dim": "vector dimensionality"
+      },
+      "data_idea": "Searches seeded vectors and measures recall vs brute force across probe counts.",
+      "real_world_use": "Pinecone, pgvector (IVFFlat), and RAG pipelines index embeddings with IVF/HNSW.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "json-path-query-engine",
+      "name": "JSONPath Query Engine",
+      "concept": "JSONPath queries nested documents: the engine parses path expressions ($.store.book[?(@.price<10)].title) with filters and wildcards, evaluating against documents. It brings SQL-like selection to JSON. The demo implements the core grammar.",
+      "key_params": {
+        "grammar": "path/filter/wildcard support",
+        "docs": "seeded document set",
+        "errors": "invalid-path diagnostics"
+      },
+      "data_idea": "Evaluates seeded JSONPath queries and verifies results match expected selections.",
+      "real_world_use": "MongoDB projections, Kubernetes kubectl, and config tools query JSON with paths.",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cdc-log",
+      "name": "Change Data Capture Log",
+      "concept": "CDC streams row changes: the log tails the WAL-ish change feed, emitting insert/update/delete events with before/after images to downstream consumers. It powers realtime sync without polling. Ordering and exactly-once delivery are the guarantees.",
+      "key_params": {
+        "events": "insert/update/delete capture",
+        "order": "per-key ordering",
+        "delivery": "at-least-once with dedupe"
+      },
+      "data_idea": "Captures seeded table changes and verifies the event stream reconstructs the table.",
+      "real_world_use": "Debezium, Fivetran, and realtime warehouses stream CDC from databases.",
+      "suggested_types": [
+        "data_pipeline",
+        "task_queue",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "event-sourcing-store",
+      "name": "Event Sourcing Store",
+      "concept": "Event sourcing persists events, not state: the store appends domain events, rebuilds aggregates by replay, and snapshots to bound replay cost. Projections build read models from the stream. Full history enables time travel and audit.",
+      "key_params": {
+        "events": "domain event types",
+        "snapshot": "snapshot interval",
+        "project": "read-model projections"
+      },
+      "data_idea": "Replays seeded event streams and verifies aggregate rebuilds and projections.",
+      "real_world_use": "CQRS systems, banking ledgers, and collaboration tools source state from events.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "backup_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "audit-trail-immutable",
+      "name": "Immutable Audit Trail",
+      "concept": "Audit trails must be tamper-evident: the store appends hash-chained records (each includes the previous hash), making silent edits detectable. It records actor, action, and before/after. Retention policies bound growth. Compliance asks for exactly this.",
+      "key_params": {
+        "chain": "hash chaining",
+        "record": "actor/action/diff fields",
+        "verify": "chain verification"
+      },
+      "data_idea": "Appends seeded audit records (including a tamper attempt) and verifies detection.",
+      "real_world_use": "Financial compliance and security auditing require tamper-evident trails.",
+      "suggested_types": [
+        "log_analyzer",
+        "encryption_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "backup-scheduler",
+      "name": "Backup Scheduler (Full + Incremental)",
+      "concept": "Backup strategies layer full and incremental: the scheduler takes periodic full backups with incrementals between, tracks chains, and validates restorability of the chain. It computes storage cost and RPO per schedule. Broken chains get flagged before they matter.",
+      "key_params": {
+        "full": "full backup cadence",
+        "incr": "incremental cadence",
+        "retain": "chain retention"
+      },
+      "data_idea": "Schedules seeded backups and verifies chain integrity and RPO compliance.",
+      "real_world_use": "pgBackRest, Bacula, and cloud backup schedule full/incremental chains.",
+      "suggested_types": [
+        "scheduler",
+        "backup_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "point-in-time-recovery",
+      "name": "Point-in-Time Recovery",
+      "concept": "PITR restores to any moment: the engine replays a base backup plus WAL up to the target timestamp, handling timeline branches. It answers 'restore to just before the bad deploy'. Recovery testing proves the chain works.",
+      "key_params": {
+        "target": "recovery timestamp",
+        "base": "base backup selection",
+        "replay": "WAL replay to target"
+      },
+      "data_idea": "Recovers seeded databases to timestamps and verifies state matches the moment.",
+      "real_world_use": "Postgres PITR and RDS point-in-time restore implement WAL replay.",
+      "suggested_types": [
+        "backup_tool",
+        "simulation",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "failover-orchestrator",
+      "name": "Failover Orchestrator",
+      "concept": "Failover promotes a replica when the primary dies: the orchestrator detects failure (with fencing to avoid split-brain), promotes the most caught-up replica, and repoints clients. It measures RTO and data loss. Fencing is what makes it safe.",
+      "key_params": {
+        "detect": "failure detection timeout",
+        "fence": "old-primary fencing",
+        "promote": "replica selection"
+      },
+      "data_idea": "Fails seeded primaries and verifies safe promotion with measured RTO.",
+      "real_world_use": "Patroni, RDS Multi-AZ, and Redis Sentinel orchestrate failover.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "scheduler"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "split-brain-fencer",
+      "name": "Split-Brain Fencer",
+      "concept": "Network partitions can create two primaries: the fencer uses fencing tokens (monotonic generations) so storage rejects writes from the deposed primary, plus quorum rules preventing dual promotion. It is the safety net under every failover. STONITH ('shoot the other node') is the blunt version.",
+      "key_params": {
+        "tokens": "monotonic fencing tokens",
+        "quorum": "promotion quorum rule",
+        "partition": "seeded partition scenarios"
+      },
+      "data_idea": "Partitions seeded clusters and verifies only one writer ever succeeds.",
+      "real_world_use": "Distributed locks (ZooKeeper fencing) and storage systems fence with tokens.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "pii-data-masking",
+      "name": "PII Data Masking",
+      "concept": "Non-production environments should not hold real PII: the masker scans columns for PII patterns (emails, SSNs, cards), applies format-preserving masking or tokenization, and keeps referential consistency across tables. It enables safe analytics on production-shaped data.",
+      "key_params": {
+        "patterns": "PII detection patterns",
+        "method": "mask vs tokenize vs hash",
+        "consistent": "cross-table consistency"
+      },
+      "data_idea": "Masks seeded datasets and verifies PII removal with join consistency preserved.",
+      "real_world_use": "Delphix, compliance pipelines, and dev-data provisioning mask PII.",
+      "suggested_types": [
+        "data_pipeline",
+        "encryption_tool",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    }
+  ]
+}

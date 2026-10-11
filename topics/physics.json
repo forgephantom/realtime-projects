@@ -1,0 +1,2357 @@
+{
+  "domain": "physics",
+  "subdomain": "physics",
+  "topics": [
+    {
+      "slug_base": "projectile-motion-lab",
+      "name": "Projectile Motion Lab",
+      "concept": "A projectile launched with a given speed and angle follows a parabolic path because gravity pulls it downward at a constant rate while horizontal motion continues unchanged. Air resistance bends that ideal parabola, so the lab compares the ideal trajectory with a drag-corrected one.",
+      "key_params": {
+        "launch_speed": "initial speed in meters per second",
+        "launch_angle": "angle above the horizontal in degrees",
+        "drag_coefficient": "strength of air resistance on the body"
+      },
+      "data_idea": "A seeded RNG varies launch speed, angle, and drag across runs, then integrates each trajectory with small time steps to record range and apex.",
+      "real_world_use": "Ballistics tables, sports equipment design, and agricultural sprayer calibration all rely on projectile models.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "double-pendulum-chaos-simulator",
+      "name": "Double Pendulum Chaos Simulator",
+      "concept": "Two linked pendulum arms obey deterministic equations of motion, yet tiny differences in the starting angles explode into completely different swinging paths. This sensitive dependence on initial conditions is the hallmark of deterministic chaos in a simple mechanical system.",
+      "key_params": {
+        "arm_lengths": "lengths of the two pendulum arms in meters",
+        "bob_masses": "masses of the two bobs in kilograms",
+        "initial_angles": "starting angles of each arm in radians"
+      },
+      "data_idea": "A seeded RNG draws pairs of nearly identical starting states and integrates both with a fixed-step solver so the divergence of the two paths can be compared.",
+      "real_world_use": "Chaos theory courses and robotics labs use the double pendulum to study unpredictability and control of coupled nonlinear systems.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "n-body-gravity-sandbox",
+      "name": "N-Body Gravity Sandbox",
+      "concept": "Every body in the sandbox pulls on every other body with a gravitational force that weakens with the square of the distance. Integrating all these mutual forces forward in time reveals orbits, slingshots, and occasional ejections without any pre-scripted paths.",
+      "key_params": {
+        "body_count": "number of gravitational bodies to simulate",
+        "time_step": "integration step size in seconds",
+        "softening": "short-range smoothing length that avoids infinite forces"
+      },
+      "data_idea": "A seeded RNG scatters bodies with random positions and velocities inside a disk, then the engine steps the whole system and logs orbital radii over time.",
+      "real_world_use": "Mission designers and astrophysicists run N-body codes to plan satellite constellations and model star cluster evolution.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "inclined-plane-friction-analyzer",
+      "name": "Inclined Plane Friction Analyzer",
+      "concept": "A block on a ramp slides only when the downhill pull of gravity along the slope beats the maximum grip of static friction. Once moving, kinetic friction slows it, so the same ramp produces very different travel times depending on the friction coefficient.",
+      "key_params": {
+        "incline_angle": "ramp angle above the horizontal in degrees",
+        "friction_coefficient": "kinetic friction coefficient of the surface",
+        "block_mass": "mass of the sliding block in kilograms"
+      },
+      "data_idea": "A seeded RNG samples ramp angles and friction values, integrates the slide for each combination, and records the time to reach the bottom.",
+      "real_world_use": "Conveyor and chute designers in mining and logistics size ramps and belts from friction and slope calculations.",
+      "suggested_types": [
+        "simulation",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "spring-mass-damper-oscillator",
+      "name": "Spring Mass Damper Oscillator",
+      "concept": "A mass on a spring swings back and forth at a natural frequency set by the spring stiffness and the mass. A damper bleeds energy out of each swing, and the balance between stiffness and damping decides whether the motion rings, decays quickly, or never overshoots.",
+      "key_params": {
+        "spring_constant": "stiffness of the spring in newtons per meter",
+        "mass": "oscillating mass in kilograms",
+        "damping_ratio": "dimensionless damping strength from 0 to 2"
+      },
+      "data_idea": "A seeded RNG picks spring, mass, and damping values, numerically integrates the oscillator from a displaced start, and logs peak amplitudes per cycle.",
+      "real_world_use": "Suspension engineers and vibration analysts tune shock absorbers and machinery mounts with exactly this model.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "circular-motion-centripetal-lab",
+      "name": "Circular Motion Centripetal Lab",
+      "concept": "An object moving in a circle at steady speed is constantly accelerating toward the center, even though its speed never changes. The inward force needed grows with the square of the speed and with the mass, and shrinks as the circle gets larger.",
+      "key_params": {
+        "orbit_radius": "radius of the circular path in meters",
+        "angular_speed": "rotation rate in radians per second",
+        "mass": "mass of the orbiting object in kilograms"
+      },
+      "data_idea": "A seeded RNG generates batches of radius, speed, and mass values, computes the required centripetal force for each, and adds small measurement noise to mimic sensor readings.",
+      "real_world_use": "Centrifuge manufacturers and highway engineers use centripetal force relations to rate equipment and bank curves.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "collision-momentum-workshop",
+      "name": "Collision Momentum Workshop",
+      "concept": "When two objects collide, total momentum is conserved no matter how elastic the impact is. The restitution coefficient describes how much of the kinetic energy survives the hit, ranging from perfectly sticky to perfectly bouncy collisions.",
+      "key_params": {
+        "mass_a": "mass of the first object in kilograms",
+        "velocity_b": "incoming velocity of the second object in meters per second",
+        "restitution": "coefficient of restitution from 0 to 1"
+      },
+      "data_idea": "A seeded RNG draws mass pairs, speeds, and restitution values, resolves each collision analytically, and logs the outgoing velocities and energy loss.",
+      "real_world_use": "Crash-test engineers and game-physics programmers rely on momentum and restitution models for impact analysis.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rotational-inertia-calculator",
+      "name": "Rotational Inertia Calculator",
+      "concept": "Rotational inertia measures how hard it is to spin an object, and it depends on how the mass is spread away from the axis, not just how much mass there is. Thin hoops resist spinning far more than solid disks of the same mass and radius.",
+      "key_params": {
+        "shape": "geometry such as rod, disk, hoop, or sphere",
+        "mass": "total mass in kilograms",
+        "radius": "characteristic radius in meters"
+      },
+      "data_idea": "A seeded RNG samples shapes, masses, and sizes, evaluates each closed-form inertia formula, and stores the results with unit conversions.",
+      "real_world_use": "Flywheel and drivetrain designers compute rotational inertia to size motors and predict spin-up times.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "torque-equilibrium-solver",
+      "name": "Torque Equilibrium Solver",
+      "concept": "A body stays still when the forces balance and the torques about any point also balance, so no rotation starts. Given several forces applied at different positions, the solver finds the one missing force or position that restores equilibrium.",
+      "key_params": {
+        "force_count": "number of applied forces in the system",
+        "lever_arms": "distances from the pivot point in meters",
+        "pivot_position": "location of the rotation axis"
+      },
+      "data_idea": "A seeded RNG creates force configurations with one unknown, solves the two equilibrium equations, and records the balancing force.",
+      "real_world_use": "Structural and crane engineers check static equilibrium of beams, booms, and rigging before lifting loads.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "simple-pendulum-period-fitter",
+      "name": "Simple Pendulum Period Fitter",
+      "concept": "For small swings, a pendulum's period depends only on its length and local gravity, not on the mass of the bob. Plotting the square of the measured period against the length gives a straight line whose slope reveals the value of g.",
+      "key_params": {
+        "string_length": "pendulum length in meters",
+        "swing_amplitude": "release angle in degrees",
+        "measurement_noise": "standard deviation of the synthetic timing error"
+      },
+      "data_idea": "A seeded RNG chooses lengths, computes ideal periods, then adds Gaussian timing noise to produce synthetic stopwatch data for fitting.",
+      "real_world_use": "Introductory physics labs and field gravimetry teams estimate local gravity from pendulum timing data.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "kepler-orbit-visualizer",
+      "name": "Kepler Orbit Visualizer",
+      "concept": "Kepler's laws describe how planets sweep out equal areas in equal times and how orbital periods grow with distance from the sun. Given a semi-major axis and eccentricity, the visualizer traces the full elliptical path and marks where the planet speeds up near perihelion.",
+      "key_params": {
+        "semi_major_axis": "orbit size in astronomical units",
+        "eccentricity": "orbit shape from 0 for circular to near 1",
+        "central_mass": "mass of the star in solar masses"
+      },
+      "data_idea": "A seeded RNG samples axis and eccentricity values, solves Kepler's equation numerically for positions around the ellipse, and exports the orbit points.",
+      "real_world_use": "Planetarium software and exoplanet catalogs render orbital paths from Keplerian elements.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "escape-velocity-calculator",
+      "name": "Escape Velocity Calculator",
+      "concept": "Escape velocity is the speed a projectile needs so that its kinetic energy exactly pays the gravitational bill to reach infinity. It depends only on the planet's mass and radius, so a feather and a rocket need the same escape speed from the same world.",
+      "key_params": {
+        "body_mass": "mass of the celestial body in kilograms",
+        "body_radius": "radius of the body in meters",
+        "altitude": "starting altitude above the surface in meters"
+      },
+      "data_idea": "A seeded RNG builds synthetic solar-system bodies with plausible mass and radius pairs and computes their escape velocities.",
+      "real_world_use": "Launch-vehicle mission planners use escape and orbital velocities to budget propellant for interplanetary transfers.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rocket-thrust-impulse-model",
+      "name": "Rocket Thrust Impulse Model",
+      "concept": "A rocket accelerates by throwing mass out the back, so thrust equals the exhaust speed times the rate at which propellant is burned. The Tsiolkovsky rocket equation then ties the total velocity change to the exhaust speed and the fraction of the craft that is fuel.",
+      "key_params": {
+        "exhaust_velocity": "effective exhaust speed in meters per second",
+        "mass_flow_rate": "propellant burn rate in kilograms per second",
+        "propellant_fraction": "fraction of total mass that is fuel"
+      },
+      "data_idea": "A seeded RNG varies exhaust velocity, burn rate, and fuel fraction, integrates the thrust curve over the burn, and logs the final delta-v.",
+      "real_world_use": "Propulsion teams size engines and tanks for sounding rockets and satellite thrusters with thrust and delta-v budgets.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "harmonic-motion-resonance-finder",
+      "name": "Harmonic Motion Resonance Finder",
+      "concept": "A driven oscillator swings largest when the driving frequency matches its natural frequency, a phenomenon called resonance. Damping widens and flattens the resonance peak, so the finder sweeps the drive frequency and records the steady-state amplitude at each step.",
+      "key_params": {
+        "natural_frequency": "undriven oscillation frequency in hertz",
+        "damping_ratio": "dimensionless damping from 0.01 to 1",
+        "drive_amplitude": "strength of the periodic driving force"
+      },
+      "data_idea": "A seeded RNG picks oscillator parameters, sweeps a synthetic drive frequency across the resonance, and records amplitude plus noise at each frequency point.",
+      "real_world_use": "Bridge and machinery engineers map resonance peaks to avoid destructive vibration at operating speeds.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "coupled-pendulums-normal-modes",
+      "name": "Coupled Pendulums Normal Modes",
+      "concept": "Two pendulums joined by a weak spring exchange energy back and forth in a slow beating rhythm. The motion splits into two normal modes: the pendulums swinging together as one, or swinging in exact opposition, each with its own distinct frequency.",
+      "key_params": {
+        "pendulum_length": "length of each pendulum in meters",
+        "coupling_strength": "spring stiffness linking the two bobs",
+        "initial_displacement": "starting angle of the first pendulum"
+      },
+      "data_idea": "A seeded RNG varies coupling strength and release angles, integrates the two coupled equations, and extracts the two normal-mode frequencies from the motion.",
+      "real_world_use": "Vibration engineers study coupled-mode energy transfer to design tuned mass dampers for buildings.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rolling-without-slipping-tracker",
+      "name": "Rolling Without Slipping Tracker",
+      "concept": "A wheel rolling without slipping links its spin to its travel: the center moves forward exactly one circumference per revolution. Static friction does the gripping but performs no work, so the wheel's kinetic energy splits between translation and rotation in a fixed ratio.",
+      "key_params": {
+        "wheel_radius": "radius of the rolling body in meters",
+        "incline_angle": "slope angle in degrees",
+        "shape_factor": "rotational inertia factor such as 0.5 for a solid cylinder"
+      },
+      "data_idea": "A seeded RNG samples radii, slopes, and shape factors, integrates the rolling dynamics, and logs center speed versus spin rate.",
+      "real_world_use": "Vehicle dynamics teams model tire rolling and race engineers analyze wheel spin versus vehicle speed.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "friction-coefficient-estimator",
+      "name": "Friction Coefficient Estimator",
+      "concept": "The friction coefficient can be read off from a sliding experiment: measuring how far a block travels or how long it takes down a ramp of known angle reveals mu. Fitting a straight line through distance-versus-time data extracts the coefficient even when individual timings are noisy.",
+      "key_params": {
+        "incline_angle": "ramp angle in degrees",
+        "slide_distance": "measured slide distance in meters",
+        "timing_noise": "standard deviation of synthetic timer error"
+      },
+      "data_idea": "A seeded RNG assigns true friction values, simulates slide times with noise, and stores the noisy observations for the estimator to fit.",
+      "real_world_use": "Materials testing labs certify floor, tire, and brake-pad friction from instrumented slide tests.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "work-energy-theorem-verifier",
+      "name": "Work Energy Theorem Verifier",
+      "concept": "The work energy theorem states that the net work done on an object equals its change in kinetic energy, no matter how complicated the path. The verifier integrates force along a sampled path and checks that the accumulated work matches the energy change.",
+      "key_params": {
+        "applied_force": "magnitude of the pushing force in newtons",
+        "path_length": "distance traveled in meters",
+        "mass": "object mass in kilograms"
+      },
+      "data_idea": "A seeded RNG builds random force profiles along a path, numerically integrates work, and compares it with the analytic kinetic energy change.",
+      "real_world_use": "Physics instructors and tutoring platforms use work energy checks as the canonical first test of mechanics understanding.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "coriolis-force-simulator",
+      "name": "Coriolis Force Simulator",
+      "concept": "On a rotating planet, moving air and water appear to curve because the ground beneath them turns: the Coriolis effect deflects motion to the right in the northern hemisphere and to the left in the southern. The deflection grows with latitude and with the speed of the moving object.",
+      "key_params": {
+        "latitude": "geographic latitude in degrees",
+        "object_speed": "speed of the moving parcel in meters per second",
+        "rotation_period": "planet rotation period in hours"
+      },
+      "data_idea": "A seeded RNG launches parcels from random latitudes and headings, integrates their curved paths in the rotating frame, and logs deflection distances.",
+      "real_world_use": "Meteorologists and oceanographers include Coriolis terms in every large-scale weather and current model.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "gyroscopic-precession-model",
+      "name": "Gyroscopic Precession Model",
+      "concept": "A spinning wheel resists tipping because its angular momentum must change direction slowly rather than fall over, producing the stately circling motion called precession. The precession rate is proportional to the gravitational torque and inversely proportional to the spin angular momentum.",
+      "key_params": {
+        "spin_rate": "wheel spin in radians per second",
+        "tilt_angle": "angle of the axle from vertical in degrees",
+        "wheel_mass": "mass of the spinning wheel in kilograms"
+      },
+      "data_idea": "A seeded RNG varies spin rates and tilt angles, integrates the torque-driven precession, and records the axle path over several revolutions.",
+      "real_world_use": "Navigation and spacecraft attitude systems exploit gyroscopic stability for orientation reference.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "ideal-gas-law-workbench",
+      "name": "Ideal Gas Law Workbench",
+      "concept": "The ideal gas law ties pressure, volume, temperature, and amount of gas together in one equation, so fixing three determines the fourth. The workbench also tracks isothermal and adiabatic expansions, where work done by the gas comes at the cost of internal energy.",
+      "key_params": {
+        "pressure": "gas pressure in kilopascals",
+        "volume": "container volume in liters",
+        "temperature": "gas temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG draws gas states within safe ranges, computes the missing state variable, and simulates expansion paths with small step sizes.",
+      "real_world_use": "HVAC and compressed-air system designers size vessels and lines from gas-law relations.",
+      "suggested_types": [
+        "simulation",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "carnot-cycle-efficiency-calc",
+      "name": "Carnot Cycle Efficiency Calculator",
+      "concept": "The Carnot cycle sets the absolute ceiling on heat-engine efficiency, determined solely by the hot and cold reservoir temperatures. No real engine can beat it, so the calculator compares practical cycle efficiencies against this theoretical maximum.",
+      "key_params": {
+        "hot_temperature": "hot reservoir temperature in kelvin",
+        "cold_temperature": "cold reservoir temperature in kelvin",
+        "working_fluid_gamma": "heat capacity ratio of the gas"
+      },
+      "data_idea": "A seeded RNG generates reservoir temperature pairs, traces the four Carnot steps numerically, and logs work output and efficiency.",
+      "real_world_use": "Power-plant engineers benchmark turbine and engine designs against the Carnot limit during feasibility studies.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "heat-transfer-conduction-solver",
+      "name": "Heat Transfer Conduction Solver",
+      "concept": "Heat flows through a solid from hot to cold at a rate set by the material conductivity and the temperature gradient. The solver discretizes a rod into segments and steps the heat equation forward to find how temperatures evolve and where steady state settles.",
+      "key_params": {
+        "thermal_conductivity": "material conductivity in watts per meter-kelvin",
+        "rod_length": "length of the conducting rod in meters",
+        "end_temperatures": "fixed temperatures at each end in kelvin"
+      },
+      "data_idea": "A seeded RNG picks materials and boundary temperatures, runs the finite-difference heat solver, and records the temperature profile at several time slices.",
+      "real_world_use": "Electronics thermal engineers predict chip and heat-sink temperatures with conduction solvers.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "blackbody-radiation-spectrum",
+      "name": "Blackbody Radiation Spectrum",
+      "concept": "Every warm object glows with a spectrum described by Planck's law, peaking at a wavelength that shifts bluer as the temperature rises. Integrating the spectrum gives the total radiated power of the Stefan Boltzmann law, linking temperature to emitted energy.",
+      "key_params": {
+        "temperature": "object temperature in kelvin",
+        "wavelength_range": "spectral band to evaluate in nanometers",
+        "emissivity": "surface emissivity from 0 to 1"
+      },
+      "data_idea": "A seeded RNG samples object temperatures, evaluates the Planck curve across the band, and integrates to get total power with added detector noise.",
+      "real_world_use": "Astronomers infer stellar temperatures from observed spectra, and furnace designers estimate radiative heat loss.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "maxwell-boltzmann-speed-fitter",
+      "name": "Maxwell Boltzmann Speed Fitter",
+      "concept": "Gas molecules do not share one speed; their speeds spread into the Maxwell Boltzmann distribution with a long tail of fast movers. The most probable speed shifts higher with temperature and lower with molecular mass.",
+      "key_params": {
+        "temperature": "gas temperature in kelvin",
+        "molar_mass": "molecular mass in grams per mole",
+        "sample_size": "number of synthetic molecules to draw"
+      },
+      "data_idea": "A seeded RNG draws molecular speeds from the distribution for random temperature and mass values, building histograms the fitter then inverts.",
+      "real_world_use": "Plasma physicists and vacuum engineers estimate particle fluxes from Maxwell Boltzmann statistics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "entropy-change-calculator",
+      "name": "Entropy Change Calculator",
+      "concept": "Entropy measures how spread out energy becomes, and it rises whenever heat flows from hot to cold or a gas expands into more volume. For reversible processes the entropy change is the heat exchanged divided by the temperature, summed over each step.",
+      "key_params": {
+        "heat_exchanged": "reversible heat transfer in joules",
+        "temperature": "process temperature in kelvin",
+        "volume_ratio": "expansion ratio of final to initial volume"
+      },
+      "data_idea": "A seeded RNG constructs multi-step reversible paths with random heats and temperatures, then accumulates the entropy change step by step.",
+      "real_world_use": "Chemical engineers check entropy balances to verify that proposed process steps obey the second law.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "refrigeration-cycle-analyzer",
+      "name": "Refrigeration Cycle Analyzer",
+      "concept": "A refrigerator is a heat engine run backwards: work input pumps heat from a cold box to a warm room. The coefficient of performance, the ratio of cooling delivered to work consumed, is bounded by the Carnot refrigerator limit set by the two reservoir temperatures.",
+      "key_params": {
+        "evaporator_temp": "cold-side temperature in kelvin",
+        "condenser_temp": "hot-side temperature in kelvin",
+        "refrigerant_flow": "mass flow rate in kilograms per second"
+      },
+      "data_idea": "A seeded RNG samples operating temperatures and flow rates, walks the vapor-compression cycle states, and logs cooling capacity and power draw.",
+      "real_world_use": "Refrigeration engineers rate chillers and heat pumps by coefficient of performance during equipment selection.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "thermal-expansion-lab",
+      "name": "Thermal Expansion Lab",
+      "concept": "Most solids lengthen slightly when heated, with the change proportional to the original length, the temperature rise, and a material-specific expansion coefficient. Bridges and rails leave expansion gaps so this growth does not buckle the structure.",
+      "key_params": {
+        "expansion_coefficient": "linear coefficient in per-kelvin",
+        "original_length": "length at reference temperature in meters",
+        "temperature_change": "temperature rise in kelvin"
+      },
+      "data_idea": "A seeded RNG pairs materials with temperature rises, computes length changes, and adds micrometer-level measurement noise to the readings.",
+      "real_world_use": "Civil engineers size expansion joints in bridges and pipelines from thermal expansion calculations.",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "specific-heat-capacity-fitter",
+      "name": "Specific Heat Capacity Fitter",
+      "concept": "Specific heat capacity tells how much energy raises one kilogram of a material by one degree. In a calorimetry run, heating a sample with known power and timing the temperature rise gives a straight-line fit whose slope reveals the capacity.",
+      "key_params": {
+        "heating_power": "heater power in watts",
+        "sample_mass": "mass of the sample in kilograms",
+        "time_span": "heating duration in seconds"
+      },
+      "data_idea": "A seeded RNG assigns true capacities to synthetic samples, simulates noisy temperature-versus-time traces, and stores them for the linear fitter.",
+      "real_world_use": "Materials labs characterize new alloys and insulators by measuring heat capacity in calorimeters.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "stefan-boltzmann-verifier",
+      "name": "Stefan Boltzmann Verifier",
+      "concept": "The power radiated by a hot surface grows with the fourth power of its absolute temperature. Plotting the logarithm of measured power against the logarithm of temperature should yield a straight line of slope four, confirming the law.",
+      "key_params": {
+        "surface_temperature": "emitter temperature in kelvin",
+        "surface_area": "radiating area in square meters",
+        "emissivity": "surface emissivity from 0 to 1"
+      },
+      "data_idea": "A seeded RNG picks emitter temperatures, computes ideal radiated power, and adds proportional sensor noise to mimic a radiometer.",
+      "real_world_use": "Infrared camera manufacturers calibrate thermal imagers against Stefan Boltzmann reference sources.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "brownian-motion-random-walk",
+      "name": "Brownian Motion Random Walk",
+      "concept": "A pollen grain in water jitters because countless molecular collisions nudge it in random directions. Averaging many such walks shows the mean squared displacement growing linearly with time, the signature of diffusion.",
+      "key_params": {
+        "diffusion_coefficient": "diffusion constant in square meters per second",
+        "step_count": "number of random steps per walk",
+        "particle_count": "number of particles to average"
+      },
+      "data_idea": "A seeded RNG generates random-walk trajectories for many particles, records positions at each step, and exports the ensemble for mean-squared-displacement analysis.",
+      "real_world_use": "Biophysicists track fluorescent particles in cells to infer cytoplasm viscosity from diffusion data.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gas-diffusion-mixture-model",
+      "name": "Gas Diffusion Mixture Model",
+      "concept": "When two gases meet, each diffuses through the other until the mixture is uniform, with lighter molecules spreading faster in proportion to the inverse square root of their mass. Fick's law quantifies the flux from the concentration gradient and the diffusion coefficient.",
+      "key_params": {
+        "diffusion_coefficient": "binary diffusion coefficient in square meters per second",
+        "molar_masses": "molar masses of the two gases",
+        "tube_length": "length of the diffusion tube in meters"
+      },
+      "data_idea": "A seeded RNG sets up concentration profiles in a tube for random gas pairs, steps the diffusion equation forward, and logs profiles over time.",
+      "real_world_use": "Chemical engineers design gas separators and fuel-cell membranes using diffusion and permeation models.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rc-circuit-transient-analyzer",
+      "name": "RC Circuit Transient Analyzer",
+      "concept": "A capacitor charging through a resistor follows an exponential curve with a time constant equal to resistance times capacitance. The analyzer fits measured voltage traces to extract that time constant and predicts settling behavior.",
+      "key_params": {
+        "resistance": "series resistance in ohms",
+        "capacitance": "capacitance in microfarads",
+        "source_voltage": "step input voltage in volts"
+      },
+      "data_idea": "A seeded RNG picks RC pairs, synthesizes exponential charge and discharge traces with oscilloscope-style noise, and exports the waveforms.",
+      "real_world_use": "Electronics technicians verify timing circuits and power-supply hold-up behavior from RC transient measurements.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rlc-resonance-finder",
+      "name": "RLC Resonance Finder",
+      "concept": "An RLC circuit stores energy alternately in the inductor and the capacitor, resonating at a frequency set by their values. Resistance damps the response, so sweeping the source frequency and finding the current peak reveals the resonant frequency and the quality factor.",
+      "key_params": {
+        "inductance": "inductance in millihenries",
+        "capacitance": "capacitance in nanofarads",
+        "resistance": "series resistance in ohms"
+      },
+      "data_idea": "A seeded RNG generates RLC triples, computes the theoretical frequency response, and samples it with noise to build synthetic sweep data.",
+      "real_world_use": "RF engineers tune filters and antenna matching networks by locating resonance peaks.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "coulomb-force-calculator",
+      "name": "Coulomb Force Calculator",
+      "concept": "The electric force between two charges follows an inverse square law: it grows with the product of the charges and weakens with the square of their separation. Like charges repel, opposite charges attract, and the force acts along the line joining them.",
+      "key_params": {
+        "charge_a": "first charge in microcoulombs",
+        "charge_b": "second charge in microcoulombs",
+        "separation": "distance between charges in meters"
+      },
+      "data_idea": "A seeded RNG samples charge pairs and separations across several orders of magnitude and computes the resulting forces.",
+      "real_world_use": "Electrostatic precipitator and copier designers estimate forces on charged particles during product development.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "electric-field-line-mapper",
+      "name": "Electric Field Line Mapper",
+      "concept": "Field lines sketch the direction a positive test charge would move, streaming out of positive charges and into negative ones. Tracing many lines from each charge builds a map that reveals where the field is strong from line crowding.",
+      "key_params": {
+        "charge_positions": "coordinates of the point charges in meters",
+        "charge_values": "charge magnitudes in microcoulombs",
+        "line_count": "number of field lines traced per charge"
+      },
+      "data_idea": "A seeded RNG places small charge constellations, traces field lines with an adaptive stepper, and exports the line coordinates.",
+      "real_world_use": "High-voltage engineers visualize field concentrations to place shielding around transformers and switchgear.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gauss-law-flux-estimator",
+      "name": "Gauss Law Flux Estimator",
+      "concept": "Gauss's law says the total electric flux through any closed surface equals the enclosed charge divided by the vacuum permittivity. The estimator samples the field over a chosen surface numerically and compares the integral with the charge-based prediction.",
+      "key_params": {
+        "enclosed_charge": "net charge inside the surface in nanocoulombs",
+        "surface_shape": "sphere, cube, or cylinder",
+        "sample_density": "number of field samples per surface"
+      },
+      "data_idea": "A seeded RNG picks enclosed charges and surfaces, numerically integrates the flux with jittered sample points, and logs the numerical versus theoretical flux.",
+      "real_world_use": "Computational electromagnetics courses use flux verification as a sanity check for field solvers.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "capacitor-network-solver",
+      "name": "Capacitor Network Solver",
+      "concept": "Capacitors in series share the same charge and split the voltage, while capacitors in parallel share the voltage and split the charge. Reducing a network branch by branch yields the equivalent capacitance and the voltage on every component.",
+      "key_params": {
+        "network_topology": "series-parallel connection layout",
+        "capacitance_values": "individual capacitances in microfarads",
+        "applied_voltage": "voltage across the whole network in volts"
+      },
+      "data_idea": "A seeded RNG builds random series-parallel networks, reduces them analytically, and records each capacitor's voltage and stored energy.",
+      "real_world_use": "Power-supply designers choose capacitor banks for filtering and energy storage from network calculations.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "biot-savart-field-calculator",
+      "name": "Biot Savart Field Calculator",
+      "concept": "The Biot Savart law adds up the magnetic field contributed by every small segment of a current-carrying wire. For loops, solenoids, and straight wires the integral has clean closed forms, but arbitrary shapes need numerical integration along the path.",
+      "key_params": {
+        "wire_path": "sequence of points defining the conductor shape",
+        "current": "current in amperes",
+        "field_point": "coordinates where the field is evaluated"
+      },
+      "data_idea": "A seeded RNG constructs wire shapes from loops to helices, integrates the Biot Savart contributions numerically, and logs field vectors at probe points.",
+      "real_world_use": "Magnet designers for MRI machines and particle accelerators compute coil fields with Biot Savart codes.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "lorentz-force-particle-tracer",
+      "name": "Lorentz Force Particle Tracer",
+      "concept": "A charged particle in a magnetic field curves into a helix because the magnetic force always acts perpendicular to its velocity. The gyroradius grows with momentum and shrinks with field strength, which is why strong magnets bend particle beams tightly.",
+      "key_params": {
+        "particle_momentum": "particle momentum in megaelectronvolt-c",
+        "magnetic_field": "uniform field strength in tesla",
+        "pitch_angle": "angle between velocity and field in degrees"
+      },
+      "data_idea": "A seeded RNG draws particle momenta and field strengths, integrates helical trajectories, and exports the path points.",
+      "real_world_use": "Accelerator physicists trace beam particles through magnets when laying out beamlines.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "faraday-induction-simulator",
+      "name": "Faraday Induction Simulator",
+      "concept": "A changing magnetic flux through a loop induces a voltage that opposes the change, which is how generators convert motion into electricity. Moving a magnet through a coil or varying the field strength both produce an electromotive force proportional to the rate of flux change.",
+      "key_params": {
+        "magnet_speed": "speed of the moving magnet in meters per second",
+        "coil_turns": "number of turns in the coil",
+        "magnet_strength": "dipole moment of the magnet"
+      },
+      "data_idea": "A seeded RNG varies magnet speeds and coil geometries, numerically differentiates the flux through the coil, and logs the induced voltage waveform.",
+      "real_world_use": "Generator and sensor designers predict induced voltages in pickups, alternators, and inductive chargers.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "transformer-turns-analyzer",
+      "name": "Transformer Turns Analyzer",
+      "concept": "An ideal transformer scales voltage by the ratio of secondary to primary turns, and current scales inversely so power is conserved. Real transformers lose a little to core and copper losses, which the analyzer estimates from load measurements.",
+      "key_params": {
+        "primary_turns": "number of primary winding turns",
+        "secondary_turns": "number of secondary winding turns",
+        "input_voltage": "primary voltage in volts"
+      },
+      "data_idea": "A seeded RNG samples turns ratios and load currents, computes ideal outputs, and adds small efficiency losses for realism.",
+      "real_world_use": "Power engineers select transformer ratios for distribution networks and test winding configurations.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ac-circuit-impedance-lab",
+      "name": "AC Circuit Impedance Lab",
+      "concept": "In alternating current circuits, inductors and capacitors oppose current with frequency-dependent reactances, combining with resistance into a single complex impedance. The lab sweeps frequency and computes the magnitude and phase of the total impedance for series and parallel networks.",
+      "key_params": {
+        "frequency": "source frequency in hertz",
+        "resistance": "resistance in ohms",
+        "reactive_values": "inductance in millihenries and capacitance in microfarads"
+      },
+      "data_idea": "A seeded RNG generates component triples, evaluates impedance across a log-spaced frequency sweep, and stores magnitude and phase with instrument noise.",
+      "real_world_use": "Audio and power engineers measure impedance curves to design crossovers and filters.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hall-effect-sensor-model",
+      "name": "Hall Effect Sensor Model",
+      "concept": "A current flowing through a conductor in a perpendicular magnetic field gets pushed sideways, building up a measurable Hall voltage across the strip. That voltage is proportional to the field strength and inversely proportional to the carrier density, which makes thin films excellent magnetic sensors.",
+      "key_params": {
+        "magnetic_field": "field strength in millitesla",
+        "drive_current": "bias current in milliamps",
+        "carrier_density": "charge carrier density per cubic meter"
+      },
+      "data_idea": "A seeded RNG samples field strengths and film parameters, computes ideal Hall voltages, and adds thermal drift noise.",
+      "real_world_use": "Automotive engineers use Hall sensors for wheel-speed and crankshaft position measurements.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "motional-emf-generator-lab",
+      "name": "Motional EMF Generator Lab",
+      "concept": "Sliding a conducting rod across rails in a magnetic field sweeps out area, and the changing flux drives a current around the loop. The induced voltage equals the field strength times the rod length times its speed.",
+      "key_params": {
+        "magnetic_field": "uniform field in tesla",
+        "rod_length": "length of the sliding rod in meters",
+        "slide_speed": "rod velocity in meters per second"
+      },
+      "data_idea": "A seeded RNG varies field, length, and speed, computes the ideal induced voltage, and logs it with contact-resistance noise.",
+      "real_world_use": "Introductory labs and railgun concept studies use motional EMF as the simplest generator model.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dipole-field-visualizer",
+      "name": "Dipole Field Visualizer",
+      "concept": "An electric dipole, two opposite charges close together, produces a field that falls off faster than a single charge and has a characteristic two-lobed pattern. Far away, the field strength depends on the dipole moment and the angle from the dipole axis.",
+      "key_params": {
+        "dipole_moment": "charge times separation in coulomb-meters",
+        "orientation": "dipole axis angle in degrees",
+        "grid_extent": "plotting region size in meters"
+      },
+      "data_idea": "A seeded RNG places dipoles with random moments and orientations, evaluates the analytic field on a grid, and exports the vector map.",
+      "real_world_use": "Antenna engineers study dipole radiation patterns when designing radio and wireless links.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "circuit-nodal-analysis-solver",
+      "name": "Circuit Nodal Analysis Solver",
+      "concept": "Nodal analysis writes Kirchhoff's current law at every circuit node, producing a system of linear equations whose unknowns are the node voltages. Solving that system reveals every voltage and branch current in a resistive network.",
+      "key_params": {
+        "node_count": "number of circuit nodes",
+        "resistor_values": "resistances between node pairs in ohms",
+        "source_currents": "injected currents at nodes in amps"
+      },
+      "data_idea": "A seeded RNG builds random resistor networks with current sources, solves the nodal equations, and stores the full voltage solution.",
+      "real_world_use": "Circuit simulator developers use nodal analysis as the core engine behind SPICE-style tools.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "photoconductivity-detector-model",
+      "name": "Photoconductivity Detector Model",
+      "concept": "Light with enough energy kicks electrons into the conduction band of a photoconductor, raising its conductivity in proportion to the illumination. The model converts photon flux into a current signal and adds the shot noise that limits detection.",
+      "key_params": {
+        "illumination": "incident optical power in microwatts",
+        "wavelength": "light wavelength in nanometers",
+        "bandgap_energy": "semiconductor bandgap in electronvolts"
+      },
+      "data_idea": "A seeded RNG sweeps illumination and wavelength, computes photocurrent from the quantum efficiency, and adds shot noise to the readings.",
+      "real_world_use": "Optical sensor teams characterize photodetectors for flame alarms and light meters.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "thin-lens-ray-tracer",
+      "name": "Thin Lens Ray Tracer",
+      "concept": "A thin lens bends parallel rays toward its focal point, and the lens equation relates object distance, image distance, and focal length. Tracing a few principal rays locates the image and reveals whether it is real or virtual, upright or inverted.",
+      "key_params": {
+        "focal_length": "lens focal length in centimeters",
+        "object_distance": "distance from object to lens in centimeters",
+        "object_height": "object height in centimeters"
+      },
+      "data_idea": "A seeded RNG places objects at random distances, computes image positions analytically, and traces principal rays to log the ray coordinates.",
+      "real_world_use": "Optics designers prototype camera and microscope layouts with paraxial ray tracing before detailed simulation.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "double-slit-interference-lab",
+      "name": "Double Slit Interference Lab",
+      "concept": "Light passing through two narrow slits interferes with itself, painting bright and dark fringes on a distant screen. The fringe spacing grows with the wavelength and the screen distance, and shrinks as the slits move apart.",
+      "key_params": {
+        "wavelength": "light wavelength in nanometers",
+        "slit_separation": "distance between slits in millimeters",
+        "screen_distance": "distance to the screen in meters"
+      },
+      "data_idea": "A seeded RNG varies wavelength, slit spacing, and screen distance, evaluates the interference intensity pattern, and adds photon-counting noise.",
+      "real_world_use": "Metrology labs measure tiny displacements and wavelengths with interferometric fringe analysis.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "diffraction-grating-analyzer",
+      "name": "Diffraction Grating Analyzer",
+      "concept": "A diffraction grating splits light into sharp spectral orders at angles governed by the grating equation, which links the line spacing, the wavelength, and the diffraction angle. Measuring the angle of a known order reveals an unknown wavelength.",
+      "key_params": {
+        "lines_per_mm": "grating line density",
+        "diffraction_order": "spectral order integer",
+        "measured_angle": "observed diffraction angle in degrees"
+      },
+      "data_idea": "A seeded RNG assigns grating densities and wavelengths, computes the diffraction angles, and adds angular measurement noise.",
+      "real_world_use": "Spectroscopy labs identify elements from emission lines dispersed by gratings.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "snells-law-refraction-lab",
+      "name": "Snell Law Refraction Lab",
+      "concept": "Light crossing into a denser medium bends toward the normal by an amount set by the ratio of refractive indices. Beyond the critical angle the light cannot escape at all, reflecting completely inside the denser material.",
+      "key_params": {
+        "index_a": "refractive index of the first medium",
+        "index_b": "refractive index of the second medium",
+        "incident_angle": "angle of incidence in degrees"
+      },
+      "data_idea": "A seeded RNG samples medium pairs and incident angles, computes refracted or totally reflected rays, and logs the outgoing angles.",
+      "real_world_use": "Lens and prism manufacturers verify glass refractive indices with Snell law measurements.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "malus-law-polarization-fitter",
+      "name": "Malus Law Polarization Fitter",
+      "concept": "Rotating an analyzer in front of polarized light dims the transmitted beam as the square of the cosine of the angle between the polarizers. Fitting intensity-versus-angle data to this curve extracts the polarization purity of the source.",
+      "key_params": {
+        "polarizer_angle": "analyzer rotation angle in degrees",
+        "incident_intensity": "beam intensity in arbitrary units",
+        "extinction_ratio": "minimum to maximum transmission ratio"
+      },
+      "data_idea": "A seeded RNG sweeps analyzer angles, evaluates the Malus curve with a floor from imperfect polarizers, and adds photodiode noise.",
+      "real_world_use": "LCD and 3D display manufacturers test polarizer alignment with Malus law measurements.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "fiber-optic-tir-simulator",
+      "name": "Fiber Optic Total Internal Reflection Simulator",
+      "concept": "Light stays trapped in an optical fiber because the core glass has a higher index than the cladding, so rays striking the wall beyond the critical angle reflect perfectly. The simulator traces meridional rays and checks the acceptance angle that keeps light guided.",
+      "key_params": {
+        "core_index": "refractive index of the fiber core",
+        "cladding_index": "refractive index of the cladding",
+        "launch_angle": "ray entry angle in degrees"
+      },
+      "data_idea": "A seeded RNG launches rays at random angles into fibers with sampled indices, traces reflections, and logs which rays stay guided.",
+      "real_world_use": "Telecom engineers verify fiber numerical aperture and bend tolerance during cable design.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mirror-image-calculator",
+      "name": "Mirror Image Calculator",
+      "concept": "Plane mirrors form virtual images as far behind the glass as the object is in front, while curved mirrors follow the mirror equation with sign conventions for real and virtual images. Magnification then gives the image size and orientation.",
+      "key_params": {
+        "mirror_type": "plane, concave, or convex",
+        "focal_length": "mirror focal length in centimeters",
+        "object_distance": "object distance in centimeters"
+      },
+      "data_idea": "A seeded RNG samples mirror types and object distances, evaluates the mirror equation, and records image distance and magnification.",
+      "real_world_use": "Telescope and headlight designers compute mirror image properties during optical layout.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "spectrometer-wavelength-calibrator",
+      "name": "Spectrometer Wavelength Calibrator",
+      "concept": "A spectrometer maps detector pixels to wavelengths using known reference lines, and a polynomial fit through those calibration points converts every pixel into a wavelength. More reference lines and a wider spread sharpen the calibration.",
+      "key_params": {
+        "reference_lines": "known emission wavelengths in nanometers",
+        "pixel_positions": "detector pixels of the reference lines",
+        "fit_order": "polynomial order for the calibration"
+      },
+      "data_idea": "A seeded RNG synthesizes reference spectra with known lines, adds pixel jitter, and exports pixel-wavelength pairs for the calibration fit.",
+      "real_world_use": "Analytical chemistry labs calibrate every spectrometer against standard lamps before quantitative work.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fresnel-reflectance-model",
+      "name": "Fresnel Reflectance Model",
+      "concept": "When light meets a boundary, the reflected fraction depends on the angle of incidence and the polarization, as the Fresnel equations describe. At the Brewster angle, reflected p-polarized light vanishes entirely, leaving only s-polarized reflection.",
+      "key_params": {
+        "index_a": "refractive index of the first medium",
+        "index_b": "refractive index of the second medium",
+        "incident_angle": "angle of incidence in degrees"
+      },
+      "data_idea": "A seeded RNG sweeps incident angles for medium pairs, evaluates the Fresnel coefficients for both polarizations, and logs reflectance curves.",
+      "real_world_use": "Coating engineers design anti-reflection layers for lenses and solar panels from Fresnel calculations.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "zone-plate-diffraction-model",
+      "name": "Zone Plate Diffraction Model",
+      "concept": "A Fresnel zone plate focuses light without any glass: alternating transparent and opaque rings are spaced so that contributions from each ring arrive in phase at the focus. The ring radii grow with the square root of the ring number and the design wavelength.",
+      "key_params": {
+        "focal_length": "design focal length in millimeters",
+        "wavelength": "design wavelength in nanometers",
+        "zone_count": "number of ring pairs"
+      },
+      "data_idea": "A seeded RNG builds zone plates for random focal lengths and wavelengths, computes ring radii, and samples the on-axis intensity profile.",
+      "real_world_use": "X-ray microscopists use zone plates as lenses where refractive optics cannot work.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "wave-superposition-studio",
+      "name": "Wave Superposition Studio",
+      "concept": "Waves add point by point: crests on crests reinforce into bigger waves while a crest meeting a trough cancels out. The studio sums arbitrary wave trains and shows how phase differences sculpt the resulting pattern.",
+      "key_params": {
+        "frequency_a": "first wave frequency in hertz",
+        "frequency_b": "second wave frequency in hertz",
+        "phase_offset": "phase difference in radians"
+      },
+      "data_idea": "A seeded RNG picks wave pairs with random phases and amplitudes, samples the summed waveform, and exports the time series.",
+      "real_world_use": "Acoustics engineers predict cancellation zones when placing speakers and noise-control systems.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "standing-wave-harmonics-lab",
+      "name": "Standing Wave Harmonics Lab",
+      "concept": "A string fixed at both ends can only vibrate in patterns with nodes at the ends, so its allowed frequencies are whole-number multiples of the fundamental. The lab plucks synthetic strings and identifies each harmonic from the node count.",
+      "key_params": {
+        "string_length": "string length in meters",
+        "tension": "string tension in newtons",
+        "linear_density": "mass per unit length in kilograms per meter"
+      },
+      "data_idea": "A seeded RNG configures strings, computes the harmonic series, and synthesizes pluck waveforms with noise for harmonic identification.",
+      "real_world_use": "Instrument makers tune stringed instruments by matching measured harmonics to target frequencies.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "doppler-effect-calculator",
+      "name": "Doppler Effect Calculator",
+      "concept": "A moving source squeezes wave crests together ahead of it and stretches them behind, raising the pitch in front and lowering it behind. The observed frequency shift depends on the ratio of the source speed to the wave speed.",
+      "key_params": {
+        "source_speed": "source velocity in meters per second",
+        "wave_speed": "wave propagation speed in meters per second",
+        "emitted_frequency": "source frequency in hertz"
+      },
+      "data_idea": "A seeded RNG samples source speeds and directions, computes observed frequencies, and adds small measurement noise.",
+      "real_world_use": "Radar guns and medical ultrasound measure speeds from Doppler frequency shifts.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sound-intensity-decibel-lab",
+      "name": "Sound Intensity Decibel Lab",
+      "concept": "Human hearing spans a trillion-fold range of intensities, so sound levels are quoted on the logarithmic decibel scale. Doubling the distance from a point source drops the level by six decibels because intensity falls with the square of distance.",
+      "key_params": {
+        "source_power": "acoustic power in watts",
+        "distance": "distance from the source in meters",
+        "reference_intensity": "hearing threshold reference in watts per square meter"
+      },
+      "data_idea": "A seeded RNG places sources at random distances, computes intensity and decibel levels, and adds meter noise.",
+      "real_world_use": "Workplace safety officers survey factory noise against regulatory decibel limits.",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "seismic-wave-travel-time",
+      "name": "Seismic Wave Travel Time Analyzer",
+      "concept": "Earthquakes launch P waves and S waves that travel at different speeds, so the gap between their arrivals at a station reveals the distance to the epicenter. With three stations the circles of possible distance intersect at the quake location.",
+      "key_params": {
+        "p_wave_speed": "P wave speed in kilometers per second",
+        "s_wave_speed": "S wave speed in kilometers per second",
+        "station_distances": "distances of stations from the epicenter"
+      },
+      "data_idea": "A seeded RNG places synthetic quakes and stations, computes arrival times for both wave types, and adds picking noise to the arrival picks.",
+      "real_world_use": "Seismological networks locate earthquakes in near real time from arrival-time differences.",
+      "suggested_types": [
+        "data_pipeline",
+        "log_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "fourier-synthesis-visualizer",
+      "name": "Fourier Synthesis Visualizer",
+      "concept": "Any periodic waveform can be rebuilt by adding sine waves at multiples of the fundamental frequency, with the right amplitudes and phases. A square wave needs only odd harmonics, and adding more terms sharpens its edges toward the ideal shape.",
+      "key_params": {
+        "harmonic_count": "number of sine terms to sum",
+        "waveform_type": "target shape such as square, sawtooth, or triangle",
+        "fundamental_frequency": "base frequency in hertz"
+      },
+      "data_idea": "A seeded RNG selects waveforms and harmonic counts, sums the Fourier series numerically, and exports the synthesized trace.",
+      "real_world_use": "Signal processing engineers use Fourier synthesis to design filters and understand harmonic distortion.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "beats-interference-analyzer",
+      "name": "Beats Interference Analyzer",
+      "concept": "Two tones of nearly the same frequency drift in and out of phase, making the combined sound swell and fade at the difference frequency. That beat rate lets tuners hear tiny frequency errors as slow pulsations.",
+      "key_params": {
+        "frequency_a": "first tone frequency in hertz",
+        "frequency_b": "second tone frequency in hertz",
+        "duration": "sample duration in seconds"
+      },
+      "data_idea": "A seeded RNG picks close tone pairs, synthesizes the summed waveform, and logs the envelope so the beat rate can be measured.",
+      "real_world_use": "Piano tuners and radio engineers detect small frequency offsets from beat measurements.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "tsunami-wave-propagation-model",
+      "name": "Tsunami Wave Propagation Model",
+      "concept": "In deep water a tsunami is a long, fast, low wave whose speed depends only on ocean depth. As it shoals, the front slows while the rear keeps coming, so the wave grows dramatically taller before striking the coast.",
+      "key_params": {
+        "ocean_depth": "deep-water depth in meters",
+        "initial_height": "wave height offshore in meters",
+        "coast_slope": "seafloor slope near the shore"
+      },
+      "data_idea": "A seeded RNG samples depths and initial heights, propagates the wave with the shallow-water speed, and logs height amplification versus distance.",
+      "real_world_use": "Tsunami warning centers run propagation models to forecast arrival times and inundation zones.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "photoelectric-effect-lab",
+      "name": "Photoelectric Effect Lab",
+      "concept": "Electrons escape a metal only when incoming photons carry enough energy to overcome the work function; brighter light of too-red color ejects nothing. The stopping voltage rises linearly with light frequency, and its slope reveals Planck's constant.",
+      "key_params": {
+        "light_frequency": "photon frequency in terahertz",
+        "work_function": "metal work function in electronvolts",
+        "light_intensity": "beam intensity in arbitrary units"
+      },
+      "data_idea": "A seeded RNG illuminates synthetic metals with random frequencies, computes stopping voltages, and adds voltmeter noise.",
+      "real_world_use": "Photocathode developers characterize detector materials by mapping stopping voltage against frequency.",
+      "suggested_types": [
+        "simulation",
+        "linear_regression"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "compton-scattering-calculator",
+      "name": "Compton Scattering Calculator",
+      "concept": "An X-ray photon bouncing off an electron loses energy, so the scattered photon has a longer wavelength that depends only on the scattering angle. This Compton shift is direct evidence that photons carry momentum.",
+      "key_params": {
+        "incident_wavelength": "incoming photon wavelength in picometers",
+        "scattering_angle": "deflection angle in degrees",
+        "electron_rest_energy": "electron rest energy in kiloelectronvolts"
+      },
+      "data_idea": "A seeded RNG samples incident wavelengths and angles, evaluates the Compton formula, and records the scattered wavelength.",
+      "real_world_use": "Medical imaging physicists account for Compton scatter when correcting CT and gamma camera data.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "de-broglie-wavelength-calc",
+      "name": "De Broglie Wavelength Calculator",
+      "concept": "Every moving particle has an associated wavelength equal to Planck's constant divided by its momentum. The wavelength is vanishingly small for baseballs but reaches atomic scales for electrons, which is why electron microscopes resolve so finely.",
+      "key_params": {
+        "particle_mass": "particle mass in kilograms",
+        "particle_speed": "particle speed in meters per second",
+        "kinetic_energy": "alternative energy input in electronvolts"
+      },
+      "data_idea": "A seeded RNG generates particles from electrons to dust grains with random speeds and computes their de Broglie wavelengths.",
+      "real_world_use": "Electron microscope designers choose accelerating voltages from the electron wavelength they need.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "particle-in-a-box-solver",
+      "name": "Particle in a Box Solver",
+      "concept": "Confining a particle to a one-dimensional box forces its wavefunction into standing waves, so only discrete energy levels are allowed. The energies grow with the square of the quantum number and shrink with the square of the box length.",
+      "key_params": {
+        "box_length": "confinement length in nanometers",
+        "quantum_number": "energy level integer",
+        "particle_mass": "particle mass in kilograms"
+      },
+      "data_idea": "A seeded RNG samples box sizes and quantum numbers, evaluates the analytic wavefunctions on a grid, and exports energy levels.",
+      "real_world_use": "Nanotechnology courses introduce quantum confinement in quantum dots with the particle-in-a-box model.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "schrodinger-1d-simulator",
+      "name": "Schrodinger 1D Simulator",
+      "concept": "The time-independent Schrodinger equation turns a potential energy landscape into allowed wavefunctions and energies. Numerically integrating it across barriers, wells, and steps shows how quantum particles tunnel and reflect in ways classical particles cannot.",
+      "key_params": {
+        "potential_shape": "well, barrier, or step profile",
+        "energy_guess": "trial energy in electronvolts",
+        "grid_points": "number of spatial discretization points"
+      },
+      "data_idea": "A seeded RNG builds random potential profiles, integrates the Schrodinger equation with a shooting method, and logs the wavefunction and transmission.",
+      "real_world_use": "Semiconductor device engineers model quantum wells and tunneling junctions in lasers and transistors.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "quantum-tunneling-probability",
+      "name": "Quantum Tunneling Probability",
+      "concept": "A quantum particle can slip through an energy barrier it classically could not climb, with a probability that drops exponentially as the barrier grows taller and wider. This leakage underlies alpha decay and flash memory operation.",
+      "key_params": {
+        "barrier_height": "barrier potential in electronvolts",
+        "barrier_width": "barrier thickness in nanometers",
+        "particle_energy": "incoming particle energy in electronvolts"
+      },
+      "data_idea": "A seeded RNG samples barrier geometries and particle energies, evaluates the transmission coefficient, and records the exponential trend.",
+      "real_world_use": "Flash memory designers tune oxide thickness from tunneling probability calculations.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "heisenberg-uncertainty-demo",
+      "name": "Heisenberg Uncertainty Demo",
+      "concept": "Confining a particle's position spreads out its possible momenta, and the product of the two uncertainties can never drop below half of the reduced Planck constant. The demo builds wave packets of different widths and measures the resulting momentum spread.",
+      "key_params": {
+        "packet_width": "spatial width of the wave packet in nanometers",
+        "packet_center": "mean position in nanometers",
+        "sample_count": "number of simulated measurements"
+      },
+      "data_idea": "A seeded RNG creates Gaussian wave packets of random widths, simulates position and momentum measurements, and logs the uncertainty product.",
+      "real_world_use": "Quantum optics labs verify uncertainty relations when characterizing squeezed light sources.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hydrogen-spectrum-fitter",
+      "name": "Hydrogen Spectrum Fitter",
+      "concept": "Hydrogen emits light only at wavelengths given by the Rydberg formula, corresponding to electrons dropping between discrete energy levels. Fitting measured line wavelengths extracts the Rydberg constant and identifies which transitions produced each line.",
+      "key_params": {
+        "upper_level": "starting principal quantum number",
+        "lower_level": "ending principal quantum number",
+        "wavelength_noise": "measurement noise in nanometers"
+      },
+      "data_idea": "A seeded RNG picks electron transitions, computes the Rydberg wavelengths, and adds spectrometer noise for the fitter to invert.",
+      "real_world_use": "Astronomers identify elements in stellar spectra by matching observed lines to Rydberg predictions.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "radioactive-decay-analyzer",
+      "name": "Radioactive Decay Analyzer",
+      "concept": "Unstable nuclei decay at random, yet a large sample follows a smooth exponential law with a characteristic half-life. Counting decays in time bins and fitting the exponential extracts the half-life even from noisy detector data.",
+      "key_params": {
+        "half_life": "true half-life in seconds",
+        "initial_atoms": "starting number of nuclei",
+        "bin_width": "counting time bin in seconds"
+      },
+      "data_idea": "A seeded RNG simulates decay events as a Poisson process, bins the counts, and exports the time series for exponential fitting.",
+      "real_world_use": "Nuclear medicine teams verify radiopharmaceutical doses by measuring decay curves.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "half-life-data-fitter",
+      "name": "Half Life Data Fitter",
+      "concept": "Taking the logarithm of activity measurements turns an exponential decay curve into a straight line whose slope gives the decay constant. The fitter handles background counts and dead-time corrections before extracting the half-life.",
+      "key_params": {
+        "decay_constant": "decay constant per second",
+        "background_rate": "detector background counts per second",
+        "measurement_time": "total counting time in seconds"
+      },
+      "data_idea": "A seeded RNG generates decay time series with Poisson noise plus background, which the fitter log-transforms and regresses.",
+      "real_world_use": "Environmental labs date groundwater and check contamination from isotope activity measurements.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "mass-energy-equivalence-lab",
+      "name": "Mass Energy Equivalence Lab",
+      "concept": "Mass and energy are two forms of the same thing, linked by the speed of light squared, so even a tiny mass holds an enormous energy. Nuclear reactions release energy because the products weigh slightly less than the reactants.",
+      "key_params": {
+        "mass_defect": "lost mass in atomic mass units",
+        "reaction_type": "fusion or fission process",
+        "yield_mass": "mass of fuel consumed in kilograms"
+      },
+      "data_idea": "A seeded RNG samples mass defects for common reactions and converts them to energy yields with unit conversions.",
+      "real_world_use": "Reactor physicists compute energy release per fission to size fuel loads and cooling systems.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "time-dilation-simulator",
+      "name": "Time Dilation Simulator",
+      "concept": "Clocks moving near the speed of light tick slower as seen by a stationary observer, by the Lorentz factor. The simulator compares proper time aboard a fast craft with coordinate time on Earth for trips at relativistic speeds.",
+      "key_params": {
+        "velocity_fraction": "speed as a fraction of light speed",
+        "trip_distance": "travel distance in light years",
+        "proper_time": "time experienced aboard in years"
+      },
+      "data_idea": "A seeded RNG picks velocities and distances, applies the Lorentz transform, and logs both frame times for comparison.",
+      "real_world_use": "GPS system designers correct satellite clocks for relativistic time dilation daily.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "length-contraction-visualizer",
+      "name": "Length Contraction Visualizer",
+      "concept": "Objects rushing past at relativistic speeds appear shortened along their direction of motion by the Lorentz factor. The visualizer draws fast-moving rods and spacecraft at their contracted lengths for speeds up to nearly the speed of light.",
+      "key_params": {
+        "velocity_fraction": "speed as a fraction of light speed",
+        "rest_length": "object length in its own frame in meters",
+        "object_count": "number of objects to draw"
+      },
+      "data_idea": "A seeded RNG places objects with random rest lengths and velocities, computes contracted lengths, and exports the scene geometry.",
+      "real_world_use": "Particle accelerator teams account for bunch length contraction when timing beam instrumentation.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "relativistic-doppler-calculator",
+      "name": "Relativistic Doppler Calculator",
+      "concept": "Light from a receding source is redshifted by the relativistic Doppler formula, which accounts for time dilation on top of the classical wave stretching. Astronomers read recessional velocities directly from the observed wavelength shift.",
+      "key_params": {
+        "rest_wavelength": "emitted wavelength in nanometers",
+        "velocity_fraction": "source speed as a fraction of light speed",
+        "recession": "whether the source approaches or recedes"
+      },
+      "data_idea": "A seeded RNG samples rest wavelengths and velocities, applies the relativistic Doppler shift, and records observed wavelengths.",
+      "real_world_use": "Cosmologists measure galaxy redshifts to map the expansion history of the universe.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stellar-luminosity-calculator",
+      "name": "Stellar Luminosity Calculator",
+      "concept": "A star's luminosity grows with the square of its radius and the fourth power of its surface temperature. Combining those with the distance gives the apparent brightness astronomers actually observe from Earth.",
+      "key_params": {
+        "stellar_radius": "radius in solar radii",
+        "surface_temperature": "effective temperature in kelvin",
+        "distance": "distance in parsecs"
+      },
+      "data_idea": "A seeded RNG draws stellar parameters from main-sequence distributions and computes luminosity and apparent magnitude.",
+      "real_world_use": "Stellar astronomers estimate distances to stars from luminosity and apparent brightness.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "habitable-zone-estimator",
+      "name": "Habitable Zone Estimator",
+      "concept": "The habitable zone is the ring around a star where a rocky planet could hold liquid water, set by the stellar luminosity. Hotter stars push the zone outward, while cooler red dwarfs pull it close in.",
+      "key_params": {
+        "stellar_luminosity": "luminosity in solar units",
+        "stellar_temperature": "surface temperature in kelvin",
+        "albedo": "planetary reflectivity from 0 to 1"
+      },
+      "data_idea": "A seeded RNG samples stellar luminosities and albedos, computes inner and outer zone edges, and logs equilibrium temperatures.",
+      "real_world_use": "Exoplanet survey teams prioritize follow-up observations on planets inside the habitable zone.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "exoplanet-transit-detector",
+      "name": "Exoplanet Transit Detector",
+      "concept": "When a planet crosses its star, the starlight dips by the ratio of their disk areas, and the dip repeats every orbital period. Folding noisy brightness measurements at trial periods reveals the telltale box-shaped transit signal.",
+      "key_params": {
+        "planet_radius": "planet radius in earth radii",
+        "orbital_period": "orbital period in days",
+        "noise_level": "photometric noise in parts per million"
+      },
+      "data_idea": "A seeded RNG injects transit dips into synthetic light curves with stellar noise, then exports the series for period-fold detection.",
+      "real_world_use": "Space telescope missions such as Kepler and TESS discovered thousands of exoplanets with transit photometry.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "hohmann-transfer-planner",
+      "name": "Hohmann Transfer Planner",
+      "concept": "A Hohmann transfer moves a spacecraft between two circular orbits with two engine burns: one to enter an elliptical transfer orbit, one to circularize at the target. The total delta-v is the minimum possible for coplanar transfers.",
+      "key_params": {
+        "inner_radius": "starting orbit radius in kilometers",
+        "outer_radius": "target orbit radius in kilometers",
+        "central_mass": "mass of the central body in kilograms"
+      },
+      "data_idea": "A seeded RNG picks orbit pairs around random bodies, computes both burns and the transfer time, and logs the maneuver plan.",
+      "real_world_use": "Mission planners route satellites to geostationary orbit with Hohmann transfer budgets.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "solar-eclipse-geometry-lab",
+      "name": "Solar Eclipse Geometry Lab",
+      "concept": "A total solar eclipse happens when the Moon's shadow cone exactly reaches Earth, which requires the Sun, Moon, and Earth to align while the Moon is near its orbital node. The lab computes shadow paths and eclipse duration from the three-body geometry.",
+      "key_params": {
+        "moon_distance": "earth-moon distance in kilometers",
+        "sun_distance": "earth-sun distance in kilometers",
+        "moon_radius": "lunar radius in kilometers"
+      },
+      "data_idea": "A seeded RNG varies orbital distances and alignments, traces the shadow cone, and logs eclipse type and totality duration.",
+      "real_world_use": "Eclipse chasers and observatories plan expeditions from computed totality paths years in advance.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cosmic-distance-ladder-calc",
+      "name": "Cosmic Distance Ladder Calculator",
+      "concept": "Astronomers measure cosmic distances in rungs: parallax for nearby stars, standard candles like Cepheid variables for galaxies, and supernovae for the far universe. Each rung calibrates the next, so errors propagate upward through the ladder.",
+      "key_params": {
+        "parallax_angle": "measured parallax in milliarcseconds",
+        "apparent_magnitude": "observed brightness magnitude",
+        "absolute_magnitude": "intrinsic brightness magnitude"
+      },
+      "data_idea": "A seeded RNG creates synthetic standard candles at known distances, adds magnitude scatter, and exports the ladder for distance fitting.",
+      "real_world_use": "Cosmology teams anchor the Hubble constant to the calibrated distance ladder.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "redshift-velocity-calculator",
+      "name": "Redshift Velocity Calculator",
+      "concept": "The redshift of a galaxy's spectral lines measures how fast it recedes, since the expansion of space stretches the light in transit. For nearby galaxies the velocity is simply the redshift times the speed of light; distant ones need the full cosmological model.",
+      "key_params": {
+        "observed_wavelength": "measured line wavelength in nanometers",
+        "rest_wavelength": "laboratory line wavelength in nanometers",
+        "hubble_constant": "expansion rate in kilometers per second per megaparsec"
+      },
+      "data_idea": "A seeded RNG assigns redshifts to synthetic galaxies, shifts their spectral lines, and records the inferred velocities.",
+      "real_world_use": "Galaxy survey teams map large-scale structure from redshift-derived distances.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "star-color-temperature-fitter",
+      "name": "Star Color Temperature Fitter",
+      "concept": "Stars glow bluer when hotter and redder when cooler, so the ratio of brightness in blue and visual filters encodes the surface temperature. Fitting observed color indices against blackbody curves extracts temperatures without a spectrum.",
+      "key_params": {
+        "blue_magnitude": "B filter magnitude",
+        "visual_magnitude": "V filter magnitude",
+        "reddening": "interstellar extinction correction"
+      },
+      "data_idea": "A seeded RNG assigns stellar temperatures, computes synthetic color indices with dust reddening and noise, and exports the photometry.",
+      "real_world_use": "Stellar population studies estimate temperatures for millions of stars from two-filter photometry.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pulsar-timing-analyzer",
+      "name": "Pulsar Timing Analyzer",
+      "concept": "Pulsars are stellar lighthouses whose beams sweep past Earth with metronome regularity. Tiny deviations in arrival times reveal orbiting companions, glitches in the star's spin, or even passing gravitational waves.",
+      "key_params": {
+        "spin_period": "pulsar rotation period in milliseconds",
+        "timing_noise": "arrival time jitter in microseconds",
+        "observation_span": "data span in days"
+      },
+      "data_idea": "A seeded RNG generates pulse arrival times with spin-down trends and injected anomalies, then exports the timing residuals.",
+      "real_world_use": "Pulsar timing arrays hunt for nanohertz gravitational waves from supermassive black hole binaries.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "galaxy-rotation-curve-fitter",
+      "name": "Galaxy Rotation Curve Fitter",
+      "concept": "Stars in spiral galaxies orbit far faster in the outskirts than visible matter alone can explain, so rotation curves stay flat instead of falling. Fitting the curve separates the disk, bulge, and the dark matter halo that must dominate the gravity.",
+      "key_params": {
+        "disk_mass": "stellar disk mass in solar masses",
+        "halo_scale": "dark matter halo scale radius in kiloparsecs",
+        "inclination": "galaxy tilt in degrees"
+      },
+      "data_idea": "A seeded RNG builds galaxies with disk plus halo mass profiles, computes rotation speeds, and adds velocity measurement noise.",
+      "real_world_use": "Galactic astronomers weigh dark matter halos by fitting observed rotation curves.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bernoulli-flow-analyzer",
+      "name": "Bernoulli Flow Analyzer",
+      "concept": "In steady, incompressible flow, faster-moving fluid carries lower pressure, which is why airplane wings lift and carburetors draw fuel. The analyzer applies Bernoulli's equation along streamlines to predict pressure drops from velocity changes.",
+      "key_params": {
+        "inlet_velocity": "upstream flow speed in meters per second",
+        "inlet_pressure": "upstream pressure in kilopascals",
+        "area_ratio": "downstream to upstream cross-section ratio"
+      },
+      "data_idea": "A seeded RNG samples pipe constrictions and flow speeds, evaluates Bernoulli along the streamline, and logs pressure profiles.",
+      "real_world_use": "HVAC engineers size ducts and venturi meters from Bernoulli pressure-velocity relations.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pipe-friction-head-loss",
+      "name": "Pipe Friction Head Loss Calculator",
+      "concept": "Friction between flowing fluid and pipe walls eats pressure, with the loss growing with pipe length and roughly the square of velocity. The Darcy Weisbach equation combines the friction factor, which depends on roughness and the Reynolds number, into a head-loss estimate.",
+      "key_params": {
+        "pipe_diameter": "inner diameter in meters",
+        "pipe_length": "pipe length in meters",
+        "flow_velocity": "mean velocity in meters per second"
+      },
+      "data_idea": "A seeded RNG generates pipe networks with random diameters, roughness, and flows, then computes head loss for each segment.",
+      "real_world_use": "Water utilities size pumps and mains from head-loss calculations across distribution networks.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "drag-coefficient-fitter",
+      "name": "Drag Coefficient Fitter",
+      "concept": "Aerodynamic drag grows with the square of speed, the air density, and the frontal area, scaled by a shape-dependent drag coefficient. Dropping objects or towing models and fitting the velocity data extracts the coefficient for any shape.",
+      "key_params": {
+        "frontal_area": "projected area in square meters",
+        "air_density": "density in kilograms per cubic meter",
+        "terminal_speed": "measured terminal velocity in meters per second"
+      },
+      "data_idea": "A seeded RNG assigns shapes with true drag coefficients, simulates falls with quadratic drag and noise, and exports velocity traces.",
+      "real_world_use": "Automotive engineers cut fuel consumption by measuring and reducing vehicle drag coefficients.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "buoyancy-archimedes-lab",
+      "name": "Buoyancy Archimedes Lab",
+      "concept": "A submerged object feels an upward push equal to the weight of the fluid it displaces. Objects denser than the fluid sink, lighter ones float with just enough submerged to balance their weight.",
+      "key_params": {
+        "object_density": "object density in kilograms per cubic meter",
+        "fluid_density": "fluid density in kilograms per cubic meter",
+        "object_volume": "object volume in cubic meters"
+      },
+      "data_idea": "A seeded RNG samples object and fluid densities, computes the buoyant force and submerged fraction, and logs float or sink outcomes.",
+      "real_world_use": "Naval architects compute hull displacement and stability from buoyancy calculations.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "reynolds-number-regime-lab",
+      "name": "Reynolds Number Regime Lab",
+      "concept": "The Reynolds number compares inertial to viscous forces in a flow, predicting whether it stays smooth and laminar or breaks into turbulence. Below about 2300 in a pipe the flow is laminar; far above, it turns turbulent.",
+      "key_params": {
+        "flow_velocity": "mean velocity in meters per second",
+        "pipe_diameter": "diameter in meters",
+        "kinematic_viscosity": "fluid viscosity in square meters per second"
+      },
+      "data_idea": "A seeded RNG samples velocities, diameters, and viscosities across fluids, computes Reynolds numbers, and labels the flow regime.",
+      "real_world_use": "Process engineers check Reynolds numbers to pick pumps and predict mixing in chemical plants.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "open-channel-flow-calculator",
+      "name": "Open Channel Flow Calculator",
+      "concept": "Rivers and canals flow under gravity with a free surface, and the Manning equation relates discharge to channel shape, slope, and roughness. The calculator finds normal depth and checks whether the flow is tranquil or rapid via the Froude number.",
+      "key_params": {
+        "channel_slope": "bed slope as a decimal",
+        "manning_n": "roughness coefficient",
+        "channel_width": "bottom width in meters"
+      },
+      "data_idea": "A seeded RNG generates trapezoidal channels with random slopes and roughness, solves for normal depth, and logs discharge.",
+      "real_world_use": "Hydrologists design irrigation canals and flood channels with Manning flow calculations.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "wind-turbine-lift-drag-model",
+      "name": "Wind Turbine Lift Drag Model",
+      "concept": "Turbine blades are wings that spin: lift on each blade section drives the rotor while drag resists it. Blade element theory sums the forces along the span to predict power output for a given wind speed and pitch.",
+      "key_params": {
+        "wind_speed": "incoming wind speed in meters per second",
+        "blade_pitch": "pitch angle in degrees",
+        "rotor_radius": "rotor radius in meters"
+      },
+      "data_idea": "A seeded RNG samples wind speeds and pitch settings, evaluates the blade-element power curve, and logs power versus tip-speed ratio.",
+      "real_world_use": "Wind farm developers estimate annual energy production from turbine power curves.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hydrostatic-pressure-depth",
+      "name": "Hydrostatic Pressure Depth Calculator",
+      "concept": "Pressure in a still fluid grows linearly with depth because each layer must support the weight of everything above it. Ten meters of water adds about one atmosphere of pressure, which is why divers feel their ears squeeze.",
+      "key_params": {
+        "depth": "depth below the surface in meters",
+        "fluid_density": "fluid density in kilograms per cubic meter",
+        "surface_pressure": "pressure at the surface in kilopascals"
+      },
+      "data_idea": "A seeded RNG samples depths and fluid densities, computes gauge and absolute pressures, and converts between pressure units.",
+      "real_world_use": "Dam and submarine designers rate structures against hydrostatic pressure profiles.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "surface-tension-droplet-model",
+      "name": "Surface Tension Droplet Model",
+      "concept": "Surface tension pulls a liquid surface taut like a stretched skin, and small droplets become nearly perfect spheres to minimize their surface area. The Laplace pressure inside a droplet grows as the droplet gets smaller, which drives phenomena like capillary rise.",
+      "key_params": {
+        "droplet_radius": "droplet radius in millimeters",
+        "surface_tension": "liquid surface tension in newtons per meter",
+        "contact_angle": "wetting angle on the surface in degrees"
+      },
+      "data_idea": "A seeded RNG samples droplet sizes and liquids, computes internal Laplace pressure, and logs droplet shapes.",
+      "real_world_use": "Inkjet printer engineers tune droplet formation from surface tension and pressure models.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "terminal-velocity-solver",
+      "name": "Terminal Velocity Solver",
+      "concept": "A falling object stops accelerating when air drag exactly balances its weight, settling at a constant terminal velocity. The solver finds that balance point for spheres, skydivers, and raindrops from their size, mass, and drag coefficient.",
+      "key_params": {
+        "object_mass": "mass in kilograms",
+        "frontal_area": "projected area in square meters",
+        "drag_coefficient": "shape drag coefficient"
+      },
+      "data_idea": "A seeded RNG samples masses, areas, and drag coefficients, solves the force balance, and logs terminal velocities.",
+      "real_world_use": "Parachute designers size canopies from terminal velocity requirements for safe descent.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "coupled-oscillator-chain",
+      "name": "Coupled Oscillator Chain",
+      "concept": "A line of masses joined by springs supports traveling waves and a whole spectrum of standing-wave modes. Plucking one end launches a pulse down the chain, while the mode frequencies reveal how stiffness and mass set the wave speed.",
+      "key_params": {
+        "mass_count": "number of masses in the chain",
+        "spring_constant": "coupling stiffness in newtons per meter",
+        "boundary": "fixed or free ends"
+      },
+      "data_idea": "A seeded RNG configures chains with random lengths and stiffness, integrates the motion, and extracts mode frequencies.",
+      "real_world_use": "Phonon models in solid-state physics treat crystals as coupled oscillator chains to predict heat capacity.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "fft-signal-analyzer",
+      "name": "FFT Signal Analyzer",
+      "concept": "The fast Fourier transform decomposes any sampled signal into its frequency components, revealing hidden periodicities in vibration, audio, or electrical noise. Windowing and averaging choices trade frequency resolution against noise suppression.",
+      "key_params": {
+        "sample_rate": "sampling frequency in hertz",
+        "window_type": "windowing function such as Hann or rectangular",
+        "signal_length": "number of samples"
+      },
+      "data_idea": "A seeded RNG synthesizes multi-tone signals with noise, runs the FFT pipeline, and logs the detected peaks.",
+      "real_world_use": "Condition-monitoring technicians diagnose failing bearings from vibration FFT spectra.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "noise-spectrum-analyzer",
+      "name": "Noise Spectrum Analyzer",
+      "concept": "White noise carries equal power at every frequency while pink noise falls off, and real sensors show their own fingerprint of 1-f noise and hum lines. The analyzer estimates the power spectral density of a recording and classifies the noise type.",
+      "key_params": {
+        "noise_type": "white, pink, or brown",
+        "sample_rate": "sampling rate in hertz",
+        "duration": "recording length in seconds"
+      },
+      "data_idea": "A seeded RNG generates colored noise processes with known slopes, estimates their spectra, and logs the fitted slope.",
+      "real_world_use": "Audio engineers and seismologists characterize sensor noise floors before trusting faint signals.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vibration-isolation-model",
+      "name": "Vibration Isolation Model",
+      "concept": "Mounting equipment on soft springs isolates it from floor vibration, but only above a cutoff frequency set by the mount stiffness and the mass. The transmissibility curve shows which frequencies get through and which are blocked.",
+      "key_params": {
+        "mount_stiffness": "isolator stiffness in newtons per meter",
+        "equipment_mass": "mass in kilograms",
+        "damping_ratio": "isolator damping from 0 to 1"
+      },
+      "data_idea": "A seeded RNG picks mount and mass combinations, sweeps excitation frequency, and logs the transmissibility curve.",
+      "real_world_use": "Precision manufacturers isolate lithography tools and electron microscopes from building vibration.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stress-strain-curve-analyzer",
+      "name": "Stress Strain Curve Analyzer",
+      "concept": "Pulling a material sample produces a stress strain curve: an initial elastic slope giving Young's modulus, a yield point where permanent deformation begins, and a fracture point at failure. The analyzer extracts all three from tensile test data.",
+      "key_params": {
+        "sample_area": "cross-sectional area in square millimeters",
+        "gauge_length": "original length in millimeters",
+        "load_rate": "pulling force rate in newtons per second"
+      },
+      "data_idea": "A seeded RNG synthesizes tensile curves with material-appropriate moduli and noise, then exports force-extension data for analysis.",
+      "real_world_use": "Quality engineers certify steel and composite batches from tensile test curves.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "youngs-modulus-data-fitter",
+      "name": "Young Modulus Data Fitter",
+      "concept": "Young's modulus is the slope of the elastic part of a stress strain curve, and a bending-beam experiment measures it from the deflection under load. Plotting deflection against load gives a straight line whose slope encodes the modulus.",
+      "key_params": {
+        "beam_length": "beam span in meters",
+        "beam_thickness": "beam thickness in millimeters",
+        "applied_load": "center load in newtons"
+      },
+      "data_idea": "A seeded RNG simulates beam deflections with true moduli and dial-gauge noise, then stores load-deflection pairs for fitting.",
+      "real_world_use": "Civil engineers verify structural steel grades from modulus measurements.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "johnson-noise-lab",
+      "name": "Johnson Noise Lab",
+      "concept": "Every resistor generates thermal noise voltage from the random motion of its electrons, with a power set by temperature and resistance. This Johnson noise is the fundamental floor that no amplifier can remove.",
+      "key_params": {
+        "resistance": "resistance in ohms",
+        "temperature": "temperature in kelvin",
+        "bandwidth": "measurement bandwidth in hertz"
+      },
+      "data_idea": "A seeded RNG samples resistors and temperatures, computes the theoretical noise voltage, and synthesizes noisy time series.",
+      "real_world_use": "Radio astronomers and quantum computing teams budget Johnson noise in cryogenic amplifiers.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "piezoelectric-sensor-model",
+      "name": "Piezoelectric Sensor Model",
+      "concept": "Squeezing a piezoelectric crystal generates a voltage proportional to the applied force, and the effect reverses to make actuators. The model converts mechanical stress into charge output through the piezoelectric coefficient.",
+      "key_params": {
+        "piezo_coefficient": "charge coefficient in picocoulombs per newton",
+        "applied_force": "force in newtons",
+        "crystal_area": "electrode area in square millimeters"
+      },
+      "data_idea": "A seeded RNG applies random force profiles to synthetic crystals, computes the charge output, and adds amplifier noise.",
+      "real_world_use": "Engine knock sensors and guitar pickups convert vibration to voltage with piezoelectric elements.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "crystal-lattice-visualizer",
+      "name": "Crystal Lattice Visualizer",
+      "concept": "Crystals repeat a unit cell through space, and the arrangement of atoms inside the cell defines properties from strength to conductivity. The visualizer builds cubic lattices and computes packing efficiency and nearest-neighbor distances.",
+      "key_params": {
+        "lattice_type": "simple cubic, body-centered, or face-centered",
+        "lattice_constant": "cell edge length in angstroms",
+        "atom_radius": "atomic radius in angstroms"
+      },
+      "data_idea": "A seeded RNG generates unit cells with random lattice constants, places atoms, and exports coordinates with computed metrics.",
+      "real_world_use": "Materials scientists relate crystal structure to mechanical and electronic properties of metals.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "resistivity-temperature-fitter",
+      "name": "Resistivity Temperature Fitter",
+      "concept": "Metal resistance rises nearly linearly with temperature as lattice vibrations scatter electrons more strongly. Measuring resistance at several temperatures and fitting a line extracts the temperature coefficient and the reference resistivity.",
+      "key_params": {
+        "reference_resistivity": "resistivity at reference temperature in ohm-meters",
+        "temperature_coefficient": "per-kelvin coefficient",
+        "temperature_range": "measurement span in kelvin"
+      },
+      "data_idea": "A seeded RNG synthesizes resistance-versus-temperature data with ohmmeter noise for random metals, ready for linear fitting.",
+      "real_world_use": "Wire and RTD sensor manufacturers calibrate temperature probes from resistance curves.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hall-mobility-analyzer",
+      "name": "Hall Mobility Analyzer",
+      "concept": "Combining a Hall voltage measurement with the sample conductivity yields the carrier mobility, telling how easily charges move through the material. High mobility means fast transistors and sensitive detectors.",
+      "key_params": {
+        "hall_voltage": "measured Hall voltage in millivolts",
+        "sample_current": "drive current in milliamps",
+        "sample_thickness": "film thickness in micrometers"
+      },
+      "data_idea": "A seeded RNG samples semiconductor parameters, computes Hall voltages and conductivities, and adds contact noise.",
+      "real_world_use": "Semiconductor fabs qualify wafer material by Hall mobility measurements.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "semiconductor-diode-model",
+      "name": "Semiconductor Diode Model",
+      "concept": "A diode passes current easily in one direction and blocks it in the other, with forward current rising exponentially with voltage per the Shockley equation. The model traces the full current-voltage curve including reverse breakdown.",
+      "key_params": {
+        "saturation_current": "reverse saturation current in nanoamps",
+        "ideality_factor": "diode ideality from 1 to 2",
+        "temperature": "junction temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG samples diode parameters, sweeps bias voltage, and logs the current-voltage characteristic with measurement noise.",
+      "real_world_use": "Circuit designers select diodes and predict rectification efficiency from IV curves.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "solar-panel-output-model",
+      "name": "Solar Panel Output Model",
+      "concept": "A solar panel's power output scales with sunlight intensity and cell area, but drops as the cells heat up because voltage falls with temperature. The model combines irradiance, tilt, and temperature derating to predict hourly energy yield.",
+      "key_params": {
+        "panel_area": "panel area in square meters",
+        "panel_efficiency": "conversion efficiency from 0 to 1",
+        "irradiance": "sunlight intensity in watts per square meter"
+      },
+      "data_idea": "A seeded RNG generates daily irradiance profiles with cloud noise, applies the temperature derating, and logs power output.",
+      "real_world_use": "Solar installers size rooftop systems and forecast payback from yield models.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "wind-turbine-power-curve",
+      "name": "Wind Turbine Power Curve",
+      "concept": "A wind turbine produces nothing below its cut-in speed, ramps up with the cube of wind speed, then caps at rated power until cut-out. The power curve maps every wind speed to expected output for energy estimates.",
+      "key_params": {
+        "cut_in_speed": "cut-in wind speed in meters per second",
+        "rated_speed": "rated wind speed in meters per second",
+        "rated_power": "maximum power in kilowatts"
+      },
+      "data_idea": "A seeded RNG samples wind speed distributions, applies the piecewise power curve with turbulence noise, and logs energy totals.",
+      "real_world_use": "Wind farm developers rank turbine models by annual energy from power curves and site wind data.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "battery-discharge-analyzer",
+      "name": "Battery Discharge Analyzer",
+      "concept": "A battery's voltage sags as it discharges, and the usable capacity shrinks when current is high because of internal resistance and Peukert effects. The analyzer fits discharge curves to estimate capacity and internal resistance.",
+      "key_params": {
+        "nominal_capacity": "rated capacity in amp-hours",
+        "discharge_current": "load current in amps",
+        "internal_resistance": "cell resistance in milliohms"
+      },
+      "data_idea": "A seeded RNG simulates discharge curves for random capacities and loads with voltage noise, then exports the traces.",
+      "real_world_use": "Battery management teams grade used EV packs from discharge test data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "flywheel-energy-storage",
+      "name": "Flywheel Energy Storage",
+      "concept": "A flywheel stores energy as rotational kinetic energy, which grows with the square of the spin speed and with the moment of inertia. Spinning in a vacuum on magnetic bearings keeps losses low enough for grid-scale storage.",
+      "key_params": {
+        "rotor_mass": "flywheel mass in kilograms",
+        "rotor_radius": "rotor radius in meters",
+        "max_rpm": "maximum safe speed in revolutions per minute"
+      },
+      "data_idea": "A seeded RNG samples rotor designs, computes stored energy and spin-down losses, and logs charge-discharge cycles.",
+      "real_world_use": "Grid operators use flywheels for frequency regulation and uninterruptible power supplies.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pump-efficiency-calculator",
+      "name": "Pump Efficiency Calculator",
+      "concept": "A pump's efficiency is the hydraulic power delivered to the fluid divided by the shaft power consumed. The best efficiency point sits at a specific flow and head on the pump curve, and running far from it wastes energy.",
+      "key_params": {
+        "flow_rate": "volume flow in liters per second",
+        "head": "pump head in meters",
+        "shaft_power": "input power in kilowatts"
+      },
+      "data_idea": "A seeded RNG samples operating points along synthetic pump curves, computes efficiencies, and logs the best efficiency point.",
+      "real_world_use": "Water utilities select and schedule pumps to run near peak efficiency and cut electricity costs.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "motor-torque-speed-curve",
+      "name": "Motor Torque Speed Curve",
+      "concept": "An electric motor delivers its highest torque at stall and the least at top speed, with power peaking in between. Mapping torque against speed from test data reveals the operating envelope for any application.",
+      "key_params": {
+        "stall_torque": "torque at zero speed in newton-meters",
+        "no_load_speed": "top speed in revolutions per minute",
+        "winding_resistance": "armature resistance in ohms"
+      },
+      "data_idea": "A seeded RNG generates motor parameters, traces the torque-speed line, and adds dynamometer noise.",
+      "real_world_use": "Robotics engineers match motors to loads from torque-speed curves before building drivetrains.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "geothermal-gradient-model",
+      "name": "Geothermal Gradient Model",
+      "concept": "Temperature inside the Earth rises roughly 25 degrees per kilometer of depth as heat flows outward from the interior. The model extrapolates surface heat flow into depth profiles to estimate temperatures for geothermal wells.",
+      "key_params": {
+        "surface_heat_flow": "heat flux in milliwatts per square meter",
+        "rock_conductivity": "thermal conductivity in watts per meter-kelvin",
+        "target_depth": "well depth in kilometers"
+      },
+      "data_idea": "A seeded RNG samples heat flow and conductivity values, integrates the gradient downward, and logs temperature profiles.",
+      "real_world_use": "Geothermal developers screen drilling sites from heat-flow surveys and gradient models.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "building-heat-loss-audit",
+      "name": "Building Heat Loss Audit",
+      "concept": "Heat escapes a building through walls, windows, and air leaks, each with its own thermal resistance. Summing the losses over the envelope for a design temperature gives the heating load the furnace must meet.",
+      "key_params": {
+        "wall_area": "wall area in square meters",
+        "insulation_r_value": "thermal resistance in square-meter-kelvin per watt",
+        "design_delta_t": "indoor-outdoor temperature difference in kelvin"
+      },
+      "data_idea": "A seeded RNG assembles buildings from wall, window, and infiltration components, computes loss per component, and logs the total load.",
+      "real_world_use": "Energy auditors size replacement heating systems from heat-loss calculations.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lightning-energy-estimator",
+      "name": "Lightning Energy Estimator",
+      "concept": "A lightning bolt carries tens of kiloamps for microseconds, and multiplying the charge transferred by the cloud-to-ground voltage gives the stroke energy. The estimator converts measured current waveforms into total energy and peak power.",
+      "key_params": {
+        "peak_current": "peak stroke current in kiloamps",
+        "stroke_duration": "current duration in microseconds",
+        "cloud_voltage": "cloud potential in megavolts"
+      },
+      "data_idea": "A seeded RNG synthesizes stroke current waveforms with random peaks, integrates charge and energy, and logs per-stroke totals.",
+      "real_world_use": "Lightning protection engineers rate surge arresters from stroke energy statistics.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "seismometer-trace-analyzer",
+      "name": "Seismometer Trace Analyzer",
+      "concept": "A seismometer records ground motion as a wiggly trace where the first P wave arrival, the stronger S wave, and the surface waves each have a signature. The analyzer picks arrivals and estimates magnitude from the trace amplitude and duration.",
+      "key_params": {
+        "sampling_rate": "samples per second",
+        "sensor_gain": "counts per micrometer of ground motion",
+        "noise_floor": "background noise in counts"
+      },
+      "data_idea": "A seeded RNG embeds synthetic quake waveforms in noise, then exports traces for arrival picking and magnitude estimation.",
+      "real_world_use": "Seismic networks monitor aftershock sequences and industrial blasts from trace analysis.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "atmospheric-pressure-altitude",
+      "name": "Atmospheric Pressure Altitude Calculator",
+      "concept": "Air pressure falls exponentially with altitude because the air above thins out, halving roughly every 5.5 kilometers. The barometric formula converts a pressure reading into altitude, which is how altimeters work.",
+      "key_params": {
+        "sea_level_pressure": "reference pressure in hectopascals",
+        "temperature": "air temperature in kelvin",
+        "altitude": "height above sea level in meters"
+      },
+      "data_idea": "A seeded RNG samples altitudes and temperatures, evaluates the barometric formula, and converts between pressure units.",
+      "real_world_use": "Aviation altimeters and weather stations convert pressure to altitude with the barometric relation.",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pendulum-wave-art-generator",
+      "name": "Pendulum Wave Art Generator",
+      "concept": "A row of pendulums with slightly different lengths swings in mesmerizing patterns as they drift in and out of phase, periodically snapping back into alignment. The generator tunes the lengths so the visual cycle repeats after a chosen time.",
+      "key_params": {
+        "pendulum_count": "number of pendulums in the row",
+        "cycle_time": "time for the pattern to repeat in seconds",
+        "release_angle": "starting angle in degrees"
+      },
+      "data_idea": "A seeded RNG picks cycle times and pendulum counts, solves for the matching lengths, and exports the animation frames.",
+      "real_world_use": "Science museums build pendulum wave sculptures as crowd-pleasing physics exhibits.",
+      "suggested_types": [
+        "simulation",
+        "terminal_game"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "magnetic-levitation-model",
+      "name": "Magnetic Levitation Model",
+      "concept": "Stable magnetic levitation balances the upward magnetic force against gravity, with active feedback adjusting the coil current as the gap changes. The model finds equilibrium gaps and tests how disturbances settle or grow.",
+      "key_params": {
+        "coil_current": "electromagnet current in amps",
+        "magnet_strength": "levitated magnet strength in tesla",
+        "gap_distance": "air gap in millimeters"
+      },
+      "data_idea": "A seeded RNG samples coil currents and gaps, solves the force balance, and logs stability margins.",
+      "real_world_use": "Maglev train and magnetic bearing engineers verify lift and stability margins with levitation models.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "electrostatic-precipitator-model",
+      "name": "Electrostatic Precipitator Model",
+      "concept": "An electrostatic precipitator charges dust particles with a corona discharge and pulls them to collector plates with a strong electric field. Collection efficiency rises with plate area and falls with gas velocity, following the Deutsch Anderson relation.",
+      "key_params": {
+        "plate_area": "total collector area in square meters",
+        "gas_flow_rate": "gas volume flow in cubic meters per second",
+        "particle_size": "particle diameter in micrometers"
+      },
+      "data_idea": "A seeded RNG samples precipitator geometries and particle sizes, computes drift velocities and efficiencies, and logs performance.",
+      "real_world_use": "Power plants clean flue gas with electrostatic precipitators sized from collection models.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "geiger-counter-simulator",
+      "name": "Geiger Counter Simulator",
+      "concept": "A Geiger counter clicks each time ionizing radiation triggers an avalanche in its gas tube, with counts arriving as a Poisson process. After each click the tube goes briefly dead, so high rates need dead-time correction to recover the true activity.",
+      "key_params": {
+        "source_activity": "true activity in becquerels",
+        "dead_time": "detector dead time in microseconds",
+        "background_rate": "background counts per second"
+      },
+      "data_idea": "A seeded RNG generates Poisson event streams, applies dead-time losses, and exports the click timestamps.",
+      "real_world_use": "Radiation safety teams survey workplaces and check contamination with Geiger counters.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cloud-chamber-track-analyzer",
+      "name": "Cloud Chamber Track Analyzer",
+      "concept": "Charged particles leave trails of droplets in a supersaturated cloud chamber, and the curvature of each track in a magnetic field reveals the particle's momentum. The analyzer fits circles to synthetic tracks and estimates momentum from the radius.",
+      "key_params": {
+        "magnetic_field": "chamber field in tesla",
+        "track_length": "visible track length in centimeters",
+        "measurement_noise": "droplet position noise in millimeters"
+      },
+      "data_idea": "A seeded RNG generates curved tracks with random momenta, adds droplet noise, and exports the point sets for circle fitting.",
+      "real_world_use": "Particle physics outreach labs let students measure cosmic ray momenta from real chamber photos.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cyclotron-resonance-calculator",
+      "name": "Cyclotron Resonance Calculator",
+      "concept": "In a cyclotron, charged particles spiral outward in step with an alternating electric field because their orbital frequency stays constant in a uniform magnetic field. The calculator finds the resonant frequency and the maximum energy before relativity detunes the orbit.",
+      "key_params": {
+        "magnetic_field": "field strength in tesla",
+        "particle_charge": "charge in coulombs",
+        "particle_mass": "mass in kilograms"
+      },
+      "data_idea": "A seeded RNG samples magnet strengths and particle species, computes cyclotron frequencies, and logs the energy limits.",
+      "real_world_use": "Medical cyclotron facilities tune RF systems to the resonance when producing PET isotopes.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "muon-lifetime-relativity-lab",
+      "name": "Muon Lifetime Relativity Lab",
+      "concept": "Muons created in the upper atmosphere live only two microseconds, yet reach the ground because time dilation stretches their lifetime at near-light speeds. Counting muon decays at different altitudes and fitting the survival curve tests special relativity directly.",
+      "key_params": {
+        "muon_energy": "muon energy in gigaelectronvolts",
+        "detector_altitude": "detector height in meters",
+        "count_duration": "measurement time in hours"
+      },
+      "data_idea": "A seeded RNG simulates muon decays along flight paths with time dilation, then exports the altitude-dependent count rates.",
+      "real_world_use": "Undergraduate labs and cosmic ray observatories verify relativity with muon flux measurements.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "gravitational-lensing-demo",
+      "name": "Gravitational Lensing Demo",
+      "concept": "A massive galaxy bends the light of objects behind it, magnifying and sometimes splitting their images into arcs or rings. The Einstein radius sets the scale of the effect from the lens mass and the geometry of the alignment.",
+      "key_params": {
+        "lens_mass": "lens mass in solar masses",
+        "lens_distance": "distance to the lens in megaparsecs",
+        "source_offset": "background source offset in arcseconds"
+      },
+      "data_idea": "A seeded RNG places lenses and sources with random alignments, computes image positions and magnifications, and exports the lensing map.",
+      "real_world_use": "Astrophysicists weigh galaxy clusters by modeling the arcs they lens.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "black-hole-shadow-model",
+      "name": "Black Hole Shadow Model",
+      "concept": "A black hole casts a dark shadow about five times its event horizon because photon orbits near the hole either escape or fall in. The model ray-traces light paths in curved spacetime to render the shadow and the bright photon ring.",
+      "key_params": {
+        "black_hole_mass": "mass in solar masses",
+        "spin_parameter": "dimensionless spin from 0 to 1",
+        "viewing_angle": "observer inclination in degrees"
+      },
+      "data_idea": "A seeded RNG samples black hole masses and spins, integrates photon geodesics, and logs the shadow diameter.",
+      "real_world_use": "The Event Horizon Telescope collaboration models shadows to interpret images of M87 and Sagittarius A.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cosmic-ray-flux-monitor",
+      "name": "Cosmic Ray Flux Monitor",
+      "concept": "Cosmic rays rain down constantly, and their flux rises and falls with the solar cycle as the solar wind shields Earth. The monitor counts synthetic detector hits, corrects for pressure and temperature, and tracks the flux trend.",
+      "key_params": {
+        "detector_area": "detector area in square meters",
+        "barometric_coefficient": "pressure correction per hectopascal",
+        "solar_activity": "sunspot number index"
+      },
+      "data_idea": "A seeded RNG generates Poisson hit streams modulated by solar activity, applies atmospheric corrections, and logs daily flux.",
+      "real_world_use": "Neutron monitor stations worldwide track cosmic ray flux for space weather forecasting.",
+      "suggested_types": [
+        "monitoring_agent",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tides-harmonic-analyzer",
+      "name": "Tides Harmonic Analyzer",
+      "concept": "Ocean tides are the sum of many sinusoidal constituents driven by the Moon and Sun, each with its own period and amplitude. Fitting tide gauge records to these harmonics lets the analyzer predict future high and low waters.",
+      "key_params": {
+        "constituent_count": "number of tidal harmonics to fit",
+        "record_length": "gauge record length in days",
+        "gauge_noise": "water level noise in centimeters"
+      },
+      "data_idea": "A seeded RNG synthesizes tide records from known constituents with noise, then exports the series for harmonic fitting.",
+      "real_world_use": "Port authorities publish tide tables from harmonic analyses of local gauge data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "satellite-ground-track-plotter",
+      "name": "Satellite Ground Track Plotter",
+      "concept": "A satellite's ground track is the path its orbit traces over the rotating Earth, shifting westward each revolution. Given orbital elements, the plotter predicts passes over ground stations and their timing.",
+      "key_params": {
+        "orbit_altitude": "altitude in kilometers",
+        "inclination": "orbital inclination in degrees",
+        "station_coords": "ground station latitude and longitude"
+      },
+      "data_idea": "A seeded RNG samples orbits and stations, propagates the orbit with Earth rotation, and logs pass start and end times.",
+      "real_world_use": "Amateur radio operators and Earth-observation teams schedule contacts and imaging passes from ground-track predictions.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "spring-pendulum-chaos",
+      "name": "Spring Pendulum Chaos",
+      "concept": "A mass bouncing on a spring while swinging like a pendulum couples its up-down and side-to-side motions through the spring tension. At certain energies the exchange between bouncing and swinging becomes chaotic, with no repeating pattern.",
+      "key_params": {
+        "spring_constant": "stiffness in newtons per meter",
+        "rest_length": "unstretched spring length in meters",
+        "total_energy": "system energy in joules"
+      },
+      "data_idea": "A seeded RNG sets initial conditions at random energies, integrates the coupled equations, and logs the trajectory and energy exchange.",
+      "real_world_use": "Nonlinear dynamics courses use the spring pendulum as a tabletop example of Hamiltonian chaos.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "magnetic-dipole-torque-lab",
+      "name": "Magnetic Dipole Torque Lab",
+      "concept": "A compass needle or current loop in a magnetic field feels a torque that twists it toward alignment, proportional to the sine of the angle between the dipole and the field. The lab measures oscillation frequencies of the dipole to extract its magnetic moment.",
+      "key_params": {
+        "magnetic_moment": "dipole moment in ampere-square-meters",
+        "field_strength": "external field in millitesla",
+        "moment_of_inertia": "dipole inertia in kilogram-square-meters"
+      },
+      "data_idea": "A seeded RNG varies moments and fields, simulates the torsional oscillation with damping noise, and logs the period.",
+      "real_world_use": "Magnetometer manufacturers calibrate compass and torque sensors against known dipole moments.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "electric-motor-design-studio",
+      "name": "Electric Motor Design Studio",
+      "concept": "A DC motor converts current into torque through the Lorentz force on its windings, with speed limited by the back EMF it generates as it spins. The studio trades winding turns, magnet strength, and voltage to hit a target torque and speed.",
+      "key_params": {
+        "winding_turns": "number of coil turns",
+        "magnet_flux": "field strength in tesla",
+        "supply_voltage": "drive voltage in volts"
+      },
+      "data_idea": "A seeded RNG samples motor designs, computes torque-speed curves from the electromechanical equations, and logs the performance envelope.",
+      "real_world_use": "Small-motor manufacturers iterate winding and magnet choices with design studios before prototyping.",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    }
+  ]
+}

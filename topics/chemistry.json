@@ -1,0 +1,2352 @@
+{
+  "domain": "chemistry",
+  "subdomain": "chemistry",
+  "topics": [
+    {
+      "slug_base": "titration-curve-calculator",
+      "name": "Titration Curve Calculator",
+      "concept": "Adding a strong base to a weak acid neutralizes the acid in stages, and the pH jumps sharply at the equivalence point where moles of titrant equal moles of analyte. The calculator traces pH against titrant volume and pinpoints the equivalence point and buffer region.",
+      "key_params": {
+        "acid_concentration": "analyte concentration in moles per liter",
+        "acid_pka": "acid dissociation constant as pKa",
+        "titrant_concentration": "titrant concentration in moles per liter"
+      },
+      "data_idea": "A seeded RNG picks acid pKa values and concentrations, computes the pH at each titrant addition, and adds electrode noise.",
+      "real_world_use": "Quality control labs determine unknown acid concentrations from titration curves daily.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "arrhenius-rate-fitter",
+      "name": "Reaction Rate Fitter (Arrhenius)",
+      "concept": "Reaction rates climb exponentially with temperature because more molecules carry enough energy to clear the activation barrier. Plotting the natural log of the rate constant against inverse temperature gives a straight line whose slope reveals the activation energy.",
+      "key_params": {
+        "activation_energy": "energy barrier in kilojoules per mole",
+        "temperature_range": "measurement span in kelvin",
+        "pre_exponential": "Arrhenius A factor per second"
+      },
+      "data_idea": "A seeded RNG assigns activation energies, computes rate constants across temperatures, and adds experimental scatter.",
+      "real_world_use": "Process chemists predict reaction times at plant scale from laboratory Arrhenius data.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "periodic-trend-visualizer",
+      "name": "Periodic Trend Visualizer",
+      "concept": "Atomic radius shrinks across a period as the growing nuclear charge pulls electrons tighter, then jumps at each new shell down a group. Ionization energy and electronegativity follow similar predictable waves across the table.",
+      "key_params": {
+        "property": "trend to plot such as radius or ionization energy",
+        "period_range": "which rows of the table to include",
+        "group_range": "which columns of the table to include"
+      },
+      "data_idea": "A seeded RNG adds small Gaussian jitter to the tabulated element properties and randomly selects which groups and periods to feature in each demo run.",
+      "real_world_use": "Teachers and textbook authors illustrate periodicity with trend plots in every general chemistry course.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "molar-mass-calculator",
+      "name": "Molar Mass Calculator",
+      "concept": "A molecule's molar mass is the sum of its atoms' atomic weights, and it converts between grams weighed on a balance and moles used in equations. Parsing a chemical formula into element counts automates the bookkeeping.",
+      "key_params": {
+        "formula": "chemical formula string such as H2SO4",
+        "mass_grams": "sample mass in grams",
+        "target_moles": "desired amount in moles"
+      },
+      "data_idea": "A seeded RNG draws formulas from a compound list with random masses and computes moles and required masses.",
+      "real_world_use": "Lab technicians prepare reagent solutions from molar mass calculations every day.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "stoichiometry-reaction-balancer",
+      "name": "Stoichiometry Reaction Balancer",
+      "concept": "A balanced equation conserves every atom, so the coefficients tell the exact mole ratios that react. Solving a small linear system over the element counts yields those coefficients for any valid reaction.",
+      "key_params": {
+        "reactants": "list of reactant formulas",
+        "products": "list of product formulas",
+        "given_moles": "known starting amount in moles"
+      },
+      "data_idea": "A seeded RNG assembles reactions from a formula pool, balances them, and generates mole-conversion questions with answers.",
+      "real_world_use": "Chemical engineers size raw material feeds from balanced process equations.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "limiting-reagent-analyzer",
+      "name": "Limiting Reagent Analyzer",
+      "concept": "The reactant that runs out first caps how much product can form, no matter how much of the others is present. Dividing each available amount by its stoichiometric coefficient identifies the limiting reagent and the theoretical yield.",
+      "key_params": {
+        "reactant_masses": "available mass of each reactant in grams",
+        "balanced_equation": "stoichiometric coefficients",
+        "molar_masses": "molar mass of each species"
+      },
+      "data_idea": "A seeded RNG generates reactant inventories for random reactions, computes the limiting reagent, and logs the theoretical yield.",
+      "real_world_use": "Manufacturing chemists minimize waste by charging reactors at the exact limiting ratio.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ideal-gas-mixture-calculator",
+      "name": "Ideal Gas Mixture Calculator",
+      "concept": "In a gas mixture each component contributes a partial pressure proportional to its mole fraction, and the total pressure is their sum. The calculator converts between mass, mole fraction, and partial pressure for arbitrary mixtures.",
+      "key_params": {
+        "component_moles": "moles of each gas component",
+        "total_pressure": "mixture pressure in kilopascals",
+        "temperature": "temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG builds mixtures with random compositions, computes partial pressures, and converts between concentration units.",
+      "real_world_use": "Diving gas blenders and anesthesiologists compute partial pressures of breathing mixtures.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gas-law-pressure-volume-lab",
+      "name": "Gas Law Pressure Volume Lab",
+      "concept": "Boyle's law says pressure times volume stays constant at fixed temperature, while Charles's law says volume grows linearly with absolute temperature. The lab combines all three simple gas laws to predict how a gas responds to changing conditions.",
+      "key_params": {
+        "initial_pressure": "starting pressure in kilopascals",
+        "initial_volume": "starting volume in liters",
+        "initial_temperature": "starting temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG picks initial gas states, applies random pressure, volume, or temperature changes, and computes the final state.",
+      "real_world_use": "Scuba training programs teach pressure-volume effects with gas law calculations.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "real-gas-van-der-waals",
+      "name": "Real Gas Van der Waals Model",
+      "concept": "Real gases deviate from the ideal law because molecules attract each other and occupy real volume. The van der Waals equation adds a pressure correction for attraction and a volume correction for molecular size, capturing condensation behavior the ideal law misses.",
+      "key_params": {
+        "a_constant": "attraction parameter in liter-squared-bar per mole-squared",
+        "b_constant": "excluded volume in liters per mole",
+        "temperature": "temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG samples van der Waals constants for common gases, traces isotherms, and logs the deviation from ideal pressure.",
+      "real_world_use": "Natural gas engineers correct pipeline flow calculations with real-gas equations of state.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "heat-of-reaction-calculator",
+      "name": "Heat of Reaction Calculator",
+      "concept": "Every reaction absorbs or releases heat equal to the difference between the formation enthalpies of products and reactants. A negative enthalpy change means the reaction gives off heat; positive means it needs heat to proceed.",
+      "key_params": {
+        "formation_enthalpies": "standard enthalpies of formation in kilojoules per mole",
+        "stoichiometry": "balanced coefficients",
+        "reaction_moles": "extent of reaction in moles"
+      },
+      "data_idea": "A seeded RNG assembles reactions from species with known enthalpies, computes the heat of reaction, and scales it to random extents.",
+      "real_world_use": "Safety engineers estimate heat release from formation-enthalpy data when assessing reactor runaway risk.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hess-law-pathway-solver",
+      "name": "Hess Law Pathway Solver",
+      "concept": "Enthalpy is a state function, so the heat of a reaction equals the sum of the heats of any sequence of steps leading from reactants to products. The solver chains known reaction enthalpies to reach a target reaction.",
+      "key_params": {
+        "known_reactions": "list of reactions with known enthalpies",
+        "target_reaction": "desired overall reaction",
+        "step_count": "number of intermediate steps"
+      },
+      "data_idea": "A seeded RNG builds reaction networks with known step enthalpies, then derives the target enthalpy by combination.",
+      "real_world_use": "Thermochemists determine formation enthalpies of unstable compounds via Hess law cycles.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "calorimetry-data-analyzer",
+      "name": "Calorimetry Data Analyzer",
+      "concept": "A calorimeter traps the heat of a reaction in water or a metal block, and the measured temperature rise reveals the energy released. Correcting for the calorimeter's own heat capacity turns raw temperature data into reaction enthalpies.",
+      "key_params": {
+        "calorimeter_constant": "heat capacity of the apparatus in joules per kelvin",
+        "water_mass": "water mass in grams",
+        "temperature_rise": "observed rise in kelvin"
+      },
+      "data_idea": "A seeded RNG simulates calorimetry runs with true heats and thermometer noise, then exports the temperature traces.",
+      "real_world_use": "Food labs measure calorie content with bomb calorimetry based on the same principle.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bond-energy-estimator",
+      "name": "Bond Energy Estimator",
+      "concept": "Breaking bonds costs energy and forming bonds releases it, so the reaction enthalpy is roughly the energy in minus the energy out. Summing average bond energies gives a quick estimate when formation enthalpies are unavailable.",
+      "key_params": {
+        "bonds_broken": "list of broken bonds with energies",
+        "bonds_formed": "list of formed bonds with energies",
+        "bond_count": "number of each bond type"
+      },
+      "data_idea": "A seeded RNG assembles reactions from a bond-energy table, estimates the enthalpy, and compares it with formation-enthalpy values.",
+      "real_world_use": "Combustion engineers estimate flame temperatures from bond-energy calculations.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "first-order-kinetics-fitter",
+      "name": "First Order Kinetics Fitter",
+      "concept": "In a first-order reaction the rate is proportional to the remaining reactant, so concentration decays exponentially and the log of concentration falls on a straight line. The slope of that line is the rate constant.",
+      "key_params": {
+        "rate_constant": "true rate constant per second",
+        "initial_concentration": "starting concentration in moles per liter",
+        "sampling_times": "measurement times in seconds"
+      },
+      "data_idea": "A seeded RNG generates exponential decay traces with analytical noise, then exports concentration-time data for log-linear fitting.",
+      "real_world_use": "Pharmaceutical teams measure drug degradation rates with first-order kinetic fits.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "reaction-order-determiner",
+      "name": "Reaction Order Determiner",
+      "concept": "The reaction order reveals how the rate depends on each reactant's concentration, found by comparing initial rates across experiments. A log-log plot of rate against concentration has a slope equal to the order in that reactant.",
+      "key_params": {
+        "concentration_a": "reactant A concentrations in moles per liter",
+        "concentration_b": "reactant B concentrations in moles per liter",
+        "rate_noise": "relative noise in measured rates"
+      },
+      "data_idea": "A seeded RNG assigns true orders, computes initial rates for concentration grids, and adds measurement noise for the determiner to invert.",
+      "real_world_use": "Kineticists map out rate laws to design reactors that run at optimal concentrations.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "half-life-kinetics-calculator",
+      "name": "Half Life Kinetics Calculator",
+      "concept": "The half-life of a first-order reaction is a constant, independent of how much reactant remains, while higher-order half-lives stretch as concentration drops. The calculator converts between rate constants and half-lives for each order.",
+      "key_params": {
+        "rate_constant": "rate constant in per second",
+        "reaction_order": "order 1, 2, or 3",
+        "initial_concentration": "starting concentration in moles per liter"
+      },
+      "data_idea": "A seeded RNG samples rate constants and orders, computes half-lives, and converts between the kinetic parameters.",
+      "real_world_use": "Environmental scientists estimate pollutant persistence from kinetic half-lives.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "catalysis-effect-simulator",
+      "name": "Catalysis Effect Simulator",
+      "concept": "A catalyst speeds a reaction by opening a lower-energy pathway, leaving the overall thermodynamics untouched. The simulator compares the catalyzed and uncatalyzed rate profiles to show how the barrier drop multiplies the rate.",
+      "key_params": {
+        "activation_energy": "uncatalyzed barrier in kilojoules per mole",
+        "barrier_reduction": "catalyst barrier lowering in kilojoules per mole",
+        "temperature": "temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG varies barriers and reductions, computes both rate constants, and logs the rate enhancement factor.",
+      "real_world_use": "Catalyst developers quantify rate improvements when screening new formulations.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "equilibrium-constant-calculator",
+      "name": "Equilibrium Constant Calculator",
+      "concept": "At equilibrium the ratio of product to reactant concentrations, each raised to its stoichiometric power, settles at a constant K. The reaction quotient Q compared against K tells which direction the system will shift.",
+      "key_params": {
+        "concentrations": "current concentrations in moles per liter",
+        "stoichiometry": "balanced coefficients",
+        "temperature": "temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG generates concentration sets around random K values, computes Q, and logs the predicted shift direction.",
+      "real_world_use": "Industrial chemists tune reactor conditions to push Q toward favorable K values.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "le-chateliers-principle-demo",
+      "name": "Le Chatelier Principle Demo",
+      "concept": "Disturbing an equilibrium by adding reactant, removing product, or changing temperature makes the system shift to counteract the change. The demo applies each disturbance to a model equilibrium and shows the new resting concentrations.",
+      "key_params": {
+        "equilibrium_constant": "K value at the reference temperature",
+        "disturbance": "added, removed, heated, or cooled",
+        "disturbance_size": "magnitude of the change"
+      },
+      "data_idea": "A seeded RNG applies random disturbances to equilibrium systems, solves for the new equilibrium, and logs the concentration shifts.",
+      "real_world_use": "Fertilizer plants run the Haber process at high pressure to exploit Le Chatelier shifts.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "solubility-product-solver",
+      "name": "Solubility Product Solver",
+      "concept": "A sparingly soluble salt dissolves until the product of its ion concentrations hits the solubility product Ksp, and adding a common ion drives more of it out of solution. The solver finds the equilibrium solubility for any Ksp and ion background.",
+      "key_params": {
+        "ksp": "solubility product constant",
+        "common_ion_concentration": "background ion concentration in moles per liter",
+        "stoichiometry": "salt dissolution coefficients"
+      },
+      "data_idea": "A seeded RNG samples Ksp values and background ions, solves the equilibrium equations, and logs solubilities.",
+      "real_world_use": "Water treatment engineers predict scale formation from solubility product calculations.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "common-ion-effect-model",
+      "name": "Common Ion Effect Model",
+      "concept": "Adding an ion already present in a dissolution equilibrium suppresses further dissolving, a direct consequence of Le Chatelier's principle. The model quantifies how much the solubility drops as the common ion concentration rises.",
+      "key_params": {
+        "ksp": "solubility product constant",
+        "common_ion_levels": "range of background ion concentrations",
+        "salt_stoichiometry": "dissolution coefficients"
+      },
+      "data_idea": "A seeded RNG sweeps common ion concentrations for random salts, computes solubility at each level, and logs the suppression curve.",
+      "real_world_use": "Analytical chemists precipitate analytes selectively by exploiting the common ion effect.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ph-calculator-suite",
+      "name": "pH Calculator Suite",
+      "concept": "pH is the negative log of the hydrogen ion concentration, compressing a huge concentration range into a 0 to 14 scale. The suite handles strong acids, weak acids, strong bases, and mixtures through charge and mass balances.",
+      "key_params": {
+        "acid_concentration": "acid concentration in moles per liter",
+        "acid_pka": "pKa for weak acids",
+        "base_concentration": "base concentration in moles per liter"
+      },
+      "data_idea": "A seeded RNG generates acid and base solutions with random strengths, solves the equilibrium, and converts between pH and concentrations.",
+      "real_world_use": "Pool operators and brewers adjust water chemistry from pH calculations.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "buffer-capacity-analyzer",
+      "name": "Buffer Capacity Analyzer",
+      "concept": "A buffer resists pH change because its weak acid and conjugate base soak up added acid or base. Capacity peaks when the pH equals the pKa and the concentrations are high, and the analyzer maps how much titrant the buffer can absorb.",
+      "key_params": {
+        "acid_pka": "buffer pKa",
+        "total_concentration": "combined acid plus base concentration",
+        "added_titrant": "moles of strong acid or base added per liter"
+      },
+      "data_idea": "A seeded RNG builds buffers with random pKa and concentrations, simulates titrant additions, and logs the pH response.",
+      "real_world_use": "Biochemists formulate buffers that hold pH steady during enzyme assays.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "acid-dissociation-fitter",
+      "name": "Acid Dissociation Fitter",
+      "concept": "The acid dissociation constant Ka measures how completely a weak acid releases its proton. Titrating the acid and fitting the pH curve extracts Ka, since the pH equals the pKa exactly at the half-equivalence point.",
+      "key_params": {
+        "true_pka": "actual pKa of the synthetic acid",
+        "titration_points": "number of pH measurements",
+        "ph_noise": "electrode noise in pH units"
+      },
+      "data_idea": "A seeded RNG synthesizes titration curves for acids with known pKa values, adds electrode noise, and exports the curves for fitting.",
+      "real_world_use": "Pharmaceutical labs measure drug pKa values to predict absorption behavior.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "indicator-range-visualizer",
+      "name": "Indicator Range Visualizer",
+      "concept": "An acid-base indicator changes color over about two pH units centered on its own pKa. Matching the indicator's transition range to the titration's steep jump ensures the color change lands at the equivalence point.",
+      "key_params": {
+        "indicator_pka": "indicator transition pKa",
+        "titration_ph_range": "pH span of the titration jump",
+        "equivalence_ph": "pH at the equivalence point"
+      },
+      "data_idea": "A seeded RNG pairs indicators with titration types, computes the color-change window, and flags suitable matches.",
+      "real_world_use": "Teaching labs select indicators for each titration from range tables the visualizer reproduces.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "polyprotic-acid-speciation",
+      "name": "Polyprotic Acid Speciation",
+      "concept": "Diprotic and triprotic acids release protons in stages, so the solution contains a pH-dependent mix of species. The speciation diagram shows which form dominates at each pH, with crossover points at each pKa.",
+      "key_params": {
+        "pka_values": "list of dissociation constants",
+        "total_concentration": "analytical concentration in moles per liter",
+        "ph_range": "pH span to evaluate"
+      },
+      "data_idea": "A seeded RNG samples polyprotic acids with spaced pKa values, computes species fractions across pH, and exports the distribution curves.",
+      "real_world_use": "Geochemists model carbonate speciation to understand ocean and groundwater chemistry.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "galvanic-cell-potential-lab",
+      "name": "Galvanic Cell Potential Lab",
+      "concept": "A galvanic cell turns a spontaneous redox reaction into electricity, with the cell voltage equal to the cathode reduction potential minus the anode one. Electrons flow from the oxidized anode to the reduced cathode through the external circuit.",
+      "key_params": {
+        "cathode_potential": "standard reduction potential in volts",
+        "anode_potential": "standard reduction potential in volts",
+        "ion_concentrations": "actual ion concentrations in moles per liter"
+      },
+      "data_idea": "A seeded RNG pairs half-cells with random potentials and concentrations, applies the Nernst correction, and logs cell voltages.",
+      "real_world_use": "Battery engineers screen electrode pairs by computing theoretical cell voltages.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nernst-equation-calculator",
+      "name": "Nernst Equation Calculator",
+      "concept": "The Nernst equation corrects a standard electrode potential for actual concentrations, dropping about 59 millivolts per tenfold concentration change for a one-electron reaction at room temperature. It links measured cell voltage to reaction progress.",
+      "key_params": {
+        "standard_potential": "standard potential in volts",
+        "electron_count": "electrons transferred",
+        "reaction_quotient": "ratio of product to reactant activities"
+      },
+      "data_idea": "A seeded RNG samples potentials, electron counts, and quotients, then computes the corrected electrode potentials.",
+      "real_world_use": "Corrosion engineers predict metal potentials in real environments from Nernst corrections.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "electrolysis-faraday-analyzer",
+      "name": "Electrolysis Faraday Analyzer",
+      "concept": "Faraday's laws say the mass deposited in electrolysis is proportional to the total charge passed, scaled by the molar mass over the electron count. The analyzer converts current and time into predicted product mass and compares it with measured yields.",
+      "key_params": {
+        "current": "cell current in amps",
+        "duration": "electrolysis time in seconds",
+        "electron_count": "electrons per deposited atom"
+      },
+      "data_idea": "A seeded RNG samples currents, times, and metals, computes theoretical deposits, and adds weighing noise.",
+      "real_world_use": "Electroplating shops control coating thickness from Faraday charge calculations.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "corrosion-rate-model",
+      "name": "Corrosion Rate Model",
+      "concept": "Corrosion is an electrochemical cell in disguise, with metal dissolving at anodic sites while oxygen or hydrogen reduces at cathodic ones. Polarization curves give the corrosion current, which Faraday's law converts into millimeters of metal lost per year.",
+      "key_params": {
+        "corrosion_current": "corrosion current density in microamps per square centimeter",
+        "metal_density": "density in grams per cubic centimeter",
+        "exposure_time": "exposure duration in days"
+      },
+      "data_idea": "A seeded RNG synthesizes polarization curves with Tafel slopes, extracts corrosion currents, and logs penetration rates.",
+      "real_world_use": "Pipeline operators forecast remaining wall thickness from corrosion rate surveys.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "battery-chemistry-comparator",
+      "name": "Battery Chemistry Comparator",
+      "concept": "Different battery chemistries trade energy density, cycle life, cost, and safety against each other. The comparator scores lithium-ion, lead-acid, nickel-metal-hydride, and sodium-ion cells on normalized metrics for a chosen application.",
+      "key_params": {
+        "energy_density": "watt-hours per kilogram",
+        "cycle_life": "full cycles to 80 percent capacity",
+        "cost_per_kwh": "cost in dollars per kilowatt-hour"
+      },
+      "data_idea": "A seeded RNG draws chemistry specs from published ranges, normalizes the metrics, and exports the comparison table.",
+      "real_world_use": "Product teams choose battery chemistries for tools and vehicles from comparison matrices.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "colligative-properties-lab",
+      "name": "Colligative Properties Lab",
+      "concept": "Dissolved particles lower a solvent's vapor pressure, which raises the boiling point and lowers the freezing point in proportion to the molality. These colligative effects depend only on particle count, not on what the particles are.",
+      "key_params": {
+        "solute_molality": "moles of solute per kilogram of solvent",
+        "vant_hoff_factor": "particles per formula unit",
+        "solvent_kf": "freezing point constant in kelvin-kilogram per mole"
+      },
+      "data_idea": "A seeded RNG dissolves random solutes in solvents, computes freezing and boiling shifts, and adds thermometer noise.",
+      "real_world_use": "Antifreeze formulators set coolant concentrations from freezing-point depression data.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "freezing-point-depression-fitter",
+      "name": "Freezing Point Depression Fitter",
+      "concept": "Measuring how much a solute depresses the freezing point reveals its molar mass, since the depression is proportional to molality. The fitter converts cooling-curve data into molar mass estimates with supercooling corrections.",
+      "key_params": {
+        "solute_mass": "dissolved mass in grams",
+        "solvent_mass": "solvent mass in grams",
+        "observed_depression": "freezing point drop in kelvin"
+      },
+      "data_idea": "A seeded RNG synthesizes cooling curves for solutes of known molar mass with probe noise, then exports the freezing plateaus.",
+      "real_world_use": "Polymer labs estimate number-average molar mass from cryoscopy measurements.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "solution-concentration-converter",
+      "name": "Solution Concentration Converter",
+      "concept": "Molarity, molality, mass percent, and mole fraction all describe the same solution in different units. The converter moves between them using density and molar masses, handling the volume-to-mass conversion carefully.",
+      "key_params": {
+        "molarity": "moles per liter of solution",
+        "solution_density": "density in grams per milliliter",
+        "solute_molar_mass": "molar mass in grams per mole"
+      },
+      "data_idea": "A seeded RNG generates solutions with random concentrations and densities, then converts each to all four units.",
+      "real_world_use": "Analytical labs relabel stock solutions between unit systems for different methods.",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dilution-series-planner",
+      "name": "Dilution Series Planner",
+      "concept": "Serial dilutions step a stock solution down by a constant factor each time, and the dilution equation C1V1 equals C2V2 sizes every transfer. The planner computes the pipetting volumes for a target concentration ladder.",
+      "key_params": {
+        "stock_concentration": "stock concentration in moles per liter",
+        "dilution_factor": "factor per step",
+        "step_count": "number of dilutions"
+      },
+      "data_idea": "A seeded RNG picks stock concentrations and target ladders, computes each transfer volume, and logs the plan.",
+      "real_world_use": "Microbiology labs prepare antibiotic dilution series for minimum inhibitory concentration tests.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "solubility-curve-analyzer",
+      "name": "Solubility Curve Analyzer",
+      "concept": "Most solids dissolve better in hot water, so solubility plotted against temperature rises in a characteristic curve. The analyzer fits measured solubility data and predicts the crystallization yield when a hot saturated solution cools.",
+      "key_params": {
+        "temperature": "temperature in degrees celsius",
+        "solubility": "grams per 100 grams of water",
+        "cooling_target": "final temperature in degrees celsius"
+      },
+      "data_idea": "A seeded RNG samples solubility curves with saturation noise, fits them, and computes crystallization yields on cooling.",
+      "real_world_use": "Crystallization engineers design purification steps from solubility curve data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "beer-lambert-law-fitter",
+      "name": "Beer Lambert Law Fitter",
+      "concept": "Absorbance grows linearly with concentration and path length, with the molar absorptivity as the proportionality constant. A calibration line through standard solutions turns any absorbance reading into a concentration.",
+      "key_params": {
+        "molar_absorptivity": "absorptivity in liters per mole-centimeter",
+        "path_length": "cuvette path in centimeters",
+        "standard_concentrations": "calibration concentrations"
+      },
+      "data_idea": "A seeded RNG builds calibration standards with photometer noise, fits the Beer Lambert line, and quantifies unknown samples.",
+      "real_world_use": "Clinical labs quantify blood analytes from spectrophotometer calibration curves.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "uv-vis-spectrum-analyzer",
+      "name": "UV Vis Spectrum Analyzer",
+      "concept": "Molecules absorb ultraviolet and visible light at wavelengths matching their electronic transitions, producing characteristic peaks. The analyzer finds peak positions and widths in noisy spectra and matches them against a reference library.",
+      "key_params": {
+        "wavelength_range": "scan range in nanometers",
+        "peak_count": "number of absorption peaks",
+        "baseline_drift": "drift in absorbance units"
+      },
+      "data_idea": "A seeded RNG synthesizes spectra from Gaussian peaks with baseline drift and detector noise, then exports the traces.",
+      "real_world_use": "Pharmaceutical QC labs verify drug identity from UV Vis spectra.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "ir-peak-interpreter",
+      "name": "IR Peak Interpreter",
+      "concept": "Infrared absorption peaks correspond to vibrating bonds, so a broad band near 3300 reciprocal centimeters suggests O-H or N-H while a sharp peak near 1700 suggests a carbonyl. The interpreter classifies functional groups from peak lists using learned patterns.",
+      "key_params": {
+        "peak_positions": "absorption peaks in reciprocal centimeters",
+        "peak_intensities": "relative peak strengths",
+        "training_examples": "labeled spectra count"
+      },
+      "data_idea": "A seeded RNG generates synthetic IR peak lists from functional-group templates with position jitter, building a labeled training set.",
+      "real_world_use": "Organic chemists confirm synthesized structures by interpreting IR spectra.",
+      "suggested_types": [
+        "naive_bayes",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nmr-signal-predictor",
+      "name": "NMR Signal Predictor",
+      "concept": "In proton NMR, hydrogens in different chemical environments resonate at distinct shifts, and neighboring hydrogens split each signal following the n-plus-one rule. The predictor estimates shifts and splitting patterns from a molecular structure.",
+      "key_params": {
+        "proton_count": "number of equivalent protons",
+        "neighbor_count": "neighboring protons for splitting",
+        "base_shift": "reference chemical shift in ppm"
+      },
+      "data_idea": "A seeded RNG assembles molecules from fragments with known shift increments, predicts the spectrum, and adds instrument noise.",
+      "real_world_use": "Medicinal chemists verify new compounds by comparing predicted and measured NMR spectra.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "mass-spec-fragment-matcher",
+      "name": "Mass Spec Fragment Matcher",
+      "concept": "A mass spectrometer shatters molecules into charged fragments, and the pattern of mass-to-charge peaks fingerprints the structure. The matcher compares observed peak lists against candidate fragmentations to rank likely structures.",
+      "key_params": {
+        "parent_mass": "molecular ion mass in daltons",
+        "fragment_masses": "observed fragment peaks",
+        "mass_tolerance": "matching tolerance in daltons"
+      },
+      "data_idea": "A seeded RNG fragments candidate molecules by bond-cleavage rules, adds mass error, and exports the peak lists.",
+      "real_world_use": "Forensic labs identify unknown substances from mass spectral fragmentation patterns.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "chromatography-retention-analyzer",
+      "name": "Chromatography Retention Analyzer",
+      "concept": "Compounds separate in chromatography because each partitions differently between the mobile and stationary phases, emerging at its own retention time. The analyzer fits retention data to predict elution order and resolution between peaks.",
+      "key_params": {
+        "retention_times": "peak retention times in minutes",
+        "peak_widths": "peak widths at baseline in minutes",
+        "flow_rate": "mobile phase flow in milliliters per minute"
+      },
+      "data_idea": "A seeded RNG simulates chromatograms with Gaussian peaks at random retentions, adds detector noise, and exports the traces.",
+      "real_world_use": "Analytical labs validate separation methods from retention and resolution data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "atomic-orbital-visualizer",
+      "name": "Atomic Orbital Visualizer",
+      "concept": "Hydrogen-like orbitals are standing waves of the electron described by three quantum numbers, with s, p, and d shapes of increasing complexity. The visualizer samples the probability density and renders the familiar lobe patterns and nodal surfaces.",
+      "key_params": {
+        "principal_n": "principal quantum number",
+        "angular_l": "angular momentum quantum number",
+        "grid_resolution": "sampling points per axis"
+      },
+      "data_idea": "A seeded RNG is not needed for the analytic orbitals; the tool evaluates the radial and angular functions on a grid and exports the density field.",
+      "real_world_use": "Chemistry educators render orbital shapes for textbooks and lecture slides.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "electron-configuration-quiz",
+      "name": "Electron Configuration Quiz",
+      "concept": "Electrons fill orbitals from lowest energy upward following the Aufbau order, with Hund's rule spreading them across degenerate orbitals before pairing. The quiz generates configurations and challenges learners to spot exceptions like chromium and copper.",
+      "key_params": {
+        "element_range": "atomic numbers to include",
+        "question_count": "number of quiz questions",
+        "include_exceptions": "whether to include anomalous configurations"
+      },
+      "data_idea": "A seeded RNG draws elements, computes correct configurations from filling rules, and generates distractor answers.",
+      "real_world_use": "Tutoring platforms drill electron configurations as the gateway to bonding topics.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ionization-energy-trend-fitter",
+      "name": "Ionization Energy Trend Fitter",
+      "concept": "Ionization energy generally rises across a period as the nucleus tightens its grip, with dips at filled and half-filled subshells. Fitting the trend across elements quantifies the effective nuclear charge felt by the outer electron.",
+      "key_params": {
+        "element_range": "atomic numbers to fit",
+        "ionization_level": "first, second, or third ionization",
+        "measurement_noise": "noise in kilojoules per mole"
+      },
+      "data_idea": "A seeded RNG samples element data with the known subshell dips and adds measurement noise for the trend fitter.",
+      "real_world_use": "Inorganic chemists rationalize reactivity patterns from ionization energy trends.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "electronegativity-predictor",
+      "name": "Electronegativity Predictor",
+      "concept": "Electronegativity measures an atom's pull on shared electrons, rising toward fluorine in the upper right of the table. Clustering elements by their periodic position and properties predicts values for superheavy or hypothetical elements.",
+      "key_params": {
+        "atomic_number": "element atomic number",
+        "group": "periodic table group",
+        "period": "periodic table period"
+      },
+      "data_idea": "A seeded RNG holds out random elements from the known table and uses the remaining ones to train the cluster-based predictor.",
+      "real_world_use": "Materials informatics teams impute missing elemental properties for alloy screening.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "lewis-structure-validator",
+      "name": "Lewis Structure Validator",
+      "concept": "A valid Lewis structure assigns every valence electron to bonds or lone pairs so that each atom approaches an octet. The validator counts electrons, distributes them by the standard rules, and flags structures that break the octet or the electron budget.",
+      "key_params": {
+        "molecular_formula": "formula string such as CO2",
+        "central_atom": "atom placed at the center",
+        "total_charge": "molecular charge"
+      },
+      "data_idea": "A seeded RNG generates candidate structures, some with deliberate octet violations, and labels them for the validator to check.",
+      "real_world_use": "Homework platforms auto-grade Lewis structure drawings in general chemistry courses.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vsepr-geometry-predictor",
+      "name": "VSEPR Geometry Predictor",
+      "concept": "Electron pairs repel each other into arrangements that maximize their separation, which fixes the molecular shape from the count of bonding and lone pairs. Four pairs give a tetrahedron, but two lone pairs bend it into the familiar shape of water.",
+      "key_params": {
+        "bonding_pairs": "number of bonding electron pairs",
+        "lone_pairs": "number of lone pairs",
+        "central_atom": "central atom symbol"
+      },
+      "data_idea": "A seeded RNG samples pair counts, looks up the VSEPR geometry, and exports the ideal bond angles.",
+      "real_world_use": "Molecular modeling tools seed geometry optimizations with VSEPR-predicted shapes.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "molecular-dipole-estimator",
+      "name": "Molecular Dipole Estimator",
+      "concept": "A molecule is polar when its bond dipoles do not cancel, which depends on both the electronegativity differences and the geometry. Water's bent shape leaves a net dipole while carbon dioxide's linear shape cancels out.",
+      "key_params": {
+        "bond_dipoles": "individual bond dipole moments in debye",
+        "bond_angles": "angles between bonds in degrees",
+        "geometry": "molecular shape label"
+      },
+      "data_idea": "A seeded RNG builds molecules from bond vectors, sums the vector dipoles, and logs the net moment.",
+      "real_world_use": "Solvent formulators predict solubility behavior from molecular dipole moments.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hybridization-analyzer",
+      "name": "Hybridization Analyzer",
+      "concept": "Carbon mixes its s and p orbitals into sp3, sp2, or sp hybrids to match the geometry around it: tetrahedral, trigonal planar, or linear. Counting sigma bonds and lone pairs reveals which hybridization the central atom uses.",
+      "key_params": {
+        "sigma_bond_count": "number of sigma bonds",
+        "lone_pair_count": "number of lone pairs",
+        "molecule": "molecule label"
+      },
+      "data_idea": "A seeded RNG draws molecules with known hybridizations, extracts the steric number, and labels the hybridization.",
+      "real_world_use": "Organic chemistry courses teach hybridization as the bridge between structure and reactivity.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bond-order-calculator",
+      "name": "Bond Order Calculator",
+      "concept": "Bond order is half the difference between bonding and antibonding electrons, and it predicts bond strength and length. A bond order of two means a double bond, while fractional orders appear in resonance structures like benzene.",
+      "key_params": {
+        "bonding_electrons": "electrons in bonding orbitals",
+        "antibonding_electrons": "electrons in antibonding orbitals",
+        "molecule": "molecule label"
+      },
+      "data_idea": "A seeded RNG generates molecular orbital fillings for diatomics, computes bond orders, and logs the predicted bond type.",
+      "real_world_use": "Computational chemists sanity-check bonding descriptions with bond order analysis.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "crystal-structure-analyzer",
+      "name": "Crystal Structure Analyzer",
+      "concept": "Ionic crystals pack into lattices like rock salt or cesium chloride depending on the radius ratio of cation to anion. The analyzer computes coordination numbers and lattice parameters from ionic radii.",
+      "key_params": {
+        "cation_radius": "cation radius in picometers",
+        "anion_radius": "anion radius in picometers",
+        "structure_type": "rock salt, cesium chloride, or zinc blende"
+      },
+      "data_idea": "A seeded RNG pairs cations and anions with random radii, predicts the stable structure type, and computes the lattice constant.",
+      "real_world_use": "Ceramics engineers predict crystal structures when formulating new oxide materials.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lattice-energy-estimator",
+      "name": "Lattice Energy Estimator",
+      "concept": "Lattice energy is the energy released when gaseous ions assemble into a crystal, and it grows with ionic charge and shrinks with ionic size. The Born Lande equation estimates it from charges, radii, and the crystal structure.",
+      "key_params": {
+        "cation_charge": "cation charge magnitude",
+        "anion_charge": "anion charge magnitude",
+        "interionic_distance": "distance in picometers"
+      },
+      "data_idea": "A seeded RNG samples ionic compounds with random charges and radii, evaluates the Born Lande estimate, and logs the energies.",
+      "real_world_use": "Battery researchers compare lattice energies when screening solid electrolyte candidates.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "coordination-complex-analyzer",
+      "name": "Coordination Complex Analyzer",
+      "concept": "Transition metals bind ligands in geometries like octahedral or tetrahedral, and the metal's oxidation state plus the ligand charges determine the complex's overall charge. The analyzer assigns oxidation states and predicts geometry from the coordination number.",
+      "key_params": {
+        "metal": "central metal symbol",
+        "ligands": "list of ligand formulas",
+        "coordination_number": "number of bound ligands"
+      },
+      "data_idea": "A seeded RNG assembles complexes from metals and ligands, computes oxidation states, and labels the geometry.",
+      "real_world_use": "Catalyst designers enumerate candidate complexes before expensive quantum calculations.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "crystal-field-splitting-model",
+      "name": "Crystal Field Splitting Model",
+      "concept": "Ligands split a metal's d orbitals into higher and lower energy sets, and the gap determines the complex's color and magnetism. Strong-field ligands pair electrons up while weak-field ligands leave them unpaired.",
+      "key_params": {
+        "ligand_strength": "spectrochemical series position",
+        "d_electron_count": "metal d electrons from 1 to 10",
+        "geometry": "octahedral or tetrahedral"
+      },
+      "data_idea": "A seeded RNG pairs metals with ligands of random field strength, computes the splitting diagram, and predicts spin state.",
+      "real_world_use": "Pigment chemists tune transition-metal colors by choosing ligands that shift d-d absorptions.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "chelate-effect-calculator",
+      "name": "Chelate Effect Calculator",
+      "concept": "Multidentate ligands bind metals far more tightly than equivalent monodentate ligands because one chelate replaces several bound solvent molecules, gaining entropy. The calculator compares formation constants to quantify the chelate advantage.",
+      "key_params": {
+        "denticity": "number of donor atoms per ligand",
+        "formation_constant": "log of the formation constant",
+        "ligand_count": "number of ligands"
+      },
+      "data_idea": "A seeded RNG generates chelate and non-chelate complexes with random constants, then computes the stability difference.",
+      "real_world_use": "Water treatment formulators choose chelating agents that lock up hardness ions effectively.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "reaction-mechanism-stepper",
+      "name": "Reaction Mechanism Stepper",
+      "concept": "Organic reactions proceed through elementary steps where bonds break and form, with curved arrows tracking electron pairs. The stepper walks through classic mechanisms step by step, showing intermediates and the rate-determining step.",
+      "key_params": {
+        "mechanism_type": "such as SN1, SN2, E1, or addition",
+        "substrate": "starting molecule label",
+        "step_count": "number of elementary steps"
+      },
+      "data_idea": "A seeded RNG selects mechanisms and substrates, enumerates the intermediates, and exports the step sequence with energy labels.",
+      "real_world_use": "Organic chemistry courses teach mechanism literacy with step-through visualizations.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sn1-sn2-rate-comparator",
+      "name": "SN1 SN2 Rate Comparator",
+      "concept": "SN1 reactions ionize first and depend only on the substrate, favoring tertiary carbons and polar protic solvents, while SN2 reactions need backside attack and favor primary carbons. The comparator predicts which pathway dominates from structure and conditions.",
+      "key_params": {
+        "substrate_class": "primary, secondary, or tertiary",
+        "solvent_type": "polar protic or polar aprotic",
+        "nucleophile_strength": "nucleophile rating"
+      },
+      "data_idea": "A seeded RNG samples substrates and conditions, computes relative SN1 and SN2 rates from empirical rules, and logs the winner.",
+      "real_world_use": "Synthetic chemists choose solvents and substrates to steer substitution pathways.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "electrophilic-substitution-predictor",
+      "name": "Electrophilic Substitution Predictor",
+      "concept": "Substituents already on a benzene ring direct the next group to ortho, meta, or para positions depending on whether they donate or withdraw electrons. A decision tree trained on directing rules predicts the major product.",
+      "key_params": {
+        "substituent": "existing ring substituent",
+        "electrophile": "incoming electrophile",
+        "reaction_conditions": "temperature and catalyst flags"
+      },
+      "data_idea": "A seeded RNG generates substituted benzenes with labeled directing outcomes, building a training set for the decision tree.",
+      "real_world_use": "Medicinal chemists plan aromatic substitution sequences during drug synthesis design.",
+      "suggested_types": [
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "functional-group-classifier",
+      "name": "Functional Group Classifier",
+      "concept": "Alcohols, ketones, acids, and amines each carry signature atom patterns that determine their chemistry. The classifier scans a molecular graph for these patterns and labels every functional group present.",
+      "key_params": {
+        "molecule_graph": "atoms and bonds representation",
+        "pattern_library": "functional group SMARTS-like patterns",
+        "training_size": "labeled molecules for training"
+      },
+      "data_idea": "A seeded RNG assembles molecules from fragments with known groups, generating a labeled dataset for the classifier.",
+      "real_world_use": "Cheminformatics pipelines tag functional groups when indexing compound libraries.",
+      "suggested_types": [
+        "naive_bayes",
+        "decision_tree"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "iupac-name-parser",
+      "name": "IUPAC Name Parser",
+      "concept": "Systematic names encode a molecule's skeleton: the parent chain length, substituent positions, and functional group suffixes. The parser tokenizes a name, validates it against naming rules, and reconstructs the connectivity.",
+      "key_params": {
+        "compound_name": "IUPAC name string",
+        "max_carbons": "longest chain to support",
+        "stereo_support": "whether to parse R/S and E/Z labels"
+      },
+      "data_idea": "A seeded RNG generates valid names from random skeletons, then feeds them to the parser for round-trip validation.",
+      "real_world_use": "Chemical database curators validate submitted names before registering new compounds.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "isomer-counter",
+      "name": "Isomer Counter",
+      "concept": "A single molecular formula can hide many constitutional isomers, and stereochemistry multiplies the count further. The counter enumerates distinct connectivity graphs and filters out duplicates by canonical labeling.",
+      "key_params": {
+        "molecular_formula": "formula string such as C4H10",
+        "max_atoms": "atom count cap",
+        "include_stereo": "whether to count stereoisomers"
+      },
+      "data_idea": "A seeded RNG draws molecular formulas from a hydrocarbon pool and logs the enumerated isomer counts as the demo dataset.",
+      "real_world_use": "Petroleum chemists estimate mixture complexity from isomer counts of hydrocarbon formulas.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "alkene-addition-predictor",
+      "name": "Alkene Addition Predictor",
+      "concept": "Adding reagents across a double bond follows Markovnikov's rule when a carbocation intermediate forms: the proton lands on the carbon that already has more hydrogens. The predictor applies regioselectivity rules to name the major addition product.",
+      "key_params": {
+        "alkene": "alkene structure label",
+        "reagent": "adding reagent such as HBr or H2O",
+        "peroxide_present": "whether peroxides flip the regiochemistry"
+      },
+      "data_idea": "A seeded RNG pairs alkenes with reagents, applies the selectivity rules, and logs the predicted major product.",
+      "real_world_use": "Process chemists predict addition products when designing alkene functionalization steps.",
+      "suggested_types": [
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "oxidation-number-calculator",
+      "name": "Oxidation Number Calculator",
+      "concept": "Oxidation numbers track electron bookkeeping by assigning shared electrons to the more electronegative atom. Standard rules handle oxygen, hydrogen, and halogens, leaving the unusual atom's number to solve for.",
+      "key_params": {
+        "compound_formula": "formula string",
+        "known_rules": "rule set for common elements",
+        "total_charge": "ion charge"
+      },
+      "data_idea": "A seeded RNG draws compounds and ions, applies the rule hierarchy, and logs the computed oxidation numbers.",
+      "real_world_use": "Analytical chemists balance redox equations starting from oxidation number assignments.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "redox-titration-analyzer",
+      "name": "Redox Titration Analyzer",
+      "concept": "In a redox titration the titrant oxidizes or reduces the analyte, and the equivalence point arrives when electrons donated equal electrons accepted. The analyzer fits the potential curve from a platinum electrode to locate the endpoint.",
+      "key_params": {
+        "analyte_moles": "moles of reducing agent",
+        "titrant_normality": "oxidant normality",
+        "electrode_noise": "potential noise in millivolts"
+      },
+      "data_idea": "A seeded RNG synthesizes potential-versus-volume curves with Nernstian shapes and noise, then exports them for endpoint fitting.",
+      "real_world_use": "Water labs determine dissolved oxygen and COD with redox titrations.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "carbonyl-reactivity-ranker",
+      "name": "Carbonyl Reactivity Ranker",
+      "concept": "Acid chlorides react fastest at the carbonyl carbon, followed by aldehydes, ketones, and finally unreactive amides, because electron donors stabilize the carbonyl against attack. The ranker orders compounds by computed electrophilicity descriptors.",
+      "key_params": {
+        "compound_list": "carbonyl compounds to rank",
+        "descriptor": "electrophilicity measure",
+        "solvent": "solvent label"
+      },
+      "data_idea": "A seeded RNG samples carbonyl compounds with descriptor values, ranks them, and compares against the known reactivity order.",
+      "real_world_use": "Synthetic chemists pick acylating agents by reactivity rank when planning routes.",
+      "suggested_types": [
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "polymer-molecular-weight-analyzer",
+      "name": "Polymer Molecular Weight Analyzer",
+      "concept": "Polymer samples contain chains of many lengths, so chemists report averages: the number average weights short chains more while the weight average favors long ones. The analyzer computes both averages and the dispersity from a molecular weight distribution.",
+      "key_params": {
+        "distribution_type": "such as Schulz-Zimm or log-normal",
+        "mean_mw": "mean molecular weight in daltons",
+        "dispersity": "weight over number average"
+      },
+      "data_idea": "A seeded RNG draws chain lengths from the distribution, bins them like GPC data, and exports the chromatogram.",
+      "real_world_use": "Plastics manufacturers control product quality from gel permeation chromatography averages.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "polymerization-kinetics-model",
+      "name": "Polymerization Kinetics Model",
+      "concept": "Free-radical polymerization grows chains through initiation, propagation, and termination steps, with the kinetic chain length set by the propagation-to-termination ratio. The model integrates the rate equations to predict conversion and molecular weight over time.",
+      "key_params": {
+        "initiator_concentration": "initiator in moles per liter",
+        "propagation_rate": "kp in liters per mole-second",
+        "monomer_concentration": "monomer in moles per liter"
+      },
+      "data_idea": "A seeded RNG samples kinetic parameters, integrates the polymerization ODEs, and logs conversion and average chain length.",
+      "real_world_use": "Polymer plants tune initiator feeds to hit target molecular weights.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "glass-transition-estimator",
+      "name": "Glass Transition Estimator",
+      "concept": "The glass transition temperature marks where a polymer shifts from rigid glass to flexible rubber as chain segments gain mobility. It rises with chain stiffness and crosslinking, and the estimator predicts it from structural descriptors.",
+      "key_params": {
+        "backbone_stiffness": "chain rigidity descriptor",
+        "side_group_size": "substituent bulk descriptor",
+        "crosslink_density": "crosslinks per chain"
+      },
+      "data_idea": "A seeded RNG samples polymers with descriptor values and known transitions, building a dataset for the estimator.",
+      "real_world_use": "Packaging engineers select polymers whose glass transition suits the service temperature.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "enzyme-kinetics-fitter",
+      "name": "Enzyme Kinetics Fitter",
+      "concept": "Enzyme-catalyzed reactions saturate: at low substrate the rate climbs linearly, then levels at Vmax when every active site is busy. The Michaelis constant Km is the substrate concentration giving half the maximum rate.",
+      "key_params": {
+        "vmax": "maximum rate in micromoles per minute",
+        "km": "Michaelis constant in millimolar",
+        "substrate_range": "concentration span tested"
+      },
+      "data_idea": "A seeded RNG generates initial-rate data with assay noise across substrate concentrations, then exports it for nonlinear fitting.",
+      "real_world_use": "Drug discovery teams measure inhibitor potency from enzyme kinetic fits.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "michaelis-menten-simulator",
+      "name": "Michaelis Menten Simulator",
+      "concept": "The Michaelis Menten equation describes how reaction velocity depends on substrate concentration for a simple enzyme mechanism. Simulating the underlying differential equations shows the transient burst before the steady state the equation assumes.",
+      "key_params": {
+        "enzyme_concentration": "total enzyme in micromolar",
+        "substrate_concentration": "initial substrate in millimolar",
+        "catalytic_rate": "kcat per second"
+      },
+      "data_idea": "A seeded RNG samples kinetic parameters, integrates the full mechanism ODEs, and logs the progress curves.",
+      "real_world_use": "Biochemists validate the steady-state assumption before trusting Michaelis Menten fits.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "protein-charge-calculator",
+      "name": "Protein Charge Calculator",
+      "concept": "A protein's net charge comes from its ionizable side chains, each titrating according to its pKa. The pH where the positive and negative charges balance is the isoelectric point, where the protein least wants to stay dissolved.",
+      "key_params": {
+        "amino_acid_sequence": "one-letter sequence string",
+        "ph": "solution pH",
+        "pka_table": "side-chain pKa values"
+      },
+      "data_idea": "A seeded RNG generates random peptide sequences, computes charge-versus-pH curves, and logs the isoelectric points.",
+      "real_world_use": "Protein purification teams choose chromatography pH from calculated isoelectric points.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "amino-acid-titration-model",
+      "name": "Amino Acid Titration Model",
+      "concept": "Amino acids are polyprotic: the carboxyl group deprotonates at low pH and the amino group at high pH, with side chains adding more steps. The titration curve shows flat buffer regions around each pKa separated by steep jumps.",
+      "key_params": {
+        "pka_carboxyl": "carboxyl pKa",
+        "pka_amino": "amino pKa",
+        "side_chain_pka": "side-chain pKa if present"
+      },
+      "data_idea": "A seeded RNG picks amino acids with their pKa sets, computes the titration curve, and adds pH noise.",
+      "real_world_use": "Biochemistry labs teach acid-base behavior through amino acid titrations.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dna-melting-temperature-calc",
+      "name": "DNA Melting Temperature Calculator",
+      "concept": "Double-stranded DNA separates when heated past its melting temperature, which rises with GC content because G-C pairs have three hydrogen bonds. Salt concentration also stabilizes the duplex by shielding the phosphate charges.",
+      "key_params": {
+        "sequence_length": "number of base pairs",
+        "gc_content": "fraction of G-C pairs",
+        "salt_concentration": "sodium concentration in moles per liter"
+      },
+      "data_idea": "A seeded RNG generates sequences with random GC content, computes melting temperatures, and converts between salt conditions.",
+      "real_world_use": "PCR assay designers pick primer annealing temperatures from melting calculations.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "metabolic-pathway-flow",
+      "name": "Metabolic Pathway Flow",
+      "concept": "Metabolic pathways chain enzyme reactions together, and the slowest step throttles the whole flux. The model integrates the coupled rate equations to find steady-state fluxes and which enzyme exerts the most control.",
+      "key_params": {
+        "enzyme_levels": "concentration of each enzyme",
+        "substrate_influx": "input flux in millimolar per second",
+        "pathway_length": "number of reaction steps"
+      },
+      "data_idea": "A seeded RNG samples enzyme levels and kinetic constants, integrates the pathway to steady state, and logs the fluxes.",
+      "real_world_use": "Metabolic engineers identify bottlenecks to boost biofuel yields in microbes.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "radioisotope-decay-calculator",
+      "name": "Radioisotope Decay Calculator",
+      "concept": "Radioactive isotopes decay exponentially with a fixed half-life, so the remaining activity after any time is a simple exponential of the elapsed half-lives. The calculator chains parent-daughter decays for isotope generators.",
+      "key_params": {
+        "half_life": "isotope half-life in days",
+        "initial_activity": "starting activity in becquerels",
+        "elapsed_time": "time in days"
+      },
+      "data_idea": "A seeded RNG samples isotopes and elapsed times, computes remaining activities, and converts between activity units.",
+      "real_world_use": "Nuclear medicine departments schedule doses around isotope decay calculations.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nuclear-binding-energy-calc",
+      "name": "Nuclear Binding Energy Calculator",
+      "concept": "Nuclei weigh less than their separate protons and neutrons because binding energy escapes as mass, and the binding energy per nucleon peaks near iron. The semi-empirical mass formula estimates binding from volume, surface, Coulomb, and asymmetry terms.",
+      "key_params": {
+        "mass_number": "total nucleons A",
+        "atomic_number": "protons Z",
+        "model": "semi-empirical mass formula terms"
+      },
+      "data_idea": "A seeded RNG samples nuclides across the chart, evaluates the mass formula, and logs binding energies per nucleon.",
+      "real_world_use": "Nuclear physicists estimate Q-values for reactions from mass-formula binding energies.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "carbon-dating-analyzer",
+      "name": "Carbon Dating Analyzer",
+      "concept": "Living things maintain a steady ratio of carbon-14 to carbon-12, but after death the carbon-14 decays with a 5730-year half-life. Measuring the remaining ratio in a sample reveals how long ago the organism died.",
+      "key_params": {
+        "measured_ratio": "carbon-14 to carbon-12 ratio",
+        "modern_ratio": "present-day reference ratio",
+        "measurement_error": "relative uncertainty"
+      },
+      "data_idea": "A seeded RNG assigns true ages to synthetic samples, computes their ratios with measurement noise, and exports the data for age fitting.",
+      "real_world_use": "Archaeologists date organic artifacts from radiocarbon measurements.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "activation-energy-barrier-plotter",
+      "name": "Activation Energy Barrier Plotter",
+      "concept": "A reaction coordinate diagram plots energy against reaction progress, with the hilltop marking the transition state and its height the activation energy. Comparing catalyzed and uncatalyzed profiles shows exactly where the catalyst helps.",
+      "key_params": {
+        "activation_energy": "barrier height in kilojoules per mole",
+        "reaction_enthalpy": "overall energy change",
+        "intermediate_count": "number of intermediates"
+      },
+      "data_idea": "A seeded RNG builds energy profiles with random barriers and intermediates, then exports the coordinates for plotting.",
+      "real_world_use": "Computational chemists visualize reaction pathways from calculated energy profiles.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "transition-state-analyzer",
+      "name": "Transition State Analyzer",
+      "concept": "Transition state theory says the rate is proportional to the concentration of the activated complex, which the Eyring equation relates to the enthalpy and entropy of activation. Plotting log rate over temperature against inverse temperature extracts both.",
+      "key_params": {
+        "activation_enthalpy": "enthalpy of activation in kilojoules per mole",
+        "activation_entropy": "entropy of activation in joules per mole-kelvin",
+        "temperature_range": "span in kelvin"
+      },
+      "data_idea": "A seeded RNG generates Eyring plots with experimental scatter from known activation parameters, ready for fitting.",
+      "real_world_use": "Physical chemists distinguish associative from dissociative mechanisms via activation entropy signs.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rate-law-integrator",
+      "name": "Rate Law Integrator",
+      "concept": "Integrating a differential rate law gives the concentration as an explicit function of time for first, second, and zero-order reactions. The integrator solves these analytically and numerically to compare the concentration profiles.",
+      "key_params": {
+        "rate_constant": "rate constant with order-appropriate units",
+        "reaction_order": "0, 1, or 2",
+        "initial_concentration": "starting concentration in moles per liter"
+      },
+      "data_idea": "A seeded RNG samples rate constants and orders, integrates the rate laws, and logs the concentration-time curves.",
+      "real_world_use": "Reactor designers predict batch times from integrated rate laws.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "consecutive-reaction-solver",
+      "name": "Consecutive Reaction Solver",
+      "concept": "In A to B to C sequences, the intermediate B rises then falls as it is made and consumed. Solving the coupled equations shows when B peaks, which matters for isolating it before it reacts away.",
+      "key_params": {
+        "rate_k1": "first step rate constant per second",
+        "rate_k2": "second step rate constant per second",
+        "initial_a": "starting concentration of A"
+      },
+      "data_idea": "A seeded RNG samples rate constant pairs, solves the consecutive kinetics, and logs the intermediate peak time and height.",
+      "real_world_use": "Pharmaceutical chemists time quenches to catch intermediates in multi-step syntheses.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "steady-state-approximation-demo",
+      "name": "Steady State Approximation Demo",
+      "concept": "Reactive intermediates stay at tiny, nearly constant concentrations because they are consumed as fast as they form. Setting their net rate to zero simplifies complex mechanisms into usable rate laws.",
+      "key_params": {
+        "mechanism_steps": "elementary steps in the mechanism",
+        "intermediate": "species assumed at steady state",
+        "rate_constants": "step rate constants"
+      },
+      "data_idea": "A seeded RNG builds mechanisms with random rate constants, integrates the full system, and compares with the steady-state rate law.",
+      "real_world_use": "Kineticists derive rate laws for chain reactions with the steady-state approximation.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "collision-theory-simulator",
+      "name": "Collision Theory Simulator",
+      "concept": "Molecules react only when they collide with enough energy and the right orientation, so the rate equals the collision frequency times the energetic and steric fractions. The simulator tracks synthetic molecules and counts fruitful collisions.",
+      "key_params": {
+        "molecule_count": "number of simulated molecules",
+        "activation_energy": "energy threshold in kilojoules per mole",
+        "steric_factor": "orientation probability from 0 to 1"
+      },
+      "data_idea": "A seeded RNG initializes molecular velocities from a Maxwell Boltzmann draw, steps the collisions, and logs reactive events.",
+      "real_world_use": "Gas-phase kineticists estimate pre-exponential factors from collision theory.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "adsorption-isotherm-fitter",
+      "name": "Adsorption Isotherm Fitter",
+      "concept": "Gas molecules sticking to a surface follow isotherms that relate the adsorbed amount to the gas pressure. The Langmuir form assumes a single molecular layer while the Freundlich form handles heterogeneous surfaces.",
+      "key_params": {
+        "max_capacity": "monolayer capacity in millimoles per gram",
+        "affinity_constant": "Langmuir K in per kilopascal",
+        "pressure_range": "measurement span in kilopascals"
+      },
+      "data_idea": "A seeded RNG generates adsorption data from isotherm models with pressure noise, then exports it for fitting.",
+      "real_world_use": "Materials teams characterize activated carbon and catalysts from adsorption isotherms.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "langmuir-surface-model",
+      "name": "Langmuir Surface Model",
+      "concept": "The Langmuir model treats adsorption as molecules filling identical surface sites with no interactions between them. Coverage rises steeply at low pressure and saturates at a full monolayer, which the model maps for catalytic surfaces.",
+      "key_params": {
+        "site_density": "adsorption sites per square nanometer",
+        "adsorption_energy": "binding energy in kilojoules per mole",
+        "gas_pressure": "pressure in kilopascals"
+      },
+      "data_idea": "A seeded RNG samples site densities and binding energies, computes coverage versus pressure, and logs the isotherms.",
+      "real_world_use": "Heterogeneous catalysis researchers estimate active site coverage under reaction conditions.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "catalyst-screening-analyzer",
+      "name": "Catalyst Screening Analyzer",
+      "concept": "Screening campaigns test dozens of catalyst formulations and cluster them by activity and selectivity descriptors. The analyzer groups similar performers and flags the most promising region of formulation space.",
+      "key_params": {
+        "formulation_count": "number of catalysts tested",
+        "descriptor_count": "measured properties per catalyst",
+        "cluster_count": "number of performance groups"
+      },
+      "data_idea": "A seeded RNG synthesizes catalyst performance data with cluster structure and noise, then exports the descriptor matrix.",
+      "real_world_use": "High-throughput catalysis labs triage thousands of formulations with clustering.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "q10-temperature-coefficient",
+      "name": "Q10 Temperature Coefficient Calculator",
+      "concept": "The Q10 coefficient says how many times faster a reaction runs when the temperature rises ten degrees, typically around two to three for chemical reactions. It gives a quick rule of thumb for temperature sensitivity without full Arrhenius data.",
+      "key_params": {
+        "rate_low_temp": "rate at the lower temperature",
+        "rate_high_temp": "rate ten degrees higher",
+        "reference_temp": "baseline temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG samples rate pairs from Arrhenius kinetics, computes Q10 values, and logs the temperature sensitivity.",
+      "real_world_use": "Food scientists estimate shelf-life changes from Q10 rules for storage temperatures.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "density-mixture-calculator",
+      "name": "Density Mixture Calculator",
+      "concept": "The density of a mixture is the total mass over the total volume, but volumes do not always add ideally when liquids mix. The calculator handles ideal mixing and applies excess-volume corrections for common pairs.",
+      "key_params": {
+        "component_densities": "pure densities in grams per milliliter",
+        "mass_fractions": "mass fraction of each component",
+        "excess_volume": "non-ideality correction"
+      },
+      "data_idea": "A seeded RNG builds mixtures with random compositions, computes ideal and corrected densities, and logs the results.",
+      "real_world_use": "Beverage and fuel blenders hit target densities from mixture calculations.",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "empirical-formula-fitter",
+      "name": "Empirical Formula Fitter",
+      "concept": "Combustion analysis gives the mass of each element in a compound, and dividing by atomic weights then by the smallest value yields the simplest whole-number ratio. The fitter converts elemental analysis data into empirical formulas.",
+      "key_params": {
+        "element_masses": "measured mass of each element in grams",
+        "sample_mass": "total sample mass in grams",
+        "measurement_error": "relative analytical error"
+      },
+      "data_idea": "A seeded RNG picks compounds, simulates elemental analysis with noise, and exports the mass data for formula fitting.",
+      "real_world_use": "Forensic labs identify unknown organics from elemental analysis.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "percent-yield-analyzer",
+      "name": "Percent Yield Analyzer",
+      "concept": "Percent yield is the actual product mass divided by the theoretical maximum, and values below one hundred percent reveal side reactions or losses. The analyzer tracks yields across batches and flags runs that drift from the norm.",
+      "key_params": {
+        "theoretical_yield": "maximum product in grams",
+        "actual_yield": "recovered product in grams",
+        "batch_count": "number of batches to analyze"
+      },
+      "data_idea": "A seeded RNG simulates batch yields with process variation and occasional outliers, then exports the batch records.",
+      "real_world_use": "Production chemists monitor batch yields to catch process drift early.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gravimetric-analysis-calc",
+      "name": "Gravimetric Analysis Calculator",
+      "concept": "Gravimetric analysis precipitates the analyte as a weighable solid, and the gravimetric factor converts the precipitate mass back to analyte mass. Drying to constant weight removes the water that would inflate the result.",
+      "key_params": {
+        "precipitate_mass": "dried precipitate in grams",
+        "gravimetric_factor": "analyte mass per precipitate mass",
+        "sample_mass": "original sample in grams"
+      },
+      "data_idea": "A seeded RNG simulates precipitations with weighing noise, computes analyte percentages, and logs the results.",
+      "real_world_use": "Mining labs assay ore grades by gravimetric precipitation.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "complexometric-titration-model",
+      "name": "Complexometric Titration Model",
+      "concept": "EDTA wraps around metal ions in a one-to-one complex, so titrating with EDTA measures total hardness or metal content directly. A metal indicator changes color when the last free metal ion is complexed.",
+      "key_params": {
+        "edta_concentration": "titrant concentration in moles per liter",
+        "metal_concentration": "analyte concentration",
+        "formation_constant": "log of the metal-EDTA constant"
+      },
+      "data_idea": "A seeded RNG synthesizes complexometric titration curves with indicator transition noise, then exports the data.",
+      "real_world_use": "Water utilities measure calcium and magnesium hardness by EDTA titration.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "precipitation-curve-analyzer",
+      "name": "Precipitation Curve Analyzer",
+      "concept": "Adding precipitant to a metal solution first builds soluble complexes, then solid appears once the solubility product is exceeded. The analyzer traces the precipitation curve and finds the reagent volume where the solid first forms.",
+      "key_params": {
+        "metal_concentration": "initial metal in moles per liter",
+        "ksp": "solubility product",
+        "precipitant_concentration": "titrant concentration"
+      },
+      "data_idea": "A seeded RNG samples metal systems, computes the precipitation onset, and logs the full titration curve.",
+      "real_world_use": "Wastewater plants dose precipitants to remove heavy metals from effluent.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "flame-test-color-predictor",
+      "name": "Flame Test Color Predictor",
+      "concept": "Heated metal ions emit characteristic colors as excited electrons fall back: sodium burns yellow, potassium lilac, calcium orange-red. The predictor maps elements to their flame colors for qualitative identification.",
+      "key_params": {
+        "element": "element symbol",
+        "flame_temperature": "flame temperature in kelvin",
+        "observation": "reported color description"
+      },
+      "data_idea": "A seeded RNG pairs elements with their known flame colors and generates quiz items with distractors.",
+      "real_world_use": "Teaching labs introduce qualitative analysis with flame tests.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "qualitative-analysis-tree",
+      "name": "Qualitative Analysis Tree",
+      "concept": "Classic qualitative analysis separates cations into groups by selective precipitation: chlorides first, then sulfides in acid, then sulfides in base. A decision tree walks through the separation scheme from observed precipitates to ion identity.",
+      "key_params": {
+        "observed_precipitates": "list of precipitation observations",
+        "group_reagents": "reagents used per group",
+        "training_cases": "labeled analysis runs"
+      },
+      "data_idea": "A seeded RNG simulates separation schemes for random ion mixtures, recording observations and the true ions present.",
+      "real_world_use": "Analytical chemistry courses still teach systematic cation analysis as a logic exercise.",
+      "suggested_types": [
+        "decision_tree",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "spectrophotometer-calibrator",
+      "name": "Spectrophotometer Calibrator",
+      "concept": "A spectrophotometer needs calibration against standards of known absorbance before it can quantify unknowns. The calibrator fits the standard curve, checks linearity, and estimates the detection limit from the blank noise.",
+      "key_params": {
+        "standard_absorbances": "known absorbance values",
+        "blank_readings": "blank replicate measurements",
+        "wavelength": "measurement wavelength in nanometers"
+      },
+      "data_idea": "A seeded RNG generates standard curves with photometric noise and blank replicates, then exports the calibration data.",
+      "real_world_use": "Environmental labs calibrate every instrument run before analyzing water samples.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ph-meter-calibration-lab",
+      "name": "pH Meter Calibration Lab",
+      "concept": "A pH electrode is calibrated with buffers of known pH, typically 4, 7, and 10, and the slope between them should be near 59 millivolts per pH unit. Drift or a flat slope signals a failing electrode.",
+      "key_params": {
+        "buffer_ph_values": "calibration buffer pH values",
+        "measured_mv": "electrode readings in millivolts",
+        "temperature": "calibration temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG simulates electrode responses with Nernstian slopes and drift, then exports the calibration readings.",
+      "real_world_use": "Field technicians calibrate pH meters before every round of water sampling.",
+      "suggested_types": [
+        "linear_regression",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "water-hardness-analyzer",
+      "name": "Water Hardness Analyzer",
+      "concept": "Water hardness is the combined calcium and magnesium concentration, usually reported as milligrams per liter of calcium carbonate equivalent. The analyzer converts titration or sensor data into hardness and classifies the water from soft to very hard.",
+      "key_params": {
+        "calcium_concentration": "calcium in milligrams per liter",
+        "magnesium_concentration": "magnesium in milligrams per liter",
+        "sample_volume": "titrated volume in milliliters"
+      },
+      "data_idea": "A seeded RNG generates water samples with random hardness ions, simulates titration volumes with noise, and exports the results.",
+      "real_world_use": "Municipal water plants monitor hardness to control scaling in distribution systems.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "air-quality-index-calculator",
+      "name": "Air Quality Index Calculator",
+      "concept": "The air quality index converts pollutant concentrations into a single 0 to 500 scale using breakpoint tables, with the worst pollutant setting the overall index. The calculator ingests sensor readings and reports the index with its health category.",
+      "key_params": {
+        "pm25": "fine particulate in micrograms per cubic meter",
+        "ozone_ppb": "ozone in parts per billion",
+        "no2_ppb": "nitrogen dioxide in parts per billion"
+      },
+      "data_idea": "A seeded RNG synthesizes pollutant time series with diurnal patterns and sensor noise, then exports them for index computation.",
+      "real_world_use": "Environmental agencies publish daily air quality indices from monitoring networks.",
+      "suggested_types": [
+        "monitoring_agent",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ocean-acidification-model",
+      "name": "Ocean Acidification Model",
+      "concept": "Dissolving carbon dioxide forms carbonic acid, which lowers ocean pH and depletes the carbonate ions that shell-builders need. The model solves the carbonate equilibrium system for pH and saturation states under rising CO2.",
+      "key_params": {
+        "atmospheric_co2": "CO2 in parts per million",
+        "alkalinity": "total alkalinity in microequivalents per kilogram",
+        "temperature": "water temperature in celsius"
+      },
+      "data_idea": "A seeded RNG samples CO2 trajectories and ocean conditions, solves the carbonate system, and logs pH and aragonite saturation.",
+      "real_world_use": "Marine researchers project reef stress from ocean acidification models.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "greenhouse-gas-forcing-model",
+      "name": "Greenhouse Gas Forcing Model",
+      "concept": "Each greenhouse gas traps outgoing infrared radiation, and its radiative forcing grows logarithmically with concentration for CO2. The model sums the forcing from CO2, methane, and nitrous oxide to estimate the warming commitment.",
+      "key_params": {
+        "co2_ppm": "carbon dioxide in parts per million",
+        "ch4_ppb": "methane in parts per billion",
+        "n2o_ppb": "nitrous oxide in parts per billion"
+      },
+      "data_idea": "A seeded RNG samples emission scenarios, computes radiative forcing per gas, and logs the total forcing over time.",
+      "real_world_use": "Climate assessment teams compare mitigation pathways with forcing models.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "soil-ph-buffer-model",
+      "name": "Soil pH Buffer Model",
+      "concept": "Soils resist pH change through clay minerals and organic matter that exchange hydrogen and aluminum ions. The model estimates lime requirement from the buffer pH and target pH for crop production.",
+      "key_params": {
+        "soil_ph": "measured soil pH",
+        "buffer_ph": "buffer test pH",
+        "target_ph": "desired pH for the crop"
+      },
+      "data_idea": "A seeded RNG generates soil test results with lab noise, computes lime needs, and exports the recommendations.",
+      "real_world_use": "Agronomists prescribe lime applications from soil buffer tests.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "wastewater-treatment-analyzer",
+      "name": "Wastewater Treatment Analyzer",
+      "concept": "Treatment plants track biochemical oxygen demand, suspended solids, and nutrient levels through each process stage. The analyzer computes removal efficiencies and flags stages that underperform their design targets.",
+      "key_params": {
+        "influent_bod": "incoming BOD in milligrams per liter",
+        "effluent_bod": "outgoing BOD in milligrams per liter",
+        "flow_rate": "plant flow in million gallons per day"
+      },
+      "data_idea": "A seeded RNG simulates plant influent with daily variation, applies stage removal rates with noise, and logs the effluent quality.",
+      "real_world_use": "Plant operators prove permit compliance from treatment performance data.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "nutrient-cycle-tracker",
+      "name": "Nutrient Cycle Tracker",
+      "concept": "Nitrogen and phosphorus move between soil, plants, water, and air through fixation, uptake, runoff, and denitrification. The tracker balances the fluxes through each compartment to find where nutrients accumulate or leak.",
+      "key_params": {
+        "fertilizer_input": "applied nitrogen in kilograms per hectare",
+        "runoff_fraction": "fraction lost to runoff",
+        "crop_uptake": "plant uptake in kilograms per hectare"
+      },
+      "data_idea": "A seeded RNG samples farm nutrient budgets with weather-driven runoff noise, then exports the compartment balances.",
+      "real_world_use": "Watershed managers target nutrient reductions to prevent algal blooms.",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "atmospheric-ozone-model",
+      "name": "Atmospheric Ozone Model",
+      "concept": "Stratospheric ozone absorbs harmful ultraviolet light, but chlorine from old refrigerants catalytically destroys it in polar spring. The model integrates the catalytic cycle kinetics to track ozone column depth over the season.",
+      "key_params": {
+        "chlorine_loading": "stratospheric chlorine in parts per billion",
+        "temperature": "polar stratospheric temperature in kelvin",
+        "sunlight_hours": "daily sunlight in hours"
+      },
+      "data_idea": "A seeded RNG samples chlorine levels and temperatures, integrates the ozone destruction kinetics, and logs the ozone column.",
+      "real_world_use": "Atmospheric scientists verify Montreal Protocol recovery with ozone models.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "acid-rain-impact-model",
+      "name": "Acid Rain Impact Model",
+      "concept": "Sulfur and nitrogen oxides form acids in rainwater, dropping its pH and leaching base cations from soils. The model links emission rates to deposition pH and estimates the buffering capacity a watershed needs.",
+      "key_params": {
+        "so2_emissions": "sulfur dioxide in kilotons per year",
+        "no2_emissions": "nitrogen dioxide in kilotons per year",
+        "rainfall": "annual rainfall in millimeters"
+      },
+      "data_idea": "A seeded RNG samples emission and rainfall scenarios, computes rain pH, and logs the acid load per watershed.",
+      "real_world_use": "Regulators set emission caps from acid deposition modeling.",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "chemical-equilibrium-game",
+      "name": "Chemical Equilibrium Game",
+      "concept": "Players disturb a virtual equilibrium by adding reactants or changing temperature, then predict which way the system shifts. Scoring rewards correct Le Chatelier predictions and penalizes overshooting the new equilibrium.",
+      "key_params": {
+        "round_count": "number of game rounds",
+        "disturbance_pool": "types of disturbances offered",
+        "difficulty_level": "beginner to advanced"
+      },
+      "data_idea": "A seeded RNG generates equilibrium scenarios with random K values and disturbances, then logs player predictions versus outcomes.",
+      "real_world_use": "Educational game designers use equilibrium mechanics to teach shifting systems.",
+      "suggested_types": [
+        "terminal_game",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "element-flashcard-engine",
+      "name": "Element Flashcard Engine",
+      "concept": "Spaced repetition schedules element facts for review just before they are forgotten, making symbol, name, and number recall stick. The engine tracks each card's difficulty and prioritizes the weakest ones.",
+      "key_params": {
+        "card_count": "number of element cards",
+        "review_interval": "base spacing in days",
+        "mastery_threshold": "correct recalls to retire a card"
+      },
+      "data_idea": "A seeded RNG simulates learner recall probabilities per card, schedules reviews, and logs the learning curve.",
+      "real_world_use": "Study apps use spaced repetition engines for vocabulary and science facts.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "molecule-builder-sandbox",
+      "name": "Molecule Builder Sandbox",
+      "concept": "The sandbox lets users snap atoms together into molecules while enforcing valence rules, so impossible structures get rejected with an explanation. Built molecules can be checked for formula, molar mass, and basic geometry.",
+      "key_params": {
+        "atom_palette": "elements available to place",
+        "max_atoms": "molecule size cap",
+        "valence_rules": "allowed bonds per element"
+      },
+      "data_idea": "A seeded RNG assembles random valid molecules from the palette, then exports their formulas and properties.",
+      "real_world_use": "Chemistry learning apps let students practice structure building safely.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "periodic-table-explorer",
+      "name": "Periodic Table Explorer",
+      "concept": "The explorer presents every element with its key properties and lets users sort and filter by group, period, state, or property ranges. A simulated API serves the element data so the interface works offline.",
+      "key_params": {
+        "filter_property": "property to filter by",
+        "sort_order": "ascending or descending",
+        "detail_level": "basic or extended element data"
+      },
+      "data_idea": "A seeded RNG is not needed for the fixed element dataset; the simulated API serves element records with pagination for the explorer.",
+      "real_world_use": "Reference apps and classroom tools browse element data through explorers like this.",
+      "suggested_types": [
+        "web_dashboard",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "lab-safety-quiz-engine",
+      "name": "Lab Safety Quiz Engine",
+      "concept": "Safe lab work means knowing where the eyewash is, which waste goes in which container, and what to do when a spill happens. The quiz engine draws scenario questions from safety rules and tracks certification readiness.",
+      "key_params": {
+        "question_bank_size": "number of safety questions",
+        "pass_score": "required percentage to pass",
+        "topic_weights": "weights per safety topic"
+      },
+      "data_idea": "A seeded RNG samples questions by topic weights, generates answer options, and logs the quiz sessions.",
+      "real_world_use": "Universities require safety quiz certification before students enter teaching labs.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "unit-conversion-chemistry",
+      "name": "Chemistry Unit Converter",
+      "concept": "Chemistry constantly converts between grams, moles, liters, atmospheres, and joules, and a missed conversion ruins an experiment. The converter chains unit factors with dimensional checks so incompatible units get rejected.",
+      "key_params": {
+        "value": "numeric value to convert",
+        "from_unit": "source unit string",
+        "to_unit": "target unit string"
+      },
+      "data_idea": "A seeded RNG generates conversion problems across chemistry units with random values, then logs the correct answers.",
+      "real_world_use": "Lab software embeds unit converters in solution preparation calculators.",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "significant-figures-tutor",
+      "name": "Significant Figures Tutor",
+      "concept": "Significant figures track measurement precision through calculations: multiplication keeps the fewest figures while addition keeps the coarsest decimal place. The tutor generates problems and explains each rounding step.",
+      "key_params": {
+        "problem_count": "number of practice problems",
+        "operation_mix": "add, multiply, or mixed problems",
+        "figure_range": "significant figures per value"
+      },
+      "data_idea": "A seeded RNG builds arithmetic problems with random values, computes the correctly rounded answers, and logs the steps.",
+      "real_world_use": "Introductory lab courses drill significant figures before any quantitative experiment.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dimensional-analysis-solver",
+      "name": "Dimensional Analysis Solver",
+      "concept": "Factor-label method strings unit conversions end to end so unwanted units cancel, leaving only the target. The solver plans the conversion chain and shows each cancellation step.",
+      "key_params": {
+        "start_unit": "starting unit",
+        "target_unit": "desired unit",
+        "given_value": "numeric starting value"
+      },
+      "data_idea": "A seeded RNG creates conversion chains of random length from a unit graph, then exports the problem and solution steps.",
+      "real_world_use": "Engineering students use dimensional analysis to check that equations balance.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gas-chromatography-sim",
+      "name": "Gas Chromatography Simulator",
+      "concept": "Gas chromatography vaporizes a mixture and sweeps it through a column where components separate by volatility and affinity. The simulator models retention, peak broadening, and temperature programming effects.",
+      "key_params": {
+        "component_count": "number of analytes",
+        "column_temperature": "oven temperature in celsius",
+        "carrier_flow": "carrier gas flow in milliliters per minute"
+      },
+      "data_idea": "A seeded RNG assigns retention factors to analytes, synthesizes the chromatogram with noise, and exports the trace.",
+      "real_world_use": "Petrochemical labs identify fuel components from GC retention data.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "distillation-column-model",
+      "name": "Distillation Column Model",
+      "concept": "A distillation column enriches the volatile component stage by stage, with the McCabe Thiele method stepping between the equilibrium curve and the operating line. The model computes the theoretical stages needed for a target purity.",
+      "key_params": {
+        "feed_composition": "mole fraction of the volatile component",
+        "reflux_ratio": "reflux to distillate ratio",
+        "target_purity": "desired distillate purity"
+      },
+      "data_idea": "A seeded RNG samples feed compositions and reflux ratios, steps off the McCabe Thiele stages, and logs the stage count.",
+      "real_world_use": "Refinery engineers size distillation towers from stage calculations.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "extraction-efficiency-calc",
+      "name": "Extraction Efficiency Calculator",
+      "concept": "Liquid-liquid extraction pulls a solute into a second solvent according to the partition coefficient, and multiple small extractions beat one large one. The calculator finds the recovered fraction for any extraction scheme.",
+      "key_params": {
+        "partition_coefficient": "distribution ratio between solvents",
+        "solvent_volumes": "volume per extraction in milliliters",
+        "extraction_count": "number of sequential extractions"
+      },
+      "data_idea": "A seeded RNG samples partition coefficients and schemes, computes recovery per scheme, and logs the efficiencies.",
+      "real_world_use": "Natural product chemists optimize extractions to isolate compounds from plant material.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "recrystallization-yield-model",
+      "name": "Recrystallization Yield Model",
+      "concept": "Recrystallization purifies by dissolving in hot solvent and cooling so pure crystals grow while impurities stay dissolved. The yield is the solubility difference between hot and cold, minus what the cold solvent keeps.",
+      "key_params": {
+        "hot_solubility": "solubility at boiling in grams per 100 milliliters",
+        "cold_solubility": "solubility at ice temperature",
+        "crude_mass": "starting impure mass in grams"
+      },
+      "data_idea": "A seeded RNG samples solubility pairs and impurity levels, computes the recovered crystal mass, and logs purity estimates.",
+      "real_world_use": "Organic synthesis labs purify products by recrystallization before characterization.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "thin-layer-chromatography-analyzer",
+      "name": "Thin Layer Chromatography Analyzer",
+      "concept": "In TLC, compounds climb a plate at different rates and the retention factor Rf is the spot distance over the solvent front distance. The analyzer measures spot positions from synthetic plate images and computes Rf values.",
+      "key_params": {
+        "spot_count": "number of spots on the plate",
+        "solvent_front": "front distance in centimeters",
+        "spot_noise": "position noise in millimeters"
+      },
+      "data_idea": "A seeded RNG places spots at random Rf values on synthetic plates with noise, then exports the plate data.",
+      "real_world_use": "Organic chemists check reaction progress and purity with quick TLC plates.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "melting-point-analyzer",
+      "name": "Melting Point Analyzer",
+      "concept": "A pure compound melts over a narrow range while impurities depress and broaden the melting point. The analyzer fits melting curves from synthetic apparatus data to report the range and purity verdict.",
+      "key_params": {
+        "true_melting_point": "pure melting point in celsius",
+        "impurity_level": "mole fraction of impurity",
+        "heating_rate": "degrees per minute"
+      },
+      "data_idea": "A seeded RNG simulates melting curves with impurity broadening and observer noise, then exports the traces.",
+      "real_world_use": "Synthesis labs confirm product identity and purity from melting point ranges.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "boiling-point-elevation-lab",
+      "name": "Boiling Point Elevation Lab",
+      "concept": "Dissolved solute raises the boiling point in proportion to molality, which is why salted water boils slightly hotter. The lab measures the elevation and back-calculates the solute concentration.",
+      "key_params": {
+        "solute_molality": "molality in moles per kilogram",
+        "ebullioscopic_constant": "Kb in kelvin-kilogram per mole",
+        "vant_hoff_factor": "particles per formula unit"
+      },
+      "data_idea": "A seeded RNG dissolves solutes at random molalities, computes the boiling elevation, and adds thermometer noise.",
+      "real_world_use": "Antifreeze testers infer coolant concentration from boiling point measurements.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vapor-pressure-curve-fitter",
+      "name": "Vapor Pressure Curve Fitter",
+      "concept": "Vapor pressure rises steeply with temperature as more molecules escape the liquid surface. Fitting the Antoine equation to measured pressures gives the constants that predict boiling points at any pressure.",
+      "key_params": {
+        "antoine_a": "Antoine constant A",
+        "antoine_b": "Antoine constant B",
+        "antoine_c": "Antoine constant C"
+      },
+      "data_idea": "A seeded RNG samples Antoine constants for liquids, generates pressure-temperature data with gauge noise, and exports it for fitting.",
+      "real_world_use": "Distillation designers predict column pressures from Antoine constants.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "clausius-clapeyron-fitter",
+      "name": "Clausius Clapeyron Fitter",
+      "concept": "The Clausius Clapeyron equation links vapor pressure to temperature through the enthalpy of vaporization: a plot of log pressure against inverse temperature is a straight line. Its slope gives the heat needed to vaporize a mole.",
+      "key_params": {
+        "vaporization_enthalpy": "delta H vap in kilojoules per mole",
+        "temperature_range": "measurement span in kelvin",
+        "pressure_noise": "relative gauge noise"
+      },
+      "data_idea": "A seeded RNG generates vapor pressure data from known enthalpies with noise, then exports it for the log-inverse fit.",
+      "real_world_use": "Refrigerant engineers compare working fluids by their vaporization enthalpies.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "phase-diagram-explorer",
+      "name": "Phase Diagram Explorer",
+      "concept": "A pressure-temperature phase diagram maps where a substance is solid, liquid, or gas, with the triple point where all three coexist. The explorer traces phase boundaries and identifies the phase at any point.",
+      "key_params": {
+        "triple_point": "triple point pressure and temperature",
+        "critical_point": "critical pressure and temperature",
+        "query_point": "pressure and temperature to classify"
+      },
+      "data_idea": "A seeded RNG samples substances with random triple and critical points, classifies query points, and logs the phase map.",
+      "real_world_use": "Materials engineers choose processing conditions from phase diagrams.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "triple-point-calculator",
+      "name": "Triple Point Calculator",
+      "concept": "The triple point is the unique temperature and pressure where solid, liquid, and gas coexist in equilibrium. Water's triple point at 273.16 kelvin once defined the kelvin scale itself.",
+      "key_params": {
+        "substance": "substance label",
+        "triple_temp": "triple point temperature in kelvin",
+        "triple_pressure": "triple point pressure in kilopascals"
+      },
+      "data_idea": "A seeded RNG looks up triple point data for random substances and converts between temperature and pressure units.",
+      "real_world_use": "Metrology labs calibrate thermometers against fixed-point cells at triple points.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "supercritical-fluid-model",
+      "name": "Supercritical Fluid Model",
+      "concept": "Above the critical point, the liquid-gas boundary vanishes and the fluid gains liquid-like density with gas-like diffusivity. Supercritical carbon dioxide is a green solvent for decaffeination and extraction because its solvating power tunes with pressure.",
+      "key_params": {
+        "critical_temperature": "critical temperature in kelvin",
+        "critical_pressure": "critical pressure in megapascals",
+        "operating_pressure": "process pressure in megapascals"
+      },
+      "data_idea": "A seeded RNG samples operating points near the critical region, computes density from an equation of state, and logs the solvent power.",
+      "real_world_use": "Food and pharma industries extract flavors and compounds with supercritical CO2.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "hydrogen-bonding-analyzer",
+      "name": "Hydrogen Bonding Analyzer",
+      "concept": "Hydrogen bonds form when hydrogen attached to nitrogen, oxygen, or fluorine reaches toward a lone pair on a neighbor, and they explain water's high boiling point. The analyzer counts donors and acceptors in a structure to predict hydrogen-bonding strength.",
+      "key_params": {
+        "donor_count": "hydrogen bond donors",
+        "acceptor_count": "hydrogen bond acceptors",
+        "molecule": "molecule label"
+      },
+      "data_idea": "A seeded RNG builds molecules with random donor and acceptor counts, estimates the network strength, and logs the predictions.",
+      "real_world_use": "Drug designers count hydrogen bonds to predict how tightly a molecule binds its target.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "intermolecular-forces-ranker",
+      "name": "Intermolecular Forces Ranker",
+      "concept": "London dispersion forces act between all molecules, dipole-dipole adds for polar ones, and hydrogen bonding dominates when available. Ranking these forces for a set of compounds predicts their relative boiling points.",
+      "key_params": {
+        "compound_list": "compounds to rank",
+        "polarity": "dipole moment per compound in debye",
+        "molar_mass": "molar mass in grams per mole"
+      },
+      "data_idea": "A seeded RNG samples compounds with force descriptors, ranks them by predicted boiling point, and compares with reference data.",
+      "real_world_use": "Solvent formulators pick carriers by volatility predicted from intermolecular forces.",
+      "suggested_types": [
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dipole-dipole-interaction-model",
+      "name": "Dipole Dipole Interaction Model",
+      "concept": "Polar molecules attract when their dipoles align head to tail, with an energy that falls off as the inverse cube of distance. Averaging over thermal rotation weakens the attraction, which the Keesom model quantifies.",
+      "key_params": {
+        "dipole_a": "first dipole moment in debye",
+        "dipole_b": "second dipole moment in debye",
+        "separation": "center distance in angstroms"
+      },
+      "data_idea": "A seeded RNG samples dipole pairs and orientations, computes the orientation-averaged energy, and logs the attraction.",
+      "real_world_use": "Physical chemists estimate solvation energies from dipole interaction models.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "surface-tension-analyzer",
+      "name": "Surface Tension Analyzer",
+      "concept": "Surface tension is the energy cost of creating new liquid surface, measured by the force on a ring pulled from the liquid or the height of capillary rise. Surfactants lower it by crowding the interface.",
+      "key_params": {
+        "ring_radius": "Du Nouy ring radius in millimeters",
+        "pull_force": "measured force in millinewtons",
+        "temperature": "liquid temperature in celsius"
+      },
+      "data_idea": "A seeded RNG synthesizes ring-pull measurements with force noise for liquids of known tension, then exports the readings.",
+      "real_world_use": "Detergent formulators benchmark surfactants by surface tension reduction.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "viscosity-temperature-fitter",
+      "name": "Viscosity Temperature Fitter",
+      "concept": "Liquid viscosity drops exponentially with temperature following an Arrhenius-like relation, since heat helps molecules slide past each other. Fitting viscosity data against inverse temperature extracts the flow activation energy.",
+      "key_params": {
+        "activation_energy": "flow activation energy in kilojoules per mole",
+        "reference_viscosity": "viscosity at reference temperature in centipoise",
+        "temperature_range": "span in kelvin"
+      },
+      "data_idea": "A seeded RNG generates viscosity-temperature data with viscometer noise, then exports it for the Arrhenius-style fit.",
+      "real_world_use": "Lubricant engineers grade motor oils by viscosity-temperature behavior.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "capillary-action-model",
+      "name": "Capillary Action Model",
+      "concept": "Liquid climbs a narrow tube when adhesion to the wall beats the liquid's own cohesion, with the rise height inversely proportional to the tube radius. The model balances surface tension against the weight of the lifted column.",
+      "key_params": {
+        "tube_radius": "capillary radius in millimeters",
+        "surface_tension": "liquid surface tension in newtons per meter",
+        "contact_angle": "wetting angle in degrees"
+      },
+      "data_idea": "A seeded RNG samples tube radii and liquids, computes the capillary rise, and logs the heights.",
+      "real_world_use": "Paper diagnostics and soil scientists rely on capillary flow in porous media.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "osmosis-pressure-calculator",
+      "name": "Osmosis Pressure Calculator",
+      "concept": "Osmotic pressure drives water across a semipermeable membrane toward the saltier side, following the van't Hoff relation that mirrors the ideal gas law. Reverse osmosis overcomes this pressure to desalinate seawater.",
+      "key_params": {
+        "solute_concentration": "moles per liter",
+        "vant_hoff_factor": "particles per formula unit",
+        "temperature": "temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG samples solute concentrations and temperatures, computes osmotic pressures, and converts between pressure units.",
+      "real_world_use": "Desalination plants size pumps to exceed the osmotic pressure of seawater.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dialysis-rate-model",
+      "name": "Dialysis Rate Model",
+      "concept": "Dialysis clears small solutes through a membrane by diffusion while retaining large molecules, with clearance depending on membrane area and the concentration gradient. The model integrates the mass balance to predict solute removal over time.",
+      "key_params": {
+        "membrane_area": "dialyzer area in square meters",
+        "blood_flow": "flow rate in milliliters per minute",
+        "initial_urea": "starting urea in milligrams per deciliter"
+      },
+      "data_idea": "A seeded RNG samples dialyzer parameters, integrates the clearance equations, and logs the concentration decay.",
+      "real_world_use": "Nephrologists prescribe dialysis dose from urea clearance models.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "emulsion-stability-analyzer",
+      "name": "Emulsion Stability Analyzer",
+      "concept": "Emulsions of oil and water droplets are stabilized by surfactants that lower interfacial tension and provide electrostatic or steric repulsion. The analyzer combines droplet size data with zeta potential to score stability.",
+      "key_params": {
+        "droplet_size": "mean droplet diameter in micrometers",
+        "zeta_potential": "surface potential in millivolts",
+        "surfactant_concentration": "concentration in weight percent"
+      },
+      "data_idea": "A seeded RNG generates droplet size distributions with light-scattering noise, then exports them with stability labels.",
+      "real_world_use": "Cosmetics and food companies shelf-test emulsions from droplet and charge data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "colloid-size-analyzer",
+      "name": "Colloid Size Analyzer",
+      "concept": "Dynamic light scattering infers particle size from how fast intensity fluctuations decay, since small particles diffuse faster. The analyzer fits the autocorrelation function to extract the hydrodynamic radius distribution.",
+      "key_params": {
+        "scattering_angle": "detector angle in degrees",
+        "solvent_viscosity": "viscosity in centipoise",
+        "temperature": "temperature in kelvin"
+      },
+      "data_idea": "A seeded RNG synthesizes autocorrelation decays for particle populations with detector noise, then exports the traces.",
+      "real_world_use": "Nanoparticle manufacturers verify batch sizes with light scattering analysis.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "zeta-potential-calculator",
+      "name": "Zeta Potential Calculator",
+      "concept": "Zeta potential is the electric potential at the slipping plane around a charged particle, and values beyond plus or minus 30 millivolts usually keep a colloid stable. Electrophoretic mobility converts directly into zeta potential via the Smoluchowski equation.",
+      "key_params": {
+        "mobility": "electrophoretic mobility in micrometer-centimeter per volt-second",
+        "dielectric_constant": "medium dielectric constant",
+        "viscosity": "medium viscosity in centipoise"
+      },
+      "data_idea": "A seeded RNG samples mobilities for colloids with known zeta potentials, applies the conversion, and adds measurement noise.",
+      "real_world_use": "Paint and ink formulators tune zeta potential to prevent pigment settling.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    }
+  ]
+}

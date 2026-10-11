@@ -1,0 +1,2112 @@
+{
+  "domain": "mathematics",
+  "subdomain": "mathematics",
+  "topics": [
+    {
+      "concept": "The Sieve of Eratosthenes finds all primes up to a limit by iteratively marking multiples of each discovered prime, starting from 2. It runs in near-linear time and is the classic first algorithm for prime enumeration. The project builds a memory-efficient sieve with wheel-style skipping of even numbers.",
+      "data_idea": "No external data needed; the integer range itself is the input, generated deterministically from the limit parameter.",
+      "difficulty": "beginner",
+      "key_params": {
+        "limit": "upper bound for prime search",
+        "segment_size": "chunk size for the segmented variant",
+        "show_composites": "whether to list crossed-out numbers"
+      },
+      "name": "Sieve of Eratosthenes Prime Generator",
+      "real_world_use": "Used in cryptography libraries and math software to generate prime tables for key generation and number-theory research.",
+      "slug_base": "sieve-of-eratosthenes",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Every integer factors uniquely into primes, and trial division finds that factorization by testing divisors up to the square root of the remaining value. Pollard-style early exits and a precomputed prime table speed it up. The tool reports the full factor tree and the largest prime factor.",
+      "data_idea": "The demo synthesizes semiprimes and smooth numbers with a seeded RNG by multiplying random small primes, then factors them back.",
+      "difficulty": "beginner",
+      "key_params": {
+        "max_time_ms": "give-up budget for large inputs",
+        "number": "integer to factor",
+        "use_prime_table": "use sieved primes as trial divisors"
+      },
+      "name": "Trial-Division Prime Factorization Engine",
+      "real_world_use": "Factorization underpins RSA security analysis and is a standard benchmark in computational number theory.",
+      "slug_base": "prime-factorization-engine",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The Miller-Rabin test decides primality by checking whether a number behaves like a prime under several random bases, using Fermat-style witnesses on the odd part of n minus 1. Each round halves the chance of a false positive, so a handful of rounds gives near-certainty. It is the workhorse test behind real key generation.",
+      "data_idea": "The project generates random odd candidates and known Carmichael numbers with a seeded RNG to demonstrate witness detection rates.",
+      "difficulty": "advanced",
+      "key_params": {
+        "candidate": "odd integer to test",
+        "rounds": "number of random bases to try",
+        "seed": "RNG seed for reproducible bases"
+      },
+      "name": "Miller-Rabin Probabilistic Primality Tester",
+      "real_world_use": "Used by OpenSSL and similar libraries to vet probable primes before RSA key generation.",
+      "slug_base": "miller-rabin-primality",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A modular inverse of a under modulus m is the number x with a times x congruent to 1 mod m, and it exists exactly when a and m are coprime. The extended Euclidean algorithm finds it by tracking Bezout coefficients through the division steps. The tool also reports the full gcd chain.",
+      "data_idea": "Demo pairs are synthesized by picking a random modulus and a coprime residue with a seeded RNG, then verifying a times inverse mod m equals 1.",
+      "difficulty": "beginner",
+      "key_params": {
+        "a": "the number to invert",
+        "modulus": "the modulus m",
+        "show_steps": "print each Euclidean division step"
+      },
+      "name": "Extended Euclidean Modular Inverse Calculator",
+      "real_world_use": "Modular inverses are essential in RSA key computation, elliptic-curve arithmetic, and error-correcting codes.",
+      "slug_base": "modular-inverse-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "The Chinese Remainder Theorem combines several congruences x congruent to a_i mod m_i into one solution modulo the product, provided the moduli are pairwise coprime. The constructive proof uses modular inverses of the partial products. The solver validates coprimality and returns the smallest non-negative solution.",
+      "data_idea": "The demo picks random coprime moduli and random remainders with a seeded RNG, then solves and verifies each synthetic system.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "moduli": "list of m_i values",
+        "remainders": "list of a_i values",
+        "verify": "check the solution against every congruence"
+      },
+      "name": "Chinese Remainder Theorem Solver",
+      "real_world_use": "Used in RSA-CRT decryption speedups, secret sharing schemes, and calendar computations.",
+      "slug_base": "chinese-remainder-solver",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "RSA encrypts with a public exponent e modulo n = p*q and decrypts with the private exponent d, the modular inverse of e modulo phi(n). Correctness follows from Euler's theorem on the coprime message space. This toy pipeline generates small primes, builds keys, and round-trips short integer messages.",
+      "data_idea": "The demo draws small random primes with a seeded RNG, constructs keys, encrypts random messages, and asserts decryption recovers them.",
+      "difficulty": "advanced",
+      "key_params": {
+        "message": "integer message smaller than n",
+        "prime_bits": "bit length of the toy primes",
+        "public_exponent": "e, usually 65537"
+      },
+      "name": "Toy RSA Encrypt-Decrypt Pipeline",
+      "real_world_use": "RSA secures web traffic, email, and software signing; toy versions teach the number theory behind production libraries.",
+      "slug_base": "rsa-toy-encryptor",
+      "suggested_types": [
+        "encryption_tool",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Two parties agree on a shared secret over a public channel by each raising a generator g to a private exponent modulo a prime p and exchanging the results. An eavesdropper sees only the public values and would need to solve the discrete logarithm to recover the secret. The simulator runs both sides and a passive observer.",
+      "data_idea": "The demo synthesizes safe-ish primes and random private exponents with a seeded RNG, then shows both parties deriving identical secrets.",
+      "difficulty": "advanced",
+      "key_params": {
+        "generator": "the base g",
+        "prime_bits": "size of the shared prime p",
+        "seed": "RNG seed for the private exponents"
+      },
+      "name": "Diffie-Hellman Key Exchange Simulator",
+      "real_world_use": "Diffie-Hellman underlies TLS handshakes and VPN key agreement in production networking.",
+      "slug_base": "diffie-hellman-key-exchange",
+      "suggested_types": [
+        "simulation",
+        "encryption_tool"
+      ]
+    },
+    {
+      "concept": "The Collatz map halves even numbers and sends odd n to 3n+1; the unproven conjecture says every starting value reaches 1. Despite its simplicity the stopping times vary wildly and unpredictably. The explorer computes total stopping time and peak value for ranges of starting numbers.",
+      "data_idea": "No dataset is needed; the explorer scans consecutive integer ranges and aggregates stopping-time statistics with plain arithmetic.",
+      "difficulty": "beginner",
+      "key_params": {
+        "end": "last starting value",
+        "start": "first starting value",
+        "track_peak": "record the maximum value reached"
+      },
+      "name": "Collatz Sequence Explorer",
+      "real_world_use": "Collatz-style iteration is a classic benchmark for arbitrary-precision arithmetic and a favorite open problem in recreational mathematics.",
+      "slug_base": "collatz-sequence-explorer",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Any real number expands into a continued fraction of integer partial quotients, and truncating the expansion yields the best rational approximations of that number. For rationals the expansion terminates via the Euclidean algorithm; for irrationals like pi it runs forever. The tool prints convergents and their approximation error.",
+      "data_idea": "The demo expands seeded-RNG random decimals plus constants like pi and sqrt(2), comparing convergent accuracy across them.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "show_convergents": "list each convergent p/q",
+        "terms": "how many partial quotients to compute",
+        "value": "decimal number to expand"
+      },
+      "name": "Continued Fraction Expander",
+      "real_world_use": "Continued fractions give optimal gear ratios, calendar leap-year rules, and rational approximations in numerical libraries.",
+      "slug_base": "continued-fraction-expander",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "The greatest common divisor of two numbers falls out of the Euclidean algorithm, which repeatedly replaces the pair by the smaller number and the remainder. The least common multiple then follows from the identity gcd times lcm equals the product. The batch tool reduces whole lists of integers pairwise.",
+      "data_idea": "The demo synthesizes random integer lists with a seeded RNG and reduces them, checking the gcd-divides-lcm identity on every batch.",
+      "difficulty": "beginner",
+      "key_params": {
+        "numbers": "list of integers",
+        "operation": "gcd or lcm",
+        "show_steps": "trace the Euclidean reductions"
+      },
+      "name": "GCD and LCM Batch Calculator",
+      "real_world_use": "GCD computations appear in fraction simplification, scheduling problems with repeating cycles, and gear-train design.",
+      "slug_base": "gcd-lcm-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Euler's totient phi(n) counts integers below n that are coprime to n, computed from the prime factorization as n times the product of (1 - 1/p) over distinct prime factors. It governs the cycle length of modular exponentiation via Euler's theorem. The calculator also demonstrates the phi summation identity over divisors.",
+      "data_idea": "The demo evaluates phi on seeded-RNG random integers and cross-checks counts by brute force for small n.",
+      "difficulty": "beginner",
+      "key_params": {
+        "n": "integer to evaluate",
+        "show_factorization": "display the prime factors used",
+        "verify_identity": "check the divisor-sum identity"
+      },
+      "name": "Euler Totient Function Calculator",
+      "real_world_use": "Totients set RSA key sizes and appear in primality testing and cyclic-group cryptography.",
+      "slug_base": "eulers-totient-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The discrete logarithm asks for x with g^x congruent to h mod p, the inverse of modular exponentiation. Brute force tries successive powers, which is hopeless for cryptographic sizes but instructive for tiny primes. The lab times the search and contrasts it with the baby-step giant-step improvement.",
+      "data_idea": "The demo picks small primes and random targets with a seeded RNG, then measures brute-force steps versus the faster algorithm.",
+      "difficulty": "advanced",
+      "key_params": {
+        "generator": "base g",
+        "prime": "small modulus p",
+        "target": "value h to take the log of"
+      },
+      "name": "Discrete Logarithm Brute-Force Lab",
+      "real_world_use": "Discrete-log hardness secures Diffie-Hellman and ElGamal; the lab shows why parameter sizes matter.",
+      "slug_base": "discrete-log-bruteforce",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "The equation ax + by = c has integer solutions exactly when gcd(a,b) divides c, and the extended Euclidean algorithm produces one particular solution. All solutions then follow by stepping along the homogeneous direction. The solver returns the general solution family and the smallest non-negative pair.",
+      "data_idea": "The demo synthesizes solvable and unsolvable triples with a seeded RNG and checks that returned solutions satisfy the equation.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "a": "coefficient of x",
+        "b": "coefficient of y",
+        "c": "right-hand side"
+      },
+      "name": "Linear Diophantine Equation Solver",
+      "real_world_use": "Diophantine methods appear in coin problems, scheduling with indivisible units, and lattice-based cryptography.",
+      "slug_base": "linear-diophantine-solver",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Positional notation represents a number as digits times powers of the base, so conversion means repeated division for the integer part and repeated multiplication for the fraction part. The tool handles bases 2 through 36 with digit alphabets and exact fractional expansion up to a precision cap.",
+      "data_idea": "The demo converts seeded-RNG random values across random base pairs and verifies round-trip conversion returns the original.",
+      "difficulty": "beginner",
+      "key_params": {
+        "from_base": "source base 2-36",
+        "to_base": "target base 2-36",
+        "value": "number as a string"
+      },
+      "name": "Arbitrary Base Converter",
+      "real_world_use": "Base conversion powers hex dumps, URL-safe encodings, and numeral-system teaching tools.",
+      "slug_base": "base-converter",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Roman numerals use subtractive notation (IV for 4, IX for 9) on top of additive symbols, which makes parsing a matter of scanning left to right and subtracting when a smaller symbol precedes a larger one. Generation greedily peels off the largest fitting symbol. The converter validates canonical form in both directions.",
+      "data_idea": "The demo converts seeded-RNG random integers 1-3999 to numerals and back, asserting the round trip is exact.",
+      "difficulty": "beginner",
+      "key_params": {
+        "direction": "to_roman or to_arabic",
+        "strict": "reject non-canonical forms",
+        "value": "roman string or arabic integer"
+      },
+      "name": "Roman Numeral Converter",
+      "real_world_use": "Roman-numeral parsing appears in document outline processors, clock-face renderers, and typography tools.",
+      "slug_base": "roman-numeral-converter",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The digital root is the repeated digit sum of a number, equal to the number mod 9 (with 9 in place of 0), because 10 is congruent to 1 mod 9. Casting out nines uses this to check arithmetic: the root of a sum or product must match the combination of the roots. The lab verifies long additions and multiplications this way.",
+      "data_idea": "The demo generates seeded-RNG random arithmetic problems, computes digital roots, and flags any planted wrong answers.",
+      "difficulty": "beginner",
+      "key_params": {
+        "check_operation": "addition or multiplication to verify",
+        "numbers": "list of integers to reduce",
+        "operands": "the numbers being checked"
+      },
+      "name": "Digital Root and Casting-Out-Nines Lab",
+      "real_world_use": "Check-digit schemes like ISBN and credit-card validation generalize this modular checksum idea.",
+      "slug_base": "digital-root-lab",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A number is perfect when its proper divisors sum to itself (like 6 and 28), abundant when the sum exceeds it, and deficient otherwise. The divisor sum comes from the prime factorization via the multiplicative sigma function. The classifier scans ranges and reports the rare perfect numbers it finds.",
+      "data_idea": "The demo scans deterministic integer ranges, computing divisor sums from trial-division factorizations without any external data.",
+      "difficulty": "beginner",
+      "key_params": {
+        "end": "range end",
+        "find_perfect_only": "skip classification, hunt perfect numbers",
+        "start": "range start"
+      },
+      "name": "Abundant, Deficient, and Perfect Number Classifier",
+      "real_world_use": "Perfect numbers connect to Mersenne primes, an active area of distributed computing projects like GIMPS.",
+      "slug_base": "perfect-number-classifier",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "An aliquot sequence iterates the proper-divisor sum function s(n); it can terminate at 1, reach a perfect number, or fall into an amicable or sociable cycle. Detecting cycles needs a visited-set with step indices. The generator traces sequences and classifies their eventual behavior.",
+      "data_idea": "The demo traces aliquot sequences for seeded-RNG random starts and tabulates how many terminate, perfect-terminate, or cycle.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "detect_cycles": "report cycle length when one closes",
+        "max_steps": "iteration cap",
+        "start": "starting integer"
+      },
+      "name": "Aliquot Sequence Generator",
+      "real_world_use": "Aliquot dynamics are studied in computational number theory and used as exercises in cycle-detection algorithm courses.",
+      "slug_base": "aliquot-sequence-generator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A number is happy if repeatedly replacing it by the sum of squares of its digits reaches 1; unhappy numbers fall into the 8-cycle containing 4. Floyd-style cycle detection or a small visited set decides the outcome quickly. The detector maps happy density across ranges.",
+      "data_idea": "The demo scans deterministic integer ranges with pure arithmetic, counting happy numbers and recording trajectory lengths.",
+      "difficulty": "beginner",
+      "key_params": {
+        "end": "range end",
+        "show_path": "print the digit-square trajectory",
+        "start": "range start"
+      },
+      "name": "Happy Number Detector",
+      "real_world_use": "Happy numbers are a staple of coding-interview cycle-detection problems and recreational math explorations.",
+      "slug_base": "happy-number-detector",
+      "suggested_types": [
+        "cli_tool",
+        "terminal_game",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Prime gaps are the differences between consecutive primes, and their statistics (maximal gaps, average gap growth near log n) probe the irregular distribution of primes. The analyzer sieves a range, records every gap, and reports the histogram plus record-breaking gaps. Twin-prime pairs get counted as a special case.",
+      "data_idea": "The demo sieves deterministic ranges and aggregates gap statistics internally, needing no external prime tables.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "histogram_bins": "bins for the gap histogram",
+        "limit": "sieve upper bound",
+        "track_twins": "count twin-prime pairs"
+      },
+      "name": "Prime Gap Analyzer",
+      "real_world_use": "Gap analysis informs prime-search projects and research on the distribution of primes.",
+      "slug_base": "prime-gap-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Matrix multiplication composes linear maps: entry (i,j) of the product is the dot product of row i of A with column j of B, costing O(n^3) in the naive triple loop. Blocking the loops over cache-friendly tiles recovers most of the performance that naive code leaves behind. The lab benchmarks naive, tiled, and transposed variants on the same matrices.",
+      "data_idea": "The demo fills matrices with seeded-RNG random floats and verifies each variant against a reference implementation.",
+      "difficulty": "beginner",
+      "key_params": {
+        "matrix_size": "n for n-by-n matrices",
+        "tile_size": "block size for the tiled variant",
+        "trials": "repetitions per timing"
+      },
+      "name": "Matrix Multiplication Lab",
+      "real_world_use": "Matrix multiplication is the core kernel of deep learning, graphics transforms, and scientific simulation codes.",
+      "slug_base": "matrix-multiply-lab",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "LU decomposition factors a square matrix into a lower-triangular L and an upper-triangular U so that linear systems solve in two cheap triangular passes. Partial pivoting swaps rows to avoid tiny pivots and controls rounding error. The solver also reports the determinant as the product of U's diagonal.",
+      "data_idea": "The demo synthesizes random diagonally-dominant systems with a seeded RNG, solves them, and checks residuals against the known solution.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "pivoting": "none or partial",
+        "size": "matrix dimension",
+        "tolerance": "pivot singularity threshold"
+      },
+      "name": "LU Decomposition Linear Solver",
+      "real_world_use": "LU factorization backs circuit simulators, finite-element codes, and countless engineering linear solves.",
+      "slug_base": "lu-decomposition-solver",
+      "suggested_types": [
+        "cli_tool",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "The QR algorithm repeatedly factors a matrix into orthogonal Q times upper-triangular R and multiplies them back in reverse order; the iterates converge to reveal the eigenvalues on the diagonal. It is the standard dense eigensolver in numerical libraries. This educational version runs it on small symmetric matrices with shift acceleration.",
+      "data_idea": "The demo builds random symmetric matrices with a seeded RNG and compares converged diagonal entries against characteristic-polynomial roots.",
+      "difficulty": "advanced",
+      "key_params": {
+        "iterations": "max QR steps",
+        "shift": "whether to use Wilkinson-style shifts",
+        "size": "matrix dimension"
+      },
+      "name": "QR Algorithm Eigenvalue Approximator",
+      "real_world_use": "Eigenvalue solvers drive vibration analysis, quantum chemistry, and Google's original PageRank computations.",
+      "slug_base": "qr-eigenvalue-approximator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Power iteration finds the dominant eigenvector by repeatedly multiplying a starting vector by the matrix and normalizing; the ratio of successive norms converges to the largest-magnitude eigenvalue. Convergence speed depends on the gap between the top two eigenvalues. The tool reports the eigenvalue, eigenvector, and iteration count.",
+      "data_idea": "The demo generates random matrices with a planted dominant eigenpair using a seeded RNG and measures convergence against it.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "max_iterations": "iteration cap",
+        "start_vector": "initial guess vector",
+        "tolerance": "convergence threshold"
+      },
+      "name": "Power Iteration Eigenfinder",
+      "real_world_use": "Power iteration computes PageRank vectors and dominant modes in network and structural analysis.",
+      "slug_base": "power-iteration-eigenfinder",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Least squares fits the line (or plane) minimizing the sum of squared residuals, and the normal equations give the closed-form solution via the pseudo-inverse. Solving through QR or SVD is numerically safer than forming the Gram matrix directly. The fitter reports coefficients, R-squared, and residual plots data.",
+      "data_idea": "The demo synthesizes noisy linear data with a seeded RNG around known slopes, then recovers the coefficients and compares error bars.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "features": "number of predictors",
+        "noise_std": "Gaussian noise level",
+        "samples": "number of data points"
+      },
+      "name": "Least-Squares Regression Fitter",
+      "real_world_use": "Least squares is the backbone of econometrics, experimental calibration, and trend estimation.",
+      "slug_base": "least-squares-fitter",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "PageRank models a random surfer who follows links with probability d and teleports to a random page otherwise; the stationary distribution of this Markov chain ranks the pages. Power iteration on the link matrix converges to that distribution. The project builds a synthetic web graph and ranks its pages.",
+      "data_idea": "The demo generates a random directed graph with a seeded RNG, runs power iteration, and lists the top-ranked synthetic pages.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "damping": "teleport probability complement d",
+        "iterations": "power-iteration steps",
+        "nodes": "number of synthetic pages"
+      },
+      "name": "PageRank on a Synthetic Web Graph",
+      "real_world_use": "PageRank pioneered web search ranking and now analyzes citation, social, and biological networks.",
+      "slug_base": "pagerank-synthetic-web",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "rest_api"
+      ]
+    },
+    {
+      "concept": "A Markov chain moves between states with fixed transition probabilities, and its long-run behavior is the stationary distribution satisfying pi = pi P. The simulator steps many walkers, compares empirical visit frequencies with the solved stationary vector, and measures mixing time. Absorbing states get special handling.",
+      "data_idea": "The demo builds random stochastic matrices with a seeded RNG and checks that simulated frequencies converge to the computed stationary distribution.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "states": "number of chain states",
+        "steps": "simulation steps",
+        "walkers": "parallel walkers"
+      },
+      "name": "Markov Chain Stationary Simulator",
+      "real_world_use": "Markov models price derivatives, model queues, and analyze web navigation and DNA sequences.",
+      "slug_base": "markov-chain-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Gaussian elimination reduces an augmented matrix to row-echelon form with partial pivoting, then back-substitutes to find the solution vector. The same elimination detects singular systems and computes rank. The solver shows each elimination step for teaching.",
+      "data_idea": "The demo synthesizes solvable and singular systems with a seeded RNG and verifies solutions by substitution.",
+      "difficulty": "beginner",
+      "key_params": {
+        "show_steps": "display each elimination step",
+        "size": "system dimension",
+        "tolerance": "zero-pivot threshold"
+      },
+      "name": "Gaussian Elimination Solver",
+      "real_world_use": "Gaussian elimination is taught worldwide and still used in small-scale engineering and graphics solves.",
+      "slug_base": "gaussian-elimination-solver",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The determinant measures how a matrix scales volume, computed here by Laplace expansion for tiny matrices and by LU-style elimination for larger ones. Sign flips on each row swap keep the elimination result exact in sign. The lab compares both methods and times the crossover point.",
+      "data_idea": "The demo generates random integer matrices with a seeded RNG and cross-checks both determinant methods for agreement.",
+      "difficulty": "beginner",
+      "key_params": {
+        "method": "laplace or elimination",
+        "size": "matrix dimension",
+        "trials": "timing repetitions"
+      },
+      "name": "Matrix Determinant Lab",
+      "real_world_use": "Determinants appear in change-of-variables formulas, stability analysis, and geometry computations.",
+      "slug_base": "matrix-determinant-lab",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Projecting vector v onto u keeps the component of v parallel to u, given by the scalar projection times the unit direction. Gram-style repeated projection decomposes v into parallel and orthogonal parts. The tool also computes angles and distances from projections.",
+      "data_idea": "The demo draws random vectors with a seeded RNG and verifies the Pythagorean split between projected and rejected components.",
+      "difficulty": "beginner",
+      "key_params": {
+        "dimension": "vector length",
+        "target": "vector to project onto",
+        "vector": "vector to project"
+      },
+      "name": "Vector Projection Toolkit",
+      "real_world_use": "Projections power computer graphics lighting, least-squares geometry, and signal decomposition.",
+      "slug_base": "vector-projection-tool",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Gram-Schmidt turns a set of independent vectors into an orthonormal set by subtracting each vector's projections onto the earlier orthonormalized ones. The modified variant re-orthogonalizes against the running set for better numerical stability. The tool verifies orthonormality of the output.",
+      "data_idea": "The demo orthogonalizes seeded-RNG random vector sets and checks pairwise dot products are near zero and norms near one.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "modified": "use modified Gram-Schmidt",
+        "tolerance": "orthonormality check threshold",
+        "vectors": "input vector set"
+      },
+      "name": "Gram-Schmidt Orthogonalizer",
+      "real_world_use": "Orthogonalization underlies QR factorization, Krylov solvers, and quantum-state basis construction.",
+      "slug_base": "gram-schmidt-orthogonalizer",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The condition number of a matrix, the ratio of its largest to smallest singular value, measures how much relative error in the data can be amplified in the solution. Hilbert matrices are the classic ill-conditioned example. The analyzer estimates it via power iteration on A and its inverse without a full SVD.",
+      "data_idea": "The demo builds random and Hilbert matrices with a seeded RNG, perturbs right-hand sides, and compares observed error growth to the estimate.",
+      "difficulty": "advanced",
+      "key_params": {
+        "matrix_type": "random or hilbert",
+        "perturbation": "relative RHS noise level",
+        "size": "matrix dimension"
+      },
+      "name": "Linear System Condition Analyzer",
+      "real_world_use": "Condition estimates guide solver choice in finite-element analysis and inverse problems.",
+      "slug_base": "linear-system-condition-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The Kronecker product of A and B builds a block matrix where each entry a_ij scales a full copy of B, exploding dimensions multiplicatively. It appears in vectorized matrix equations and quantum tensor products. The explorer builds the product and verifies identities like (A tensor B)(C tensor D) = AC tensor BD.",
+      "data_idea": "The demo multiplies seeded-RNG random small matrices and checks the mixed-product identity numerically.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "matrix_a": "first factor",
+        "matrix_b": "second factor",
+        "verify_identity": "check the mixed-product rule"
+      },
+      "name": "Kronecker Product Explorer",
+      "real_world_use": "Kronecker products model composite quantum systems and appear in image processing and control theory.",
+      "slug_base": "kronecker-product-explorer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A 2D rotation matrix with cos and sin entries rotates points about the origin, and chaining such matrices composes rotations additively in angle. The visualizer applies sequences of rotations, reflections, and scalings to polygon point sets and exports the transformed coordinates. Determinant sign flags orientation flips.",
+      "data_idea": "The demo rotates seeded-RNG random polygon vertices and verifies distances from the origin are preserved.",
+      "difficulty": "beginner",
+      "key_params": {
+        "angle_deg": "rotation angle",
+        "center": "rotation center point",
+        "points": "list of (x,y) vertices"
+      },
+      "name": "Rotation Matrix Visualizer",
+      "real_world_use": "Rotation matrices drive game engines, robotics kinematics, and computer-vision pose estimation.",
+      "slug_base": "rotation-matrix-visualizer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The singular value decomposition writes a matrix as U Sigma V^T, and keeping only the top k singular values gives the best rank-k approximation in Frobenius norm. Truncating small singular values compresses image-like data dramatically. This toy pipeline computes a small SVD by eigendecomposition of the Gram matrix and reconstructs approximations.",
+      "data_idea": "The demo builds low-rank-plus-noise matrices with a seeded RNG and measures reconstruction error versus the number of kept components.",
+      "difficulty": "advanced",
+      "key_params": {
+        "noise_level": "added noise strength",
+        "rank": "number of components to keep",
+        "size": "matrix dimension"
+      },
+      "name": "Toy SVD Rank Compressor",
+      "real_world_use": "Truncated SVD powers latent semantic analysis, recommender systems, and image compression research.",
+      "slug_base": "svd-image-compressor-toy",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Definite integrals are approximated by slicing the interval into panels and fitting the integrand with trapezoids or parabolas; Simpson's rule is exact for cubics and converges with fourth-order accuracy. Richardson-style refinement halves the panel width until the change falls below tolerance. The integrator compares both rules on the same function.",
+      "data_idea": "The demo integrates seeded-RNG random polynomials and transcendental functions, comparing numerical results against known antiderivatives.",
+      "difficulty": "beginner",
+      "key_params": {
+        "function": "integrand expression",
+        "interval": "(a, b) bounds",
+        "method": "trapezoid or simpson"
+      },
+      "name": "Numeric Integrator (Trapezoid and Simpson)",
+      "real_world_use": "Numerical quadrature computes probabilities, expected values, and engineering quantities lacking closed forms.",
+      "slug_base": "numeric-integrator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Monte Carlo integration estimates an integral by averaging the integrand over uniform random samples, with error shrinking like one over the square root of the sample count regardless of dimension. That dimension independence is its superpower for high-dimensional integrals. The tool also reports the standard error of the estimate.",
+      "data_idea": "The demo integrates seeded-RNG sampled test functions of rising dimension and plots error decay against sample count.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "dimensions": "integral dimension",
+        "function": "integrand expression",
+        "samples": "number of random points"
+      },
+      "name": "Monte Carlo Integrator",
+      "real_world_use": "Monte Carlo integration prices exotic derivatives and computes physics partition functions.",
+      "slug_base": "monte-carlo-integrator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Newton's method refines a root guess by following the tangent line to its x-intercept, doubling correct digits each step once near a simple root. It needs the derivative and can diverge from bad starts or stall at multiple roots. The finder tries several starts and reports basins of convergence.",
+      "data_idea": "The demo builds seeded-RNG random polynomials with known roots and measures iteration counts from scattered starting guesses.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "derivative": "f prime expression",
+        "function": "f expression",
+        "initial_guess": "starting x"
+      },
+      "name": "Newton-Raphson Root Finder",
+      "real_world_use": "Newton's method solves nonlinear equations in circuit simulation, robotics, and optimization internals.",
+      "slug_base": "newton-raphson-root-finder",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Bisection brackets a root between points of opposite sign and halves the interval each step, guaranteeing linear convergence whenever the function is continuous. It is slow but bulletproof, making it the standard fallback when faster methods fail. The solver logs the shrinking bracket.",
+      "data_idea": "The demo brackets roots of seeded-RNG random polynomials and verifies the final interval width matches the theoretical halving.",
+      "difficulty": "beginner",
+      "key_params": {
+        "function": "f expression",
+        "interval": "(a, b) bracket",
+        "tolerance": "target interval width"
+      },
+      "name": "Bisection Root Finder",
+      "real_world_use": "Bisection backs safety-critical root finding in embedded firmware and is the fallback inside hybrid solvers.",
+      "slug_base": "bisection-root-finder",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Gradient descent minimizes a function by stepping opposite the gradient, with the learning rate controlling the trade-off between speed and oscillation. On convex quadratics it converges linearly; on ravines it zigzags unless the rate is tuned. The visualizer traces the path on 2D surfaces and exports the trajectory.",
+      "data_idea": "The demo optimizes seeded-RNG random quadratic bowls and Rosenbrock-like valleys, recording steps to convergence per learning rate.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "function": "2D objective expression",
+        "iterations": "max steps",
+        "learning_rate": "step size"
+      },
+      "name": "Gradient Descent Visualizer",
+      "real_world_use": "Gradient descent trains neural networks and fits large-scale regression and logistics models.",
+      "slug_base": "gradient-descent-visualizer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Euler's method advances an ODE solution by stepping along the current slope, the simplest possible integrator. Its global error is first order, so halving the step size only halves the error. The solver compares Euler against the exact solution for test equations and reports error growth.",
+      "data_idea": "The demo integrates seeded-RNG random linear ODEs with known closed-form solutions and tabulates error versus step size.",
+      "difficulty": "beginner",
+      "key_params": {
+        "derivative": "dy/dt expression",
+        "initial": "(t0, y0)",
+        "step": "time step h"
+      },
+      "name": "Euler ODE Solver",
+      "real_world_use": "Euler steps appear in game physics, quick prototypes, and as the baseline for better integrators.",
+      "slug_base": "euler-ode-solver",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Runge-Kutta 4 samples the slope at four points per step and combines them with Simpson-like weights, achieving fourth-order accuracy. It is the default workhorse for non-stiff ODEs. The solver adapts nothing but reports local error estimates from step doubling.",
+      "data_idea": "The demo integrates seeded-RNG random nonlinear ODEs and compares RK4 error against Euler at matched step counts.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "derivative": "dy/dt expression",
+        "initial": "(t0, y0)",
+        "step": "time step h"
+      },
+      "name": "Runge-Kutta ODE Solver",
+      "real_world_use": "RK4 integrates spacecraft trajectories, chemical kinetics, and ecological models.",
+      "slug_base": "runge-kutta-ode-solver",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "The Lorenz system of three coupled ODEs is the canonical chaotic system: tiny changes in initial conditions produce exponentially diverging trajectories, the famous butterfly effect. Yet all trajectories settle onto a strange attractor with fractal structure. The simulator integrates it with RK4 and exports the attractor points.",
+      "data_idea": "The demo integrates twin trajectories from microscopically perturbed starts with a seeded RNG and measures their separation over time.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "initial": "(x0, y0, z0) start",
+        "sigma_rho_beta": "Lorenz parameters",
+        "steps": "integration steps"
+      },
+      "name": "Lorenz Attractor Simulator",
+      "real_world_use": "Lorenz dynamics model atmospheric convection and motivate ensemble forecasting in meteorology.",
+      "slug_base": "lorenz-attractor-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Derivatives are approximated by finite differences: forward, backward, and centered stencils with first, first, and second-order accuracy respectively. Subtracting nearly equal function values causes cancellation error that grows as the step shrinks, so an optimal step balances truncation and rounding. The tool scans step sizes to find that sweet spot.",
+      "data_idea": "The demo differentiates seeded-RNG random smooth test functions and compares stencil errors against analytic derivatives.",
+      "difficulty": "beginner",
+      "key_params": {
+        "function": "f expression",
+        "point": "x where derivative is taken",
+        "stencil": "forward, backward, or centered"
+      },
+      "name": "Finite-Difference Derivative Approximator",
+      "real_world_use": "Finite differences compute gradients in black-box optimization and sensitivity analysis.",
+      "slug_base": "derivative-approximator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Taylor's theorem approximates a smooth function by its value and derivatives at a point; adding terms shrinks the error inside the radius of convergence. The remainder term bounds the truncation error. The approximator builds the polynomial to order n and plots error versus distance from the expansion point.",
+      "data_idea": "The demo expands seeded-RNG random analytic test functions and measures max error on intervals of increasing radius.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "center": "expansion point",
+        "function": "f expression",
+        "order": "polynomial degree"
+      },
+      "name": "Taylor Series Approximator",
+      "real_world_use": "Taylor expansions linearize control systems and approximate special functions in math libraries.",
+      "slug_base": "taylor-series-approximator",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Riemann sums approximate area under a curve with left-endpoint, right-endpoint, or midpoint rectangles, converging as the partition refines. The midpoint rule is second-order accurate while endpoint rules are first-order. The explorer animates refinement and tracks the error decay rate.",
+      "data_idea": "The demo refines partitions on seeded-RNG random integrands and fits the observed convergence order from the error sequence.",
+      "difficulty": "beginner",
+      "key_params": {
+        "function": "integrand expression",
+        "interval": "(a, b)",
+        "rule": "left, right, or midpoint"
+      },
+      "name": "Riemann Sum Explorer",
+      "real_world_use": "Riemann sums introduce integration in calculus courses and prototype quadrature rules.",
+      "slug_base": "riemann-sum-explorer",
+      "suggested_types": [
+        "quiz_engine",
+        "web_dashboard",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Fixed-point iteration solves x = g(x) by repeated substitution, converging when g is a contraction with slope magnitude below 1 near the fixed point. The contraction mapping theorem guarantees a unique attractive fixed point in that case. The iterator detects divergence and oscillation automatically.",
+      "data_idea": "The demo iterates seeded-RNG random contraction maps and verifies the convergence rate matches the local slope.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "function": "g expression",
+        "initial_guess": "starting x",
+        "tolerance": "stopping threshold"
+      },
+      "name": "Fixed-Point Iterator",
+      "real_world_use": "Fixed-point iteration solves implicit equations in economics equilibrium models and circuit analysis.",
+      "slug_base": "fixed-point-iterator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "The secant method approximates Newton's method without a derivative by using the slope of the line through the last two iterates. It converges superlinearly with order about 1.618, the golden ratio. Like Newton it needs decent starting guesses but only one function evaluation per step.",
+      "data_idea": "The demo solves seeded-RNG random polynomial equations and compares secant iteration counts against Newton and bisection.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "function": "f expression",
+        "guesses": "two starting x values",
+        "tolerance": "stopping threshold"
+      },
+      "name": "Secant Method Solver",
+      "real_world_use": "The secant method roots black-box functions in engineering where derivatives are unavailable.",
+      "slug_base": "secant-method-solver",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Lagrange interpolation builds the unique degree n-1 polynomial through n points as a weighted sum of basis polynomials, each equal to 1 at its own node and 0 at the others. It is exact on the nodes but can oscillate wildly between them (Runge's phenomenon). The tool evaluates the interpolant and its node errors.",
+      "data_idea": "The demo interpolates seeded-RNG random point sets and measures max deviation on fine grids between nodes.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "evaluation_points": "where to evaluate",
+        "nodes": "list of (x, y) points",
+        "values": "y values at nodes"
+      },
+      "name": "Lagrange Interpolator",
+      "real_world_use": "Polynomial interpolation resamples signals and builds finite-difference formulas.",
+      "slug_base": "lagrange-interpolator",
+      "suggested_types": [
+        "cli_tool",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "Monte Carlo estimation of pi throws random darts at the unit square and counts the fraction landing inside the quarter circle; that fraction times 4 approximates pi. The error shrinks like one over the square root of the dart count. The estimator tracks convergence and compares seeded runs.",
+      "data_idea": "The demo uses a seeded RNG for dart coordinates and records estimate error at logarithmically spaced sample counts.",
+      "difficulty": "beginner",
+      "key_params": {
+        "darts": "number of random points",
+        "seed": "RNG seed",
+        "track_history": "record the running estimate"
+      },
+      "name": "Monte Carlo Pi Estimator",
+      "real_world_use": "Monte Carlo methods estimate integrals and risks in finance, physics, and rendering.",
+      "slug_base": "monte-carlo-pi-estimator",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The Central Limit Theorem says averages of independent samples approach a normal distribution as the sample size grows, regardless of the original distribution's shape. Simulating thousands of sample means from a skewed population makes the bell curve emerge visibly. The demo overlays the theoretical normal curve on the histogram.",
+      "data_idea": "The demo draws samples from seeded-RNG skewed distributions (exponential, uniform) and histograms the sample means.",
+      "difficulty": "beginner",
+      "key_params": {
+        "population": "source distribution",
+        "sample_size": "n per mean",
+        "trials": "number of sample means"
+      },
+      "name": "Central Limit Theorem Demonstrator",
+      "real_world_use": "The CLT justifies confidence intervals and hypothesis tests across science and industry.",
+      "slug_base": "central-limit-theorem-demo",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Bootstrapping builds a confidence interval by resampling the observed data with replacement thousands of times and reading off percentiles of the resampled statistics. It needs no distributional assumptions beyond the sample being representative. The tool supports means, medians, and correlation coefficients.",
+      "data_idea": "The demo generates seeded-RNG synthetic samples with known parameters and checks bootstrap interval coverage rates.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "confidence": "interval level like 0.95",
+        "resamples": "bootstrap replicates",
+        "statistic": "mean, median, or correlation"
+      },
+      "name": "Bootstrap Confidence Interval Builder",
+      "real_world_use": "Bootstrapping gives uncertainty estimates in A/B testing, biostatistics, and machine-learning evaluation.",
+      "slug_base": "bootstrap-confidence-intervals",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Bayes' theorem updates a prior probability with observed evidence through the likelihood to produce a posterior. It formalizes how diagnostic tests, spam filters, and search algorithms combine base rates with new data. The calculator handles the classic disease-testing scenario and general prior-likelihood-posterior triples.",
+      "data_idea": "The demo synthesizes seeded-RNG test scenarios with known prevalence and accuracy, then verifies posterior computations.",
+      "difficulty": "beginner",
+      "key_params": {
+        "likelihood": "P(evidence given hypothesis)",
+        "prior": "P(hypothesis)",
+        "scenario": "preset like medical_test"
+      },
+      "name": "Bayes Theorem Calculator",
+      "real_world_use": "Bayesian updating powers spam filters, medical screening interpretation, and sensor fusion.",
+      "slug_base": "bayes-theorem-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Inverse-transform sampling turns uniform random numbers into draws from any distribution with an invertible CDF, covering exponential, Pareto, and custom distributions. Rejection sampling handles the rest by accepting proposals under an envelope curve. The sampler validates output with a Kolmogorov-Smirnov-style comparison.",
+      "data_idea": "The demo draws seeded-RNG samples from several distributions and checks sample moments against theoretical values.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "distribution": "target distribution",
+        "params": "distribution parameters",
+        "samples": "draw count"
+      },
+      "name": "Probability Distribution Sampler",
+      "real_world_use": "Samplers feed Monte Carlo simulations in finance, physics, and operations research.",
+      "slug_base": "distribution-sampler",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The t-test decides whether a sample mean differs significantly from a hypothesized value by scaling the difference with the standard error. Welch's variant handles unequal variances between two groups. The toolkit computes the statistic, degrees of freedom, p-value, and a plain-language verdict.",
+      "data_idea": "The demo synthesizes seeded-RNG Gaussian groups with known mean shifts and measures the test's detection rate.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alpha": "significance level",
+        "data": "sample values",
+        "hypothesis_mean": "null mean"
+      },
+      "name": "Hypothesis Test Toolkit",
+      "real_world_use": "t-tests evaluate experiments in medicine, psychology, and product A/B testing.",
+      "slug_base": "hypothesis-test-toolkit",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "The chi-square test compares observed category counts against expected ones, summing squared standardized deviations; large values reject the null of fit or independence. Degrees of freedom come from the table dimensions minus estimated parameters. The calculator handles goodness-of-fit and contingency tables.",
+      "data_idea": "The demo generates seeded-RNG multinomial draws from known distributions and checks the test accepts true nulls at the right rate.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alpha": "significance level",
+        "expected": "expected counts",
+        "observed": "observed counts"
+      },
+      "name": "Chi-Square Test Calculator",
+      "real_world_use": "Chi-square tests validate survey distributions, genetic ratios, and quality-control defect patterns.",
+      "slug_base": "chi-square-test-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "One-way ANOVA partitions total variance into between-group and within-group components; the F ratio of their mean squares tests whether any group mean differs. It generalizes the t-test to three or more groups. The analyzer reports the full ANOVA table with effect size eta-squared.",
+      "data_idea": "The demo synthesizes seeded-RNG Gaussian groups with controlled mean separations and checks F-test power across effect sizes.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alpha": "significance level",
+        "groups": "list of sample lists",
+        "post_hoc": "run pairwise comparisons"
+      },
+      "name": "One-Way ANOVA Analyzer",
+      "real_world_use": "ANOVA compares treatments in agriculture, pharma trials, and manufacturing experiments.",
+      "slug_base": "anova-one-way",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "With 23 people sharing 365 birthdays, the chance of a shared birthday already exceeds 50 percent, because the number of pairs grows quadratically. The simulator runs many random rooms and compares the empirical match rate with the exact formula. It generalizes to arbitrary group sizes and year lengths.",
+      "data_idea": "The demo fills rooms with seeded-RNG random birthdays and tallies match frequencies across group sizes.",
+      "difficulty": "beginner",
+      "key_params": {
+        "group_size": "people per room",
+        "trials": "rooms simulated",
+        "year_days": "days in the year"
+      },
+      "name": "Birthday Paradox Simulator",
+      "real_world_use": "Collision math behind the paradox governs hash-table sizing and cryptographic birthday attacks.",
+      "slug_base": "birthday-paradox-simulator",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "In the Monty Hall problem, switching doors after the host reveals a goat wins two-thirds of the time, because the initial pick was wrong with probability 2/3. Simulation settles the endless arguments instantly. The project compares stay, switch, and random strategies over many games.",
+      "data_idea": "The demo plays seeded-RNG random games under each strategy and reports win rates converging to 1/3, 2/3, and 1/2.",
+      "difficulty": "beginner",
+      "key_params": {
+        "doors": "number of doors",
+        "strategy": "stay, switch, or random",
+        "trials": "games played"
+      },
+      "name": "Monty Hall Strategy Simulator",
+      "real_world_use": "Monty Hall is the canonical conditional-probability lesson in statistics courses worldwide.",
+      "slug_base": "monty-hall-simulator",
+      "suggested_types": [
+        "simulation",
+        "terminal_game",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A gambler betting one unit per round with win probability p drifts toward ruin or a target fortune in a classic random walk with absorbing boundaries. The exact ruin probability has a closed form, and simulation confirms it. The tool sweeps starting fortunes and bet sizes.",
+      "data_idea": "The demo runs seeded-RNG random walks to absorption and compares empirical ruin rates with the exact formula.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "bet": "stake per round",
+        "start": "starting fortune",
+        "target": "goal fortune"
+      },
+      "name": "Gambler's Ruin Simulator",
+      "real_world_use": "Ruin models inform risk-of-ruin limits in trading, insurance reserves, and project funding.",
+      "slug_base": "gamblers-ruin-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The Kelly criterion maximizes long-run logarithmic wealth by betting the fraction edge over odds of the bankroll on each favorable wager. Full Kelly is aggressive, so practitioners use fractional Kelly to cut volatility. The calculator derives the fraction from win probability and payout odds and simulates growth versus fixed betting.",
+      "data_idea": "The demo simulates seeded-RNG betting sequences and compares bankroll trajectories for Kelly, half-Kelly, and flat stakes.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "fraction": "Kelly fraction multiplier",
+        "odds": "payout odds",
+        "win_prob": "probability of winning"
+      },
+      "name": "Kelly Criterion Bet Sizer",
+      "real_world_use": "Kelly sizing guides position sizing in trading and bankroll management in professional gambling.",
+      "slug_base": "kelly-criterion-calculator",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Benford's law predicts leading digits follow a logarithmic distribution with 1 appearing about 30 percent of the time, a signature of many natural datasets. Fabricated numbers tend toward uniform digits instead. The analyzer computes digit frequencies and a chi-square distance from Benford's curve.",
+      "data_idea": "The demo synthesizes seeded-RNG Benford-conforming datasets (products of randoms) and uniform fakes, then scores both.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "column": "which numeric column to test",
+        "data": "list of numbers",
+        "threshold": "flag threshold"
+      },
+      "name": "Benford's Law Fraud Analyzer",
+      "real_world_use": "Auditors use Benford analysis to flag suspicious ledgers, election data, and expense reports.",
+      "slug_base": "benfords-law-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "log_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "The coupon collector problem asks how many random draws are needed to collect all n coupons; the expected count is n times the nth harmonic number, about n log n. Simulation shows the long tail as the last few coupons take forever. The tool reports the distribution of completion times.",
+      "data_idea": "The demo draws seeded-RNG random coupons and histograms trials-to-completion across thousands of runs.",
+      "difficulty": "beginner",
+      "key_params": {
+        "coupons": "number of distinct coupons",
+        "runs": "simulation repetitions",
+        "seed": "RNG seed"
+      },
+      "name": "Coupon Collector Simulator",
+      "real_world_use": "Collector math models cache warmup, test coverage, and card-collection promotions.",
+      "slug_base": "coupon-collector-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "A Poisson process generates events with exponential inter-arrival times, giving the memoryless property: the wait for the next event never depends on how long you have waited. Counting events in fixed windows yields Poisson-distributed counts. The simulator visualizes arrivals and validates both distributions.",
+      "data_idea": "The demo synthesizes seeded-RNG exponential inter-arrivals and checks window counts against the Poisson PMF.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "duration": "simulation time",
+        "rate": "events per unit time",
+        "window": "counting window size"
+      },
+      "name": "Poisson Process Simulator",
+      "real_world_use": "Poisson processes model call-center arrivals, radioactive decay, and network packet streams.",
+      "slug_base": "poisson-process-simulator",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "A simple random walk steps left or right with equal probability, and its position after n steps has variance n while the expected maximum grows like the square root of n. Reflecting and absorbing boundaries change the behavior qualitatively. The explorer animates paths and measures scaling laws.",
+      "data_idea": "The demo walks seeded-RNG random steps and fits the observed mean-square displacement against step count.",
+      "difficulty": "beginner",
+      "key_params": {
+        "boundary": "none, reflecting, or absorbing",
+        "steps": "walk length",
+        "walkers": "number of paths"
+      },
+      "name": "Random Walk Explorer",
+      "real_world_use": "Random walks model stock prices, animal foraging, and diffusion in physics.",
+      "slug_base": "random-walk-explorer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Brownian motion is the continuous limit of random walks, with independent Gaussian increments whose variance scales with the time step. Simulating it correctly means scaling each step's noise by the square root of dt. The tool renders sample paths and verifies the diffusion scaling.",
+      "data_idea": "The demo integrates seeded-RNG Gaussian increments at several dt values and checks variance grows linearly with time.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "dt": "time step",
+        "paths": "number of trajectories",
+        "total_time": "simulation horizon"
+      },
+      "name": "Brownian Motion Path Simulator",
+      "real_world_use": "Brownian motion underlies option pricing, particle diffusion, and stochastic control.",
+      "slug_base": "brownian-motion-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Dice probabilities come from counting: with n dice the number of ways to roll a sum s is a coefficient of a polynomial, computed exactly by dynamic programming. The calculator tabulates the full distribution, expected value, and tail probabilities for arbitrary dice pools. It also handles exploding and advantage mechanics.",
+      "data_idea": "The demo enumerates small dice pools exactly and cross-checks seeded-RNG simulated frequencies against the DP table.",
+      "difficulty": "beginner",
+      "key_params": {
+        "dice": "like 3d6+2 notation",
+        "mechanic": "standard, advantage, or exploding",
+        "target": "sum threshold for tail probability"
+      },
+      "name": "Dice Probability Calculator",
+      "real_world_use": "Dice math designs board games, RPG systems, and tabletop balance testing.",
+      "slug_base": "dice-probability-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "terminal_game",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Conditional probability P(A given B) rescales the sample space to B, and Bayes' rule chains these updates through evidence. Tree diagrams make multi-stage problems mechanical. The lab walks through urn, card, and test-accuracy problems with step-by-step trees.",
+      "data_idea": "The demo builds seeded-RNG random urn compositions and verifies tree-computed probabilities against brute-force enumeration.",
+      "difficulty": "beginner",
+      "key_params": {
+        "problem": "preset scenario name",
+        "show_tree": "print the probability tree",
+        "stages": "number of conditional stages"
+      },
+      "name": "Conditional Probability Lab",
+      "real_world_use": "Conditional reasoning drives medical test interpretation and reliability engineering.",
+      "slug_base": "conditional-probability-lab",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The law of large numbers guarantees sample averages converge to the expected value as the sample grows, the mathematical backbone of all simulation. Watching the running average of coin flips or die rolls settle is the most direct demonstration. The tool plots the running mean with shrinking error bands.",
+      "data_idea": "The demo averages seeded-RNG draws from several distributions and records the deviation from the true mean at each sample size.",
+      "difficulty": "beginner",
+      "key_params": {
+        "distribution": "source distribution",
+        "samples": "max sample count",
+        "true_mean": "expected value"
+      },
+      "name": "Law of Large Numbers Demonstrator",
+      "real_world_use": "The law justifies polling, Monte Carlo methods, and quality-control sampling plans.",
+      "slug_base": "law-of-large-numbers-demo",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Permutations count orderings of n distinct items as n factorial, while combinations count subsets as the binomial coefficient, computed multiplicatively to avoid huge factorials. The calculator handles repetitions, with-and-without-replacement variants, and multiset permutations. It shows the counting formulas alongside results.",
+      "data_idea": "The demo enumerates small cases exhaustively and checks seeded-RNG random combinatorial counts against brute-force listings.",
+      "difficulty": "beginner",
+      "key_params": {
+        "k": "items chosen",
+        "n": "items available",
+        "variant": "permutation or combination"
+      },
+      "name": "Permutation and Combination Calculator",
+      "real_world_use": "Combinatorial counting sizes passwords, lottery odds, and experimental designs.",
+      "slug_base": "permutation-combination-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Binomial coefficients C(n,k) count k-subsets and appear in the binomial theorem; Pascal's recurrence builds them row by row without overflow-prone factorials. The lab renders Pascal's triangle, highlights identities like the hockey-stick rule, and computes the full row sums as powers of 2.",
+      "data_idea": "The demo builds Pascal rows deterministically and verifies identities numerically on seeded-RNG random rows.",
+      "difficulty": "beginner",
+      "key_params": {
+        "k": "subset size",
+        "n": "set size",
+        "show_row": "display the full Pascal row"
+      },
+      "name": "Binomial Coefficient Lab",
+      "real_world_use": "Binomial coefficients model coin-flip outcomes, error patterns, and committee selections.",
+      "slug_base": "binomial-coefficient-lab",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Catalan numbers count Dyck paths, valid parenthesis strings, binary trees, and triangulations, all growing like 4^n over n^(3/2). The generator uses the closed form C(2n,n)/(n+1) and can enumerate the actual parenthesis strings for small n. It demonstrates how one sequence governs many structures.",
+      "data_idea": "The demo enumerates parenthesis strings for small n and checks counts match the Catalan formula.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "enumerate": "list the actual structures",
+        "n": "Catalan index",
+        "structure": "parentheses, trees, or paths"
+      },
+      "name": "Catalan Number Generator",
+      "real_world_use": "Catalan structures appear in parsing, stack-sortable permutations, and RNA folding models.",
+      "slug_base": "catalan-number-generator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "An integer partition writes n as a sum of positive integers ignoring order, counted by a classic dynamic program over coin-like parts. The enumerator lists all partitions for small n and reports counts, largest part, and number of parts for larger n. Euler's pentagonal recurrence offers a faster counting route.",
+      "data_idea": "The demo enumerates partitions of small integers exactly and cross-checks DP counts against the recurrence.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "max_parts": "cap on number of parts",
+        "n": "integer to partition",
+        "show_all": "list every partition"
+      },
+      "name": "Integer Partition Enumerator",
+      "real_world_use": "Partitions arise in representation theory, statistical mechanics, and change-making analysis.",
+      "slug_base": "integer-partition-enumerator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Stirling numbers of the second kind count ways to split n labeled items into k nonempty unlabeled groups, satisfying S(n,k) = k*S(n-1,k) + S(n-1,k-1). Summing over k gives the Bell numbers. The calculator builds the triangle by recurrence and interprets results as clustering counts.",
+      "data_idea": "The demo verifies recurrence-built tables against brute-force set partitions for small n.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "k": "number of groups",
+        "n": "items to split",
+        "triangle_rows": "rows to display"
+      },
+      "name": "Stirling Number Calculator",
+      "real_world_use": "Stirling numbers count set partitions in clustering theory and occupancy problems.",
+      "slug_base": "stirling-number-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Graph coloring assigns colors so adjacent vertices differ; the chromatic number is the minimum needed, found here by backtracking with forward checking on small graphs. The solver visualizes the coloring and reports the search tree size. Greedy ordering heuristics give fast upper bounds.",
+      "data_idea": "The demo colors seeded-RNG random graphs and compares backtracking optima against greedy upper bounds.",
+      "difficulty": "advanced",
+      "key_params": {
+        "colors": "max colors to try",
+        "graph": "edge list",
+        "heuristic": "vertex ordering rule"
+      },
+      "name": "Graph Coloring Solver",
+      "real_world_use": "Coloring schedules exams, allocates radio frequencies, and registers compiler variables.",
+      "slug_base": "graph-coloring-solver",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The traveling salesman problem seeks the shortest tour through all cities; exact solutions explode factorially, so heuristics like nearest-neighbor and 2-opt local search dominate practice. The lab compares tour lengths from several heuristics on the same point sets and reports the optimality gap on small instances solved exactly.",
+      "data_idea": "The demo scatters seeded-RNG random cities and benchmarks heuristic tour lengths against brute-force optima for small n.",
+      "difficulty": "advanced",
+      "key_params": {
+        "cities": "number of cities",
+        "heuristic": "nearest, 2opt, or greedy",
+        "seed": "RNG seed for city placement"
+      },
+      "name": "Traveling Salesman Heuristics Lab",
+      "real_world_use": "TSP heuristics route delivery fleets, drill circuit boards, and plan genome assembly.",
+      "slug_base": "traveling-salesman-heuristics",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Dijkstra's algorithm grows the shortest-path tree by always settling the closest unvisited node, which is correct for non-negative weights. A binary heap makes it run in near-linear time. The lab traces the settled order and reconstructs paths on weighted graphs.",
+      "data_idea": "The demo builds seeded-RNG random weighted graphs and verifies Dijkstra distances against Floyd-Warshall on small cases.",
+      "difficulty": "beginner",
+      "key_params": {
+        "graph": "weighted edge list",
+        "source": "start node",
+        "target": "destination node"
+      },
+      "name": "Shortest Path Lab (Dijkstra)",
+      "real_world_use": "Dijkstra routes packets, navigates maps, and plans robot motion.",
+      "slug_base": "shortest-path-lab",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Kruskal's algorithm builds a minimum spanning tree by adding the cheapest edges that do not create cycles, using a union-find structure to test connectivity. The cut property guarantees optimality. The tool reports the tree, its total weight, and the edges rejected.",
+      "data_idea": "The demo spans seeded-RNG random weighted graphs and checks total weight against Prim's algorithm output.",
+      "difficulty": "beginner",
+      "key_params": {
+        "graph": "weighted edge list",
+        "show_rejected": "list skipped edges",
+        "verify": "cross-check with Prim"
+      },
+      "name": "Minimum Spanning Tree Builder",
+      "real_world_use": "MSTs design minimum-cost networks for telecom, power grids, and cluster analysis.",
+      "slug_base": "minimum-spanning-tree",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "An Eulerian trail uses every edge exactly once and exists exactly when zero or two vertices have odd degree (for a connected graph). Hierholzer's algorithm constructs one by splicing cycles together in linear time. The finder tests the degree condition and returns the trail or a certificate of impossibility.",
+      "data_idea": "The demo generates seeded-RNG random graphs, finds trails where they exist, and validates the degree condition on each.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "graph": "edge list",
+        "start": "trail start vertex",
+        "verify": "check every edge used once"
+      },
+      "name": "Eulerian Path Finder",
+      "real_world_use": "Eulerian trails route street sweepers, plotter pens, and DNA fragment assembly.",
+      "slug_base": "eulerian-path-finder",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A bipartite graph splits vertices into two sets with edges only across the split; two-coloring by BFS both tests bipartiteness and finds the split. Maximum matching then pairs across the split optimally via augmenting paths. The checker reports the partition and a maximum matching.",
+      "data_idea": "The demo builds seeded-RNG random bipartite and non-bipartite graphs and validates the coloring and matching results.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "graph": "edge list",
+        "show_matching": "display the maximum matching",
+        "start": "BFS start vertex"
+      },
+      "name": "Bipartite Graph Checker and Matcher",
+      "real_world_use": "Bipartite matching assigns workers to jobs, students to schools, and ads to slots.",
+      "slug_base": "bipartite-matching-checker",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The 0/1 knapsack picks items maximizing value under a weight limit, solved exactly by dynamic programming over capacity in pseudo-polynomial time. The solver reconstructs the chosen set by backtracking the DP table. A greedy value-density heuristic shows how far from optimal shortcuts can fall.",
+      "data_idea": "The demo creates seeded-RNG random item sets and compares DP optima against greedy heuristic values.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "capacity": "weight limit",
+        "items": "(weight, value) list",
+        "show_table": "display the DP table"
+      },
+      "name": "Knapsack Dynamic Programming Solver",
+      "real_world_use": "Knapsack models cargo loading, budget allocation, and resource-constrained scheduling.",
+      "slug_base": "knapsack-solver",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Counting ways to make change for an amount with given coin denominations is a classic unbounded-knapsack DP: iterate coins outer, amounts inner, accumulating combinations. The counter lists the number of ways and can enumerate them for small amounts. It also finds the minimum-coin solution as a bonus.",
+      "data_idea": "The demo counts change for seeded-RNG random amounts and verifies small cases by exhaustive enumeration.",
+      "difficulty": "beginner",
+      "key_params": {
+        "amount": "target amount",
+        "coins": "denomination list",
+        "enumerate": "list the combinations"
+      },
+      "name": "Coin Change Counter",
+      "real_world_use": "Change-making DP appears in currency systems, vending logic, and resource partitioning.",
+      "slug_base": "coin-change-counter",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The convex hull is the smallest convex polygon containing a point set, found by Graham scan (angular sort) or the monotone chain in O(n log n). The finder returns hull vertices in order and the polygon area. It flags collinear edge cases explicitly.",
+      "data_idea": "The demo scatters seeded-RNG random points and verifies all points lie inside the returned hull polygon.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "algorithm": "graham or monotone_chain",
+        "points": "list of (x,y)",
+        "show_area": "report hull area"
+      },
+      "name": "Convex Hull Finder",
+      "real_world_use": "Convex hulls bound collision shapes, cluster outlines, and geographic regions.",
+      "slug_base": "convex-hull-finder",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The Mandelbrot set contains complex c where iterating z = z^2 + c from zero stays bounded; escape-time coloring renders its infinitely detailed boundary. The cardioid and bulbs correspond to attractive cycles of different periods. The renderer outputs an ASCII or PPM image with iteration-based shading.",
+      "data_idea": "The demo renders deterministic pixel grids over seeded parameter windows, needing no external data beyond the coordinate bounds.",
+      "difficulty": "advanced",
+      "key_params": {
+        "height": "image height in pixels",
+        "max_iter": "escape iteration cap",
+        "width": "image width in pixels"
+      },
+      "name": "Mandelbrot Set Renderer",
+      "real_world_use": "Mandelbrot rendering benchmarks parallel hardware and teaches complex dynamics.",
+      "slug_base": "mandelbrot-set-renderer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Julia sets fix the parameter c and color each starting point z by how fast z = z^2 + c escapes; connected dendrites appear for c inside the Mandelbrot set, dust for c outside. Sweeping c along a path morphs the fractal continuously. The explorer renders the set for any c and animates parameter paths.",
+      "data_idea": "The demo renders deterministic grids for seeded parameter choices and animates c along circular paths.",
+      "difficulty": "advanced",
+      "key_params": {
+        "c_imag": "imaginary part of c",
+        "c_real": "real part of c",
+        "max_iter": "escape iteration cap"
+      },
+      "name": "Julia Set Explorer",
+      "real_world_use": "Julia sets illustrate complex dynamics and generate procedural art and textures.",
+      "slug_base": "julia-set-explorer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The Sierpinski triangle emerges by repeatedly removing the middle triangle from each remaining one, leaving a fractal of dimension log 3 / log 2. The chaos-game construction reaches the same set by plotting midpoints toward random vertices. The generator outputs both the recursive and chaos-game versions as text art.",
+      "data_idea": "The demo builds the triangle deterministically by recursion depth and stochastically via the seeded chaos game.",
+      "difficulty": "beginner",
+      "key_params": {
+        "depth": "recursion depth",
+        "method": "recursive or chaos_game",
+        "size": "output grid size"
+      },
+      "name": "Sierpinski Triangle Generator",
+      "real_world_use": "Sierpinski patterns model antenna designs and appear in cellular-automaton theory.",
+      "slug_base": "sierpinski-triangle-generator",
+      "suggested_types": [
+        "simulation",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "The Koch snowflake replaces each line segment with four smaller ones, growing perimeter by 4/3 each iteration while the enclosed area converges to 8/5 of the original triangle. Its boundary has fractal dimension log 4 / log 3. The builder emits the polygon vertices at any depth.",
+      "data_idea": "The demo constructs snowflake vertices deterministically per depth and verifies the perimeter ratio converges to 4/3.",
+      "difficulty": "beginner",
+      "key_params": {
+        "depth": "iteration count",
+        "show_stats": "report perimeter and area",
+        "sides": "base polygon sides"
+      },
+      "name": "Koch Snowflake Builder",
+      "real_world_use": "Koch curves inspire fractal antennas and model rugged coastlines.",
+      "slug_base": "koch-snowflake-builder",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The chaos game picks a random polygon vertex and plots the point partway from the current position toward it; for a triangle with ratio 1/2 the Sierpinski triangle appears as if by magic. Changing the ratio or adding vertex restrictions yields ferns and carpets. The tool generalizes the game to any polygon and ratio.",
+      "data_idea": "The demo runs the seeded chaos game on several polygons and ratios, exporting the resulting point clouds.",
+      "difficulty": "beginner",
+      "key_params": {
+        "points": "number of plotted points",
+        "ratio": "step fraction toward vertex",
+        "vertices": "polygon vertex count"
+      },
+      "name": "Chaos Game Fractal Plotter",
+      "real_world_use": "Iterated function systems compress images and generate natural-looking textures.",
+      "slug_base": "chaos-game-fractal",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Barnsley's fern is an iterated function system of four affine maps chosen with fixed probabilities; their attractor is a remarkably lifelike fern frond. Each map contracts, rotates, and translates the plane. The generator plots hundreds of thousands of points to resolve the frond's detail.",
+      "data_idea": "The demo iterates the four affine maps with a seeded RNG and exports the point cloud of the attractor.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "maps": "affine map parameters",
+        "points": "number of plotted points",
+        "probabilities": "map selection weights"
+      },
+      "name": "Barnsley Fern Generator",
+      "real_world_use": "Iterated function systems generate film foliage and compress natural imagery.",
+      "slug_base": "barnsley-fern-generator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Circle packing places non-overlapping circles to maximize coverage inside a container, a hard optimization tackled here by simulated annealing over circle centers. The optimizer reports the packing density and the final layout. Hexagonal arrangements emerge naturally as optimal for equal circles.",
+      "data_idea": "The demo packs seeded-RNG random circle sets into squares and measures density against the hexagonal upper bound.",
+      "difficulty": "advanced",
+      "key_params": {
+        "circles": "list of radii",
+        "container": "square side length",
+        "iterations": "annealing steps"
+      },
+      "name": "Circle Packing Optimizer",
+      "real_world_use": "Packing optimization arranges components on chips and cuts stock material efficiently.",
+      "slug_base": "circle-packing-optimizer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The shoelace formula computes polygon area by summing cross products of consecutive vertices, with the sign indicating winding orientation. It handles concave polygons as long as vertices are ordered without self-intersection. The calculator validates the vertex order and reports area and centroid.",
+      "data_idea": "The demo measures seeded-RNG random simple polygons and cross-checks areas against triangle-decomposition sums.",
+      "difficulty": "beginner",
+      "key_params": {
+        "show_centroid": "also report the centroid",
+        "vertices": "ordered (x,y) list",
+        "winding": "clockwise or ccw check"
+      },
+      "name": "Polygon Area Calculator (Shoelace)",
+      "real_world_use": "Shoelace areas compute land parcels, sprite bounds, and GIS polygon metrics.",
+      "slug_base": "polygon-area-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Two line segments intersect if and only if their endpoints straddle each other's supporting lines, tested with orientation cross products. The engine returns the intersection point for proper crossings and classifies touching, overlapping, and parallel cases. Robust epsilon handling avoids floating-point misclassification.",
+      "data_idea": "The demo tests seeded-RNG random segment pairs and validates results against a sampling-based intersection check.",
+      "difficulty": "beginner",
+      "key_params": {
+        "classify": "report the intersection type",
+        "epsilon": "parallelism tolerance",
+        "segments": "list of segment pairs"
+      },
+      "name": "Line Segment Intersection Engine",
+      "real_world_use": "Segment intersection powers CAD, collision detection, and map overlay operations.",
+      "slug_base": "line-intersection-engine",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Simulated annealing escapes local minima by accepting worse moves with a probability that decays with a cooling temperature, mimicking metallurgical annealing. Slow cooling lets the search settle near the global optimum. The optimizer logs the best energy over time and supports several cooling schedules.",
+      "data_idea": "The demo minimizes seeded-RNG random rugged test functions and compares final energies across cooling schedules.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cooling": "exponential, linear, or logarithmic",
+        "initial_temp": "starting temperature",
+        "iterations": "annealing steps"
+      },
+      "name": "Simulated Annealing Optimizer",
+      "real_world_use": "Annealing optimizes chip placement, tour routes, and protein structure prediction.",
+      "slug_base": "simulated-annealing-optimizer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A genetic algorithm evolves a population of candidate solutions through selection, crossover, and mutation, keeping the fittest to breed the next generation. Elitism preserves the best individual unchanged. The maximizer tracks fitness statistics per generation and exports the champion.",
+      "data_idea": "The demo maximizes seeded-RNG random multimodal functions and compares convergence against random search.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "crossover_rate": "breeding probability",
+        "generations": "evolution rounds",
+        "population": "population size"
+      },
+      "name": "Genetic Algorithm Maximizer",
+      "real_world_use": "Genetic algorithms tune hyperparameters, design antennas, and schedule factories.",
+      "slug_base": "genetic-algorithm-maximizer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The simplex method walks the vertices of the feasible polytope of a linear program, pivoting to adjacent vertices with better objective values until optimality. Bland's rule avoids cycling on degenerate problems. This educational solver handles small problems and prints each tableau.",
+      "data_idea": "The demo solves seeded-RNG random small LPs and verifies optima against brute-force vertex enumeration.",
+      "difficulty": "advanced",
+      "key_params": {
+        "constraints": "list of linear constraints",
+        "objective": "coefficients to maximize",
+        "pivot_rule": "dantzig or bland"
+      },
+      "name": "Simplex Linear Programming Solver",
+      "real_world_use": "Linear programming allocates resources in logistics, refining, and airline scheduling.",
+      "slug_base": "simplex-lp-solver",
+      "suggested_types": [
+        "cli_tool",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "A 2x2 game has a Nash equilibrium where neither player can improve by deviating alone; some games need mixed strategies with specific randomization probabilities. The solver enumerates pure-strategy equilibria and computes mixed equilibria from indifference conditions. It classifies the game as coordination, anti-coordination, or dilemma.",
+      "data_idea": "The demo analyzes seeded-RNG random payoff matrices and verifies equilibrium strategies are mutual best responses.",
+      "difficulty": "advanced",
+      "key_params": {
+        "classify": "name the game type",
+        "payoffs": "2x2 payoff matrices",
+        "show_mixed": "compute mixed equilibria"
+      },
+      "name": "Nash Equilibrium Finder (2x2 Games)",
+      "real_world_use": "Equilibrium analysis models auctions, pricing wars, and evolutionary strategies.",
+      "slug_base": "nash-equilibrium-2x2",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "In an iterated prisoner's dilemma tournament, strategies like tit-for-tat, grim trigger, and always-defect play round robins, and cooperation often wins through reciprocity. The tournament engine supports custom strategies, noise (misexecuted moves), and reports the full payoff matrix. Evolutionary variants let successful strategies reproduce.",
+      "data_idea": "The demo runs seeded-RNG tournaments with strategy noise and tracks which strategies dominate over generations.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "noise": "move error probability",
+        "rounds": "rounds per match",
+        "strategies": "list of strategy names"
+      },
+      "name": "Prisoner's Dilemma Tournament Engine",
+      "real_world_use": "Dilemma tournaments study cooperation in economics, biology, and multi-agent AI.",
+      "slug_base": "prisoners-dilemma-tournament",
+      "suggested_types": [
+        "simulation",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Minimax chooses the move maximizing the worst-case outcome assuming optimal opponent play, and alpha-beta pruning skips branches that cannot change the decision. Tic-tac-toe is small enough to solve completely. The game plays perfectly as either side and explains each move's minimax value.",
+      "data_idea": "The demo plays seeded-RNG random openings against the perfect engine and verifies it never loses.",
+      "difficulty": "beginner",
+      "key_params": {
+        "ai_side": "X or O for the engine",
+        "pruning": "enable alpha-beta",
+        "show_values": "display minimax scores"
+      },
+      "name": "Minimax Tic-Tac-Toe Engine",
+      "real_world_use": "Minimax and pruning are the foundation of chess and Go engines.",
+      "slug_base": "minimax-tic-tac-toe",
+      "suggested_types": [
+        "terminal_game",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Hill climbing improves a solution by moving to the best neighbor, stopping at the first local optimum it reaches. Random restarts from many starting points map out the landscape of optima. The tool compares single-start versus multi-start success rates on rugged functions.",
+      "data_idea": "The demo climbs seeded-RNG random multimodal surfaces and records how often restarts find the global peak.",
+      "difficulty": "beginner",
+      "key_params": {
+        "function": "objective expression",
+        "restarts": "number of random starts",
+        "step_size": "neighborhood radius"
+      },
+      "name": "Hill Climbing Optimizer",
+      "real_world_use": "Hill climbing tunes parameters in engineering design and image registration.",
+      "slug_base": "hill-climbing-optimizer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The diet problem is the classic linear program: minimize food cost subject to meeting nutritional requirements, with each food contributing known nutrients per dollar. The solver formulates it as an LP and reports the cheapest feasible menu. Sensitivity output shows which nutrient constraints bind.",
+      "data_idea": "The demo builds seeded-RNG random food-nutrient tables and verifies the solution meets every requirement at minimal cost.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "foods": "(cost, nutrients) list",
+        "requirements": "minimum nutrient amounts",
+        "show_binding": "list tight constraints"
+      },
+      "name": "Diet Problem LP Solver",
+      "real_world_use": "Diet models optimize animal feed, rations, and institutional meal planning.",
+      "slug_base": "diet-problem-solver",
+      "suggested_types": [
+        "linear_regression",
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "The Black-Scholes formula prices European options from spot price, strike, time to expiry, risk-free rate, and volatility, assuming lognormal price dynamics. The Greeks (delta, gamma, theta, vega) measure sensitivity to each input. The calculator prices calls and puts and tabulates the Greeks.",
+      "data_idea": "The demo prices seeded-RNG random option parameter sets and checks put-call parity holds on every quote.",
+      "difficulty": "advanced",
+      "key_params": {
+        "option_type": "call or put",
+        "spot": "current price",
+        "strike": "strike price",
+        "volatility": "sigma",
+        "years": "time to expiry"
+      },
+      "name": "Black-Scholes Option Pricer",
+      "real_world_use": "Black-Scholes pricing underlies equity-derivatives desks and risk management systems.",
+      "slug_base": "black-scholes-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A loan amortization schedule splits each payment into interest on the remaining balance and principal reduction, with the interest share shrinking over time. The closed-form payment comes from the present value of an annuity. The tool emits the full schedule and total interest paid.",
+      "data_idea": "The demo amortizes seeded-RNG random loan parameters and verifies the balance hits exactly zero at the final payment.",
+      "difficulty": "beginner",
+      "key_params": {
+        "annual_rate": "interest rate",
+        "payments_per_year": "payment frequency",
+        "principal": "loan amount",
+        "years": "loan term"
+      },
+      "name": "Loan Amortization Schedule Builder",
+      "real_world_use": "Amortization schedules power mortgage servicing and consumer-lending software.",
+      "slug_base": "loan-amortization-schedule",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Compound interest grows savings exponentially: each period's interest earns interest in later periods, so small rate differences compound into large gaps over decades. The projector compares scenarios with different rates, contributions, and compounding frequencies. It also computes the doubling time via the rule of 72.",
+      "data_idea": "The demo projects seeded-RNG random savings scenarios and verifies doubling times against the exact logarithm formula.",
+      "difficulty": "beginner",
+      "key_params": {
+        "annual_rate": "interest rate",
+        "compounds_per_year": "compounding frequency",
+        "contribution": "periodic deposit",
+        "years": "horizon"
+      },
+      "name": "Compound Interest Projector",
+      "real_world_use": "Compound projections drive retirement planning tools and savings-product disclosures.",
+      "slug_base": "compound-interest-projector",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A bond's price is the present value of its coupons plus principal, discounted at the market yield; price and yield move inversely. Duration measures price sensitivity to yield changes. The calculator prices bonds, solves for yield to maturity by root finding, and reports duration and convexity.",
+      "data_idea": "The demo prices seeded-RNG random bonds and verifies yield-to-maturity round-trips back to the quoted price.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "coupon_rate": "annual coupon",
+        "face": "face value",
+        "years": "maturity",
+        "yield": "market yield"
+      },
+      "name": "Bond Price and Yield Calculator",
+      "real_world_use": "Bond math runs fixed-income trading, portfolio management, and treasury operations.",
+      "slug_base": "bond-price-yield-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Portfolio variance combines asset variances with pairwise covariances weighted by holdings; diversification works when correlations are below one. The minimum-variance portfolio has a closed-form solution under a budget constraint. The optimizer computes the efficient frontier for two-asset blends and reports the tangency weights.",
+      "data_idea": "The demo builds seeded-RNG random covariance matrices and verifies frontier portfolios dominate single-asset risk-return points.",
+      "difficulty": "advanced",
+      "key_params": {
+        "covariance": "asset covariance matrix",
+        "returns": "expected returns",
+        "target_return": "frontier point"
+      },
+      "name": "Portfolio Variance Optimizer",
+      "real_world_use": "Mean-variance optimization allocates pension funds and robo-advisor portfolios.",
+      "slug_base": "portfolio-variance-optimizer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "An option's payoff diagram shows profit versus underlying price at expiry: calls kink upward at the strike, puts kink downward, and spreads combine kinks into bounded shapes. The visualizer plots payoff curves for single options and two-leg spreads. Breakeven points are marked automatically.",
+      "data_idea": "The demo plots seeded-RNG random strikes and premiums, verifying breakevens solve the payoff equation.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "legs": "list of option legs",
+        "spot_range": "price axis bounds",
+        "strike": "strike price"
+      },
+      "name": "Option Payoff Diagram Visualizer",
+      "real_world_use": "Payoff diagrams help traders and students understand structured-product risk profiles.",
+      "slug_base": "option-payoff-visualizer",
+      "suggested_types": [
+        "web_dashboard",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Retirement savings simulation projects a portfolio forward with annual contributions, stochastic market returns, and inflation drag, then tests whether withdrawals last through retirement. Running thousands of paths gives the success probability, the core of the 4-percent-rule analysis. The tool reports the failure rate and median terminal wealth.",
+      "data_idea": "The demo simulates seeded-RNG return paths from lognormal parameters and tallies depletion events across horizons.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "annual_return": "expected return",
+        "contribution": "yearly savings",
+        "volatility": "return std dev",
+        "years": "saving horizon"
+      },
+      "name": "Retirement Savings Monte Carlo",
+      "real_world_use": "Monte Carlo retirement analysis powers financial-planning software and pension studies.",
+      "slug_base": "retirement-savings-simulator",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Currency conversion multiplies by the exchange rate, but real converters handle bid-ask spreads, triangular arbitrage checks, and historical rate tables. The tool converts amounts, detects triangular arbitrage opportunities across three currencies, and reports the effective spread cost.",
+      "data_idea": "The demo synthesizes seeded-RNG consistent rate tables plus one planted arbitrage triangle and verifies detection.",
+      "difficulty": "beginner",
+      "key_params": {
+        "amount": "money to convert",
+        "from": "source currency",
+        "rates": "rate table",
+        "to": "target currency"
+      },
+      "name": "Currency Converter with Arbitrage Check",
+      "real_world_use": "FX conversion and arbitrage detection run inside trading desks and travel-money apps.",
+      "slug_base": "currency-converter",
+      "suggested_types": [
+        "unit_converter",
+        "cli_tool",
+        "api_client_sim"
+      ]
+    },
+    {
+      "concept": "Matrix exponentiation computes the nth Fibonacci number in O(log n) time by raising the 2x2 Fibonacci matrix to the nth power with binary exponentiation. It handles indices far beyond naive recursion or iteration. The tool also derives Lucas numbers from the same matrix powers.",
+      "data_idea": "The demo computes seeded-RNG random large indices and verifies results against the iterative method for small n.",
+      "difficulty": "beginner",
+      "key_params": {
+        "index": "which Fibonacci number",
+        "modulus": "optional mod for huge indices",
+        "show_matrix": "display the power matrix"
+      },
+      "name": "Fast Fibonacci via Matrix Exponentiation",
+      "real_world_use": "Fast linear recurrences appear in algorithm analysis and pseudorandom generation.",
+      "slug_base": "fibonacci-matrix-exponentiator",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The logistic map x_{n+1} = r*x*(1-x) transitions from fixed points to period doubling to full chaos as r increases past 3.57, the classic route to chaos. The bifurcation diagram plots long-term values against r, revealing the fractal cascade. The simulator also estimates the Lyapunov exponent.",
+      "data_idea": "The demo sweeps r deterministically with seeded initial conditions and records attractor values after transients.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "r_values": "range of r to sweep",
+        "seed_x": "initial x",
+        "transients": "steps to discard"
+      },
+      "name": "Logistic Map Chaos Explorer",
+      "real_world_use": "The logistic map introduces chaos theory in ecology, physics, and dynamical-systems courses.",
+      "slug_base": "logistic-map-chaos",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The Bailey-Borwein-Plouffe formula extracts hexadecimal digits of pi without computing earlier ones, using a series with powers of 16 in the denominator. Summing the series to enough terms yields any desired digit. The tool computes the nth hex digit and converts runs to decimal approximations.",
+      "data_idea": "The demo computes digit positions deterministically and checks early digits against the known expansion of pi.",
+      "difficulty": "advanced",
+      "key_params": {
+        "digit_index": "which hex digit to extract",
+        "terms": "series terms to sum",
+        "verify": "check against known digits"
+      },
+      "name": "Pi Digit Spigot (BBP Formula)",
+      "real_world_use": "Digit-extraction algorithms stress-test arbitrary-precision libraries and distributed computing.",
+      "slug_base": "pi-digit-spigot",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Integer square roots can be computed digit by digit with a manual long-division-like algorithm that never uses floating point. Each step brings down digit pairs and picks the largest fitting digit. The expander produces exact decimal expansions of square roots to arbitrary precision.",
+      "data_idea": "The demo expands seeded-RNG random integer square roots and verifies digits by squaring the truncated expansion.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "digits": "decimal places to produce",
+        "n": "integer to root",
+        "show_steps": "trace the digit algorithm"
+      },
+      "name": "Square Root Digit Expander",
+      "real_world_use": "Digit-by-digit algorithms underpin arbitrary-precision arithmetic libraries.",
+      "slug_base": "square-root-digit-expander",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Hofstadter's Q-sequence defines each term from two earlier terms at data-dependent positions, producing chaotic yet structured behavior with self-similar bursts. Computing it needs memoization to avoid exponential blowup. The generator plots the sequence and its burst statistics.",
+      "data_idea": "The demo computes the sequence deterministically with memoization and analyzes burst spacing statistics.",
+      "difficulty": "advanced",
+      "key_params": {
+        "show_bursts": "flag burst regions",
+        "terms": "how many terms to compute",
+        "window": "burst detection window"
+      },
+      "name": "Hofstadter Q-Sequence Generator",
+      "real_world_use": "Meta-Fibonacci sequences are studied in recreational mathematics and sequence databases.",
+      "slug_base": "hofstadter-q-sequence",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The look-and-say sequence reads off runs of identical digits: 1 becomes 11, 11 becomes 21, 21 becomes 1211, and so on. Conway proved the lengths grow by a constant factor (about 1.3036) and that strings split into 92 atomic elements. The generator produces terms and tracks length growth.",
+      "data_idea": "The demo generates terms deterministically from seeded starting strings and fits the observed growth factor.",
+      "difficulty": "beginner",
+      "key_params": {
+        "seed_string": "starting term",
+        "show_runs": "annotate the run encoding",
+        "terms": "how many terms"
+      },
+      "name": "Look-and-Say Sequence Generator",
+      "real_world_use": "Look-and-say is a favorite string-manipulation exercise in programming courses.",
+      "slug_base": "look-and-say-generator",
+      "suggested_types": [
+        "cli_tool",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Sudoku solving is constraint propagation plus backtracking: naked singles fill forced cells, and guessing with rollback handles the rest. Representing candidates as bitmasks makes it fast. The solver rates puzzle difficulty by the techniques required and can generate new puzzles by digging holes in a solved grid.",
+      "data_idea": "The demo solves seeded-RNG generated puzzles and verifies solutions satisfy row, column, and box constraints.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "difficulty_target": "puzzle hardness",
+        "puzzle": "81-char grid string",
+        "solve_steps": "show the solving trace"
+      },
+      "name": "Sudoku Solver and Generator",
+      "real_world_use": "Sudoku engines power puzzle apps and teach backtracking in algorithms courses.",
+      "slug_base": "sudoku-solver",
+      "suggested_types": [
+        "terminal_game",
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A normal magic square arranges 1..n^2 so every row, column, and diagonal sums to the same magic constant n(n^2+1)/2. The Siamese method builds odd-order squares by walking up-right with wrap-around. The builder verifies the magic property and reports the constant.",
+      "data_idea": "The demo constructs squares for seeded odd orders and verifies all lines sum to the magic constant.",
+      "difficulty": "beginner",
+      "key_params": {
+        "order": "odd square size",
+        "show_constant": "display the magic constant",
+        "verify": "check all lines"
+      },
+      "name": "Magic Square Builder",
+      "real_world_use": "Magic squares appear in puzzle design, art, and combinatorial-design theory.",
+      "slug_base": "magic-square-builder",
+      "suggested_types": [
+        "cli_tool",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "The Ackermann function grows faster than any primitive recursive function, defined by double recursion that explodes even for tiny inputs like A(4,2). Computing it needs careful recursion limits and memoization. The explorer tabulates small values and measures call counts to show the growth.",
+      "data_idea": "The demo computes small Ackermann values deterministically with memoization and records recursion depth statistics.",
+      "difficulty": "advanced",
+      "key_params": {
+        "m": "first argument",
+        "max_depth": "recursion guard",
+        "n": "second argument"
+      },
+      "name": "Ackermann Function Explorer",
+      "real_world_use": "Ackermann bounds appear in the analysis of union-find and computability theory.",
+      "slug_base": "ackermann-function-explorer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "K-means clusters points by alternating between assigning each point to the nearest centroid and moving centroids to their cluster means, minimizing within-cluster variance. Random restarts avoid poor local minima, and the elbow method picks k. The demo visualizes assignments converging on synthetic blobs.",
+      "data_idea": "The demo generates seeded-RNG Gaussian blobs with known centers and measures how well k-means recovers them.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "blobs": "number of synthetic clusters",
+        "k": "clusters to find",
+        "restarts": "random restarts"
+      },
+      "name": "K-Means Point Clusterer",
+      "real_world_use": "K-means segments customers, compresses images, and clusters genes by expression.",
+      "slug_base": "k-means-point-clusterer",
+      "suggested_types": [
+        "kmeans_clustering",
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Naive Bayes classifies by multiplying per-feature likelihoods under the independence assumption, working surprisingly well on text and tabular data. Gaussian naive Bayes fits a normal distribution per feature per class. The toy trains on synthetic labeled points and reports accuracy and confusion counts.",
+      "data_idea": "The demo synthesizes seeded-RNG labeled Gaussian class clouds and evaluates classifier accuracy on held-out points.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "classes": "number of classes",
+        "features": "feature count",
+        "samples": "training size"
+      },
+      "name": "Gaussian Naive Bayes Classifier Toy",
+      "real_world_use": "Naive Bayes filters spam, classifies documents, and triages support tickets.",
+      "slug_base": "naive-bayes-classifier-toy",
+      "suggested_types": [
+        "naive_bayes",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "A decision tree splits data by the feature and threshold maximizing information gain (or minimizing Gini impurity), recursing until leaves are pure or a depth limit hits. The finder builds the tree on synthetic data and prints the split rules as readable if-then logic. Pruning controls overfitting.",
+      "data_idea": "The demo generates seeded-RNG labeled data with a known rule and checks the tree recovers equivalent splits.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "criterion": "gini or entropy",
+        "max_depth": "tree depth cap",
+        "samples": "training size"
+      },
+      "name": "Decision Tree Split Finder",
+      "real_world_use": "Decision trees explain credit decisions, diagnose faults, and form random-forest building blocks.",
+      "slug_base": "decision-tree-split-finder",
+      "suggested_types": [
+        "decision_tree",
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Classical ciphers substitute letters: Caesar shifts the alphabet by a key, Vigenere cycles through a keyword's shifts, breaking single-letter frequency analysis. Frequency analysis cracks Caesar automatically by matching English letter distributions. The lab encrypts, decrypts, and cryptanalyzes both ciphers.",
+      "data_idea": "The demo encrypts seeded-RNG random plaintexts and verifies the cracker recovers Caesar keys from ciphertext alone.",
+      "difficulty": "beginner",
+      "key_params": {
+        "cipher": "caesar or vigenere",
+        "key": "shift or keyword",
+        "mode": "encrypt, decrypt, or crack"
+      },
+      "name": "Caesar and Vigenere Cipher Lab",
+      "real_world_use": "Classical ciphers teach cryptanalysis fundamentals behind modern cipher design.",
+      "slug_base": "caesar-vigenere-cipher-lab",
+      "suggested_types": [
+        "encryption_tool",
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Cubic splines fit piecewise cubic polynomials through data points with matching first and second derivatives at the knots, giving smooth interpolation without Runge oscillation. The tridiagonal system for the second derivatives solves in linear time. The fitter compares spline error against Lagrange interpolation.",
+      "data_idea": "The demo interpolates seeded-RNG random smooth function samples and measures max error versus polynomial interpolation.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "boundary": "natural or clamped",
+        "evaluation_points": "where to evaluate",
+        "nodes": "list of (x, y) points"
+      },
+      "name": "Cubic Spline Fitter",
+      "real_world_use": "Splines smooth animation curves, CAD surfaces, and sensor data.",
+      "slug_base": "cubic-spline-fitter",
+      "suggested_types": [
+        "cli_tool",
+        "linear_regression",
+        "web_dashboard"
+      ]
+    }
+  ]
+}

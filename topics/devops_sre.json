@@ -1,0 +1,2066 @@
+{
+  "domain": "computer_science",
+  "subdomain": "devops_sre",
+  "topics": [
+    {
+      "slug_base": "canary-deployment-orchestrator",
+      "name": "Canary Deployment Orchestrator",
+      "concept": "Canary releases shift a small slice of traffic to a new version and watch health signals before rolling forward, limiting blast radius. The orchestrator automates the stages: route 5 percent, compare error rates and latency against the stable version, then promote or roll back automatically. It turns deploy courage into a measured experiment.",
+      "key_params": {
+        "canary_percent": "initial traffic share for the new version",
+        "promotion_steps": "traffic increments toward full rollout",
+        "error_rate_guard": "error threshold that triggers rollback",
+        "latency_guard_ms": "p99 latency ceiling during canary"
+      },
+      "data_idea": "A seeded RNG simulates two service versions serving traffic with injected regressions in some runs.",
+      "real_world_use": "Used by platform teams shipping risky changes safely to production.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "monitoring_agent",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "blue-green-switch-controller",
+      "name": "Blue-Green Switch Controller",
+      "concept": "Blue-green deployment keeps two identical environments and flips the router from blue to green once the new version passes checks, making rollback a second flip. The controller manages health verification on the idle environment, the atomic traffic switch, and the keep-warm period before the old environment is torn down. Downtime drops to nearly zero.",
+      "key_params": {
+        "health_checks": "probes that must pass before the switch",
+        "warmup_seconds": "time the new env serves before old is drained",
+        "drain_timeout": "grace for in-flight requests on the old env",
+        "auto_rollback": "whether failed checks revert the switch"
+      },
+      "data_idea": "A seeded RNG fabricates environment health states with occasional failed green deployments.",
+      "real_world_use": "Used by teams needing instant rollback for critical services.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rolling-update-scheduler",
+      "name": "Rolling Update Scheduler",
+      "concept": "Rolling updates replace instances a few at a time so capacity never drops to zero, but going too fast risks taking down the whole fleet. The scheduler computes batch sizes from the minimum healthy count, pauses between batches for health verification, and halts the rollout on failures. It balances speed against safety automatically.",
+      "key_params": {
+        "batch_size": "instances updated per wave",
+        "min_healthy_percent": "floor of serving capacity",
+        "pause_seconds": "verification pause between batches",
+        "failure_threshold": "failed batches that halt the rollout"
+      },
+      "data_idea": "A seeded RNG simulates instance fleets where some updates fail health checks.",
+      "real_world_use": "Used by orchestrators like Kubernetes during version rollouts.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "feature-flag-service",
+      "name": "Feature Flag Service",
+      "concept": "Feature flags decouple deployment from release, letting code ship dark and turn on for percentages of users or specific cohorts. The service evaluates flag rules with targeting, percentage rollouts, and kill switches, logging every evaluation for audit. A bad feature gets switched off in seconds without a redeploy.",
+      "key_params": {
+        "flag_rules": "targeting conditions per flag",
+        "rollout_percent": "share of traffic receiving the feature",
+        "kill_switch": "instant global disable",
+        "audit_log": "whether evaluations are recorded"
+      },
+      "data_idea": "A seeded RNG generates users with attributes and flag evaluations across rollout stages.",
+      "real_world_use": "Used by product engineering teams for progressive delivery.",
+      "suggested_types": [
+        "rest_api",
+        "config_manager",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "service-health-monitor",
+      "name": "Service Health Monitor",
+      "concept": "Every service needs a heartbeat: regular probes that confirm it is alive and serving correctly. The monitor runs HTTP, TCP, and custom checks on a schedule, tracks uptime percentages, and pages when consecutive failures cross a threshold. Flapping detection keeps a single blip from waking anyone.",
+      "key_params": {
+        "check_interval_seconds": "probe cadence",
+        "failure_threshold": "consecutive failures before alerting",
+        "flap_window": "window for flapping detection",
+        "check_types": "http, tcp, and script checks supported"
+      },
+      "data_idea": "A seeded RNG synthesizes service check results with outages and flapping episodes.",
+      "real_world_use": "Used by every operations team as the foundation of monitoring.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "web_dashboard",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "uptime-sla-calculator",
+      "name": "Uptime SLA Calculator",
+      "concept": "SLA percentages translate directly into allowed downtime: 99.9 percent means about 43 minutes a month, and every nine matters. The calculator turns incident durations into availability numbers, compares against contracted SLAs, and computes error budgets remaining. It settles arguments about whether the SLA was actually breached.",
+      "key_params": {
+        "sla_target": "contracted availability like 99.95",
+        "period": "monthly, quarterly, or rolling window",
+        "exclusions": "planned maintenance subtracted",
+        "incidents": "downtime events with durations"
+      },
+      "data_idea": "A seeded RNG fabricates incident timelines with varied durations and exclusions.",
+      "real_world_use": "Used by SRE teams reporting SLA compliance to customers.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "error-budget-tracker",
+      "name": "Error Budget Tracker",
+      "concept": "Error budgets turn reliability into a spendable resource: ship fast while budget remains, freeze features when it burns. The tracker computes budget from the SLO, consumes it with every incident, and gates deployments when the budget runs dry. It aligns product velocity with reliability mathematically.",
+      "key_params": {
+        "slo_target": "service level objective percentage",
+        "window_days": "rolling budget window",
+        "freeze_threshold": "remaining budget that halts releases",
+        "burn_alerts": "notification tiers as budget drains"
+      },
+      "data_idea": "A seeded RNG simulates incident streams consuming budget at healthy and unhealthy rates.",
+      "real_world_use": "Used by SRE organizations implementing Google-style reliability practices.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "web_dashboard",
+        "scheduler"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "burn-rate-alerter",
+      "name": "Burn Rate Alerter",
+      "concept": "Slow budget burns need different urgency than fast ones, so burn-rate alerting watches how quickly the error budget is being consumed. The alerter computes burn over short and long windows, paging for fast burns and ticketing for slow ones, with reset detection to avoid alert fatigue. It catches incidents before the budget is gone.",
+      "key_params": {
+        "fast_window_minutes": "short burn measurement window",
+        "slow_window_hours": "long burn measurement window",
+        "page_threshold": "burn multiple that pages",
+        "ticket_threshold": "burn multiple that tickets"
+      },
+      "data_idea": "A seeded RNG generates error streams with sudden spikes and slow leaks.",
+      "real_world_use": "Used by SRE teams for SLO-based alerting instead of static thresholds.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "scheduler",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "slo-dashboard-generator",
+      "name": "SLO Dashboard Generator",
+      "concept": "SLOs scattered across spreadsheets help nobody, so a dashboard generator turns service definitions into readable status boards. It computes good-event ratios per SLO, shows budget remaining with burn projections, and highlights the worst offenders. Leadership sees reliability at a glance.",
+      "key_params": {
+        "slos": "service level objectives defined",
+        "refresh_minutes": "dashboard data freshness",
+        "projection_days": "budget exhaustion forecast horizon",
+        "grouping": "by team, tier, or service"
+      },
+      "data_idea": "A seeded RNG fabricates service metrics with varied SLO compliance.",
+      "real_world_use": "Used by engineering orgs making reliability visible.",
+      "suggested_types": [
+        "web_dashboard",
+        "report_generator",
+        "statistical_analyzer",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "latency-percentile-analyzer",
+      "name": "Latency Percentile Analyzer",
+      "concept": "Averages hide the pain: a 50ms average can conceal a terrible p99 that ruins real users. The analyzer computes p50, p90, p99, and p999 from request timings, tracks them over time, and flags regressions. Percentiles, not means, are how users experience speed.",
+      "key_params": {
+        "percentiles": "which percentiles are computed",
+        "bucket_minutes": "time aggregation window",
+        "regression_sigma": "deviation that flags a slowdown",
+        "min_samples": "floor avoiding noisy tiny buckets"
+      },
+      "data_idea": "A seeded RNG generates request timings with log-normal shape plus injected slowdowns.",
+      "real_world_use": "Used by performance engineers tracking user-facing latency.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "web_dashboard",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "apdex-score-calculator",
+      "name": "Apdex Score Calculator",
+      "concept": "Apdex compresses user satisfaction into one number from 0 to 1 by counting satisfied, tolerating, and frustrated requests against a target response time. The calculator applies the Apdex formula to response-time samples and trends the score, giving non-technical stakeholders a single health number. It pairs with percentiles, never replaces them.",
+      "key_params": {
+        "target_ms": "satisfied response threshold",
+        "samples": "response time observations",
+        "window": "aggregation period",
+        "frustrated_multiplier": "weight of frustrated requests"
+      },
+      "data_idea": "A seeded RNG synthesizes response times around and beyond the target threshold.",
+      "real_world_use": "Used in APM dashboards summarizing user experience.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "web_dashboard",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "log-aggregator",
+      "name": "Log Aggregator",
+      "concept": "Dozens of hosts each writing local logs make incidents unsearchable, so aggregation centralizes them with structure. The tool tails log files, parses common formats into fields, indexes by time and service, and serves keyword and field queries. One search box over the whole fleet beats SSHing into boxes.",
+      "key_params": {
+        "sources": "log files and hosts tailed",
+        "parse_formats": "patterns for common log shapes",
+        "retention_days": "hot storage window",
+        "query_lang": "keyword and field filters supported"
+      },
+      "data_idea": "A seeded RNG generates multi-service logs with realistic formats and an incident hidden inside.",
+      "real_world_use": "Used as the core of centralized logging stacks.",
+      "suggested_types": [
+        "log_analyzer",
+        "data_pipeline",
+        "cli_tool",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "distributed-tracing-simulator",
+      "name": "Distributed Tracing Simulator",
+      "concept": "A single user request fans out across microservices, and tracing stitches those spans into one view. The simulator generates spans with parent-child relationships, propagates trace IDs, and renders waterfall timelines showing where time went. It teaches how sampling and context propagation work.",
+      "key_params": {
+        "services": "microservice topology modeled",
+        "sample_rate": "fraction of traces kept",
+        "latency_profiles": "per-service timing distributions",
+        "error_injection": "faulty spans for diagnosis practice"
+      },
+      "data_idea": "A seeded RNG synthesizes trace trees with occasional slow or failing spans.",
+      "real_world_use": "Used by developers learning observability and debugging latency.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "log_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "metrics-pipeline",
+      "name": "Metrics Pipeline",
+      "concept": "Raw numbers become useful only after collection, aggregation, and storage, which is what a metrics pipeline does. It scrapes simulated exporters, aggregates counters and gauges into time buckets, applies retention downsampling, and answers range queries. It models the Prometheus-style pull pipeline end to end.",
+      "key_params": {
+        "scrape_interval": "collection cadence",
+        "bucket_seconds": "aggregation granularity",
+        "retention_tiers": "raw versus downsampled storage",
+        "metric_types": "counters, gauges, histograms handled"
+      },
+      "data_idea": "A seeded RNG emits exporter-style metrics with gauges, counters, and histograms.",
+      "real_world_use": "Used by SRE teams learning metrics architecture.",
+      "suggested_types": [
+        "data_pipeline",
+        "monitoring_agent",
+        "rest_api",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "alert-deduplicator",
+      "name": "Alert Deduplicator",
+      "concept": "One outage can fire hundreds of alerts across services, burying the real signal. The deduplicator groups alerts by fingerprint, suppresses repeats within a window, and rolls related alerts into a single incident notification. On-call engineers get one page, not fifty.",
+      "key_params": {
+        "fingerprint_fields": "labels identifying duplicates",
+        "suppress_window_minutes": "repeat suppression period",
+        "group_fields": "labels rolled into incidents",
+        "escalate_after": "repeats that break suppression"
+      },
+      "data_idea": "A seeded RNG generates alert storms from cascading failures plus isolated noise.",
+      "real_world_use": "Used by on-call teams fighting alert fatigue.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "alert-routing-engine",
+      "name": "Alert Routing Engine",
+      "concept": "The right alert must reach the right human: database pages go to the DBA rotation, not to frontend. The routing engine matches alerts against team ownership rules and on-call schedules, escalating up the chain when nobody acknowledges. It models rotations, overrides, and holiday coverage.",
+      "key_params": {
+        "routing_rules": "alert-to-team mappings",
+        "rotations": "on-call schedules modeled",
+        "ack_timeout_minutes": "escalation trigger",
+        "overrides": "temporary schedule changes"
+      },
+      "data_idea": "A seeded RNG fabricates alerts, rotations, and acknowledgment behavior.",
+      "real_world_use": "Used by incident management platforms routing pages.",
+      "suggested_types": [
+        "scheduler",
+        "monitoring_agent",
+        "task_queue",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "incident-timeline-generator",
+      "name": "Incident Timeline Generator",
+      "concept": "Post-incident review starts with what happened when, assembled from alerts, deploys, and chat. The generator merges these event streams into one chronological timeline, marking detection, escalation, mitigation, and resolution milestones. It exports the narrative skeleton of the postmortem.",
+      "key_params": {
+        "sources": "alert, deploy, and chat streams merged",
+        "milestones": "auto-detected phase boundaries",
+        "timezone": "display normalization",
+        "export_format": "markdown or html output"
+      },
+      "data_idea": "A seeded RNG synthesizes incident artifacts around a staged outage.",
+      "real_world_use": "Used by incident commanders drafting postmortems.",
+      "suggested_types": [
+        "log_analyzer",
+        "report_generator",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "postmortem-template-generator",
+      "name": "Postmortem Template Generator",
+      "concept": "Blameless postmortems turn outages into learning, but blank pages stall the writing. The generator scaffolds the document from incident data: timeline, impact, root causes, and action items with owners and due dates. Structured prompts keep the review blameless and thorough.",
+      "key_params": {
+        "sections": "summary, timeline, causes, actions",
+        "action_sla_days": "default remediation deadlines",
+        "blameless_checks": "language lint for blame",
+        "severity": "incident severity driving depth"
+      },
+      "data_idea": "A seeded RNG fabricates incident summaries that get templated into postmortems.",
+      "real_world_use": "Used by SRE teams standardizing incident reviews.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "task_queue",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "chaos-experiment-runner",
+      "name": "Chaos Experiment Runner",
+      "concept": "Chaos engineering proves resilience by injecting controlled faults: kill pods, add latency, drop packets, and watch the system cope. The runner defines experiments with blast-radius limits, steady-state hypotheses, and automatic abort conditions. It finds weaknesses on your schedule instead of at 3 AM.",
+      "key_params": {
+        "faults": "kill, latency, partition, disk pressure",
+        "blast_radius": "max affected scope",
+        "abort_conditions": "metrics that stop the experiment",
+        "hypothesis": "expected steady-state behavior"
+      },
+      "data_idea": "A seeded RNG simulates service health under injected faults with guardrails.",
+      "real_world_use": "Used by reliability teams validating fault tolerance.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "load-generator",
+      "name": "Load Generator",
+      "concept": "Capacity plans need numbers, and load generators produce them by hammering endpoints with scripted traffic. The tool ramps virtual users through stages, measures throughput and latency, and finds the breaking point where errors spike. Results feed right into capacity models.",
+      "key_params": {
+        "vus": "virtual user counts per stage",
+        "ramp_seconds": "traffic ramp profile",
+        "scenarios": "request mixes modeled",
+        "slo_thresholds": "pass or fail criteria"
+      },
+      "data_idea": "A seeded RNG simulates server responses with saturation behavior under load.",
+      "real_world_use": "Used by performance engineers before big launches.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "capacity-planner",
+      "name": "Capacity Planner",
+      "concept": "Running out of capacity during peak is an outage, and over-provisioning is money burned. The planner forecasts demand from historical growth, adds headroom for spikes, and recommends instance counts per tier. It turns growth charts into purchase orders.",
+      "key_params": {
+        "growth_rate": "historical demand trend",
+        "headroom_percent": "buffer above forecast",
+        "peak_factor": "seasonal spike multiplier",
+        "unit_cost": "price per capacity unit"
+      },
+      "data_idea": "A seeded RNG generates demand history with growth and seasonal peaks.",
+      "real_world_use": "Used by infrastructure teams planning purchases and reservations.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "autoscaler-simulator",
+      "name": "Autoscaler Simulator",
+      "concept": "Autoscalers add and remove instances based on metrics, but bad thresholds cause flapping or sluggish response. The simulator models replica counts reacting to CPU or queue-depth signals with cooldowns and step policies. Engineers tune thresholds against realistic traffic before trusting them in production.",
+      "key_params": {
+        "target_metric": "cpu, latency, or queue depth",
+        "scale_up_threshold": "metric value triggering growth",
+        "scale_down_threshold": "metric value triggering shrink",
+        "cooldown_seconds": "quiet period between actions"
+      },
+      "data_idea": "A seeded RNG drives metric signals with traffic spikes and dips.",
+      "real_world_use": "Used by platform teams tuning horizontal pod autoscalers.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "queue-depth-monitor",
+      "name": "Queue Depth Monitor",
+      "concept": "A growing queue means consumers cannot keep up, and an emptying one may mean producers died. The monitor tracks queue depth, age of oldest message, and consumer lag, alerting on both growth and sudden drains. It is the earliest warning for async pipeline trouble.",
+      "key_params": {
+        "depth_threshold": "messages that trigger alerts",
+        "age_threshold_seconds": "oldest-message staleness limit",
+        "consumer_lag": "behind-by metric tracked",
+        "drain_alert": "whether sudden empties alert"
+      },
+      "data_idea": "A seeded RNG synthesizes queue metrics with consumer slowdowns and producer outages.",
+      "real_world_use": "Used by teams operating message-driven architectures.",
+      "suggested_types": [
+        "monitoring_agent",
+        "task_queue",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "connection-pool-tuner",
+      "name": "Connection Pool Tuner",
+      "concept": "Database connection pools sized wrong either starve the app or overwhelm the database. The tuner simulates checkout latency, wait queues, and timeouts across pool sizes under load, recommending the sweet spot. It shows why pool size is a function of workload, not a magic number.",
+      "key_params": {
+        "pool_sizes": "candidate sizes tested",
+        "workload": "concurrent demand profile",
+        "checkout_timeout_ms": "wait limit before errors",
+        "db_max_connections": "database-side ceiling"
+      },
+      "data_idea": "A seeded RNG simulates connection checkouts with queueing under load.",
+      "real_world_use": "Used by backend teams sizing pools for databases.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "circuit-breaker-simulator",
+      "name": "Circuit Breaker Simulator",
+      "concept": "Circuit breakers stop cascading failures by failing fast when a dependency is sick, then probing recovery with half-open trials. The simulator models closed, open, and half-open states against a flaky dependency, showing how error thresholds and timeouts interact. It teaches the pattern hands-on.",
+      "key_params": {
+        "failure_threshold": "errors that trip the breaker",
+        "reset_timeout_seconds": "open-state duration",
+        "half_open_probes": "trial requests allowed",
+        "dependency_profile": "flakiness pattern modeled"
+      },
+      "data_idea": "A seeded RNG drives dependency health through healthy, flaky, and down phases.",
+      "real_world_use": "Used by developers learning resilience patterns.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "retry-backoff-policy-tester",
+      "name": "Retry Backoff Policy Tester",
+      "concept": "Retries without backoff turn a hiccup into a thundering herd, while too-timid retries abandon recoverable calls. The tester simulates retry policies with exponential backoff, jitter, and budgets against flaky endpoints, measuring success rates and added load. It finds the policy that recovers most with the least extra traffic.",
+      "key_params": {
+        "max_retries": "attempt cap",
+        "base_delay_ms": "initial backoff",
+        "jitter": "randomization of delays",
+        "retry_budget_percent": "cap on retry traffic share"
+      },
+      "data_idea": "A seeded RNG synthesizes endpoint flakiness with transient and persistent failures.",
+      "real_world_use": "Used by client teams hardening service-to-service calls.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "timeout-budget-analyzer",
+      "name": "Timeout Budget Analyzer",
+      "concept": "Every hop in a call chain needs its own timeout, and the total must fit the user's patience. The analyzer takes a service dependency graph with per-hop latencies, computes end-to-end timeout budgets, and flags hops whose timeouts exceed the parent's. It prevents the classic timeout-longer-than-caller bug.",
+      "key_params": {
+        "dependency_graph": "service call tree",
+        "hop_latencies": "p99 per hop",
+        "user_budget_ms": "total allowed latency",
+        "safety_margin": "headroom kept"
+      },
+      "data_idea": "A seeded RNG builds service graphs with latency profiles and misconfigured timeouts.",
+      "real_world_use": "Used by architects reviewing timeout configurations.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dependency-health-checker",
+      "name": "Dependency Health Checker",
+      "concept": "Your uptime is the product of your dependencies' uptime, so their health deserves its own dashboard. The checker probes third-party endpoints, tracks their availability and latency, and correlates your incidents with their outages. Vendor blame becomes data, not suspicion.",
+      "key_params": {
+        "dependencies": "external endpoints monitored",
+        "check_interval": "probe cadence",
+        "slo_per_vendor": "expected availability each",
+        "correlate": "whether local incidents are matched"
+      },
+      "data_idea": "A seeded RNG synthesizes vendor health with occasional provider outages.",
+      "real_world_use": "Used by SRE teams managing third-party risk.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "web_dashboard",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "config-drift-detector",
+      "name": "Config Drift Detector",
+      "concept": "Servers drift from their intended configuration through manual tweaks and hotfixes, until nobody knows the real state. The drift detector compares live configs against the desired baseline, reporting every divergence with severity. It catches the snowflake server before it becomes load-bearing.",
+      "key_params": {
+        "baseline": "desired configuration definition",
+        "scan_paths": "files and settings compared",
+        "severity_rules": "which drifts matter",
+        "auto_remediate": "whether to revert in simulation"
+      },
+      "data_idea": "A seeded RNG fabricates server configs with gradual manual drift.",
+      "real_world_use": "Used by ops teams enforcing configuration management.",
+      "suggested_types": [
+        "config_manager",
+        "monitoring_agent",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "secret-rotation-scheduler",
+      "name": "Secret Rotation Scheduler",
+      "concept": "Credentials that never rotate are a breach waiting to be discovered, but rotating them by hand is error-prone. The scheduler tracks secret ages against rotation policies, orchestrates staged rotation with dual-support windows, and verifies the new secret works before retiring the old. Rotation becomes routine instead of scary.",
+      "key_params": {
+        "rotation_days": "max secret age",
+        "dual_support_hours": "overlap window",
+        "verify_steps": "checks before retiring old secret",
+        "notify": "who gets warned before rotation"
+      },
+      "data_idea": "A seeded RNG builds secret inventories with aging credentials.",
+      "real_world_use": "Used by platform teams automating credential hygiene.",
+      "suggested_types": [
+        "scheduler",
+        "monitoring_agent",
+        "cli_tool",
+        "encryption_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "certificate-expiry-watcher",
+      "name": "Certificate Expiry Watcher",
+      "concept": "This watcher is the TLS-focused sibling of the expiry monitor, tuned for internal PKI with many short-lived certificates. It tracks issuance from internal CAs, predicts renewal load, and batches renewals to avoid thundering herds at the CA. Short-lived cert automation only works if renewals never slip.",
+      "key_params": {
+        "warning_days": "alert lead time",
+        "ca_capacity": "renewals the CA handles per hour",
+        "batch_window": "grouping of renewals",
+        "cert_lifetime_days": "policy lifetime"
+      },
+      "data_idea": "A seeded RNG synthesizes internal certificate lifecycles with staggered expiries.",
+      "real_world_use": "Used by PKI teams operating internal certificate authorities.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "backup-verification-runner",
+      "name": "Backup Verification Runner",
+      "concept": "Scheduled backups mean nothing until a restore is proven, so the runner automates test restores on a cadence. It restores into isolation, checksums against manifests, times the recovery, and trends success rates. Failed verifications escalate like any other production alert.",
+      "key_params": {
+        "schedule": "verification cadence",
+        "sample_percent": "data verified per run",
+        "rto_target": "recovery time objective",
+        "isolate": "sandbox for test restores"
+      },
+      "data_idea": "A seeded RNG simulates backup sets with occasional corruption.",
+      "real_world_use": "Used by operations teams proving recoverability.",
+      "suggested_types": [
+        "backup_tool",
+        "scheduler",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "disaster-recovery-drill-tracker",
+      "name": "Disaster Recovery Drill Tracker",
+      "concept": "DR plans rot without practice, so drills need scheduling, execution checklists, and scoring. The tracker plans failover drills, walks teams through runbook steps with timing, and grades recovery against RTO and RPO targets. Gaps found in drills are cheap; gaps found in disasters are not.",
+      "key_params": {
+        "scenarios": "region loss, AZ loss, data corruption",
+        "rto_target": "recovery time objective",
+        "rpo_target": "recovery point objective",
+        "drill_cadence": "how often drills run"
+      },
+      "data_idea": "A seeded RNG fabricates drill executions with step timings and misses.",
+      "real_world_use": "Used by business continuity teams proving DR readiness.",
+      "suggested_types": [
+        "scheduler",
+        "report_generator",
+        "task_queue",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "deployment-pipeline-simulator",
+      "name": "Deployment Pipeline Simulator",
+      "concept": "CI/CD pipelines are state machines of build, test, scan, and deploy stages with gates between them. The simulator models stage durations, failure rates, and gate policies, showing lead time from commit to production and where the bottlenecks live. It helps teams tune pipelines without breaking the real one.",
+      "key_params": {
+        "stages": "build, test, scan, deploy definitions",
+        "gate_policies": "quality bars between stages",
+        "parallelism": "concurrent pipeline capacity",
+        "failure_rates": "per-stage flakiness"
+      },
+      "data_idea": "A seeded RNG drives commits through pipeline stages with realistic failures.",
+      "real_world_use": "Used by DevOps teams optimizing delivery lead time.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "build-cache-analyzer",
+      "name": "Build Cache Analyzer",
+      "concept": "Slow builds waste developer hours, and cache misses are usually the culprit. The analyzer inspects build logs for cache hit rates by layer and step, attributing misses to changed inputs or misconfigured keys. Recommendations target the misses with the biggest time cost.",
+      "key_params": {
+        "log_format": "build tool log dialect",
+        "step_costs": "time per build step",
+        "key_analysis": "cache key stability checked",
+        "top_n": "worst misses reported"
+      },
+      "data_idea": "A seeded RNG synthesizes build logs with cache hits and misses.",
+      "real_world_use": "Used by developer-productivity teams speeding up CI.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "artifact-version-tracker",
+      "name": "Artifact Version Tracker",
+      "concept": "Binaries, images, and packages flow through environments, and losing track of which version is where causes incidents. The tracker records every artifact promotion from build to staging to production with checksums and timestamps. Rollback means knowing exactly what was there before.",
+      "key_params": {
+        "environments": "stages artifacts move through",
+        "checksum": "identity verification per artifact",
+        "retention": "old versions kept per env",
+        "promotion_gates": "approvals required"
+      },
+      "data_idea": "A seeded RNG simulates artifact promotions with occasional bad pushes.",
+      "real_world_use": "Used by release engineering tracking deployables.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "environment-promotion-gate",
+      "name": "Environment Promotion Gate",
+      "concept": "Promoting to production should require evidence: tests green, scans clean, approvals recorded. The gate evaluates promotion criteria automatically and blocks or allows with a full audit trail. Manual judgment stays for the exceptions, not the routine.",
+      "key_params": {
+        "criteria": "tests, scans, approvals required",
+        "evidence": "artifacts attached per criterion",
+        "override_policy": "who can bypass and how it is logged",
+        "environments": "dev through prod stages"
+      },
+      "data_idea": "A seeded RNG fabricates promotion requests with passing and failing evidence.",
+      "real_world_use": "Used by release managers enforcing quality bars.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "report_generator",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rollback-decision-engine",
+      "name": "Rollback Decision Engine",
+      "concept": "Deciding to roll back under pressure is hard, so the engine scores the decision from live signals. It weighs error-rate deltas, latency regression, and business metrics after a deploy, recommending rollback, hold, or proceed with confidence levels. It removes the 2 AM guesswork.",
+      "key_params": {
+        "signals": "error, latency, business metrics",
+        "rollback_threshold": "score triggering recommendation",
+        "compare_window": "pre versus post deploy",
+        "auto_rollback": "whether it can act alone"
+      },
+      "data_idea": "A seeded RNG simulates post-deploy metrics for good and bad releases.",
+      "real_world_use": "Used by SRE teams automating deploy safety.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "database-migration-runner",
+      "name": "Database Migration Runner",
+      "concept": "Schema migrations are the scariest part of deploys because data cannot be un-migrated easily. The runner applies versioned migrations in order with transactional safety, supports rollforward fixes, and dry-runs against a shadow copy first. Every migration is reversible or explicitly marked dangerous.",
+      "key_params": {
+        "migrations": "ordered versioned scripts",
+        "transactional": "all-or-nothing per migration",
+        "dry_run": "shadow execution before real",
+        "lock_timeout": "DDL lock guard"
+      },
+      "data_idea": "A seeded RNG generates migration scripts with a planted breaking change.",
+      "real_world_use": "Used by backend teams managing schema evolution.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "schema-diff-checker",
+      "name": "Schema Diff Checker",
+      "concept": "Unexpected schema changes break apps silently, so the diff checker compares database schemas across environments. It reports added, dropped, and altered objects with risk ratings, catching the column someone dropped in staging but not in code. Drift between environments becomes visible.",
+      "key_params": {
+        "source_schema": "reference definition",
+        "target_schema": "compared definition",
+        "risk_rules": "drops and type changes flagged",
+        "ignore_patterns": "known-safe diffs skipped"
+      },
+      "data_idea": "A seeded RNG fabricates schema pairs with planted breaking diffs.",
+      "real_world_use": "Used by DBAs validating environment parity.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "seed-data-loader",
+      "name": "Seed Data Loader",
+      "concept": "Fresh environments need realistic data to be useful, but production dumps leak PII. The loader generates referentially intact seed datasets with anonymized values, sized per environment. Developers get believable data without the compliance nightmare.",
+      "key_params": {
+        "schema": "tables and relationships",
+        "row_counts": "volume per table",
+        "anonymize": "PII-like fields faked",
+        "deterministic": "seeded for reproducibility"
+      },
+      "data_idea": "A seeded RNG builds relational seed data honoring foreign keys.",
+      "real_world_use": "Used by developers spinning up dev and test environments.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "file_organizer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "infrastructure-cost-estimator",
+      "name": "Infrastructure Cost Estimator",
+      "concept": "Cloud bills surprise everyone, so the estimator prices planned infrastructure before it is built. It takes resource specs and usage projections, applies pricing models with region multipliers, and breaks costs down by service and team. Estimates beat invoice shock.",
+      "key_params": {
+        "resources": "instance, storage, network specs",
+        "usage_hours": "projected consumption",
+        "region_multiplier": "price variation by region",
+        "discounts": "reserved and committed use modeled"
+      },
+      "data_idea": "A seeded RNG generates infrastructure plans with varied footprints.",
+      "real_world_use": "Used by FinOps teams forecasting cloud spend.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "linear_regression"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "resource-rightsizer",
+      "name": "Resource Rightsizer",
+      "concept": "Most instances run at a fraction of their provisioned CPU and memory, wasting money around the clock. The rightsizer analyzes utilization percentiles over weeks and recommends smaller shapes that still cover peaks with headroom. It quantifies the savings per recommendation.",
+      "key_params": {
+        "lookback_days": "utilization history",
+        "target_percentile": "peak coverage like p95",
+        "headroom_percent": "buffer kept",
+        "min_savings": "floor for recommendations"
+      },
+      "data_idea": "A seeded RNG synthesizes instance utilization with over-provisioned shapes.",
+      "real_world_use": "Used by FinOps teams cutting cloud waste.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "idle-resource-finder",
+      "name": "Idle Resource Finder",
+      "concept": "Orphaned disks, forgotten load balancers, and stopped instances with attached volumes bill silently for months. The finder scans the simulated inventory for resources with zero activity over a threshold and prices the waste. Cleanup becomes a prioritized list instead of archaeology.",
+      "key_params": {
+        "idle_days": "inactivity threshold",
+        "resource_types": "disks, IPs, balancers scanned",
+        "cost_per": "unit pricing for waste totals",
+        "exclude_tags": "resources exempted"
+      },
+      "data_idea": "A seeded RNG builds cloud inventories with abandoned resources.",
+      "real_world_use": "Used by FinOps teams hunting zombie spend.",
+      "suggested_types": [
+        "monitoring_agent",
+        "report_generator",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "spot-instance-scheduler",
+      "name": "Spot Instance Scheduler",
+      "concept": "Spot instances cost a fraction of on-demand but can be reclaimed with minutes of notice, so workloads must tolerate interruption. The scheduler places fault-tolerant batch jobs on spot capacity, handles interruption notices with checkpointing, and falls back to on-demand when spot is unavailable. It models the savings versus the complexity.",
+      "key_params": {
+        "bid_strategy": "max price policy",
+        "interruption_rate": "expected reclaim frequency",
+        "checkpoint_interval": "work saved between interruptions",
+        "fallback": "on-demand safety net"
+      },
+      "data_idea": "A seeded RNG simulates spot prices and interruption events.",
+      "real_world_use": "Used by batch computing teams cutting compute costs.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "statistical_analyzer",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "kubernetes-manifest-validator",
+      "name": "Kubernetes Manifest Validator",
+      "concept": "A typo in a manifest can take down a namespace, so validation before apply is cheap insurance. The validator checks manifests against schema, enforces policy like resource limits and no latest tags, and diffs against the live state. It catches the mistakes kubectl would happily apply.",
+      "key_params": {
+        "policies": "required labels, limits, probes",
+        "schema_version": "API version checked",
+        "diff_live": "whether live state is compared",
+        "forbidden": "banned images and patterns"
+      },
+      "data_idea": "A seeded RNG fabricates manifests with policy violations.",
+      "real_world_use": "Used by platform teams in CI before kubectl apply.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "helm-values-merger",
+      "name": "Helm Values Merger",
+      "concept": "Helm values cascade across defaults, environment files, and command-line overrides, and the final merge surprises people. The merger resolves the precedence chain explicitly, shows where each value came from, and diffs the result between environments. No more mystery configuration.",
+      "key_params": {
+        "value_files": "ordered override chain",
+        "precedence": "defaults to CLI ordering",
+        "show_origin": "source annotated per key",
+        "diff_envs": "environments compared"
+      },
+      "data_idea": "A seeded RNG generates layered values files with conflicting keys.",
+      "real_world_use": "Used by teams managing Helm releases across environments.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "service-mesh-traffic-splitter",
+      "name": "Service Mesh Traffic Splitter",
+      "concept": "Traffic splitting underpins canaries and A/B tests at the mesh layer, routing percentages to service versions. The splitter configures weighted routes, validates that weights sum correctly, and simulates request distribution. It separates routing policy from application code.",
+      "key_params": {
+        "weights": "percentage per destination",
+        "match_rules": "header-based overrides",
+        "validate_sum": "weights must total 100",
+        "simulate_requests": "distribution check"
+      },
+      "data_idea": "A seeded RNG simulates routed requests verifying weight accuracy.",
+      "real_world_use": "Used by platform teams doing progressive delivery.",
+      "suggested_types": [
+        "simulation",
+        "config_manager",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ingress-rule-auditor",
+      "name": "Ingress Rule Auditor",
+      "concept": "Ingress rules are the front door: a wildcard host with no TLS is an open invitation. The auditor inspects routing rules for TLS coverage, overly broad hosts, missing rate limits, and backend health. Findings prioritize the exposures attackers see first.",
+      "key_params": {
+        "rules": "ingress definitions checked",
+        "require_tls": "whether plaintext is a finding",
+        "host_specificity": "wildcard strictness",
+        "backend_checks": "service health verified"
+      },
+      "data_idea": "A seeded RNG fabricates ingress rules with security gaps.",
+      "real_world_use": "Used by platform teams auditing edge configuration.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "persistent-volume-tracker",
+      "name": "Persistent Volume Tracker",
+      "concept": "Stateful workloads depend on volumes that must survive pod churn, and orphaned volumes waste money while missing ones cause data loss. The tracker maps claims to volumes to pods, flags unbound claims and unattached volumes, and watches capacity. Storage for statefulsets stays accounted for.",
+      "key_params": {
+        "namespaces": "scope of tracking",
+        "orphan_days": "unattached threshold",
+        "capacity_warn_percent": "fullness alert",
+        "reclaim_policy": "retain versus delete checked"
+      },
+      "data_idea": "A seeded RNG synthesizes volume inventories with orphans and pressure.",
+      "real_world_use": "Used by storage admins in Kubernetes environments.",
+      "suggested_types": [
+        "monitoring_agent",
+        "cli_tool",
+        "report_generator",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pod-disruption-budget-checker",
+      "name": "Pod Disruption Budget Checker",
+      "concept": "Voluntary disruptions like node drains must never take down the quorum, which is what disruption budgets guarantee. The checker evaluates budgets against current replica counts, simulating drains to prove minimum availability holds. It catches the budget that allows zero disruptions or permits too many.",
+      "key_params": {
+        "budgets": "PDB definitions",
+        "replicas": "current counts",
+        "simulate_drain": "node drain dry-run",
+        "min_available": "floor enforced"
+      },
+      "data_idea": "A seeded RNG builds workloads with tight and loose budgets.",
+      "real_world_use": "Used by platform teams before cluster maintenance.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "config_manager",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "node-drain-planner",
+      "name": "Node Drain Planner",
+      "concept": "Draining a node for maintenance evicts pods that must land somewhere with capacity and respect their budgets. The planner sequences drains across nodes, verifying each step keeps services available and capacity sufficient. Maintenance windows stop being scary.",
+      "key_params": {
+        "nodes": "cluster node inventory",
+        "pods": "workload placement",
+        "budgets": "disruption constraints",
+        "capacity_headroom": "required free space"
+      },
+      "data_idea": "A seeded RNG synthesizes clusters with varied utilization.",
+      "real_world_use": "Used by SRE teams planning node maintenance.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cluster-upgrade-orchestrator",
+      "name": "Cluster Upgrade Orchestrator",
+      "concept": "Kubernetes upgrades touch control plane and nodes in a careful order, and skipping steps breaks things. The orchestrator plans the version path, validates skew policies between components, and stages node upgrades with health gates. It turns a risky weekend into a checklist.",
+      "key_params": {
+        "current_version": "starting version",
+        "target_version": "desired version",
+        "skew_policy": "allowed version gaps",
+        "health_gates": "checks between stages"
+      },
+      "data_idea": "A seeded RNG models component versions with skew violations.",
+      "real_world_use": "Used by platform teams upgrading clusters safely.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "log-retention-policy-enforcer",
+      "name": "Log Retention Policy Enforcer",
+      "concept": "Logs accumulate until disks fill or compliance officers ask questions, so retention needs automation. The enforcer applies tiered retention by log class, compresses aging logs, and purges past policy with an audit trail. Storage stays bounded and policy stays provable.",
+      "key_params": {
+        "policies": "retention per log class",
+        "tiers": "hot, warm, cold storage",
+        "compress_after_days": "compression threshold",
+        "audit": "purge actions logged"
+      },
+      "data_idea": "A seeded RNG ages log volumes through retention tiers.",
+      "real_world_use": "Used by ops teams managing log storage costs.",
+      "suggested_types": [
+        "scheduler",
+        "log_analyzer",
+        "config_manager",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "metrics-cardinality-guard",
+      "name": "Metrics Cardinality Guard",
+      "concept": "High-cardinality labels like user IDs explode metrics storage and crash the monitoring itself. The guard analyzes label cardinality per metric, flags runaway series counts, and suggests aggregation or label drops. It protects the monitoring system from the monitored system.",
+      "key_params": {
+        "series_limit": "max series per metric",
+        "label_analysis": "cardinality per label",
+        "suggest_fix": "aggregation recommendations",
+        "block_ingest": "whether to drop in simulation"
+      },
+      "data_idea": "A seeded RNG emits metrics with healthy and explosive label sets.",
+      "real_world_use": "Used by observability teams keeping metrics costs sane.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tracing-sampler-tuner",
+      "name": "Tracing Sampler Tuner",
+      "concept": "Keeping every trace is unaffordable and sampling everything loses the interesting ones, so smart sampling keeps errors and slow traces preferentially. The tuner simulates sampling strategies against trace streams, measuring cost versus the retention of anomalous traces. It finds the sample rate that keeps signal affordable.",
+      "key_params": {
+        "strategies": "head, tail, adaptive compared",
+        "sample_rate": "fraction kept",
+        "priority_rules": "errors and slow traces kept",
+        "cost_per_span": "storage pricing"
+      },
+      "data_idea": "A seeded RNG generates trace streams with rare interesting spans.",
+      "real_world_use": "Used by observability teams tuning trace pipelines.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "synthetic-transaction-monitor",
+      "name": "Synthetic Transaction Monitor",
+      "concept": "Real-user monitoring tells you users are unhappy; synthetics tell you before any user arrives. The monitor scripts critical user journeys like login and checkout, runs them on a schedule from multiple locations, and alerts on failures or slowdowns. It measures the experience proactively.",
+      "key_params": {
+        "journeys": "scripted user flows",
+        "locations": "probe geographies",
+        "interval_minutes": "run cadence",
+        "slo": "pass thresholds"
+      },
+      "data_idea": "A seeded RNG synthesizes journey results with regional outages.",
+      "real_world_use": "Used by SRE teams for black-box service monitoring.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "web_dashboard",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "blackbox-probe-runner",
+      "name": "Blackbox Probe Runner",
+      "concept": "Blackbox probes check a service the way the outside world sees it, without any inside knowledge. The runner executes HTTP, DNS, TCP, and ICMP probes against endpoints, recording success, latency, and certificate validity. It answers the simplest question: is it up from out here.",
+      "key_params": {
+        "targets": "endpoints probed",
+        "probe_types": "http, dns, tcp, icmp",
+        "timeout": "per-probe deadline",
+        "alert_on": "failure conditions"
+      },
+      "data_idea": "A seeded RNG fabricates probe results with outages and slowness.",
+      "real_world_use": "Used as the external complement to internal monitoring.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dns-health-checker",
+      "name": "DNS Health Checker",
+      "concept": "When DNS breaks, everything breaks, but the failure looks like everything else. The checker validates resolution from multiple resolvers, measures lookup latency, and verifies record consistency across authoritative servers. It distinguishes DNS problems from app problems fast.",
+      "key_params": {
+        "domains": "names checked",
+        "resolvers": "vantage points",
+        "record_types": "A, AAAA, MX, TXT verified",
+        "consistency": "cross-server agreement required"
+      },
+      "data_idea": "A seeded RNG synthesizes DNS answers with inconsistency and slowness.",
+      "real_world_use": "Used by network teams triaging is it DNS moments.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "tcp-connection-analyzer",
+      "name": "TCP Connection Analyzer",
+      "concept": "Connection churn, retransmits, and half-open sockets reveal network and app health that request metrics miss. The analyzer parses connection summaries into establishment rates, reset ratios, and duration distributions. It spots the SYN flood, the flaky NAT, and the leaking pool.",
+      "key_params": {
+        "states": "established, reset, timeout tracked",
+        "retransmit_threshold": "loss that concerns",
+        "churn_rate": "new connections per second",
+        "half_open_limit": "incomplete cap"
+      },
+      "data_idea": "A seeded RNG generates connection summaries with network pathologies.",
+      "real_world_use": "Used by network engineers diagnosing transport issues.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cache-hit-ratio-analyzer",
+      "name": "Cache Hit Ratio Analyzer",
+      "concept": "Caches only help when they hit, and hit ratios reveal misconfigured TTLs and poor key design. The analyzer computes hit, miss, and eviction ratios over time, correlating drops with deploys or traffic shifts. A falling hit ratio is often the first sign of an origin about to melt.",
+      "key_params": {
+        "hit_floor": "ratio triggering investigation",
+        "eviction_tracking": "capacity pressure signal",
+        "ttl_analysis": "expiry effectiveness",
+        "key_patterns": "hot versus cold keys"
+      },
+      "data_idea": "A seeded RNG synthesizes cache stats with TTL misconfigurations.",
+      "real_world_use": "Used by performance teams tuning CDN and app caches.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "log_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rate-limit-policy-tester",
+      "name": "Rate Limit Policy Tester",
+      "concept": "Rate limits protect backends, but misconfigured ones block legitimate users or let abuse through. The tester fires scripted request patterns at a simulated limiter, verifying allow and deny decisions match policy across burst, sustained, and distributed scenarios. Policy becomes testable code.",
+      "key_params": {
+        "policies": "token bucket, fixed window, sliding",
+        "scenarios": "burst, sustained, distributed",
+        "expectations": "allowed versus denied per scenario",
+        "headers": "retry-after and limit headers checked"
+      },
+      "data_idea": "A seeded RNG drives request patterns against limiter implementations.",
+      "real_world_use": "Used by API teams validating throttling behavior.",
+      "suggested_types": [
+        "simulation",
+        "rate_limiter",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "token-bucket-visualizer",
+      "name": "Token Bucket Visualizer",
+      "concept": "Token buckets are the classic rate-limiting algorithm, but their dynamics confuse people until seen. The visualizer animates tokens accumulating and draining as requests arrive, showing how burst capacity and refill rate interact. Intuition for limiter tuning becomes visual.",
+      "key_params": {
+        "capacity": "max burst tokens",
+        "refill_rate": "tokens per second",
+        "request_pattern": "arrival process",
+        "steps": "animation frames"
+      },
+      "data_idea": "A seeded RNG generates request arrivals against bucket parameters.",
+      "real_world_use": "Used in teaching rate limiting concepts.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "rate_limiter",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "distributed-lock-simulator",
+      "name": "Distributed Lock Simulator",
+      "concept": "Distributed locks coordinate work across machines, but they can deadlock, expire mid-work, or split-brain. The simulator models lock acquisition with TTLs and fencing tokens across clients, demonstrating failure modes like clock skew and GC pauses. It teaches why distributed locking is famously hard.",
+      "key_params": {
+        "clients": "contending lock holders",
+        "ttl_ms": "lock lease duration",
+        "fencing": "whether fencing tokens are used",
+        "faults": "pauses and partitions injected"
+      },
+      "data_idea": "A seeded RNG simulates lock races with injected client pauses.",
+      "real_world_use": "Used by distributed systems engineers learning coordination.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "leader-election-simulator",
+      "name": "Leader Election Simulator",
+      "concept": "Clusters need exactly one leader for coordination, and elections must converge even as members fail. The simulator runs a bully or raft-style election across nodes with crash faults, showing term progression and split-vote resolution. It makes consensus liveness concrete.",
+      "key_params": {
+        "nodes": "cluster members",
+        "election_algo": "bully or raft style",
+        "faults": "crashes and partitions",
+        "timeout_ms": "election timers"
+      },
+      "data_idea": "A seeded RNG drives node failures during elections.",
+      "real_world_use": "Used in distributed systems courses.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "consensus-log-replicator",
+      "name": "Consensus Log Replicator",
+      "concept": "Replicated logs are the heart of consensus: every node applies the same commands in the same order. The replicator simulates a leader appending entries and followers acknowledging, handling leader changes without losing committed entries. It demonstrates the safety property hands-on.",
+      "key_params": {
+        "nodes": "replica set",
+        "entries": "commands replicated",
+        "quorum": "majority required",
+        "leader_changes": "failovers simulated"
+      },
+      "data_idea": "A seeded RNG generates client commands with leader crashes mid-replication.",
+      "real_world_use": "Used teaching Raft and Paxos fundamentals.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "gossip-protocol-simulator",
+      "name": "Gossip Protocol Simulator",
+      "concept": "Gossip protocols spread information epidemically: each node tells random peers, and soon everyone knows. The simulator models rumor spread across topologies, measuring rounds to convergence under failures. It shows why gossip scales where broadcast does not.",
+      "key_params": {
+        "nodes": "cluster size",
+        "fanout": "peers contacted per round",
+        "topology": "random, ring, or clustered",
+        "failures": "dead nodes during spread"
+      },
+      "data_idea": "A seeded RNG simulates gossip rounds with node failures.",
+      "real_world_use": "Used teaching epidemic dissemination in distributed systems.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "membership-failure-detector",
+      "name": "Membership Failure Detector",
+      "concept": "Clusters must notice dead members quickly without false accusations from slow networks. The simulator implements SWIM-style suspicion with direct and indirect probing, tuning the tradeoff between detection speed and false positives. It shows how gossip-based failure detection stays scalable.",
+      "key_params": {
+        "nodes": "members monitored",
+        "probe_interval": "health check cadence",
+        "suspicion_timeout": "indirect probe window",
+        "false_positive_target": "tuning goal"
+      },
+      "data_idea": "A seeded RNG synthesizes node health with crashes and slowdowns.",
+      "real_world_use": "Used by engineers building cluster membership.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "heartbeat-monitor",
+      "name": "Heartbeat Monitor",
+      "concept": "The simplest liveness check is a periodic I am alive message, and missing heartbeats mean investigate. The monitor tracks last-seen timestamps per component, alerts after missed beats, and distinguishes a dead process from a slow network with grace periods. Simple, but everything depends on it.",
+      "key_params": {
+        "interval_seconds": "expected beat cadence",
+        "missed_threshold": "beats missed before alert",
+        "grace_period": "network jitter allowance",
+        "components": "watched processes"
+      },
+      "data_idea": "A seeded RNG generates heartbeat streams with crashes and jitter.",
+      "real_world_use": "Used as the liveness foundation in small systems.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "watchdog-timer-simulator",
+      "name": "Watchdog Timer Simulator",
+      "concept": "Watchdogs reboot hung systems: hardware or software timers that must be petted periodically or they reset the box. The simulator models pet intervals against hang faults, showing how timeout choice balances false resets against hang duration. Embedded reliability hinges on this tiny mechanism.",
+      "key_params": {
+        "timeout_ms": "pet deadline",
+        "pet_interval": "normal petting cadence",
+        "hang_faults": "simulated freezes",
+        "reset_action": "reboot behavior modeled"
+      },
+      "data_idea": "A seeded RNG simulates system ticks with occasional hangs.",
+      "real_world_use": "Used by embedded engineers validating watchdog design.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cron-job-monitor",
+      "name": "Cron Job Monitor",
+      "concept": "Cron jobs fail silently: the backup that stopped running three weeks ago is discovered during the outage. The monitor tracks expected run times, durations, and exit codes, alerting on missed runs and abnormal durations. Silent automation becomes watched automation.",
+      "key_params": {
+        "schedules": "expected cron expressions",
+        "grace_minutes": "lateness tolerance",
+        "duration_baseline": "normal runtime range",
+        "alert_on_miss": "missed run paging"
+      },
+      "data_idea": "A seeded RNG fabricates job runs with misses and slowdowns.",
+      "real_world_use": "Used by ops teams watching scheduled automation.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "log_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dead-letter-queue-inspector",
+      "name": "Dead Letter Queue Inspector",
+      "concept": "Messages that fail repeatedly land in the dead letter queue, where they wait for someone to care. The inspector samples DLQ contents, classifies failure reasons like poison payloads versus downstream outages, and supports replay after fixes. DLQs stop being write-only.",
+      "key_params": {
+        "sample_size": "messages inspected",
+        "classifiers": "failure reason taxonomy",
+        "replay": "requeue after fix in simulation",
+        "age_alert_days": "stale message escalation"
+      },
+      "data_idea": "A seeded RNG fills DLQs with poison and transient failures.",
+      "real_world_use": "Used by messaging teams recovering failed work.",
+      "suggested_types": [
+        "task_queue",
+        "log_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "message-replay-tool",
+      "name": "Message Replay Tool",
+      "concept": "Replaying production messages into staging reproduces bugs that synthetic tests miss. The tool captures message streams with timing, replays them at original or accelerated rates, and compares outputs. Time-travel debugging for event-driven systems.",
+      "key_params": {
+        "capture_window": "messages recorded",
+        "replay_speed": "1x or accelerated",
+        "compare_outputs": "diff of results",
+        "filter": "subset selection"
+      },
+      "data_idea": "A seeded RNG generates message streams with a planted bug.",
+      "real_world_use": "Used debugging event-driven production issues.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "event-schema-registry",
+      "name": "Event Schema Registry",
+      "concept": "Events without schemas become unparseable mush as producers evolve, so a registry versions every event type. It validates producers against schemas, checks compatibility on registration, and tracks which consumers use each version. Evolution stays safe.",
+      "key_params": {
+        "schemas": "versioned event definitions",
+        "compatibility": "backward, forward, full rules",
+        "validate": "producer checks",
+        "usage_tracking": "consumer mapping"
+      },
+      "data_idea": "A seeded RNG fabricates schema versions with breaking and safe changes.",
+      "real_world_use": "Used by event-driven architectures governing contracts.",
+      "suggested_types": [
+        "config_manager",
+        "cli_tool",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "webhook-delivery-tracker",
+      "name": "Webhook Delivery Tracker",
+      "concept": "Webhooks fail in the night: endpoints down, signatures rejected, retries exhausted. The tracker records every delivery attempt with status codes and latencies, computes per-endpoint reliability, and surfaces chronic failures. Partners get data instead of it works for me.",
+      "key_params": {
+        "endpoints": "subscribed URLs",
+        "retention_days": "attempt history",
+        "reliability_slo": "expected success rate",
+        "alert_on": "failure conditions"
+      },
+      "data_idea": "A seeded RNG synthesizes delivery attempts with flaky endpoints.",
+      "real_world_use": "Used by API teams operating webhook platforms.",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "web_dashboard",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "webhook-retry-scheduler",
+      "name": "Webhook Retry Scheduler",
+      "concept": "Failed webhooks deserve retries with backoff, not abandonment or hammering. The scheduler queues failed deliveries with exponential backoff and jitter, honors endpoint Retry-After hints, and dead-letters after the budget exhausts. Delivery becomes at-least-once without the thundering herd.",
+      "key_params": {
+        "max_attempts": "retry budget",
+        "base_delay": "initial backoff",
+        "jitter": "delay randomization",
+        "honor_retry_after": "server hints respected"
+      },
+      "data_idea": "A seeded RNG simulates endpoint failures with recovery patterns.",
+      "real_world_use": "Used by webhook infrastructure teams.",
+      "suggested_types": [
+        "scheduler",
+        "task_queue",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "api-gateway-simulator",
+      "name": "API Gateway Simulator",
+      "concept": "API gateways sit in front of services doing routing, auth, rate limiting, and transformation. The simulator models request flow through gateway policies, showing how each policy transforms or rejects requests. It teaches the gateway's job as a policy enforcement point.",
+      "key_params": {
+        "routes": "path to backend mappings",
+        "policies": "auth, limit, transform chain",
+        "backends": "simulated services",
+        "latency_add": "gateway overhead modeled"
+      },
+      "data_idea": "A seeded RNG drives requests through gateway policy chains.",
+      "real_world_use": "Used learning API management concepts.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "rate_limiter",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "request-id-correlator",
+      "name": "Request ID Correlator",
+      "concept": "One request, many log lines across services: correlation IDs stitch them together. The tool injects IDs at the edge, propagates them through simulated service calls, and reassembles the full journey from scattered logs. Debugging distributed systems without it is archaeology.",
+      "key_params": {
+        "id_format": "uuid or snowflake style",
+        "propagation": "header and context passing",
+        "services": "call chain modeled",
+        "reassemble": "log stitching"
+      },
+      "data_idea": "A seeded RNG scatters log lines across services sharing request IDs.",
+      "real_world_use": "Used teaching distributed debugging.",
+      "suggested_types": [
+        "log_analyzer",
+        "simulation",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "structured-log-formatter",
+      "name": "Structured Log Formatter",
+      "concept": "Plain-text logs resist parsing; JSON logs with consistent fields invite it. The formatter converts messy log lines into structured events with extracted fields, validating required keys. Downstream analysis gets dramatically easier.",
+      "key_params": {
+        "input_formats": "dialects parsed",
+        "required_fields": "timestamp, level, message",
+        "output_schema": "normalized field set",
+        "drop_malformed": "handling of unparseable lines"
+      },
+      "data_idea": "A seeded RNG generates messy logs from several services.",
+      "real_world_use": "Used standardizing logs before aggregation.",
+      "suggested_types": [
+        "log_analyzer",
+        "data_pipeline",
+        "cli_tool",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "log-sampling-policy",
+      "name": "Log Sampling Policy",
+      "concept": "High-volume debug logs drown storage budgets, but dropping them blindly loses the needle. The sampling policy keeps all errors while sampling info logs adaptively by volume, preserving rare events. It makes verbose logging affordable.",
+      "key_params": {
+        "keep_all_levels": "error and above always kept",
+        "sample_rate": "info log fraction",
+        "adaptive": "rate adjusts to volume",
+        "rare_event": "unusual messages always kept"
+      },
+      "data_idea": "A seeded RNG emits log streams with volume spikes.",
+      "real_world_use": "Used controlling logging costs at scale.",
+      "suggested_types": [
+        "log_analyzer",
+        "data_pipeline",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "error-clustering-engine",
+      "name": "Error Clustering Engine",
+      "concept": "Thousands of error instances usually reduce to a handful of root causes, and clustering finds them. The engine groups errors by normalized message, stack signature, and context, ranking clusters by frequency and blast radius. Triage starts with clusters, not instances.",
+      "key_params": {
+        "features": "message, stack, context used",
+        "similarity": "grouping threshold",
+        "min_cluster": "smallest cluster reported",
+        "ranking": "frequency versus impact"
+      },
+      "data_idea": "A seeded RNG generates error streams from a few underlying bugs.",
+      "real_world_use": "Used by on-call teams triaging error floods.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "kmeans_clustering",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stack-trace-grouper",
+      "name": "Stack Trace Grouper",
+      "concept": "Crash reports with the same stack trace are the same bug, but frames shift with inlining and async boundaries. The grouper normalizes frames, hashes the signature, and groups crashes, tracking first seen and affected versions. Duplicate bugs stop getting filed.",
+      "key_params": {
+        "normalize": "frame cleaning rules",
+        "signature_frames": "top frames hashed",
+        "versions": "affected releases tracked",
+        "merge_threshold": "similarity for merging"
+      },
+      "data_idea": "A seeded RNG fabricates crash reports from several root bugs.",
+      "real_world_use": "Used by mobile and backend teams triaging crashes.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "flaky-test-detector",
+      "name": "Flaky Test Detector",
+      "concept": "Flaky tests erode trust in CI until everyone ignores red builds, which is how real bugs ship. The detector tracks pass and fail history per test, computing flakiness scores from inconsistency rather than failure rate. Quarantine lists follow automatically.",
+      "key_params": {
+        "history_runs": "runs analyzed",
+        "flakiness_score": "inconsistency metric",
+        "quarantine_threshold": "score triggering quarantine",
+        "rerun_policy": "confirmation runs"
+      },
+      "data_idea": "A seeded RNG synthesizes test results with planted flaky tests.",
+      "real_world_use": "Used by developer-productivity teams fixing CI trust.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "log_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "test-coverage-tracker",
+      "name": "Test Coverage Tracker",
+      "concept": "Coverage numbers guide testing effort, but only when tracked per change rather than as a vanity metric. The tracker records line and branch coverage per commit, flags drops on pull requests, and trends coverage by module. It keeps the suite honest.",
+      "key_params": {
+        "metrics": "line and branch coverage",
+        "pr_gate": "minimum on new code",
+        "trend": "module-level history",
+        "exclude": "generated code skipped"
+      },
+      "data_idea": "A seeded RNG fabricates coverage reports across commits.",
+      "real_world_use": "Used by teams maintaining test discipline.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "release-notes-generator",
+      "name": "Release Notes Generator",
+      "concept": "Nobody reads raw commit logs, but everyone wants to know what changed. The generator turns merged pull requests and labels into categorized release notes with highlights and breaking-change callouts. Changelogs write themselves from good PR hygiene.",
+      "key_params": {
+        "sources": "PRs, commits, labels",
+        "categories": "features, fixes, breaking",
+        "highlight_rules": "what gets top billing",
+        "format": "markdown output"
+      },
+      "data_idea": "A seeded RNG generates PR metadata with labels.",
+      "real_world_use": "Used by release managers publishing changelogs.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "log_analyzer",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "changelog-parser",
+      "name": "Changelog Parser",
+      "concept": "Changelogs follow conventions loosely, so the parser extracts versions, dates, and change entries into structured data. It validates semantic versioning, detects breaking-change markers, and builds upgrade guides from the entries. Dependency upgrades get safer.",
+      "key_params": {
+        "format": "keep-a-changelog style",
+        "semver_check": "version bump validation",
+        "breaking_detect": "marker recognition",
+        "versions": "range queries supported"
+      },
+      "data_idea": "A seeded RNG fabricates changelogs with versions and entries.",
+      "real_world_use": "Used by dependency management tooling.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "report_generator",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dependency-vulnerability-tracker",
+      "name": "Dependency Vulnerability Tracker",
+      "concept": "Applications inherit their dependencies' vulnerabilities, so the tracker maps lockfiles against advisory data continuously. It scores reachable versus theoretical exposure, tracks fix versions, and prioritizes upgrades. Supply-chain risk becomes a managed queue.",
+      "key_params": {
+        "lockfiles": "dependency manifests parsed",
+        "advisories": "vulnerability feed simulated",
+        "reachability": "call-graph analysis modeled",
+        "fix_tracking": "patched versions noted"
+      },
+      "data_idea": "A seeded RNG builds dependency trees with vulnerable versions.",
+      "real_world_use": "Used by AppSec teams managing open-source risk.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "report_generator",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "license-compliance-checker",
+      "name": "License Compliance Checker",
+      "concept": "Copyleft licenses in dependencies can infect proprietary code with disclosure obligations. The checker inventories dependency licenses, flags GPL-family and unknown licenses against policy, and traces which components pull them in. Legal surprises get prevented at build time.",
+      "key_params": {
+        "policy": "allowed, review, banned tiers",
+        "license_db": "SPDX identifiers mapped",
+        "transitive": "full tree analyzed",
+        "report": "attribution notices generated"
+      },
+      "data_idea": "A seeded RNG fabricates dependency trees with license variety.",
+      "real_world_use": "Used by legal and engineering in open-source compliance.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "log_analyzer",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sbom-generator",
+      "name": "SBOM Generator",
+      "concept": "Software bills of materials list every component in a build, now required by regulators and big customers. The generator walks the simulated build graph emitting SPDX-style component records with versions, licenses, and hashes. Transparency becomes an artifact, not a project.",
+      "key_params": {
+        "format": "SPDX or CycloneDX",
+        "components": "direct and transitive",
+        "hashes": "integrity per component",
+        "vuln_link": "advisory cross-reference"
+      },
+      "data_idea": "A seeded RNG builds package graphs for SBOM emission.",
+      "real_world_use": "Used meeting supply-chain transparency requirements.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "file_organizer",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "git-hook-manager",
+      "name": "Git Hook Manager",
+      "concept": "Git hooks run checks on commit and push, but managing them across a team is chaos. The manager installs versioned hooks from the repo, runs linters and secret scans pre-commit, and reports bypasses. Quality gates live where developers work.",
+      "key_params": {
+        "hooks": "pre-commit, pre-push managed",
+        "checks": "lint, format, secrets",
+        "bypass_log": "no-verify usage tracked",
+        "team_sync": "hook versions distributed"
+      },
+      "data_idea": "A seeded RNG simulates commits triggering hook checks.",
+      "real_world_use": "Used standardizing developer workflows.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "file_organizer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "branch-protection-auditor",
+      "name": "Branch Protection Auditor",
+      "concept": "Unprotected main branches invite force-pushes and unreviewed merges. The auditor checks protection rules across repositories: required reviews, status checks, and push restrictions. Drift from the org standard gets flagged per repo.",
+      "key_params": {
+        "repos": "repositories audited",
+        "rules": "reviews, checks, restrictions",
+        "org_standard": "baseline policy",
+        "exceptions": "approved deviations"
+      },
+      "data_idea": "A seeded RNG fabricates repo settings with protection gaps.",
+      "real_world_use": "Used by platform teams enforcing git hygiene.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "merge-queue-simulator",
+      "name": "Merge Queue Simulator",
+      "concept": "Merge queues serialize pull requests through tests so main stays green, but sizing and timeouts need tuning. The simulator models PR arrivals, test durations, and failures through queue policies, measuring wait times and main-branch health. It tunes the tradeoff between throughput and safety.",
+      "key_params": {
+        "arrival_rate": "PRs per hour",
+        "test_duration": "validation time",
+        "batching": "speculative batches modeled",
+        "failure_rate": "flaky PR frequency"
+      },
+      "data_idea": "A seeded RNG drives PRs through queue policies.",
+      "real_world_use": "Used by teams scaling CI throughput.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "deploy-freeze-calendar",
+      "name": "Deploy Freeze Calendar",
+      "concept": "Freezing deploys during holidays and big events prevents self-inflicted outages at the worst moments. The calendar manages freeze windows with exceptions for emergency fixes, notifying teams and blocking pipelines automatically. Calm holidays are a feature.",
+      "key_params": {
+        "windows": "freeze periods defined",
+        "exceptions": "emergency bypass process",
+        "notify": "team alerts",
+        "enforce": "pipeline blocking in simulation"
+      },
+      "data_idea": "A seeded RNG schedules deploys around freeze windows.",
+      "real_world_use": "Used by release management protecting critical periods.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "config_manager",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "change-advisory-board-tracker",
+      "name": "Change Advisory Board Tracker",
+      "concept": "Regulated industries route changes through a review board, and the tracker manages that workflow. It queues change requests with risk assessments, schedules reviews, records decisions, and tracks implementation. Compliance meets velocity with structure.",
+      "key_params": {
+        "risk_tiers": "standard, normal, emergency",
+        "review_cadence": "board meeting schedule",
+        "approvals": "quorum rules",
+        "audit": "decision trail"
+      },
+      "data_idea": "A seeded RNG generates change requests with risk levels.",
+      "real_world_use": "Used in ITIL-style change management.",
+      "suggested_types": [
+        "task_queue",
+        "scheduler",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "maintenance-window-scheduler",
+      "name": "Maintenance Window Scheduler",
+      "concept": "Maintenance needs windows that minimize user impact while giving engineers enough time. The scheduler picks low-traffic windows from usage patterns, coordinates across dependent services, and notifies stakeholders. Downtime gets planned instead of surprising.",
+      "key_params": {
+        "traffic_patterns": "usage by hour",
+        "duration": "work estimate",
+        "dependencies": "services coordinated",
+        "notify_list": "stakeholder alerts"
+      },
+      "data_idea": "A seeded RNG synthesizes traffic patterns and maintenance needs.",
+      "real_world_use": "Used by ops teams planning upgrades.",
+      "suggested_types": [
+        "scheduler",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "status-page-updater",
+      "name": "Status Page Updater",
+      "concept": "During outages, the status page is the product: customers check it before they check Twitter. The updater manages incident posts with severity, affected components, and timeline updates, auto-resolving when monitors clear. Communication becomes systematic under pressure.",
+      "key_params": {
+        "components": "services with status",
+        "templates": "investigating, identified, monitoring, resolved",
+        "auto_resolve": "monitor-driven closure",
+        "subscribers": "notification list"
+      },
+      "data_idea": "A seeded RNG drives incidents through status lifecycles.",
+      "real_world_use": "Used by SRE teams communicating outages.",
+      "suggested_types": [
+        "scheduler",
+        "monitoring_agent",
+        "report_generator",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "runbook-search-engine",
+      "name": "Runbook Search Engine",
+      "concept": "Runbooks save incidents only if responders can find them in seconds. The search engine indexes runbook titles, symptoms, and tags, ranking results by relevance to the alert at hand. The right procedure surfaces when it matters.",
+      "key_params": {
+        "index": "runbook corpus",
+        "fields": "title, symptoms, tags",
+        "ranking": "relevance scoring",
+        "alert_link": "alert-to-runbook mapping"
+      },
+      "data_idea": "A seeded RNG builds runbook corpora with symptom descriptions.",
+      "real_world_use": "Used by on-call teams finding procedures fast.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "troubleshooting-decision-tree",
+      "name": "Troubleshooting Decision Tree",
+      "concept": "Systematic troubleshooting beats guessing, and decision trees encode the systematic path. The tool walks responders through symptom questions to likely causes with confidence scores, learning from past incident outcomes. Junior engineers troubleshoot like seniors.",
+      "key_params": {
+        "tree": "symptom to cause mapping",
+        "confidence": "probability per path",
+        "learn": "outcome feedback loop",
+        "escalate": "when to call a human"
+      },
+      "data_idea": "A seeded RNG simulates symptoms from known causes.",
+      "real_world_use": "Used in NOC training and guided troubleshooting.",
+      "suggested_types": [
+        "decision_tree",
+        "quiz_engine",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "escalation-policy-simulator",
+      "name": "Escalation Policy Simulator",
+      "concept": "Escalation policies decide who gets woken when, and untested policies fail at 3 AM. The simulator runs alerts through escalation chains with acknowledgment behavior modeled, measuring time-to-acknowledge and coverage gaps. Policies get tuned before they matter.",
+      "key_params": {
+        "chains": "escalation levels",
+        "ack_model": "human response behavior",
+        "coverage": "schedule gaps detected",
+        "sla": "acknowledge targets"
+      },
+      "data_idea": "A seeded RNG generates alerts with human ack patterns.",
+      "real_world_use": "Used by incident management tuning on-call.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "oncall-handoff-generator",
+      "name": "On-Call Handoff Generator",
+      "concept": "Shift changes lose context: the incoming engineer inherits mysteries, not just alerts. The generator summarizes the shift's incidents, ongoing mitigations, and watch items into a handoff note. Continuity survives the rotation.",
+      "key_params": {
+        "shift_events": "incidents and changes",
+        "watch_items": "things to keep an eye on",
+        "format": "structured handoff note",
+        "carryover": "unresolved items flagged"
+      },
+      "data_idea": "A seeded RNG fabricates shift activity with open items.",
+      "real_world_use": "Used by on-call teams at rotation boundaries.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "log_analyzer",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "toil-tracker",
+      "name": "Toil Tracker",
+      "concept": "Toil is the manual repetitive work SRE tries to eliminate, but you cannot reduce what you do not measure. The tracker logs toil tasks with duration and frequency, attributing them to teams and systems, and trends the toil percentage against the 50 percent cap. Automation ROI becomes measurable.",
+      "key_params": {
+        "tasks": "manual ops work logged",
+        "toil_cap": "50 percent guideline",
+        "attribution": "team and system",
+        "trend": "toil over time"
+      },
+      "data_idea": "A seeded RNG generates ops task logs with toil classifications.",
+      "real_world_use": "Used by SRE teams justifying automation work.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sli-measurement-pipeline",
+      "name": "SLI Measurement Pipeline",
+      "concept": "SLIs need precise definitions: which events count as good, and over what window. The pipeline ingests raw events, applies SLI definitions like successful requests over total, and emits time series for SLO evaluation. Definitions become code, not prose.",
+      "key_params": {
+        "sli_defs": "good-event ratios defined",
+        "windows": "rolling evaluation periods",
+        "events": "raw telemetry in",
+        "output": "SLI time series out"
+      },
+      "data_idea": "A seeded RNG emits request outcomes for SLI computation.",
+      "real_world_use": "Used building SLO foundations.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "error-budget-policy-engine",
+      "name": "Error Budget Policy Engine",
+      "concept": "This engine turns budget numbers into release policy: who may ship, what needs extra review, when features freeze. It evaluates deployment requests against remaining budget with tiered rules per service criticality. Governance becomes automatic and fair.",
+      "key_params": {
+        "tiers": "criticality levels",
+        "rules": "budget gates per tier",
+        "requests": "deployments evaluated",
+        "audit": "decisions logged"
+      },
+      "data_idea": "A seeded RNG generates deploy requests against budget states.",
+      "real_world_use": "Used by platform teams governing releases.",
+      "suggested_types": [
+        "decision_tree",
+        "scheduler",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    }
+  ]
+}

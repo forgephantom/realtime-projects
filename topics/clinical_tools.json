@@ -1,0 +1,4236 @@
+{
+  "domain": "healthcare",
+  "subdomain": "clinical_tools",
+  "topics": [
+    {
+      "slug_base": "triage-acuity-trainer",
+      "name": "Triage Acuity Trainer",
+      "concept": "An educational triage drill that presents synthetic emergency-department vignettes and asks the learner to assign an acuity level from a five-tier demo scale, scoring agreement with the hidden key. It explains each miss with the discriminating finding. Vignettes are fictional and the tool gives no clinical advice.",
+      "key_params": {
+        "vignettes": "case count",
+        "tiers": "acuity levels",
+        "pass_score": "passing threshold"
+      },
+      "data_idea": "A seeded RNG assembles vignettes from fictional presenting complaints and vital signs.",
+      "real_world_use": "Used in emergency-nursing education for triage practice.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gcs-calculator-edu",
+      "name": "Glasgow Coma Scale Calculator (Educational)",
+      "concept": "A teaching calculator that sums eye, verbal, and motor responses into a coma-scale total with plain-language band descriptions written for the demo. It generates practice scenarios and checks learner scoring. Fictional scenarios only, strictly educational.",
+      "key_params": {
+        "scenarios": "practice case count",
+        "bands": "score bands",
+        "hints": "whether hints show"
+      },
+      "data_idea": "A seeded RNG builds response combinations across the scale range.",
+      "real_world_use": "Used in neuro-assessment training for students.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pain-scale-tracker",
+      "name": "Pain Scale Tracker (Educational)",
+      "concept": "A pain-journal demo that logs synthetic numeric pain ratings with timestamps, activity context, and fictional interventions, charting ratings over time. It computes average pain by context and intervention. All entries are fictional and the tool gives no medical advice.",
+      "key_params": {
+        "entries": "synthetic log count",
+        "contexts": "activity contexts",
+        "scale_max": "rating scale top"
+      },
+      "data_idea": "A seeded RNG generates ratings with context-driven patterns.",
+      "real_world_use": "Used in pain-management education for journaling concepts.",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "early-warning-demo",
+      "name": "Early Warning Score Demo (Educational)",
+      "concept": "A vital-sign scoring demo that converts synthetic vital sets into an aggregate early-warning score with fictional escalation bands, demonstrating how track-and-trigger systems work. It trends scores per fictional patient. Labeled educational with demo bands.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "vital_sets": "per patient",
+        "bands": "escalation bands"
+      },
+      "data_idea": "A seeded RNG streams vital signs, some deteriorating per a hidden pattern.",
+      "real_world_use": "Used in nursing education for deterioration-recognition concepts.",
+      "suggested_types": [
+        "monitoring_agent",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "falls-assessment-demo",
+      "name": "Fall Risk Assessment Demo (Educational)",
+      "concept": "A risk-factor checklist demo scoring synthetic patients on fictional fall-risk items like gait, medications, and history, producing a demo risk band with suggested precaution categories. It is educational and uses invented items.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "items": "risk checklist items",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG assigns risk factors with realistic correlations.",
+      "real_world_use": "Used in nursing education for risk-assessment practice.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pressure-ulcer-demo",
+      "name": "Pressure Injury Risk Demo (Educational)",
+      "concept": "A skin-risk demo scoring synthetic patients on fictional subscales like mobility and moisture, demonstrating how subscale totals map to demo risk bands. It schedules fictional reassessment intervals per band. Educational with invented subscales.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "subscales": "risk subscales",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG creates subscale profiles per patient.",
+      "real_world_use": "Used in nursing education for risk-scale concepts.",
+      "suggested_types": [
+        "quiz_engine",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "nutrition-screen-demo",
+      "name": "Nutrition Screening Demo (Educational)",
+      "concept": "A malnutrition-screening demo applying simplified screening questions to synthetic patients, classifying fictional risk levels and demonstrating referral logic. Questions are demo simplifications, strictly educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "questions": "screening items",
+        "levels": "risk levels"
+      },
+      "data_idea": "A seeded RNG generates screening answers with risk patterns.",
+      "real_world_use": "Used in dietetics education for screening concepts.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "delirium-screen-demo",
+      "name": "Delirium Screening Demo (Educational)",
+      "concept": "A confusion-assessment demo walking learners through fictional delirium-screen items on synthetic cases, scoring feature presence and demonstrating the demo decision rule. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "features": "screen features",
+        "rule": "demo decision rule"
+      },
+      "data_idea": "A seeded RNG builds cases with feature combinations.",
+      "real_world_use": "Used in geriatrics-nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sepsis-screen-demo",
+      "name": "Sepsis Screening Demo (Educational)",
+      "concept": "A screening-criteria demo applying fictional qSOFA-style rules to synthetic vital sets, flagging fictional patients meeting criteria and demonstrating escalation logic. Rules are demo simplifications for education.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "criteria": "screen rules",
+        "vital_sets": "per patient"
+      },
+      "data_idea": "A seeded RNG streams vital sets, some meeting the demo criteria.",
+      "real_world_use": "Used in nursing education for screening drills.",
+      "suggested_types": [
+        "monitoring_agent",
+        "quiz_engine",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stroke-scale-demo",
+      "name": "Stroke Scale Demo (Educational)",
+      "concept": "A stroke-assessment drill presenting synthetic neuro-exam findings and asking learners to score fictional scale items, with answer explanations. Findings are fictional and the tool gives no clinical advice.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "scale items",
+        "pass_score": "passing threshold"
+      },
+      "data_idea": "A seeded RNG assembles exam findings per stroke pattern.",
+      "real_world_use": "Used in stroke education for scale practice.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nihss-trainer",
+      "name": "NIH Stroke Scale Trainer (Educational)",
+      "concept": "An expanded stroke-scale drill with synthetic exam videos described in text, item-by-item scoring practice, and total-score interpretation bands written for the demo. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "scale items",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG generates item scores per fictional stroke syndrome.",
+      "real_world_use": "Used in stroke-team training.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "apgar-demo",
+      "name": "APGAR Score Demo (Educational)",
+      "concept": "A newborn-assessment drill scoring synthetic delivery scenarios on five fictional APGAR components at one and five minutes, with interpretation bands for the demo. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "components": "score components",
+        "bands": "interpretation bands"
+      },
+      "data_idea": "A seeded RNG builds component scores per scenario.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bishop-demo",
+      "name": "Bishop Score Demo (Educational)",
+      "concept": "A cervical-assessment drill scoring synthetic exam findings on fictional Bishop components, demonstrating how totals map to demo induction-readiness bands. Findings are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "components": "score components",
+        "bands": "readiness bands"
+      },
+      "data_idea": "A seeded RNG creates exam findings per case.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "partograph-demo",
+      "name": "Partograph Demo (Educational)",
+      "concept": "A labor-progress charting demo plotting synthetic cervical dilation and fetal heart tracings against fictional alert and action lines, flagging crossings for teaching discussion. Data is fictional and educational.",
+      "key_params": {
+        "labors": "synthetic labor count",
+        "hours": "labor duration",
+        "lines": "alert and action lines"
+      },
+      "data_idea": "A seeded RNG generates labor curves, some crossing the demo lines.",
+      "real_world_use": "Used in midwifery education.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ballard-demo",
+      "name": "Ballard Score Demo (Educational)",
+      "concept": "A gestational-age assessment drill scoring synthetic neuromuscular and physical maturity signs, converting totals to fictional age estimates with demo tables. Signs are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "signs": "maturity signs",
+        "table": "demo conversion table"
+      },
+      "data_idea": "A seeded RNG builds sign profiles per gestational age.",
+      "real_world_use": "Used in neonatal education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "silverman-demo",
+      "name": "Respiratory Distress Demo (Educational)",
+      "concept": "A newborn respiratory drill scoring synthetic retraction and grunt findings on a fictional distress scale, demonstrating escalation bands. Findings are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "signs": "distress signs",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG creates sign combinations per severity.",
+      "real_world_use": "Used in neonatal education.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dowens-demo",
+      "name": "Downe's Score Demo (Educational)",
+      "concept": "A neonatal respiratory drill similar in spirit, scoring synthetic findings on a fictional score with demo interpretation bands. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "signs": "score signs",
+        "bands": "bands"
+      },
+      "data_idea": "A seeded RNG assembles findings per severity level.",
+      "real_world_use": "Used in neonatal teaching.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "comfort-scale-demo",
+      "name": "Neonatal Comfort Demo (Educational)",
+      "concept": "A comfort-assessment drill scoring synthetic behavioral cues on fictional comfort items, demonstrating score-based demo care suggestions. Cues are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "comfort items",
+        "bands": "comfort bands"
+      },
+      "data_idea": "A seeded RNG generates behavioral cue sets.",
+      "real_world_use": "Used in neonatal nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "flacc-demo",
+      "name": "FLACC Pain Demo (Educational)",
+      "concept": "A pediatric pain drill scoring synthetic face, legs, activity, cry, and consolability cues on a fictional scale, with demo interpretation bands. Cues are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "domains": "scale domains",
+        "bands": "pain bands"
+      },
+      "data_idea": "A seeded RNG builds cue combinations per pain level.",
+      "real_world_use": "Used in pediatric nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "wong-baker-demo",
+      "name": "Faces Pain Demo (Educational)",
+      "concept": "A faces-scale drill matching synthetic pain descriptions to fictional face levels, teaching self-report concepts with demo faces drawn in ASCII. Descriptions are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "faces": "face levels",
+        "descriptions": "pain descriptions"
+      },
+      "data_idea": "A seeded RNG pairs descriptions with face levels.",
+      "real_world_use": "Used in pediatric education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "glasgow-icu-demo",
+      "name": "ICU Sedation Demo (Educational)",
+      "concept": "A sedation-assessment drill scoring synthetic patient responses on a fictional agitation-sedation scale, demonstrating target-range concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "levels": "scale levels",
+        "target": "target range"
+      },
+      "data_idea": "A seeded RNG creates response sets per sedation depth.",
+      "real_world_use": "Used in ICU nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cam-icu-demo",
+      "name": "CAM-ICU Demo (Educational)",
+      "concept": "A delirium-in-ICU drill applying fictional CAM features to synthetic ventilated-patient cases, demonstrating the demo decision algorithm. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "features": "CAM features",
+        "rule": "decision rule"
+      },
+      "data_idea": "A seeded RNG builds feature patterns per case.",
+      "real_world_use": "Used in ICU education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rass-trainer",
+      "name": "RASS Trainer (Educational)",
+      "concept": "A Richmond-scale drill matching synthetic patient behaviors to fictional agitation-sedation levels, with scoring practice and explanations. Behaviors are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "levels": "scale levels",
+        "pass_score": "passing threshold"
+      },
+      "data_idea": "A seeded RNG generates behavior descriptions per level.",
+      "real_world_use": "Used in ICU training.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cpot-demo",
+      "name": "CPOT Demo (Educational)",
+      "concept": "A critical-care pain drill scoring synthetic behavioral indicators on a fictional observational pain tool, with demo interpretation bands. Indicators are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "domains": "tool domains",
+        "bands": "pain bands"
+      },
+      "data_idea": "A seeded RNG creates indicator sets per pain level.",
+      "real_world_use": "Used in ICU nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "braden-demo",
+      "name": "Braden Scale Demo (Educational)",
+      "concept": "A pressure-injury scale drill scoring synthetic patients on six fictional subscales, demonstrating risk-band mapping and fictional prevention bundles per band. Subscales are demo simplifications, educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "subscales": "six subscales",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG builds subscale profiles.",
+      "real_world_use": "Used in nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "norton-demo",
+      "name": "Norton Scale Demo (Educational)",
+      "concept": "A pressure-risk drill scoring synthetic patients on five fictional Norton items, with demo risk bands. Items are fictional and educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "items": "five items",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG creates item profiles.",
+      "real_world_use": "Used in nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "waterlow-demo",
+      "name": "Waterlow Demo (Educational)",
+      "concept": "A pressure-risk drill scoring synthetic patients on fictional Waterlow categories with demo special-risk items, mapping to demo bands. Categories are fictional and educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "categories": "risk categories",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG builds category profiles.",
+      "real_world_use": "Used in nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "morse-demo",
+      "name": "Morse Fall Demo (Educational)",
+      "concept": "A fall-scale drill scoring synthetic patients on six fictional Morse items, demonstrating risk-band mapping. Items are demo simplifications, educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "items": "six items",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG creates item profiles.",
+      "real_world_use": "Used in nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hendrich-demo",
+      "name": "Hendrich Fall Demo (Educational)",
+      "concept": "A fall-risk drill scoring synthetic patients on fictional Hendrich risk factors, with demo bands and fictional intervention lists. Factors are fictional and educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "factors": "risk factors",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG assigns risk factors.",
+      "real_world_use": "Used in nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "johns-hopkins-demo",
+      "name": "Johns Hopkins Fall Demo (Educational)",
+      "concept": "A fall-scale drill scoring synthetic patients on fictional Hopkins items across age, with demo bands. Items are fictional and educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "items": "scale items",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG builds item profiles.",
+      "real_world_use": "Used in nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "stratify-demo",
+      "name": "STRATIFY Demo (Educational)",
+      "concept": "A fall-risk drill applying five fictional STRATIFY questions to synthetic patients, demonstrating the demo cutoff. Questions are fictional and educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "questions": "five questions",
+        "cutoff": "demo cutoff"
+      },
+      "data_idea": "A seeded RNG creates answer patterns.",
+      "real_world_use": "Used in nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vap-bundle-demo",
+      "name": "VAP Bundle Demo (Educational)",
+      "concept": "A ventilator-bundle checklist demo tracking synthetic compliance with fictional bundle elements like head-of-bed elevation, demonstrating bundle-score computation. Elements are fictional and educational.",
+      "key_params": {
+        "patients": "synthetic patients",
+        "elements": "bundle elements",
+        "days": "ventilator days"
+      },
+      "data_idea": "A seeded RNG generates compliance checklists.",
+      "real_world_use": "Used in ICU education.",
+      "suggested_types": [
+        "monitoring_agent",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "clabsi-bundle-demo",
+      "name": "CLABSI Bundle Demo (Educational)",
+      "concept": "A line-bundle checklist demo tracking synthetic insertion and maintenance compliance with fictional bundle elements. Elements are fictional and educational.",
+      "key_params": {
+        "lines": "synthetic lines",
+        "elements": "bundle elements",
+        "days": "line days"
+      },
+      "data_idea": "A seeded RNG creates compliance records.",
+      "real_world_use": "Used in infection-prevention education.",
+      "suggested_types": [
+        "monitoring_agent",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cauti-bundle-demo",
+      "name": "CAUTI Bundle Demo (Educational)",
+      "concept": "A catheter-bundle checklist demo tracking synthetic insertion and maintenance compliance with fictional elements. Elements are fictional and educational.",
+      "key_params": {
+        "catheters": "synthetic catheters",
+        "elements": "bundle elements",
+        "days": "catheter days"
+      },
+      "data_idea": "A seeded RNG generates compliance records.",
+      "real_world_use": "Used in infection-prevention education.",
+      "suggested_types": [
+        "monitoring_agent",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ssi-bundle-demo",
+      "name": "SSI Bundle Demo (Educational)",
+      "concept": "A surgical-bundle checklist demo tracking synthetic compliance with fictional pre-, intra-, and post-operative elements. Elements are fictional and educational.",
+      "key_params": {
+        "procedures": "synthetic procedures",
+        "elements": "bundle elements",
+        "phases": "operative phases"
+      },
+      "data_idea": "A seeded RNG creates compliance checklists.",
+      "real_world_use": "Used in surgical education.",
+      "suggested_types": [
+        "monitoring_agent",
+        "quiz_engine",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hand-hygiene-trainer",
+      "name": "Hand Hygiene Trainer",
+      "concept": "An observation drill presenting synthetic care sequences and asking learners to identify fictional hand-hygiene moments, scoring accuracy with explanations. Sequences are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "moments": "moment types",
+        "pass_score": "passing threshold"
+      },
+      "data_idea": "A seeded RNG builds care sequences with moment opportunities.",
+      "real_world_use": "Used in infection-control training.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ppe-trainer",
+      "name": "PPE Trainer (Educational)",
+      "concept": "A donning and doffing drill sequencing synthetic PPE steps, asking learners to order fictional steps correctly with error explanations. Steps are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "steps": "PPE steps",
+        "precautions": "precaution types"
+      },
+      "data_idea": "A seeded RNG shuffles step orders for sequencing drills.",
+      "real_world_use": "Used in infection-control training.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "isolation-trainer",
+      "name": "Isolation Precautions Trainer (Educational)",
+      "concept": "A precautions drill matching synthetic infections to fictional isolation types, with explanations of demo precaution elements. Infections are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "infections": "infection list",
+        "types": "isolation types"
+      },
+      "data_idea": "A seeded RNG pairs infections with precaution types.",
+      "real_world_use": "Used in infection-control education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sharps-trainer",
+      "name": "Sharps Safety Trainer",
+      "concept": "A sharps-safety drill presenting synthetic disposal scenarios and asking learners to choose fictional safe actions, with explanations. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "devices": "sharp device types",
+        "actions": "safe actions"
+      },
+      "data_idea": "A seeded RNG builds disposal scenarios.",
+      "real_world_use": "Used in occupational-health training.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "spill-trainer",
+      "name": "Spill Response Trainer (Educational)",
+      "concept": "A spill-response drill walking learners through fictional cleanup steps for synthetic spill scenarios, scoring step order and PPE choices. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "spills": "spill types",
+        "steps": "cleanup steps"
+      },
+      "data_idea": "A seeded RNG creates spill scenarios.",
+      "real_world_use": "Used in lab-safety training.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "fire-drill-tracker",
+      "name": "Fire Drill Tracker (Educational)",
+      "concept": "A drill-logging demo recording synthetic fire-drill events with evacuation times and fictional unit performance, trending times across drills. Events are fictional.",
+      "key_params": {
+        "drills": "synthetic drill count",
+        "units": "hospital units",
+        "target_seconds": "evacuation target"
+      },
+      "data_idea": "A seeded RNG generates drill times per unit.",
+      "real_world_use": "Used in facilities emergency training.",
+      "suggested_types": [
+        "monitoring_agent",
+        "report_generator",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "code-cart-checker",
+      "name": "Code Cart Checker (Educational)",
+      "concept": "A crash-cart audit demo checking synthetic carts against a fictional supply checklist, flagging expired or missing items. Carts and items are fictional.",
+      "key_params": {
+        "carts": "synthetic cart count",
+        "items": "checklist items",
+        "expiry_days": "expiry window"
+      },
+      "data_idea": "A seeded RNG stocks carts with gaps and expiries.",
+      "real_world_use": "Used in code-readiness training.",
+      "suggested_types": [
+        "monitoring_agent",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "defib-trainer",
+      "name": "Defibrillator Trainer (Educational)",
+      "concept": "A defibrillation drill timing synthetic energy selections and fictional pad placements, scoring against demo targets. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "rhythms": "rhythm types",
+        "targets": "demo time targets"
+      },
+      "data_idea": "A seeded RNG creates rhythm scenarios.",
+      "real_world_use": "Used in resuscitation training.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "airway-trainer",
+      "name": "Airway Trainer (Educational)",
+      "concept": "An airway drill presenting synthetic airway assessments and asking learners to choose fictional airway plans, with explanations. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "findings": "assessment findings",
+        "plans": "airway plans"
+      },
+      "data_idea": "A seeded RNG builds airway assessments.",
+      "real_world_use": "Used in anesthesia education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "vent-mode-demo",
+      "name": "Ventilator Mode Demo (Educational)",
+      "concept": "A ventilation-mode explainer demonstrating fictional mode behaviors on synthetic lung mechanics with ASCII waveforms, comparing demo modes. Mechanics are fictional and educational.",
+      "key_params": {
+        "modes": "demo ventilator modes",
+        "lungs": "synthetic lung profiles",
+        "waveforms": "waveform types"
+      },
+      "data_idea": "A seeded RNG creates lung mechanics profiles.",
+      "real_world_use": "Used in respiratory-therapy education.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "abg-interpreter-edu",
+      "name": "ABG Interpreter (Educational)",
+      "concept": "An arterial-blood-gas drill interpreting synthetic values with fictional step-by-step acid-base logic, classifying demo disorder patterns. Values are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "disorder patterns",
+        "steps": "interpretation steps"
+      },
+      "data_idea": "A seeded RNG generates ABG values per pattern.",
+      "real_world_use": "Used in critical-care education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "electrolyte-demo",
+      "name": "Electrolyte Demo (Educational)",
+      "concept": "An electrolyte drill interpreting synthetic lab panels with fictional replacement-threshold logic, demonstrating demo decision bands. Panels are fictional and educational.",
+      "key_params": {
+        "panels": "synthetic panel count",
+        "electrolytes": "electrolytes",
+        "bands": "demo bands"
+      },
+      "data_idea": "A seeded RNG creates panels with abnormalities.",
+      "real_world_use": "Used in medical education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ekg-drill",
+      "name": "EKG Drill (Educational)",
+      "concept": "A rhythm-identification drill presenting synthetic ASCII rhythm strips and asking learners to name fictional rhythm patterns, with explanations. Strips are invented and educational.",
+      "key_params": {
+        "strips": "synthetic strip count",
+        "rhythms": "rhythm patterns",
+        "pass_score": "passing threshold"
+      },
+      "data_idea": "A seeded RNG synthesizes rhythm strips per pattern.",
+      "real_world_use": "Used in cardiology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cpr-trainer",
+      "name": "CPR Trainer (Educational)",
+      "concept": "A compression drill scoring synthetic compression depth and rate inputs against fictional targets, with real-time-style ASCII feedback. Inputs are learner-provided and educational.",
+      "key_params": {
+        "sessions": "practice session count",
+        "targets": "demo rate and depth targets",
+        "rounds": "compression rounds"
+      },
+      "data_idea": "A seeded RNG simulates compression quality traces for demo feedback.",
+      "real_world_use": "Used in basic life-support training.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "aed-trainer",
+      "name": "AED Trainer (Educational)",
+      "concept": "An AED drill walking learners through fictional device prompts on synthetic arrest scenarios, scoring prompt-following accuracy. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "prompts": "device prompts",
+        "rhythms": "rhythm types"
+      },
+      "data_idea": "A seeded RNG creates arrest scenarios with rhythms.",
+      "real_world_use": "Used in public-access defibrillation training.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "choking-trainer",
+      "name": "Choking Response Trainer (Educational)",
+      "concept": "A choking-response drill presenting synthetic obstruction scenarios across fictional age groups, scoring action choices. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "ages": "age groups",
+        "actions": "response actions"
+      },
+      "data_idea": "A seeded RNG builds obstruction scenarios.",
+      "real_world_use": "Used in first-aid training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bleeding-trainer",
+      "name": "Bleeding Control Trainer (Educational)",
+      "concept": "A hemorrhage-control drill presenting synthetic bleeding scenarios and asking learners to choose fictional interventions in order, with explanations. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "bleeds": "bleed types",
+        "interventions": "intervention list"
+      },
+      "data_idea": "A seeded RNG creates bleeding scenarios.",
+      "real_world_use": "Used in first-aid and tactical training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "splint-trainer",
+      "name": "Splinting Trainer (Educational)",
+      "concept": "A splinting drill presenting synthetic fracture scenarios and asking learners to select fictional splint types and checks, with explanations. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "fractures": "fracture types",
+        "splints": "splint types"
+      },
+      "data_idea": "A seeded RNG builds fracture scenarios.",
+      "real_world_use": "Used in first-aid training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "burn-trainer",
+      "name": "Burn Care Trainer (Educational)",
+      "concept": "A burn-assessment drill estimating fictional burn size with demo Lund-Browder style charts and classifying fictional depth, with explanations. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "depths": "burn depths",
+        "charts": "demo body charts"
+      },
+      "data_idea": "A seeded RNG creates burn patterns.",
+      "real_world_use": "Used in burn education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hypothermia-trainer",
+      "name": "Hypothermia Trainer (Educational)",
+      "concept": "A cold-injury drill classifying synthetic exposure scenarios into fictional hypothermia stages, with demo rewarming concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "stages": "hypothermia stages",
+        "signs": "clinical signs"
+      },
+      "data_idea": "A seeded RNG builds exposure scenarios.",
+      "real_world_use": "Used in wilderness-medicine education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "heat-illness-trainer",
+      "name": "Heat Illness Trainer (Educational)",
+      "concept": "A heat-illness drill classifying synthetic exertion scenarios into fictional heat-illness stages, with demo cooling concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "stages": "illness stages",
+        "signs": "clinical signs"
+      },
+      "data_idea": "A seeded RNG creates exertion scenarios.",
+      "real_world_use": "Used in sports-medicine education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "drowning-trainer",
+      "name": "Drowning Response Trainer (Educational)",
+      "concept": "A drowning-response drill sequencing fictional rescue and resuscitation steps for synthetic scenarios, scoring order accuracy. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "steps": "response steps",
+        "settings": "water settings"
+      },
+      "data_idea": "A seeded RNG builds drowning scenarios.",
+      "real_world_use": "Used in lifeguard training.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "anaphylaxis-trainer",
+      "name": "Anaphylaxis Trainer (Educational)",
+      "concept": "An anaphylaxis drill recognizing synthetic reaction scenarios and scoring fictional epinephrine decisions, with explanations. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "triggers": "allergen triggers",
+        "signs": "reaction signs"
+      },
+      "data_idea": "A seeded RNG creates reaction scenarios.",
+      "real_world_use": "Used in allergy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "asthma-trainer",
+      "name": "Asthma Trainer (Educational)",
+      "concept": "An asthma drill classifying synthetic exacerbation scenarios into fictional severity bands, with demo action-plan concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "bands": "severity bands",
+        "triggers": "trigger list"
+      },
+      "data_idea": "A seeded RNG builds exacerbation scenarios.",
+      "real_world_use": "Used in respiratory education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "diabetes-trainer",
+      "name": "Diabetes Trainer (Educational)",
+      "concept": "A diabetes drill interpreting synthetic glucose patterns and scoring fictional management choices, with explanations. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "glucose patterns",
+        "choices": "management choices"
+      },
+      "data_idea": "A seeded RNG generates glucose traces.",
+      "real_world_use": "Used in diabetes education.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "insulin-demo",
+      "name": "Insulin Dosing Demo (Educational)",
+      "concept": "An insulin-math drill computing fictional correction and carb-ratio doses from synthetic glucose and meal inputs, showing step-by-step math. Inputs are fictional and educational.",
+      "key_params": {
+        "problems": "practice problem count",
+        "ratios": "demo insulin ratios",
+        "targets": "glucose targets"
+      },
+      "data_idea": "A seeded RNG creates dosing problems.",
+      "real_world_use": "Used in diabetes education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hypoglycemia-trainer",
+      "name": "Hypoglycemia Trainer (Educational)",
+      "concept": "A low-glucose drill recognizing synthetic hypoglycemia scenarios and scoring fictional treatment choices by severity band. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "bands": "severity bands",
+        "treatments": "treatment options"
+      },
+      "data_idea": "A seeded RNG builds hypoglycemia scenarios.",
+      "real_world_use": "Used in diabetes education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dka-trainer",
+      "name": "DKA Trainer (Educational)",
+      "concept": "A diabetic-emergency drill interpreting synthetic lab patterns and scoring fictional management priorities, with explanations. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "lab patterns",
+        "priorities": "management priorities"
+      },
+      "data_idea": "A seeded RNG generates lab patterns.",
+      "real_world_use": "Used in endocrine education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "thyroid-trainer",
+      "name": "Thyroid Trainer (Educational)",
+      "concept": "A thyroid drill interpreting synthetic TFT patterns and classifying fictional thyroid states, with explanations. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "TFT patterns",
+        "states": "thyroid states"
+      },
+      "data_idea": "A seeded RNG creates TFT panels.",
+      "real_world_use": "Used in endocrine education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "anemia-trainer",
+      "name": "Anemia Trainer (Educational)",
+      "concept": "An anemia drill interpreting synthetic CBC patterns and classifying fictional anemia types, with explanations. Panels are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "CBC patterns",
+        "types": "anemia types"
+      },
+      "data_idea": "A seeded RNG generates CBC panels.",
+      "real_world_use": "Used in hematology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "transfusion-trainer",
+      "name": "Transfusion Trainer (Educational)",
+      "concept": "A transfusion drill matching synthetic clinical scenarios to fictional blood products, with compatibility-check practice. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "products": "blood products",
+        "checks": "compatibility checks"
+      },
+      "data_idea": "A seeded RNG builds transfusion scenarios.",
+      "real_world_use": "Used in transfusion education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "coag-trainer",
+      "name": "Coagulation Trainer (Educational)",
+      "concept": "A coagulation drill interpreting synthetic clotting panels and classifying fictional bleeding or clotting states, with explanations. Panels are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "panel patterns",
+        "states": "coag states"
+      },
+      "data_idea": "A seeded RNG creates clotting panels.",
+      "real_world_use": "Used in hematology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "sepsis-trainer",
+      "name": "Sepsis Trainer (Educational)",
+      "concept": "A sepsis drill recognizing synthetic infection scenarios and scoring fictional bundle priorities, with explanations. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "sources": "infection sources",
+        "priorities": "bundle priorities"
+      },
+      "data_idea": "A seeded RNG builds infection scenarios.",
+      "real_world_use": "Used in critical-care education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "uti-trainer",
+      "name": "UTI Trainer (Educational)",
+      "concept": "A urinary-tract drill classifying synthetic presentations into fictional UTI categories, with demo workup logic. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "categories": "UTI categories",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in medical education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pneumonia-trainer",
+      "name": "Pneumonia Trainer (Educational)",
+      "concept": "A pneumonia drill classifying synthetic respiratory scenarios into fictional severity bands, with demo site-of-care logic. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "bands": "severity bands",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds respiratory scenarios.",
+      "real_world_use": "Used in medical education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "copd-trainer",
+      "name": "COPD Trainer (Educational)",
+      "concept": "A COPD drill classifying synthetic exacerbations into fictional severity bands, with demo action concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "bands": "severity bands",
+        "triggers": "trigger list"
+      },
+      "data_idea": "A seeded RNG creates exacerbation scenarios.",
+      "real_world_use": "Used in respiratory education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hf-trainer",
+      "name": "Heart Failure Trainer (Educational)",
+      "concept": "A heart-failure drill classifying synthetic presentations into fictional stages, with demo daily-weight and diet concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "stages": "HF stages",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in cardiology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mi-trainer",
+      "name": "MI Trainer (Educational)",
+      "concept": "A heart-attack drill recognizing synthetic chest-pain scenarios and scoring fictional time-to-treatment priorities, with explanations. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "presentations": "presentation types",
+        "priorities": "time priorities"
+      },
+      "data_idea": "A seeded RNG creates chest-pain scenarios.",
+      "real_world_use": "Used in cardiology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "arrhythmia-trainer",
+      "name": "Arrhythmia Trainer (Educational)",
+      "concept": "An arrhythmia drill identifying synthetic rhythm strips and scoring fictional urgency levels, with explanations. Strips are invented and educational.",
+      "key_params": {
+        "strips": "synthetic strip count",
+        "rhythms": "rhythm types",
+        "urgency": "urgency levels"
+      },
+      "data_idea": "A seeded RNG synthesizes rhythm strips.",
+      "real_world_use": "Used in cardiology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "syncope-trainer",
+      "name": "Syncope Trainer (Educational)",
+      "concept": "A fainting drill classifying synthetic syncope scenarios into fictional risk bands, with demo workup logic. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "bands": "risk bands",
+        "causes": "syncope causes"
+      },
+      "data_idea": "A seeded RNG builds syncope scenarios.",
+      "real_world_use": "Used in cardiology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dvt-trainer",
+      "name": "DVT Trainer (Educational)",
+      "concept": "A clot drill scoring synthetic leg presentations on fictional Wells-style items, demonstrating demo probability bands. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "score items",
+        "bands": "probability bands"
+      },
+      "data_idea": "A seeded RNG creates leg presentations.",
+      "real_world_use": "Used in medical education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pe-trainer",
+      "name": "PE Trainer (Educational)",
+      "concept": "An embolism drill scoring synthetic presentations on fictional risk items, demonstrating demo probability bands. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "score items",
+        "bands": "probability bands"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in medical education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "gi-bleed-trainer",
+      "name": "GI Bleed Trainer (Educational)",
+      "concept": "A bleeding drill classifying synthetic GI presentations into fictional risk bands, with demo resuscitation priorities. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "bands": "risk bands",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG creates GI presentations.",
+      "real_world_use": "Used in gastroenterology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "liver-trainer",
+      "name": "Liver Trainer (Educational)",
+      "concept": "A liver drill interpreting synthetic liver panels and classifying fictional injury patterns, with explanations. Panels are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "injury patterns",
+        "panels": "liver panels"
+      },
+      "data_idea": "A seeded RNG generates liver panels.",
+      "real_world_use": "Used in hepatology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "aki-trainer",
+      "name": "AKI Trainer (Educational)",
+      "concept": "A kidney-injury drill staging synthetic creatinine trends with fictional KDIGO-style stages, demonstrating demo stage logic. Trends are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "stages": "injury stages",
+        "trends": "creatinine trends"
+      },
+      "data_idea": "A seeded RNG creates creatinine series.",
+      "real_world_use": "Used in nephrology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ckd-trainer",
+      "name": "CKD Trainer (Educational)",
+      "concept": "A kidney-disease drill staging synthetic eGFR and fictional albuminuria combinations into demo CKD categories, with explanations. Values are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "categories": "CKD categories",
+        "inputs": "eGFR and albuminuria"
+      },
+      "data_idea": "A seeded RNG generates kidney values.",
+      "real_world_use": "Used in nephrology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "uti-peds-trainer",
+      "name": "Pediatric UTI Trainer (Educational)",
+      "concept": "A pediatric urinary drill classifying synthetic presentations with fictional age-adjusted logic, demonstrating demo workup concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "ages": "age groups",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG creates pediatric presentations.",
+      "real_world_use": "Used in pediatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "fever-trainer",
+      "name": "Fever Trainer (Educational)",
+      "concept": "A fever drill classifying synthetic pediatric fever scenarios with fictional age-based logic, demonstrating demo evaluation concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "ages": "age groups",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds fever scenarios.",
+      "real_world_use": "Used in pediatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dehydration-trainer",
+      "name": "Dehydration Trainer (Educational)",
+      "concept": "A dehydration drill classifying synthetic assessments into fictional dehydration plans, with demo fluid-math concepts. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "plans": "dehydration plans",
+        "signs": "clinical signs"
+      },
+      "data_idea": "A seeded RNG creates assessments.",
+      "real_world_use": "Used in pediatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "malnutrition-trainer",
+      "name": "Malnutrition Trainer (Educational)",
+      "concept": "A malnutrition drill classifying synthetic anthropometry into fictional severity bands, with demo feeding concepts. Measurements are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "bands": "severity bands",
+        "measures": "anthropometric measures"
+      },
+      "data_idea": "A seeded RNG generates measurements.",
+      "real_world_use": "Used in nutrition education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "immunization-trainer",
+      "name": "Immunization Trainer (Educational)",
+      "concept": "A vaccine-schedule drill asking learners to pick fictional next doses for synthetic catch-up scenarios, with explanations. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "vaccines": "vaccine list",
+        "schedules": "demo schedules"
+      },
+      "data_idea": "A seeded RNG builds catch-up histories.",
+      "real_world_use": "Used in pediatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "scheduler",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "development-trainer",
+      "name": "Development Trainer (Educational)",
+      "concept": "A milestones drill matching synthetic child behaviors to fictional developmental windows, with explanations. Behaviors are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "domains": "developmental domains",
+        "windows": "age windows"
+      },
+      "data_idea": "A seeded RNG creates behavior descriptions.",
+      "real_world_use": "Used in pediatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "adhd-trainer",
+      "name": "ADHD Trainer (Educational)",
+      "concept": "An attention drill scoring synthetic rating-scale responses with fictional cutoffs, demonstrating demo interpretation concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "rating items",
+        "bands": "interpretation bands"
+      },
+      "data_idea": "A seeded RNG generates rating responses.",
+      "real_world_use": "Used in behavioral-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "depression-trainer",
+      "name": "Depression Screen Trainer (Educational)",
+      "concept": "A mood drill scoring synthetic questionnaire responses with fictional severity bands, demonstrating demo follow-up concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "questionnaire items",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG creates questionnaire responses.",
+      "real_world_use": "Used in behavioral-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "anxiety-trainer",
+      "name": "Anxiety Screen Trainer (Educational)",
+      "concept": "An anxiety drill scoring synthetic questionnaire responses with fictional severity bands, with demo coping concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "questionnaire items",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG generates responses.",
+      "real_world_use": "Used in behavioral-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "suicide-risk-trainer",
+      "name": "Suicide Risk Trainer (Educational)",
+      "concept": "A risk drill classifying synthetic scenarios into fictional risk levels with demo safety-planning concepts, framed carefully for education. Scenarios are fictional.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "levels": "risk levels",
+        "factors": "risk factors"
+      },
+      "data_idea": "A seeded RNG builds scenarios with risk factors.",
+      "real_world_use": "Used in behavioral-health training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "substance-trainer",
+      "name": "Substance Use Trainer (Educational)",
+      "concept": "A substance-use drill scoring synthetic screening responses with fictional risk bands, demonstrating demo brief-intervention concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "substances": "substance list",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG creates screening responses.",
+      "real_world_use": "Used in addiction education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "eating-disorder-trainer",
+      "name": "Eating Disorder Trainer (Educational)",
+      "concept": "An eating-concerns drill scoring synthetic screening responses with fictional bands, demonstrating demo referral concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "screening items",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG generates responses.",
+      "real_world_use": "Used in behavioral-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dementia-trainer",
+      "name": "Dementia Trainer (Educational)",
+      "concept": "A cognition drill scoring synthetic brief-test responses with fictional cutoffs, demonstrating demo next-step concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "test items",
+        "bands": "interpretation bands"
+      },
+      "data_idea": "A seeded RNG creates test responses.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "delirium-peds-trainer",
+      "name": "Pediatric Delirium Trainer (Educational)",
+      "concept": "A pediatric delirium drill applying fictional screen items to synthetic cases, demonstrating the demo decision rule. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "screen items",
+        "rule": "decision rule"
+      },
+      "data_idea": "A seeded RNG builds case features.",
+      "real_world_use": "Used in pediatric ICU education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pain-peds-trainer",
+      "name": "Pediatric Pain Trainer (Educational)",
+      "concept": "A pediatric pain drill selecting fictional assessment tools by synthetic age and scoring demo cases, with explanations. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "tools": "assessment tools",
+        "ages": "age groups"
+      },
+      "data_idea": "A seeded RNG creates pain cases.",
+      "real_world_use": "Used in pediatric nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "neonatal-pain-trainer",
+      "name": "Neonatal Pain Trainer (Educational)",
+      "concept": "A neonatal pain drill scoring synthetic behavioral and physiologic cues on a fictional scale, with demo bands. Cues are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "cues": "pain cues",
+        "bands": "pain bands"
+      },
+      "data_idea": "A seeded RNG generates cue sets.",
+      "real_world_use": "Used in neonatal nursing education.",
+      "suggested_types": [
+        "quiz_engine",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "lactation-trainer",
+      "name": "Lactation Trainer (Educational)",
+      "concept": "A breastfeeding drill assessing synthetic latch scenarios with fictional scoring, demonstrating demo support concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "items": "assessment items",
+        "bands": "support bands"
+      },
+      "data_idea": "A seeded RNG builds latch scenarios.",
+      "real_world_use": "Used in lactation education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "postpartum-trainer",
+      "name": "Postpartum Trainer (Educational)",
+      "concept": "A postpartum drill classifying synthetic recovery scenarios with fictional assessment items, demonstrating demo follow-up concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "items": "assessment items",
+        "bands": "follow-up bands"
+      },
+      "data_idea": "A seeded RNG creates recovery scenarios.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "preeclampsia-trainer",
+      "name": "Preeclampsia Trainer (Educational)",
+      "concept": "A hypertension-in-pregnancy drill classifying synthetic presentations with fictional criteria, demonstrating demo severity concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "criteria": "demo criteria",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gdm-trainer",
+      "name": "Gestational Diabetes Trainer (Educational)",
+      "concept": "A pregnancy-diabetes drill interpreting synthetic glucose-challenge results with fictional thresholds, demonstrating demo management concepts. Results are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "tests": "screening tests",
+        "bands": "interpretation bands"
+      },
+      "data_idea": "A seeded RNG generates test results.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "labor-trainer",
+      "name": "Labor Trainer (Educational)",
+      "concept": "A labor drill staging synthetic labor patterns with fictional criteria, demonstrating demo management concepts. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "stages": "labor stages",
+        "patterns": "labor patterns"
+      },
+      "data_idea": "A seeded RNG creates labor curves.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "shoulder-dystocia-trainer",
+      "name": "Shoulder Dystocia Trainer (Educational)",
+      "concept": "An obstetric-emergency drill sequencing fictional maneuvers for synthetic scenarios, scoring order accuracy. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "maneuvers": "fictional maneuvers",
+        "steps": "sequence steps"
+      },
+      "data_idea": "A seeded RNG builds emergency scenarios.",
+      "real_world_use": "Used in obstetrics simulation training.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "decision_tree"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "pph-trainer",
+      "name": "Postpartum Hemorrhage Trainer (Educational)",
+      "concept": "A hemorrhage drill quantifying synthetic blood loss and sequencing fictional interventions, scoring priority order. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "losses": "blood-loss volumes",
+        "interventions": "intervention list"
+      },
+      "data_idea": "A seeded RNG creates hemorrhage scenarios.",
+      "real_world_use": "Used in obstetrics training.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "eclampsia-trainer",
+      "name": "Eclampsia Trainer (Educational)",
+      "concept": "A seizure-in-pregnancy drill sequencing fictional stabilization steps for synthetic scenarios, scoring order accuracy. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "steps": "stabilization steps",
+        "signs": "warning signs"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cord-prolapse-trainer",
+      "name": "Cord Prolapse Trainer (Educational)",
+      "concept": "An obstetric-emergency drill sequencing fictional actions for synthetic cord-prolapse scenarios, scoring priority order. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "actions": "fictional actions",
+        "priorities": "priority ranks"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in obstetrics training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "breech-trainer",
+      "name": "Breech Trainer (Educational)",
+      "concept": "A breech drill classifying synthetic presentations and scoring fictional management choices, with explanations. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "types": "breech types",
+        "choices": "management choices"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "operative-delivery-trainer",
+      "name": "Operative Delivery Trainer (Educational)",
+      "concept": "An operative-delivery drill classifying synthetic indications and scoring fictional instrument choices, with explanations. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "indications": "indication list",
+        "instruments": "instrument types"
+      },
+      "data_idea": "A seeded RNG creates cases.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "csection-trainer",
+      "name": "C-Section Trainer (Educational)",
+      "concept": "A cesarean drill classifying synthetic indications into fictional urgency categories, demonstrating demo decision-to-incision concepts. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "categories": "urgency categories",
+        "indications": "indication list"
+      },
+      "data_idea": "A seeded RNG builds cases.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vbac-trainer",
+      "name": "VBAC Trainer (Educational)",
+      "concept": "A trial-of-labor drill scoring synthetic candidates on fictional VBAC predictors, demonstrating demo counseling concepts. Candidates are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "predictors": "fictional predictors",
+        "bands": "success bands"
+      },
+      "data_idea": "A seeded RNG creates candidate profiles.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "decision_tree"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fetal-monitor-trainer",
+      "name": "Fetal Monitor Trainer (Educational)",
+      "concept": "A tracing drill classifying synthetic fetal heart tracings into fictional categories, with explanations. Tracings are invented and educational.",
+      "key_params": {
+        "tracings": "synthetic tracing count",
+        "categories": "tracing categories",
+        "features": "tracing features"
+      },
+      "data_idea": "A seeded RNG synthesizes tracings per category.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "biophysical-trainer",
+      "name": "Biophysical Profile Trainer (Educational)",
+      "concept": "A fetal-assessment drill scoring synthetic ultrasound parameters on fictional profile components, with demo interpretation. Parameters are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "components": "profile components",
+        "bands": "interpretation bands"
+      },
+      "data_idea": "A seeded RNG creates parameter sets.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nonstress-trainer",
+      "name": "Nonstress Test Trainer (Educational)",
+      "concept": "A fetal-testing drill classifying synthetic nonstress tracings into fictional reactive categories, with explanations. Tracings are invented and educational.",
+      "key_params": {
+        "tracings": "synthetic tracing count",
+        "categories": "test categories",
+        "features": "tracing features"
+      },
+      "data_idea": "A seeded RNG synthesizes tracings.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "amnio-trainer",
+      "name": "Amniotic Fluid Trainer (Educational)",
+      "concept": "A fluid-assessment drill interpreting synthetic ultrasound measurements with fictional cutoffs, demonstrating demo categories. Measurements are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "measures": "fluid measures",
+        "bands": "interpretation bands"
+      },
+      "data_idea": "A seeded RNG generates measurements.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "growth-restriction-trainer",
+      "name": "Growth Restriction Trainer (Educational)",
+      "concept": "A fetal-growth drill classifying synthetic estimated weights into fictional percentile bands, demonstrating demo surveillance concepts. Weights are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "bands": "percentile bands",
+        "measures": "growth measures"
+      },
+      "data_idea": "A seeded RNG creates growth profiles.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "preeclampsia-labs-trainer",
+      "name": "Preeclampsia Labs Trainer (Educational)",
+      "concept": "A labs drill interpreting synthetic preeclampsia panels with fictional severity logic, demonstrating demo escalation concepts. Panels are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "panels": "lab panels",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG generates panels.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hellp-trainer",
+      "name": "HELLP Trainer (Educational)",
+      "concept": "A HELLP drill recognizing synthetic lab patterns with fictional classification logic, demonstrating demo urgency concepts. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "lab patterns",
+        "classes": "pattern classes"
+      },
+      "data_idea": "A seeded RNG creates lab patterns.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "placenta-trainer",
+      "name": "Placenta Trainer (Educational)",
+      "concept": "A placental drill classifying synthetic presentations into fictional placental conditions, with explanations. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "conditions": "placental conditions",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "preterm-trainer",
+      "name": "Preterm Labor Trainer (Educational)",
+      "concept": "A preterm drill classifying synthetic presentations with fictional assessment logic, demonstrating demo management concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "assessments": "assessment items",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "prom-trainer",
+      "name": "PROM Trainer (Educational)",
+      "concept": "A membranes drill classifying synthetic rupture scenarios with fictional testing logic, demonstrating demo management concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "tests": "fictional tests",
+        "bands": "management bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "chorio-trainer",
+      "name": "Chorioamnionitis Trainer (Educational)",
+      "concept": "An infection drill recognizing synthetic intraamniotic-infection scenarios with fictional criteria, demonstrating demo urgency concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "criteria": "demo criteria",
+        "signs": "clinical signs"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gbs-trainer",
+      "name": "GBS Trainer (Educational)",
+      "concept": "A strep drill applying fictional screening logic to synthetic pregnancies, demonstrating demo prophylaxis concepts. Pregnancies are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "screens": "screen results",
+        "bands": "management bands"
+      },
+      "data_idea": "A seeded RNG generates screen results.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rh-trainer",
+      "name": "Rh Trainer (Educational)",
+      "concept": "An Rh drill applying fictional blood-type logic to synthetic pregnancies, demonstrating demo immunoglobulin concepts. Pregnancies are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "types": "blood types",
+        "bands": "management bands"
+      },
+      "data_idea": "A seeded RNG creates blood-type pairs.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "anemia-preg-trainer",
+      "name": "Pregnancy Anemia Trainer (Educational)",
+      "concept": "An anemia-in-pregnancy drill interpreting synthetic hemoglobin trends with fictional trimester bands, demonstrating demo management concepts. Trends are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "trimesters": "trimesters",
+        "bands": "hemoglobin bands"
+      },
+      "data_idea": "A seeded RNG generates hemoglobin series.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hyperemesis-trainer",
+      "name": "Hyperemesis Trainer (Educational)",
+      "concept": "A nausea drill classifying synthetic pregnancy nausea scenarios into fictional severity bands, demonstrating demo care concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "bands": "severity bands",
+        "signs": "clinical signs"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ectopic-trainer",
+      "name": "Ectopic Trainer (Educational)",
+      "concept": "An ectopic drill recognizing synthetic early-pregnancy scenarios with fictional risk logic, demonstrating demo urgency concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "findings": "clinical findings",
+        "bands": "urgency bands"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "miscarriage-trainer",
+      "name": "Miscarriage Trainer (Educational)",
+      "concept": "A loss drill classifying synthetic early-pregnancy scenarios into fictional types, demonstrating demo counseling concepts framed sensitively. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "types": "loss types",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "molar-trainer",
+      "name": "Molar Pregnancy Trainer (Educational)",
+      "concept": "A molar drill recognizing synthetic early-pregnancy patterns with fictional classification logic, demonstrating demo follow-up concepts. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "clinical patterns",
+        "classes": "pattern classes"
+      },
+      "data_idea": "A seeded RNG creates patterns.",
+      "real_world_use": "Used in obstetrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "fibroid-trainer",
+      "name": "Fibroid Trainer (Educational)",
+      "concept": "A fibroid drill classifying synthetic presentations with fictional size and symptom logic, demonstrating demo management concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "sizes": "fibroid sizes",
+        "symptoms": "symptom list"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in gynecology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "endometriosis-trainer",
+      "name": "Endometriosis Trainer (Educational)",
+      "concept": "An endometriosis drill classifying synthetic pain patterns with fictional staging logic, demonstrating demo care concepts. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "pain patterns",
+        "stages": "demo stages"
+      },
+      "data_idea": "A seeded RNG creates pain patterns.",
+      "real_world_use": "Used in gynecology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pcos-trainer",
+      "name": "PCOS Trainer (Educational)",
+      "concept": "A PCOS drill applying fictional Rotterdam-style criteria to synthetic cases, demonstrating demo classification concepts. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "criteria": "demo criteria",
+        "features": "clinical features"
+      },
+      "data_idea": "A seeded RNG builds cases.",
+      "real_world_use": "Used in gynecology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "menopause-trainer",
+      "name": "Menopause Trainer (Educational)",
+      "concept": "A menopause drill classifying synthetic symptom patterns into fictional stages, demonstrating demo counseling concepts. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "stages": "menopause stages",
+        "symptoms": "symptom list"
+      },
+      "data_idea": "A seeded RNG creates symptom patterns.",
+      "real_world_use": "Used in gynecology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "contraception-trainer",
+      "name": "Contraception Trainer (Educational)",
+      "concept": "A contraception drill matching synthetic patient profiles to fictional method categories, demonstrating demo counseling concepts. Profiles are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "methods": "method categories",
+        "profiles": "patient profiles"
+      },
+      "data_idea": "A seeded RNG builds profiles.",
+      "real_world_use": "Used in family-planning education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "infertility-trainer",
+      "name": "Infertility Trainer (Educational)",
+      "concept": "An infertility drill classifying synthetic workup findings with fictional logic, demonstrating demo next-step concepts. Findings are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "findings": "workup findings",
+        "bands": "next-step bands"
+      },
+      "data_idea": "A seeded RNG creates workup findings.",
+      "real_world_use": "Used in reproductive education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pap-trainer",
+      "name": "Pap Trainer (Educational)",
+      "concept": "A cervical-screening drill classifying synthetic result categories with fictional management logic, demonstrating demo follow-up concepts. Results are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "categories": "result categories",
+        "bands": "follow-up bands"
+      },
+      "data_idea": "A seeded RNG generates result categories.",
+      "real_world_use": "Used in gynecology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sti-trainer",
+      "name": "STI Trainer (Educational)",
+      "concept": "An STI drill classifying synthetic presentations with fictional syndrome logic, demonstrating demo management concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "syndromes": "syndrome categories",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in sexual-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "uti-women-trainer",
+      "name": "Women's UTI Trainer (Educational)",
+      "concept": "A urinary drill classifying synthetic presentations into fictional uncomplicated versus complicated logic, with demo concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "classes": "UTI classes",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in primary-care education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bph-trainer",
+      "name": "BPH Trainer (Educational)",
+      "concept": "A prostate drill scoring synthetic symptom questionnaires with fictional bands, demonstrating demo management concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "questionnaire items",
+        "bands": "symptom bands"
+      },
+      "data_idea": "A seeded RNG generates responses.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "kidney-stone-trainer",
+      "name": "Kidney Stone Trainer (Educational)",
+      "concept": "A stone drill classifying synthetic colic scenarios with fictional size logic, demonstrating demo management concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "sizes": "stone sizes",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "uti-men-trainer",
+      "name": "Men's UTI Trainer (Educational)",
+      "concept": "A urinary drill classifying synthetic male presentations with fictional complicated logic, demonstrating demo workup concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "findings": "clinical findings",
+        "bands": "workup bands"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in primary-care education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "prostatitis-trainer",
+      "name": "Prostatitis Trainer (Educational)",
+      "concept": "A prostate drill classifying synthetic presentations into fictional prostatitis categories, with demo concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "categories": "prostatitis categories",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hematuria-trainer",
+      "name": "Hematuria Trainer (Educational)",
+      "concept": "A hematuria drill classifying synthetic presentations with fictional risk logic, demonstrating demo workup concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "bands": "risk bands",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "incontinence-trainer",
+      "name": "Incontinence Trainer (Educational)",
+      "concept": "A bladder drill classifying synthetic incontinence patterns into fictional types, demonstrating demo management concepts. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "types": "incontinence types",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds patterns.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ed-trainer",
+      "name": "Erectile Dysfunction Trainer (Educational)",
+      "concept": "A questionnaire drill scoring synthetic responses with fictional severity bands, demonstrating demo counseling concepts framed sensitively. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "questionnaire items",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG generates responses.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "testicular-trainer",
+      "name": "Testicular Trainer (Educational)",
+      "concept": "A scrotal drill classifying synthetic acute presentations with fictional urgency logic, demonstrating demo concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "bands": "urgency bands",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "vasectomy-trainer",
+      "name": "Vasectomy Trainer (Educational)",
+      "concept": "A counseling drill covering fictional vasectomy concepts with synthetic Q&A scenarios, demonstrating demo counseling points. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "topics": "counseling topics",
+        "questions": "patient questions"
+      },
+      "data_idea": "A seeded RNG builds Q&A scenarios.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "circumcision-trainer",
+      "name": "Circumcision Trainer (Educational)",
+      "concept": "A counseling drill covering fictional circumcision concepts with synthetic Q&A scenarios. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "topics": "counseling topics",
+        "questions": "patient questions"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hydrocele-trainer",
+      "name": "Hydrocele Trainer (Educational)",
+      "concept": "A scrotal drill classifying synthetic presentations with fictional logic, demonstrating demo management concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "findings": "clinical findings",
+        "bands": "management bands"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "varicocele-trainer",
+      "name": "Varicocele Trainer (Educational)",
+      "concept": "A scrotal drill classifying synthetic presentations with fictional grading logic, demonstrating demo concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "grades": "demo grades",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "phimosis-trainer",
+      "name": "Phimosis Trainer (Educational)",
+      "concept": "A foreskin drill classifying synthetic presentations with fictional logic, demonstrating demo management concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "findings": "clinical findings",
+        "bands": "management bands"
+      },
+      "data_idea": "A seeded RNG builds presentations.",
+      "real_world_use": "Used in urology education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "uti-elder-trainer",
+      "name": "Elder UTI Trainer (Educational)",
+      "concept": "A geriatric urinary drill classifying synthetic presentations with fictional atypical-presentation logic, demonstrating demo concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "findings": "clinical findings",
+        "bands": "assessment bands"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "delirium-elder-trainer",
+      "name": "Elder Delirium Trainer (Educational)",
+      "concept": "A geriatric delirium drill applying fictional screen items to synthetic cases, demonstrating the demo rule. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "screen items",
+        "rule": "decision rule"
+      },
+      "data_idea": "A seeded RNG builds case features.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dementia-elder-trainer",
+      "name": "Elder Dementia Trainer (Educational)",
+      "concept": "A geriatric cognition drill scoring synthetic brief tests with fictional cutoffs, demonstrating demo concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "test items",
+        "bands": "interpretation bands"
+      },
+      "data_idea": "A seeded RNG creates responses.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "polypharmacy-trainer",
+      "name": "Polypharmacy Trainer (Educational)",
+      "concept": "A medication-review drill flagging synthetic regimens with fictional interaction and duplication logic, demonstrating demo review concepts. Regimens are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "drugs": "fictional drug list",
+        "flags": "review flags"
+      },
+      "data_idea": "A seeded RNG builds regimens.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "beers-trainer",
+      "name": "Beers Criteria Trainer (Educational)",
+      "concept": "A potentially-inappropriate-medication drill flagging synthetic regimens with fictional criteria logic, demonstrating demo concepts. Regimens are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "drugs": "fictional drug list",
+        "criteria": "demo criteria"
+      },
+      "data_idea": "A seeded RNG creates regimens.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "falls-elder-trainer",
+      "name": "Elder Falls Trainer (Educational)",
+      "concept": "A geriatric falls drill scoring synthetic patients on fictional risk items, demonstrating demo prevention concepts. Patients are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "risk items",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG assigns risk items.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "osteoporosis-trainer",
+      "name": "Osteoporosis Trainer (Educational)",
+      "concept": "A bone-health drill interpreting synthetic density scores with fictional categories, demonstrating demo concepts. Scores are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "scores": "density scores",
+        "bands": "interpretation bands"
+      },
+      "data_idea": "A seeded RNG generates scores.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "frailty-trainer",
+      "name": "Frailty Trainer (Educational)",
+      "concept": "A frailty drill scoring synthetic patients on fictional frailty items, demonstrating demo phenotype concepts. Patients are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "frailty items",
+        "bands": "frailty bands"
+      },
+      "data_idea": "A seeded RNG builds item profiles.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pressure-elder-trainer",
+      "name": "Elder Pressure Trainer (Educational)",
+      "concept": "A geriatric skin drill scoring synthetic patients on fictional risk subscales, demonstrating demo prevention concepts. Patients are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "subscales": "risk subscales",
+        "bands": "risk bands"
+      },
+      "data_idea": "A seeded RNG creates profiles.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "nutrition-elder-trainer",
+      "name": "Elder Nutrition Trainer (Educational)",
+      "concept": "A geriatric nutrition drill scoring synthetic screens with fictional bands, demonstrating demo referral concepts. Screens are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "screen items",
+        "bands": "nutrition bands"
+      },
+      "data_idea": "A seeded RNG generates screens.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "depression-elder-trainer",
+      "name": "Elder Depression Trainer (Educational)",
+      "concept": "A geriatric mood drill scoring synthetic questionnaire responses with fictional bands, demonstrating demo follow-up concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "questionnaire items",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG creates responses.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hearing-elder-trainer",
+      "name": "Elder Hearing Trainer (Educational)",
+      "concept": "A hearing drill interpreting synthetic whisper-test style results with fictional logic, demonstrating demo referral concepts. Results are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "tests": "hearing tests",
+        "bands": "referral bands"
+      },
+      "data_idea": "A seeded RNG generates results.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vision-elder-trainer",
+      "name": "Elder Vision Trainer (Educational)",
+      "concept": "A vision drill interpreting synthetic acuity results with fictional bands, demonstrating demo referral concepts. Results are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "tests": "vision tests",
+        "bands": "referral bands"
+      },
+      "data_idea": "A seeded RNG creates results.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gait-elder-trainer",
+      "name": "Elder Gait Trainer (Educational)",
+      "concept": "A mobility drill timing synthetic get-up-and-go tests with fictional bands, demonstrating demo concepts. Tests are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "tests": "mobility tests",
+        "bands": "performance bands"
+      },
+      "data_idea": "A seeded RNG generates test times.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "adls-trainer",
+      "name": "ADL Trainer (Educational)",
+      "concept": "A function drill scoring synthetic daily-living assessments with fictional independence bands, demonstrating demo care-planning concepts. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "adls": "daily activities",
+        "bands": "independence bands"
+      },
+      "data_idea": "A seeded RNG creates assessments.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "iadls-trainer",
+      "name": "IADL Trainer (Educational)",
+      "concept": "An instrumental-function drill scoring synthetic assessments with fictional bands, demonstrating demo concepts. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "iadls": "instrumental activities",
+        "bands": "independence bands"
+      },
+      "data_idea": "A seeded RNG builds assessments.",
+      "real_world_use": "Used in geriatrics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "caregiver-trainer",
+      "name": "Caregiver Trainer (Educational)",
+      "concept": "A caregiver drill scoring synthetic strain questionnaires with fictional bands, demonstrating demo support concepts. Responses are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "questionnaire items",
+        "bands": "strain bands"
+      },
+      "data_idea": "A seeded RNG generates responses.",
+      "real_world_use": "Used in caregiver education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hospice-trainer",
+      "name": "Hospice Trainer (Educational)",
+      "concept": "A hospice drill classifying synthetic eligibility scenarios with fictional criteria logic, demonstrating demo concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "criteria": "demo criteria",
+        "bands": "eligibility bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "palliative-trainer",
+      "name": "Palliative Trainer (Educational)",
+      "concept": "A palliative drill scoring synthetic symptom assessments with fictional bands, demonstrating demo management concepts. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "symptoms": "symptom list",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG creates assessments.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pain-palliative-trainer",
+      "name": "Palliative Pain Trainer (Educational)",
+      "concept": "A palliative pain drill titrating fictional doses for synthetic pain scenarios with demo math, demonstrating concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "doses": "fictional doses",
+        "bands": "pain bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "decision_tree"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dyspnea-trainer",
+      "name": "Dyspnea Trainer (Educational)",
+      "concept": "A breathlessness drill scoring synthetic assessments with fictional bands, demonstrating demo management concepts. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "assessment items",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG creates assessments.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "nausea-palliative-trainer",
+      "name": "Palliative Nausea Trainer (Educational)",
+      "concept": "A nausea drill classifying synthetic causes with fictional logic, demonstrating demo management concepts. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "causes": "nausea causes",
+        "bands": "management bands"
+      },
+      "data_idea": "A seeded RNG builds cases.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "constipation-trainer",
+      "name": "Constipation Trainer (Educational)",
+      "concept": "A bowel drill classifying synthetic assessments with fictional logic, demonstrating demo management concepts. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "assessment items",
+        "bands": "management bands"
+      },
+      "data_idea": "A seeded RNG creates assessments.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "delirium-palliative-trainer",
+      "name": "Palliative Delirium Trainer (Educational)",
+      "concept": "A palliative delirium drill applying fictional screen items to synthetic cases, demonstrating the demo rule. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "screen items",
+        "rule": "decision rule"
+      },
+      "data_idea": "A seeded RNG builds case features.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "anxiety-palliative-trainer",
+      "name": "Palliative Anxiety Trainer (Educational)",
+      "concept": "A palliative anxiety drill scoring synthetic assessments with fictional bands, demonstrating demo concepts. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "assessment items",
+        "bands": "severity bands"
+      },
+      "data_idea": "A seeded RNG creates assessments.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "grief-trainer",
+      "name": "Grief Trainer (Educational)",
+      "concept": "A grief drill classifying synthetic bereavement scenarios with fictional logic, demonstrating demo support concepts framed sensitively. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "patterns": "grief patterns",
+        "bands": "support bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in bereavement education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "goals-of-care-trainer",
+      "name": "Goals of Care Trainer (Educational)",
+      "concept": "A conversation drill presenting synthetic goals-of-care scenarios with fictional discussion frameworks, scoring learner choices. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "frameworks": "discussion frameworks",
+        "choices": "learner choices"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in palliative communication training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "chatbot"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "code-status-trainer",
+      "name": "Code Status Trainer (Educational)",
+      "concept": "A code-status drill classifying synthetic scenarios with fictional logic, demonstrating demo documentation concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "statuses": "code statuses",
+        "bands": "documentation bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in palliative education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "advance-care-trainer",
+      "name": "Advance Care Trainer (Educational)",
+      "concept": "An advance-directive drill covering fictional document concepts with synthetic Q&A scenarios. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "documents": "document types",
+        "questions": "patient questions"
+      },
+      "data_idea": "A seeded RNG creates Q&A scenarios.",
+      "real_world_use": "Used in advance-care education.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "surrogate-trainer",
+      "name": "Surrogate Trainer (Educational)",
+      "concept": "A decision-maker drill classifying synthetic scenarios with fictional hierarchy logic, demonstrating demo concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "hierarchy": "decision-maker hierarchy",
+        "bands": "scenario bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in ethics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ethics-trainer",
+      "name": "Clinical Ethics Trainer (Educational)",
+      "concept": "An ethics drill presenting synthetic dilemmas with fictional principle frameworks, scoring learner analyses. Dilemmas are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "principles": "ethical principles",
+        "dilemmas": "dilemma types"
+      },
+      "data_idea": "A seeded RNG assembles dilemmas.",
+      "real_world_use": "Used in clinical-ethics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "chatbot"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "consent-trainer",
+      "name": "Consent Trainer (Educational)",
+      "concept": "A consent drill covering fictional informed-consent elements with synthetic scenarios, scoring completeness. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "elements": "consent elements",
+        "bands": "completeness bands"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in ethics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "capacity-trainer",
+      "name": "Decision Capacity Trainer (Educational)",
+      "concept": "A capacity drill applying fictional capacity elements to synthetic scenarios, demonstrating demo assessment concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "elements": "capacity elements",
+        "bands": "assessment bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in ethics education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "restraint-trainer",
+      "name": "Restraint Trainer (Educational)",
+      "concept": "A restraint drill covering fictional least-restrictive concepts with synthetic scenarios, scoring choices. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "alternatives": "restraint alternatives",
+        "bands": "choice bands"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in behavioral-health training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "seclusion-trainer",
+      "name": "Seclusion Trainer (Educational)",
+      "concept": "A seclusion drill covering fictional de-escalation concepts with synthetic scenarios, scoring choices. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "techniques": "de-escalation techniques",
+        "bands": "choice bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in behavioral-health training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "elopement-trainer",
+      "name": "Elopement Trainer (Educational)",
+      "concept": "An elopement drill classifying synthetic risk scenarios with fictional logic, demonstrating demo prevention concepts. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "risks": "risk factors",
+        "bands": "prevention bands"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in behavioral-health training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ligature-trainer",
+      "name": "Ligature Safety Trainer (Educational)",
+      "concept": "An environment drill identifying fictional ligature risks in synthetic room descriptions, scoring identification accuracy. Rooms are fictional and educational.",
+      "key_params": {
+        "rooms": "synthetic room count",
+        "risks": "risk types",
+        "bands": "accuracy bands"
+      },
+      "data_idea": "A seeded RNG builds room descriptions.",
+      "real_world_use": "Used in behavioral-health facility training.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "observation-trainer",
+      "name": "Observation Trainer (Educational)",
+      "concept": "A patient-observation drill assigning fictional observation levels to synthetic scenarios, with explanations. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "levels": "observation levels",
+        "bands": "assignment bands"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in behavioral-health training.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "milieu-trainer",
+      "name": "Milieu Trainer (Educational)",
+      "concept": "A unit-culture drill presenting synthetic milieu scenarios with fictional therapeutic concepts, scoring learner responses. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "concepts": "therapeutic concepts",
+        "bands": "response bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in behavioral-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "group-therapy-trainer",
+      "name": "Group Therapy Trainer (Educational)",
+      "concept": "A group-facilitation drill presenting synthetic group scenarios with fictional intervention concepts, scoring choices. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "interventions": "group interventions",
+        "bands": "choice bands"
+      },
+      "data_idea": "A seeded RNG creates scenarios.",
+      "real_world_use": "Used in behavioral-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cbt-trainer",
+      "name": "CBT Trainer (Educational)",
+      "concept": "A cognitive-behavioral drill identifying fictional thought distortions in synthetic thought records, with explanations. Records are fictional and educational.",
+      "key_params": {
+        "records": "synthetic record count",
+        "distortions": "distortion types",
+        "bands": "accuracy bands"
+      },
+      "data_idea": "A seeded RNG builds thought records.",
+      "real_world_use": "Used in therapy training.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dbt-trainer",
+      "name": "DBT Trainer (Educational)",
+      "concept": "A dialectical-behavior drill matching synthetic situations to fictional DBT skills, with explanations. Situations are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "skills": "DBT skills",
+        "bands": "match bands"
+      },
+      "data_idea": "A seeded RNG creates situations.",
+      "real_world_use": "Used in therapy training.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "decision_tree"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "motivational-interviewing-trainer",
+      "name": "Motivational Interviewing Trainer (Educational)",
+      "concept": "An MI drill classifying synthetic clinician statements into fictional MI categories, with explanations. Statements are fictional and educational.",
+      "key_params": {
+        "statements": "synthetic statement count",
+        "categories": "MI categories",
+        "bands": "accuracy bands"
+      },
+      "data_idea": "A seeded RNG generates statements.",
+      "real_world_use": "Used in counseling training.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "trauma-trainer",
+      "name": "Trauma-Informed Trainer (Educational)",
+      "concept": "A trauma-informed drill presenting synthetic scenarios with fictional principle concepts, scoring learner responses. Scenarios are fictional and educational.",
+      "key_params": {
+        "scenarios": "synthetic scenario count",
+        "principles": "trauma principles",
+        "bands": "response bands"
+      },
+      "data_idea": "A seeded RNG builds scenarios.",
+      "real_world_use": "Used in behavioral-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "decision_tree"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "play-therapy-trainer",
+      "name": "Play Therapy Trainer (Educational)",
+      "concept": "A play-therapy drill matching synthetic child behaviors to fictional play-therapy concepts, with explanations. Behaviors are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "behaviors": "child behaviors",
+        "concepts": "therapy concepts"
+      },
+      "data_idea": "A seeded RNG creates behaviors.",
+      "real_world_use": "Used in child-therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "art-therapy-trainer",
+      "name": "Art Therapy Trainer (Educational)",
+      "concept": "An art-therapy drill matching synthetic creations to fictional interpretive concepts, with explanations framed carefully. Creations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "creations": "art descriptions",
+        "concepts": "therapy concepts"
+      },
+      "data_idea": "A seeded RNG generates art descriptions.",
+      "real_world_use": "Used in therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "music-therapy-trainer",
+      "name": "Music Therapy Trainer (Educational)",
+      "concept": "A music-therapy drill matching synthetic goals to fictional music interventions, with explanations. Goals are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "goals": "therapy goals",
+        "interventions": "music interventions"
+      },
+      "data_idea": "A seeded RNG creates goals.",
+      "real_world_use": "Used in therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ot-trainer",
+      "name": "OT Trainer (Educational)",
+      "concept": "An occupational-therapy drill matching synthetic functional goals to fictional interventions, with explanations. Goals are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "goals": "functional goals",
+        "interventions": "OT interventions"
+      },
+      "data_idea": "A seeded RNG builds goals.",
+      "real_world_use": "Used in OT education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pt-trainer",
+      "name": "PT Trainer (Educational)",
+      "concept": "A physical-therapy drill matching synthetic mobility goals to fictional exercises, with explanations. Goals are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "goals": "mobility goals",
+        "exercises": "PT exercises"
+      },
+      "data_idea": "A seeded RNG creates goals.",
+      "real_world_use": "Used in PT education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "slp-trainer",
+      "name": "Speech Therapy Trainer (Educational)",
+      "concept": "A speech-therapy drill matching synthetic communication goals to fictional interventions, with explanations. Goals are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "goals": "communication goals",
+        "interventions": "SLP interventions"
+      },
+      "data_idea": "A seeded RNG builds goals.",
+      "real_world_use": "Used in SLP education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "feeding-therapy-trainer",
+      "name": "Feeding Therapy Trainer (Educational)",
+      "concept": "A feeding drill classifying synthetic feeding difficulties with fictional logic, demonstrating demo intervention concepts. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "difficulties": "feeding difficulties",
+        "bands": "intervention bands"
+      },
+      "data_idea": "A seeded RNG creates cases.",
+      "real_world_use": "Used in pediatric therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sensory-trainer",
+      "name": "Sensory Trainer (Educational)",
+      "concept": "A sensory-processing drill matching synthetic behaviors to fictional sensory patterns, with explanations. Behaviors are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "behaviors": "sensory behaviors",
+        "patterns": "sensory patterns"
+      },
+      "data_idea": "A seeded RNG generates behaviors.",
+      "real_world_use": "Used in OT education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "splint-ot-trainer",
+      "name": "OT Splinting Trainer (Educational)",
+      "concept": "A splinting drill matching synthetic hand conditions to fictional orthosis types, with explanations. Conditions are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "conditions": "hand conditions",
+        "orthoses": "orthosis types"
+      },
+      "data_idea": "A seeded RNG builds cases.",
+      "real_world_use": "Used in OT education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "wheelchair-trainer",
+      "name": "Wheelchair Trainer (Educational)",
+      "concept": "A seating drill matching synthetic mobility needs to fictional wheelchair features, with explanations. Needs are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "needs": "mobility needs",
+        "features": "chair features"
+      },
+      "data_idea": "A seeded RNG creates needs.",
+      "real_world_use": "Used in rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "prosthetic-ot-trainer",
+      "name": "Prosthetic Trainer (Educational)",
+      "concept": "A prosthetic drill matching synthetic amputation levels to fictional device categories, with explanations. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "levels": "amputation levels",
+        "devices": "device categories"
+      },
+      "data_idea": "A seeded RNG builds cases.",
+      "real_world_use": "Used in rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "adl-ot-trainer",
+      "name": "OT ADL Trainer (Educational)",
+      "concept": "An ADL drill grading synthetic task performances with fictional assistance levels, demonstrating demo documentation concepts. Performances are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "tasks": "ADL tasks",
+        "levels": "assistance levels"
+      },
+      "data_idea": "A seeded RNG creates performances.",
+      "real_world_use": "Used in OT education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cognition-ot-trainer",
+      "name": "OT Cognition Trainer (Educational)",
+      "concept": "A cognitive-rehab drill matching synthetic deficits to fictional OT strategies, with explanations. Deficits are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "deficits": "cognitive deficits",
+        "strategies": "OT strategies"
+      },
+      "data_idea": "A seeded RNG builds deficits.",
+      "real_world_use": "Used in OT education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "chatbot"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vision-ot-trainer",
+      "name": "OT Vision Trainer (Educational)",
+      "concept": "A low-vision drill matching synthetic visual needs to fictional OT adaptations, with explanations. Needs are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "needs": "visual needs",
+        "adaptations": "OT adaptations"
+      },
+      "data_idea": "A seeded RNG creates needs.",
+      "real_world_use": "Used in OT education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "driving-ot-trainer",
+      "name": "Driving Rehab Trainer (Educational)",
+      "concept": "A driving drill scoring synthetic fitness-to-drive assessments with fictional logic, demonstrating demo concepts. Assessments are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "items": "assessment items",
+        "bands": "fitness bands"
+      },
+      "data_idea": "A seeded RNG generates assessments.",
+      "real_world_use": "Used in OT driver-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hand-therapy-trainer",
+      "name": "Hand Therapy Trainer (Educational)",
+      "concept": "A hand drill matching synthetic injuries to fictional therapy protocols, with explanations. Injuries are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "injuries": "hand injuries",
+        "protocols": "therapy protocols"
+      },
+      "data_idea": "A seeded RNG builds injuries.",
+      "real_world_use": "Used in hand-therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lymphedema-trainer",
+      "name": "Lymphedema Trainer (Educational)",
+      "concept": "A lymphedema drill staging synthetic presentations with fictional logic, demonstrating demo management concepts. Presentations are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "stages": "lymphedema stages",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG creates presentations.",
+      "real_world_use": "Used in therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "wound-ot-trainer",
+      "name": "Wound Care Trainer (Educational)",
+      "concept": "A wound drill classifying synthetic wounds with fictional tissue and size logic, demonstrating demo care concepts. Wounds are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "tissues": "tissue types",
+        "bands": "care bands"
+      },
+      "data_idea": "A seeded RNG builds wounds.",
+      "real_world_use": "Used in wound-care education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "burn-ot-trainer",
+      "name": "Burn Rehab Trainer (Educational)",
+      "concept": "A burn-rehab drill matching synthetic burn locations to fictional therapy priorities, with explanations. Burns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "locations": "burn locations",
+        "priorities": "therapy priorities"
+      },
+      "data_idea": "A seeded RNG creates burns.",
+      "real_world_use": "Used in burn-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cardiac-rehab-trainer",
+      "name": "Cardiac Rehab Trainer (Educational)",
+      "concept": "A cardiac-rehab drill stratifying synthetic patients into fictional exercise-risk bands, demonstrating demo concepts. Patients are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "bands": "risk bands",
+        "findings": "clinical findings"
+      },
+      "data_idea": "A seeded RNG builds cases.",
+      "real_world_use": "Used in cardiac-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pulmonary-rehab-trainer",
+      "name": "Pulmonary Rehab Trainer (Educational)",
+      "concept": "A pulmonary-rehab drill matching synthetic goals to fictional exercise prescriptions, with explanations. Goals are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "goals": "rehab goals",
+        "prescriptions": "exercise prescriptions"
+      },
+      "data_idea": "A seeded RNG creates goals.",
+      "real_world_use": "Used in pulmonary-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "neuro-rehab-trainer",
+      "name": "Neuro Rehab Trainer (Educational)",
+      "concept": "A neuro-rehab drill matching synthetic deficits to fictional therapy approaches, with explanations. Deficits are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "deficits": "neuro deficits",
+        "approaches": "therapy approaches"
+      },
+      "data_idea": "A seeded RNG builds deficits.",
+      "real_world_use": "Used in neuro-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "chatbot"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stroke-rehab-trainer",
+      "name": "Stroke Rehab Trainer (Educational)",
+      "concept": "A stroke-rehab drill staging synthetic recovery with fictional scales, demonstrating demo goal concepts. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "stages": "recovery stages",
+        "goals": "rehab goals"
+      },
+      "data_idea": "A seeded RNG creates cases.",
+      "real_world_use": "Used in stroke-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sci-rehab-trainer",
+      "name": "Spinal Cord Rehab Trainer (Educational)",
+      "concept": "An SCI drill classifying synthetic injury levels with fictional logic, demonstrating demo functional-expectation concepts. Injuries are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "levels": "injury levels",
+        "expectations": "functional expectations"
+      },
+      "data_idea": "A seeded RNG builds injuries.",
+      "real_world_use": "Used in SCI-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "tbi-rehab-trainer",
+      "name": "TBI Rehab Trainer (Educational)",
+      "concept": "A brain-injury drill staging synthetic recovery with fictional scales, demonstrating demo goal concepts. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "stages": "recovery stages",
+        "goals": "rehab goals"
+      },
+      "data_idea": "A seeded RNG creates cases.",
+      "real_world_use": "Used in brain-injury education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "amputee-rehab-trainer",
+      "name": "Amputee Rehab Trainer (Educational)",
+      "concept": "An amputee drill sequencing fictional rehab phases for synthetic cases, with explanations. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "phases": "rehab phases",
+        "levels": "amputation levels"
+      },
+      "data_idea": "A seeded RNG builds cases.",
+      "real_world_use": "Used in amputee-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "geriatric-rehab-trainer",
+      "name": "Geriatric Rehab Trainer (Educational)",
+      "concept": "A geriatric-rehab drill matching synthetic goals to fictional therapy doses, with explanations. Goals are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "goals": "rehab goals",
+        "doses": "therapy doses"
+      },
+      "data_idea": "A seeded RNG creates goals.",
+      "real_world_use": "Used in geriatric-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pediatric-rehab-trainer",
+      "name": "Pediatric Rehab Trainer (Educational)",
+      "concept": "A pediatric-rehab drill matching synthetic developmental goals to fictional play-based interventions, with explanations. Goals are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "goals": "developmental goals",
+        "interventions": "play interventions"
+      },
+      "data_idea": "A seeded RNG builds goals.",
+      "real_world_use": "Used in pediatric-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sports-rehab-trainer",
+      "name": "Sports Rehab Trainer (Educational)",
+      "concept": "A sports-rehab drill sequencing fictional return-to-play phases for synthetic injuries, with explanations. Injuries are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "injuries": "sports injuries",
+        "phases": "return phases"
+      },
+      "data_idea": "A seeded RNG creates injuries.",
+      "real_world_use": "Used in sports-medicine education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "work-rehab-trainer",
+      "name": "Work Rehab Trainer (Educational)",
+      "concept": "A work-conditioning drill matching synthetic job demands to fictional therapy tasks, with explanations. Demands are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "demands": "job demands",
+        "tasks": "therapy tasks"
+      },
+      "data_idea": "A seeded RNG builds demands.",
+      "real_world_use": "Used in occupational-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "aquatic-rehab-trainer",
+      "name": "Aquatic Rehab Trainer (Educational)",
+      "concept": "An aquatic-therapy drill matching synthetic conditions to fictional pool interventions, with explanations. Conditions are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "conditions": "health conditions",
+        "interventions": "pool interventions"
+      },
+      "data_idea": "A seeded RNG creates conditions.",
+      "real_world_use": "Used in aquatic-therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vestibular-rehab-trainer",
+      "name": "Vestibular Rehab Trainer (Educational)",
+      "concept": "A vestibular drill classifying synthetic dizziness patterns with fictional logic, demonstrating demo exercise concepts. Patterns are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "patterns": "dizziness patterns",
+        "exercises": "vestibular exercises"
+      },
+      "data_idea": "A seeded RNG builds patterns.",
+      "real_world_use": "Used in vestibular-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "pelvic-rehab-trainer",
+      "name": "Pelvic Rehab Trainer (Educational)",
+      "concept": "A pelvic-floor drill matching synthetic symptoms to fictional therapy concepts, with explanations framed sensitively. Symptoms are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "symptoms": "symptom list",
+        "concepts": "therapy concepts"
+      },
+      "data_idea": "A seeded RNG creates symptoms.",
+      "real_world_use": "Used in pelvic-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "oncology-rehab-trainer",
+      "name": "Oncology Rehab Trainer (Educational)",
+      "concept": "An oncology-rehab drill matching synthetic treatment effects to fictional therapy priorities, with explanations. Effects are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "effects": "treatment effects",
+        "priorities": "therapy priorities"
+      },
+      "data_idea": "A seeded RNG builds effects.",
+      "real_world_use": "Used in oncology-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lymphedema-pt-trainer",
+      "name": "PT Lymphedema Trainer (Educational)",
+      "concept": "A lymphedema drill sequencing fictional complete-decongestive phases for synthetic cases, with explanations. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "phases": "therapy phases",
+        "stages": "lymphedema stages"
+      },
+      "data_idea": "A seeded RNG creates cases.",
+      "real_world_use": "Used in lymphedema education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "wound-pt-trainer",
+      "name": "PT Wound Trainer (Educational)",
+      "concept": "A wound drill classifying synthetic wounds with fictional logic for PT scope, demonstrating demo concepts. Wounds are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "types": "wound types",
+        "bands": "care bands"
+      },
+      "data_idea": "A seeded RNG builds wounds.",
+      "real_world_use": "Used in PT education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "icu-pt-trainer",
+      "name": "ICU PT Trainer (Educational)",
+      "concept": "An ICU-mobility drill leveling synthetic patients on a fictional mobility scale, demonstrating demo progression concepts. Patients are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "levels": "mobility levels",
+        "bands": "progression bands"
+      },
+      "data_idea": "A seeded RNG creates cases.",
+      "real_world_use": "Used in ICU-rehab education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nicu-pt-trainer",
+      "name": "NICU PT Trainer (Educational)",
+      "concept": "A neonatal-therapy drill matching synthetic developmental cues to fictional handling concepts, with explanations. Cues are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "cues": "developmental cues",
+        "concepts": "handling concepts"
+      },
+      "data_idea": "A seeded RNG generates cues.",
+      "real_world_use": "Used in NICU-therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "school-pt-trainer",
+      "name": "School PT Trainer (Educational)",
+      "concept": "A school-therapy drill matching synthetic educational needs to fictional PT services, with explanations. Needs are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "needs": "educational needs",
+        "services": "PT services"
+      },
+      "data_idea": "A seeded RNG builds needs.",
+      "real_world_use": "Used in school-therapy education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "home-pt-trainer",
+      "name": "Home PT Trainer (Educational)",
+      "concept": "A home-health drill prioritizing synthetic referrals with fictional logic, demonstrating demo visit concepts. Referrals are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "referrals": "referral types",
+        "bands": "priority bands"
+      },
+      "data_idea": "A seeded RNG creates referrals.",
+      "real_world_use": "Used in home-health education.",
+      "suggested_types": [
+        "quiz_engine",
+        "decision_tree",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "telehealth-pt-trainer",
+      "name": "Telehealth PT Trainer (Educational)",
+      "concept": "A virtual-care drill adapting fictional exercises for synthetic telehealth cases, with explanations. Cases are fictional and educational.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "exercises": "exercise list",
+        "adaptations": "telehealth adaptations"
+      },
+      "data_idea": "A seeded RNG builds cases.",
+      "real_world_use": "Used in telehealth education.",
+      "suggested_types": [
+        "quiz_engine",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    }
+  ]
+}

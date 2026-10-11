@@ -1,0 +1,58 @@
+# Design (LLD) — API Key Authentication Service: Encryption Tool
+
+## Module Breakdown
+
+| File | Purpose |
+|---|---|
+| src/main.py | CLI entrypoint (argument parsing + demo orchestration) |
+
+## Classes
+
+| Class | Description |
+|---|---|
+| StreamCipher | XOR stream cipher over a SHA-256 counter-mode keystream. |
+
+## Functions
+
+| Function | Signature | Description |
+|---|---|---|
+| derive_key | derive_key(seed, key_text) | Derive a 32-byte key from --key text, or from the seed by default. |
+| keystream | keystream(key, length) | SHA-256 counter-mode keystream of exactly `length` bytes. |
+| StreamCipher.encrypt | StreamCipher.encrypt(self, plaintext) | Encrypt bytes; returns ciphertext bytes. |
+| StreamCipher.decrypt | StreamCipher.decrypt(self, ciphertext) | Decrypt bytes; XOR is its own inverse. |
+| main | main() | Parse args; round-trip demo, or one-shot --encrypt/--decrypt. |
+
+## Data Models & Parameters
+
+The parameters below are the topic's key tunable parameters for API Key Authentication Service:
+
+| Parameter | Meaning |
+|---|---|
+| key_bytes | entropy length of issued keys |
+| scopes | permission scopes attachable to keys |
+| rotation_grace | overlap window during rotation |
+
+## Algorithm & Complexity
+
+The core of this project is XOR stream cipher with SHA-256 counter-mode keystream.
+
+- **Time complexity:** O(n) per encrypt/decrypt of n bytes
+- **Practical behavior:** performance follows the stated complexity in practice; constants depend on input shape and the Python interpreter, so the runbook recommends benchmarking with your own inputs rather than trusting a single measured number.
+
+## CLI Contract
+
+```
+cd projects/computer_science/web_development/api-key-auth-service-encryption_tool-advanced
+python3 src/main.py --help
+python3 src/main.py
+```
+Use `--encrypt TEXT` / `--decrypt HEX` for one-shot operations with --key.
+
+Every flag is documented in `--help`, including its default value and a one-line description of its effect. The default invocation (no flags) runs a complete, seeded demo end to end — that behavior is the contract other documents reference.
+
+## Extension Points
+
+- Persist state in `sqlite3` (stdlib) so results survive restarts instead of living only in memory.
+- Load parameters from a JSON config file for repeatable, shareable runs without long flag lists.
+- Add an export/serve mode (CSV/JSON export or a small local server) to integrate with other tools.
+- Add a `unittest` suite covering the core classes and asserting the seeded demo output.

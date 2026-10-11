@@ -1,0 +1,1119 @@
+{
+  "domain": "biology",
+  "subdomain": "bioinformatics",
+  "topics": [
+    {
+      "concept": "Needleman-Wunsch performs global sequence alignment with dynamic programming: a scoring matrix is filled using match, mismatch, and gap penalties, then traceback recovers the optimal end-to-end alignment. It guarantees the mathematically optimal global alignment for the chosen scoring scheme. The tool reports the alignment, score, and percent identity.",
+      "data_idea": "The demo synthesizes pairs of related DNA strings with a seeded RNG by mutating a random ancestor, then aligns them.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "gap_penalty": "cost of opening/extending a gap",
+        "match_score": "reward per matching base",
+        "mismatch_penalty": "cost per mismatch",
+        "seq_a": "first sequence",
+        "seq_b": "second sequence"
+      },
+      "name": "Needleman-Wunsch Global Sequence Aligner",
+      "real_world_use": "Global alignment compares full-length genes and proteins in comparative genomics and phylogenetics.",
+      "slug_base": "needleman-wunsch-aligner",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Smith-Waterman finds the best local alignment by allowing the dynamic programming matrix to restart at zero, so unrelated flanking regions do not drag the score down. Traceback starts from the highest-scoring cell instead of the corner. The tool highlights the aligned subsequence pair and its score.",
+      "data_idea": "The demo embeds a shared motif in two otherwise random seeded-RNG sequences and recovers the local alignment.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "gap_penalty": "gap cost",
+        "match_score": "match reward",
+        "mismatch_penalty": "mismatch cost",
+        "seq_a": "first sequence",
+        "seq_b": "second sequence"
+      },
+      "name": "Smith-Waterman Local Sequence Aligner",
+      "real_world_use": "Local alignment finds conserved domains and motifs inside longer, mostly unrelated sequences.",
+      "slug_base": "smith-waterman-aligner",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "K-mer Jaccard similarity estimates sequence relatedness without alignment by comparing the sets of length-k substrings; the Jaccard index is the intersection size over the union size. MinHash sketching approximates it for huge sequences. The tool computes exact Jaccard for small inputs and sketched estimates for large ones.",
+      "data_idea": "The demo generates seeded-RNG random sequences with controlled mutation rates and checks similarity decays with divergence.",
+      "difficulty": "beginner",
+      "key_params": {
+        "k": "k-mer length",
+        "seq_a": "first sequence",
+        "seq_b": "second sequence",
+        "sketch_size": "MinHash sketch size"
+      },
+      "name": "K-mer Jaccard Similarity Estimator",
+      "real_world_use": "K-mer similarity screens metagenomic samples and clusters massive sequence databases.",
+      "slug_base": "kmer-jaccard-similarity",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Seed-and-extend alignment mimics BLAST: short exact word matches (seeds) between query and target are found first, then each seed is extended with a scoring matrix until the score drops below a threshold. This heuristic is orders of magnitude faster than full dynamic programming. The tool reports high-scoring pairs with e-value-style ranking.",
+      "data_idea": "The demo builds a seeded-RNG synthetic database and queries with mutated copies, checking the true source ranks first.",
+      "difficulty": "advanced",
+      "key_params": {
+        "database": "list of target sequences",
+        "query": "query sequence",
+        "word_size": "seed length"
+      },
+      "name": "Seed-and-Extend Heuristic Aligner",
+      "real_world_use": "BLAST-style search is the daily workhorse for identifying unknown sequences in every genomics lab.",
+      "slug_base": "seed-and-extend-aligner",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "log_analyzer"
+      ]
+    },
+    {
+      "concept": "FASTA files store sequences as header lines starting with > followed by sequence lines; parsing them robustly means handling multi-line sequences, blank lines, and mixed case. The stats tool reports per-record length, total bases, N50-style length stats, and base composition. It validates alphabet consistency per record.",
+      "data_idea": "The demo synthesizes seeded-RNG random FASTA records with planted anomalies (blank lines, lowercase) to exercise the parser.",
+      "difficulty": "beginner",
+      "key_params": {
+        "fasta_text": "raw FASTA content",
+        "min_length": "filter threshold",
+        "show_composition": "report base counts"
+      },
+      "name": "FASTA Parser and Stats Reporter",
+      "real_world_use": "FASTA parsing starts nearly every bioinformatics pipeline, from QC to assembly.",
+      "slug_base": "fasta-stats-parser",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "file_organizer"
+      ]
+    },
+    {
+      "concept": "K-mer counting tallies every substring of length k in a sequence, revealing repeats, sequencing errors (rare k-mers), and genome size via the k-mer spectrum. A hash map with canonical k-mers (merging reverse complements) halves the work for double-stranded DNA. The counter reports the frequency histogram and the most abundant k-mers.",
+      "data_idea": "The demo generates seeded-RNG random genomes with planted repeats and checks the counter recovers the repeat copy numbers.",
+      "difficulty": "beginner",
+      "key_params": {
+        "canonical": "merge reverse complements",
+        "k": "k-mer length",
+        "sequence": "input DNA string"
+      },
+      "name": "K-mer Frequency Counter",
+      "real_world_use": "K-mer spectra estimate genome size and heterozygosity before assembly in genome projects.",
+      "slug_base": "kmer-counter",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "De Bruijn assembly chops reads into k-mers, builds a graph where edges are k-mers and nodes are (k-1)-mers, then finds an Eulerian path that spells the genome. Repeats tangle the graph into bubbles and branches that the assembler must resolve or report. This toy assembler works on small synthetic genomes and draws the graph.",
+      "data_idea": "The demo synthesizes a small seeded-RNG genome, shreds it into reads, and checks the assembler reconstructs the original.",
+      "difficulty": "advanced",
+      "key_params": {
+        "genome": "true sequence (for validation)",
+        "k": "k-mer size",
+        "reads": "list of read strings"
+      },
+      "name": "De Bruijn Graph Genome Assembler",
+      "real_world_use": "De Bruijn assemblers (SPAdes, Velvet) reconstruct genomes from short sequencing reads.",
+      "slug_base": "debruijn-assembler",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "The Burrows-Wheeler transform reversibly permutes a string so identical characters cluster together, which is why it compresses well and powers the FM-index. Appending a terminal sentinel makes the transform invertible via the LF-mapping. The tool computes the BWT and inverts it back to prove losslessness.",
+      "data_idea": "The demo transforms seeded-RNG random strings and verifies inversion recovers the original exactly.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "sequence": "input string",
+        "show_matrix": "display rotation matrix",
+        "verify": "invert and check"
+      },
+      "name": "Burrows-Wheeler Transform Tool",
+      "real_world_use": "BWT-based indexes (Bowtie, BWA) align billions of sequencing reads to reference genomes.",
+      "slug_base": "burrows-wheeler-transform",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "The FM-index combines the Burrows-Wheeler transform with rank data structures to count and locate pattern occurrences in time proportional to the pattern length, not the text length. Backward search narrows a suffix-array interval character by character. The searcher builds the index on a synthetic reference and answers count and locate queries.",
+      "data_idea": "The demo indexes a seeded-RNG synthetic chromosome and verifies query counts against brute-force search.",
+      "difficulty": "advanced",
+      "key_params": {
+        "patterns": "query patterns",
+        "reference": "reference string",
+        "show_interval": "display the SA interval"
+      },
+      "name": "FM-Index Pattern Searcher",
+      "real_world_use": "FM-indexes make read alignment to the 3-billion-base human genome practical.",
+      "slug_base": "fm-index-searcher",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "UPGMA builds a phylogenetic tree by repeatedly joining the closest pair of clusters and placing the new node at half the joining distance, assuming a molecular clock (ultrametric data). It is simple and fast but misleading when evolutionary rates vary. The builder outputs Newick-format trees from distance matrices.",
+      "data_idea": "The demo synthesizes ultrametric distance matrices from seeded-RNG random clock-like trees and checks topology recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "distance_matrix": "pairwise distances",
+        "labels": "taxon names",
+        "show_newick": "output Newick string"
+      },
+      "name": "UPGMA Phylogenetic Tree Builder",
+      "real_world_use": "UPGMA gives quick guide trees for multiple alignment and teaching phylogenetics.",
+      "slug_base": "upgma-tree-builder",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Neighbor-joining builds trees without assuming a molecular clock by joining the pair minimizing the Q-criterion, which corrects for each taxon's distance to all others. Branch lengths come from the joining formulas. The builder outputs Newick trees and compares against UPGMA on clock-violating data.",
+      "data_idea": "The demo synthesizes non-clock distance matrices from seeded-RNG random trees with variable rates and checks recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "distance_matrix": "pairwise distances",
+        "labels": "taxon names",
+        "show_newick": "output Newick string"
+      },
+      "name": "Neighbor-Joining Tree Builder",
+      "real_world_use": "Neighbor-joining reconstructs viral and bacterial phylogenies in epidemiology and microbiology.",
+      "slug_base": "neighbor-joining-tree",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Progressive multiple alignment builds a guide tree from pairwise distances, then aligns sequences along the tree from leaves to root, aligning profiles to profiles. The classic Feng-Doolittle order means early mistakes propagate, so the tool also reports column conservation scores. It handles small protein or DNA sets.",
+      "data_idea": "The demo evolves seeded-RNG random sequences along a small tree and checks the MSA recovers the true homologous columns.",
+      "difficulty": "advanced",
+      "key_params": {
+        "guide_tree": "Newick guide tree",
+        "sequences": "dict of name to sequence",
+        "show_conservation": "report column scores"
+      },
+      "name": "Progressive Multiple Sequence Aligner",
+      "real_world_use": "MSA tools (Clustal, MUSCLE) align protein families to reveal conserved functional sites.",
+      "slug_base": "progressive-msa-aligner",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "A consensus sequence summarizes an alignment column by column, taking the most frequent character and marking ties or low-conservation columns with ambiguity codes. Conservation scores quantify how strongly each position is preserved. The builder outputs the consensus plus a per-column conservation track.",
+      "data_idea": "The demo builds seeded-RNG random alignments with planted conserved blocks and checks the consensus recovers them.",
+      "difficulty": "beginner",
+      "key_params": {
+        "alignment": "list of aligned strings",
+        "threshold": "conservation cutoff",
+        "ties": "ambiguity code for ties"
+      },
+      "name": "Consensus Sequence Builder",
+      "real_world_use": "Consensus sequences design degenerate PCR primers and summarize protein family alignments.",
+      "slug_base": "consensus-sequence-builder",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Gibbs sampling discovers motifs by iteratively removing one sequence's motif instance and resampling its position proportional to how well each window matches the motif model built from the others. Repeated iterations converge on overrepresented patterns. The sampler reports the motif logo heights and instance positions.",
+      "data_idea": "The demo plants a seeded-RNG random motif in background sequences and measures recovery rate across runs.",
+      "difficulty": "advanced",
+      "key_params": {
+        "iterations": "sampling rounds",
+        "motif_width": "motif length",
+        "sequences": "input sequences"
+      },
+      "name": "Gibbs Sampling Motif Finder",
+      "real_world_use": "Motif finders locate transcription-factor binding sites in gene regulatory studies.",
+      "slug_base": "gibbs-motif-sampler",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "A position weight matrix scores each sequence window by the log-odds of its bases under the motif model versus background frequencies. Scanning a sequence with a PWM finds candidate binding sites above a score threshold. The scanner reports hit positions, scores, and strand orientation.",
+      "data_idea": "The demo scans seeded-RNG random sequences with planted motif instances and measures precision-recall across thresholds.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "pwm": "position weight matrix",
+        "sequence": "DNA to scan",
+        "threshold": "minimum log-odds score"
+      },
+      "name": "PWM Motif Scanner",
+      "real_world_use": "PWM scanning annotates regulatory elements in genome annotation pipelines.",
+      "slug_base": "pwm-motif-scanner",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "An open reading frame is a stretch between a start codon and an in-frame stop codon; the longest ORFs in each of the six reading frames are candidate protein-coding regions. The finder scans all frames, reports ORF coordinates and lengths, and translates the longest ones. Minimum length filters remove noise.",
+      "data_idea": "The demo synthesizes seeded-RNG random DNA with planted coding regions and checks the finder recovers their coordinates.",
+      "difficulty": "beginner",
+      "key_params": {
+        "min_length": "minimum ORF length in codons",
+        "sequence": "DNA string",
+        "translate": "also translate ORFs"
+      },
+      "name": "Six-Frame ORF Finder",
+      "real_world_use": "ORF finding is the first step in annotating newly sequenced genomes and metagenomes.",
+      "slug_base": "orf-finder",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "GC content varies along genomes in windows, marking isochores, CpG islands, and horizontally transferred regions. A sliding window computes the fraction of G and C bases at each position. The profiler plots the GC landscape and flags windows deviating strongly from the mean.",
+      "data_idea": "The demo builds seeded-RNG random sequences with planted GC-rich islands and checks the profiler flags them.",
+      "difficulty": "beginner",
+      "key_params": {
+        "sequence": "DNA string",
+        "step": "window step size",
+        "window": "window size"
+      },
+      "name": "GC Content Sliding-Window Profiler",
+      "real_world_use": "GC profiling identifies CpG islands near promoters and atypical regions in pathogen genomes.",
+      "slug_base": "gc-content-profiler",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Codon usage bias measures how unevenly synonymous codons are used; highly expressed genes prefer codons matching abundant tRNAs. Relative synonymous codon usage (RSCU) normalizes each codon's count by the uniform expectation. The analyzer reports RSCU tables and the effective number of codons.",
+      "data_idea": "The demo synthesizes seeded-RNG random coding sequences with planted bias and checks the analyzer quantifies it.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "min_genes": "genes to include",
+        "sequences": "coding DNA list",
+        "table": "genetic code table"
+      },
+      "name": "Codon Usage Bias Analyzer",
+      "real_world_use": "Codon optimization improves recombinant protein expression in biotech manufacturing.",
+      "slug_base": "codon-usage-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Restriction enzymes cut DNA at specific recognition sites, often palindromic; mapping every site of a chosen enzyme set along a sequence plans cloning experiments. The finder scans both strands, reports cut positions, and lists the resulting fragment sizes. It handles ambiguous IUPAC codes in recognition sequences.",
+      "data_idea": "The demo scans seeded-RNG random plasmids with planted sites and verifies fragment sizes sum to the total length.",
+      "difficulty": "beginner",
+      "key_params": {
+        "enzymes": "dict of name to recognition site",
+        "sequence": "DNA string",
+        "show_fragments": "list fragment sizes"
+      },
+      "name": "Restriction Site Mapper",
+      "real_world_use": "Restriction mapping plans every molecular-cloning and plasmid-design workflow.",
+      "slug_base": "restriction-site-finder",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "PCR primer melting temperature is estimated by the Wallace rule for short primers or nearest-neighbor thermodynamics for longer ones, and good primers avoid hairpins, dimers, and extreme GC. The designer scores candidate primers on Tm, GC clamp, and self-complementarity. It returns the top pairs with amplicon size.",
+      "data_idea": "The demo designs primers on seeded-RNG random templates and checks predicted amplicons match the template coordinates.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "primer_length": "primer size range",
+        "target_tm": "desired melting temp",
+        "template": "DNA template"
+      },
+      "name": "PCR Primer Tm Designer",
+      "real_world_use": "Primer design underlies diagnostics, genotyping, and every PCR-based assay.",
+      "slug_base": "primer-tm-designer",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Translation converts a coding DNA sequence into protein using the standard genetic code table, mapping each codon triplet to its amino acid until a stop codon. The translator handles all common codon tables and reports the peptide plus its length. Ambiguous bases translate to X.",
+      "data_idea": "The demo translates seeded-RNG random coding sequences and verifies start-to-stop translation lengths match codon counts.",
+      "difficulty": "beginner",
+      "key_params": {
+        "sequence": "coding DNA",
+        "table": "genetic code table id",
+        "to_stop": "stop at first stop codon"
+      },
+      "name": "DNA to Protein Translator",
+      "real_world_use": "Translation is the core step turning predicted ORFs into protein sequences for analysis.",
+      "slug_base": "protein-translator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Protein molecular weight sums residue masses plus one water molecule, using average isotopic masses; the isoelectric point is found by root-finding the net-charge-versus-pH curve. The calculator reports weight, pI, extinction coefficient, and amino acid composition. These properties guide purification design.",
+      "data_idea": "The demo computes properties of seeded-RNG random peptides and cross-checks weights against residue-sum arithmetic.",
+      "difficulty": "beginner",
+      "key_params": {
+        "ph_range": "pH scan bounds",
+        "sequence": "protein string",
+        "show_composition": "report residue counts"
+      },
+      "name": "Protein Molecular Weight and pI Calculator",
+      "real_world_use": "Mass and pI calculations plan protein purification and mass-spec experiments.",
+      "slug_base": "protein-molecular-weight",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "The Kyte-Doolittle scale assigns each amino acid a hydrophobicity value; averaging over a sliding window reveals hydrophobic stretches that often correspond to transmembrane helices or buried cores. The profiler plots the hydropathy curve and flags peaks above a threshold.",
+      "data_idea": "The demo profiles seeded-RNG random proteins with planted hydrophobic stretches and checks peak detection.",
+      "difficulty": "beginner",
+      "key_params": {
+        "sequence": "protein string",
+        "threshold": "peak cutoff",
+        "window": "averaging window"
+      },
+      "name": "Kyte-Doolittle Hydrophobicity Profiler",
+      "real_world_use": "Hydropathy plots predict transmembrane regions during membrane-protein annotation.",
+      "slug_base": "hydrophobicity-profiler",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A dot plot places one sequence on each axis and marks matching windows, so diagonals reveal repeats, duplications, and rearrangements at a glance. Window size and mismatch tolerance tune sensitivity versus noise. The generator outputs the match matrix as text art or coordinate lists.",
+      "data_idea": "The demo plots seeded-RNG random sequence pairs with planted duplications and checks diagonals appear at the right offsets.",
+      "difficulty": "beginner",
+      "key_params": {
+        "seq_a": "first sequence",
+        "seq_b": "second sequence",
+        "threshold": "matches per window",
+        "window": "window size"
+      },
+      "name": "Sequence Dot Plot Generator",
+      "real_world_use": "Dot plots visualize genome rearrangements and repeat structure in comparative genomics.",
+      "slug_base": "dot-plot-generator",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A sequence logo stacks letters at each alignment column with heights proportional to information content (2 bits minus entropy for DNA), making conserved positions visually obvious. The calculator computes per-column entropy, information content, and letter frequencies from an alignment.",
+      "data_idea": "The demo builds seeded-RNG random alignments with planted conserved columns and checks logo heights peak there.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alignment": "list of aligned strings",
+        "alphabet": "dna or protein",
+        "show_entropy": "report per-column entropy"
+      },
+      "name": "Sequence Logo Height Calculator",
+      "real_world_use": "Logos depict binding motifs in papers and motif databases.",
+      "slug_base": "sequence-logo-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Tandem repeats are adjacent copies of a short unit; finding them means testing each position for periodicity across unit lengths and requiring a minimum copy number. The finder reports repeat unit, location, copy number, and percent identity to the consensus unit. It distinguishes microsatellites from longer minisatellites.",
+      "data_idea": "The demo plants seeded-RNG random repeats in background sequence and measures detection sensitivity by unit length.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "max_unit": "longest unit to test",
+        "min_copies": "minimum repeat count",
+        "sequence": "DNA string"
+      },
+      "name": "Tandem Repeat Finder",
+      "real_world_use": "Repeat finding genotypes microsatellites for forensics and disease studies.",
+      "slug_base": "tandem-repeat-finder",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "N50 is the contig length at which half the assembly is in contigs of that size or larger, the standard contiguity metric; NG50 normalizes against the known genome size. The calculator sorts contig lengths, walks the cumulative sum, and reports N50, L50, and the full Nx curve. It flags assemblies dominated by tiny contigs.",
+      "data_idea": "The demo synthesizes seeded-RNG random contig length distributions and verifies N50 against a brute-force cumulative walk.",
+      "difficulty": "beginner",
+      "key_params": {
+        "contigs": "list of contig lengths",
+        "genome_size": "for NG50",
+        "show_curve": "report the Nx curve"
+      },
+      "name": "Assembly N50 Calculator",
+      "real_world_use": "N50 benchmarks every genome assembly project from microbes to mammals.",
+      "slug_base": "assembly-n50-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "FASTQ records carry per-base quality scores encoding error probabilities; trimming removes low-quality tails and adapter sequences before analysis. The trimmer slides a window over qualities, cuts where the average drops below threshold, and reports how many bases and reads were removed. It validates the four-line record structure.",
+      "data_idea": "The demo synthesizes seeded-RNG random FASTQ records with degrading tail qualities and checks trimming cut points.",
+      "difficulty": "beginner",
+      "key_params": {
+        "min_length": "drop reads shorter than this",
+        "quality_threshold": "minimum average quality",
+        "window": "sliding window size"
+      },
+      "name": "FASTQ Quality Trimmer",
+      "real_world_use": "Quality trimming is the mandatory first step of every short-read analysis pipeline.",
+      "slug_base": "fastq-quality-trimmer",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "log_analyzer"
+      ]
+    },
+    {
+      "concept": "Read simulators generate synthetic sequencing reads from a reference with realistic error profiles, insert sizes, and coverage depth, giving ground truth for benchmarking. This simulator models substitution errors by quality score and paired-end insert distributions. It outputs FASTQ-format reads with known true positions.",
+      "data_idea": "The demo simulates reads from a seeded-RNG random reference and verifies coverage uniformity and error rates.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "coverage": "target depth",
+        "error_rate": "per-base error",
+        "read_length": "read size",
+        "reference": "reference string"
+      },
+      "name": "Synthetic Sequencing Read Simulator",
+      "real_world_use": "Simulated reads benchmark aligners and variant callers with known ground truth.",
+      "slug_base": "read-simulator",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Coverage depth is the number of reads covering each reference position; its mean and uniformity reveal deletions, duplications, and capture bias. The calculator piles up synthetic alignments, reports per-position depth, and flags low-coverage and zero-coverage stretches. GC-bias plots correlate depth with local GC.",
+      "data_idea": "The demo piles seeded-RNG random alignments on a synthetic reference and checks depth statistics against the simulator settings.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alignments": "list of (start, sequence)",
+        "reference_length": "reference size",
+        "show_gc_bias": "correlate depth with GC"
+      },
+      "name": "Coverage Depth Calculator",
+      "real_world_use": "Coverage analysis detects copy-number variants and validates sequencing experiments.",
+      "slug_base": "coverage-depth-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "A pileup stacks aligned reads at each position so variant calling reduces to counting non-reference bases; strand bias and base-quality weighting separate true variants from errors. The simulator generates pileups with planted SNPs at known allele fractions and scores a simple caller on them. It reports precision and recall by allele fraction.",
+      "data_idea": "The demo plants seeded-RNG random SNPs at controlled fractions and measures caller precision-recall curves.",
+      "difficulty": "advanced",
+      "key_params": {
+        "allele_fractions": "planted SNP fractions",
+        "coverage": "read depth",
+        "error_rate": "sequencing error"
+      },
+      "name": "Pileup Variant Calling Simulator",
+      "real_world_use": "Pileup logic underlies GATK and bcftools variant calling in clinical and research genomics.",
+      "slug_base": "pileup-variant-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Allele frequency estimation counts reference and alternate alleles across a sample, the foundation of population genetics; genotype likelihoods refine it for low-coverage data. The estimator reports frequencies with binomial confidence intervals and tests Hardy-Weinberg equilibrium. It handles multi-allelic sites.",
+      "data_idea": "The demo draws seeded-RNG random genotypes from known frequencies and checks estimates converge to the truth.",
+      "difficulty": "beginner",
+      "key_params": {
+        "confidence": "interval level",
+        "genotypes": "list of genotype calls",
+        "show_hwe": "test Hardy-Weinberg"
+      },
+      "name": "Allele Frequency Estimator",
+      "real_world_use": "Allele frequencies feed GWAS, selection scans, and clinical variant interpretation.",
+      "slug_base": "allele-frequency-estimator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Linkage disequilibrium measures non-random association between alleles at two loci, quantified by D, D-prime, and the correlation r-squared. It decays with recombination distance and reveals haplotype block structure. The calculator builds the 2x2 haplotype table from genotype data and reports all three statistics.",
+      "data_idea": "The demo simulates seeded-RNG random haplotypes with controlled LD and checks the statistics recover the planted values.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "genotypes_a": "genotypes at locus A",
+        "genotypes_b": "genotypes at locus B",
+        "statistic": "D, Dprime, or r2"
+      },
+      "name": "Linkage Disequilibrium Calculator",
+      "real_world_use": "LD mapping fine-maps disease associations and designs genotyping arrays.",
+      "slug_base": "linkage-disequilibrium-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Fst quantifies population differentiation from allele-frequency variance between subpopulations relative to the total, ranging from 0 (identical) to 1 (fixed differences). Weir and Cockerham's estimator corrects for sample size. The tool computes per-locus Fst and flags outlier loci as selection candidates.",
+      "data_idea": "The demo simulates seeded-RNG random subpopulations with controlled divergence and checks Fst tracks the migration rate.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "estimator": "hudson or weir_cockerham",
+        "populations": "list of genotype lists",
+        "show_outliers": "flag high-Fst loci"
+      },
+      "name": "Fst Population Differentiation Calculator",
+      "real_world_use": "Fst scans detect local adaptation and structure populations in conservation genetics.",
+      "slug_base": "fst-differentiation",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Tajima's D compares two estimators of mutation rate: pairwise diversity versus segregating sites; negative values signal population expansion or selective sweeps, positive values signal balancing selection or bottlenecks. The statistic normalizes their difference by its theoretical variance. The calculator reports D and an approximate significance flag.",
+      "data_idea": "The demo simulates seeded-RNG random neutral genealogies and checks D centers near zero under neutrality.",
+      "difficulty": "advanced",
+      "key_params": {
+        "sequences": "aligned sample sequences",
+        "show_variance": "report the denominator",
+        "significance": "flag threshold"
+      },
+      "name": "Tajima's D Neutrality Tester",
+      "real_world_use": "Tajima's D screens genomes for selective sweeps in evolutionary studies.",
+      "slug_base": "tajimas-d-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "The site frequency spectrum counts how many segregating sites have the derived allele in exactly 1, 2, ..., n-1 samples; its shape encodes demography and selection. Neutral constant-size populations give a 1/i spectrum. The tool builds the folded or unfolded spectrum from aligned sequences and compares against the neutral expectation.",
+      "data_idea": "The demo simulates seeded-RNG random neutral samples and checks the spectrum matches the 1/i expectation.",
+      "difficulty": "advanced",
+      "key_params": {
+        "folded": "fold the spectrum",
+        "outgroup": "for polarization",
+        "sequences": "aligned sample sequences"
+      },
+      "name": "Site Frequency Spectrum Builder",
+      "real_world_use": "SFS-based methods infer demographic history in human and conservation genomics.",
+      "slug_base": "site-frequency-spectrum",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "P-distance is the proportion of differing sites between two aligned sequences, the simplest evolutionary distance; the Jukes-Cantor correction adjusts for multiple hits. The matrix builder computes all pairwise distances and exports PHYLIP-format matrices. It flags saturated pairs where correction becomes unreliable.",
+      "data_idea": "The demo evolves seeded-RNG random sequences along known branch lengths and checks distances track true divergence.",
+      "difficulty": "beginner",
+      "key_params": {
+        "correction": "none or jukes_cantor",
+        "sequences": "aligned sequences",
+        "show_matrix": "display full matrix"
+      },
+      "name": "Pairwise Evolutionary Distance Matrix",
+      "real_world_use": "Distance matrices feed tree building and molecular-clock dating.",
+      "slug_base": "pdistance-matrix",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Bootstrapping a phylogeny resamples alignment columns with replacement, rebuilds the tree many times, and reports how often each clade recurs as support values. Values above 70-80 percent are conventionally considered solid. The tool wraps any distance tree builder with bootstrap support annotation.",
+      "data_idea": "The demo bootstraps seeded-RNG random alignments with known trees and checks support tracks true clades.",
+      "difficulty": "advanced",
+      "key_params": {
+        "replicates": "bootstrap count",
+        "sequences": "aligned sequences",
+        "tree_method": "upgma or neighbor_joining"
+      },
+      "name": "Phylogenetic Bootstrap Support Analyzer",
+      "real_world_use": "Bootstrap values are the standard confidence measure on published phylogenetic trees.",
+      "slug_base": "bootstrap-phylogeny",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Maximum parsimony scores a tree by the minimum number of character-state changes needed to explain the data, computed bottom-up with Fitch's algorithm. Shorter trees are preferred. The scorer evaluates candidate trees on small alignments and reports the parsimony score plus homoplasy index.",
+      "data_idea": "The demo scores seeded-RNG random small trees on synthetic alignments and verifies scores against brute-force reconstructions.",
+      "difficulty": "advanced",
+      "key_params": {
+        "alignment": "aligned sequences",
+        "show_changes": "map changes to branches",
+        "trees": "candidate Newick trees"
+      },
+      "name": "Maximum Parsimony Tree Scorer",
+      "real_world_use": "Parsimony reconstructs morphological and small molecular phylogenies.",
+      "slug_base": "parsimony-scorer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Synteny blocks are runs of orthologous genes in conserved order between genomes, revealed by chaining collinear hits from a dot plot. Inversions and translocations break the blocks. The finder chains seeded diagonal matches into blocks with gap penalties and reports block coordinates and orientations.",
+      "data_idea": "The demo synthesizes seeded-RNG random gene orders with planted rearrangements and checks block recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "gap_penalty": "chaining gap cost",
+        "hits": "list of (x, y) matches",
+        "min_block": "minimum block size"
+      },
+      "name": "Synteny Block Chainer",
+      "real_world_use": "Synteny maps trace chromosome evolution across species in comparative genomics.",
+      "slug_base": "synteny-block-finder",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "VCF files record variants with chromosome, position, reference and alternate alleles, quality, and genotype fields; summary statistics reveal call-set quality. The reporter counts variant types (SNP, indel), transition-transversion ratio, missingness per sample, and allele-frequency spectra. It flags low-quality and multiallelic records.",
+      "data_idea": "The demo synthesizes seeded-RNG random VCF records with planted quality issues and checks the reporter flags them.",
+      "difficulty": "beginner",
+      "key_params": {
+        "min_quality": "quality filter",
+        "show_titv": "report Ti/Tv ratio",
+        "vcf_text": "raw VCF content"
+      },
+      "name": "VCF Stats Reporter",
+      "real_world_use": "VCF QC is routine in clinical sequencing and GWAS pipelines.",
+      "slug_base": "vcf-stats-reporter",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "report_generator",
+        "log_analyzer"
+      ]
+    },
+    {
+      "concept": "BED files list genomic intervals as chromosome, start, end; intersecting two interval sets finds overlaps for annotation tasks like counting reads in genes. A sweep-line algorithm processes sorted intervals in linear time. The intersector reports overlaps, coverage fractions, and nearest-neighbor distances.",
+      "data_idea": "The demo generates seeded-RNG random interval sets and validates overlaps against brute-force checks.",
+      "difficulty": "beginner",
+      "key_params": {
+        "a_intervals": "first interval set",
+        "b_intervals": "second interval set",
+        "fraction": "require reciprocal overlap"
+      },
+      "name": "BED Interval Intersector",
+      "real_world_use": "Interval intersection annotates ChIP-seq peaks and computes target coverage.",
+      "slug_base": "bed-interval-intersector",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "GFF files annotate genomes with features (genes, exons, CDS) in nine tab-separated columns with hierarchical parent-child attributes. The stats tool parses records, counts features by type, computes gene and exon length distributions, and validates parent references. It reports per-chromosome feature density.",
+      "data_idea": "The demo synthesizes seeded-RNG random GFF annotations with planted hierarchy errors and checks validation catches them.",
+      "difficulty": "beginner",
+      "key_params": {
+        "gff_text": "raw GFF content",
+        "show_density": "per-chromosome counts",
+        "validate": "check parent links"
+      },
+      "name": "GFF Feature Stats Parser",
+      "real_world_use": "GFF parsing drives genome browsers and annotation pipelines.",
+      "slug_base": "gff-feature-stats",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "file_organizer"
+      ]
+    },
+    {
+      "concept": "Reciprocal best hits find orthologs: gene A in genome 1 and gene B in genome 2 are ortholog candidates if each is the other's top similarity hit. This simple rule underlies many orthology pipelines. The finder runs all-versus-all k-mer similarity and reports reciprocal pairs with scores.",
+      "data_idea": "The demo evolves seeded-RNG random gene sets with duplications and checks RBH recovers true one-to-one orthologs.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "genome_a": "protein list A",
+        "genome_b": "protein list B",
+        "min_score": "hit threshold"
+      },
+      "name": "Reciprocal Best Hit Ortholog Finder",
+      "real_world_use": "RBH orthology maps genes across species for functional annotation transfer.",
+      "slug_base": "reciprocal-best-hit-finder",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "A profile hidden Markov model generalizes a multiple alignment into match, insert, and delete states with learned emission and transition probabilities, capturing position-specific conservation and gap patterns. This simplified builder estimates the profile from a small alignment with pseudocounts. It scores new sequences by Viterbi log-odds.",
+      "data_idea": "The demo builds profiles from seeded-RNG random family alignments and checks scoring ranks true members above decoys.",
+      "difficulty": "advanced",
+      "key_params": {
+        "alignment": "seed alignment",
+        "pseudocount": "smoothing weight",
+        "sequences": "sequences to score"
+      },
+      "name": "Profile HMM Builder (Simplified)",
+      "real_world_use": "Profile HMMs (HMMER, Pfam) detect remote protein homologs missed by BLAST.",
+      "slug_base": "hmm-profile-builder",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Chou-Fasman predicts secondary structure from propensities: each amino acid has measured tendencies for helix, sheet, and turn, and nucleation plus extension rules grow predicted segments. It is outdated but beautifully transparent. The predictor annotates each residue with H/E/C predictions and confidence margins.",
+      "data_idea": "The demo predicts structure for seeded-RNG random proteins and compares segment statistics against the propensity tables.",
+      "difficulty": "beginner",
+      "key_params": {
+        "min_helix": "helix nucleation length",
+        "sequence": "protein string",
+        "show_confidence": "report margins"
+      },
+      "name": "Chou-Fasman Secondary Structure Predictor",
+      "real_world_use": "Chou-Fasman teaches structure prediction concepts in biochemistry courses.",
+      "slug_base": "chou-fasman-predictor",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Signal peptides are N-terminal stretches with a positively charged n-region, hydrophobic h-region, and cleavage site that direct proteins to the secretory pathway. A rule-based predictor scores these regions with hydrophobicity windows and cleavage-site patterns. It reports the predicted cleavage position and a secretion verdict.",
+      "data_idea": "The demo synthesizes seeded-RNG random proteins with planted signal peptides and measures detection accuracy.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "sequence": "protein string",
+        "show_regions": "annotate n/h/c regions",
+        "threshold": "secretion score cutoff"
+      },
+      "name": "Rule-Based Signal Peptide Predictor",
+      "real_world_use": "Signal-peptide prediction (SignalP) triages secreted proteins in drug-target discovery.",
+      "slug_base": "signal-peptide-predictor",
+      "suggested_types": [
+        "cli_tool",
+        "naive_bayes"
+      ]
+    },
+    {
+      "concept": "Transmembrane helices are ~20-residue hydrophobic stretches; topology predictors scan hydropathy profiles for peaks flanked by charge-bias rules (positive-inside). This predictor combines windowed hydrophobicity with the positive-inside rule to assign inside/outside orientation. It outputs a topology string per protein.",
+      "data_idea": "The demo synthesizes seeded-RNG random proteins with planted helices and checks topology recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "min_helix": "minimum helix length",
+        "sequence": "protein string",
+        "window": "hydropathy window"
+      },
+      "name": "Transmembrane Topology Predictor",
+      "real_world_use": "Topology prediction annotates membrane proteins, a major drug-target class.",
+      "slug_base": "transmembrane-predictor",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Nussinov's algorithm predicts RNA secondary structure by dynamic programming: it maximizes the number of base pairs under the constraint that pairs do not cross (no pseudoknots). Traceback yields the dot-bracket structure. The folder reports pair count and the structure string.",
+      "data_idea": "The demo folds seeded-RNG random RNAs and verifies structures have no crossing pairs and respect minimum loop lengths.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "min_loop": "minimum hairpin loop size",
+        "pairs": "allowed base pairs",
+        "sequence": "RNA string"
+      },
+      "name": "Nussinov RNA Secondary Structure Folder",
+      "real_world_use": "RNA folding models guide riboswitch design and noncoding-RNA annotation.",
+      "slug_base": "nussinov-rna-folder",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "RNA folding free energy sums stacking energies of adjacent base pairs plus loop penalties; lower energy means more stable structure. A simplified scorer evaluates a given structure with a small thermodynamic parameter set instead of full dynamic programming. It ranks candidate structures by stability.",
+      "data_idea": "The demo scores seeded-RNG random structures on synthetic RNAs and checks stacking-dominated structures win.",
+      "difficulty": "advanced",
+      "key_params": {
+        "loop_penalty": "per-nucleotide loop cost",
+        "sequence": "RNA string",
+        "structures": "candidate dot-bracket strings"
+      },
+      "name": "RNA Folding Free-Energy Scorer",
+      "real_world_use": "Energy models (ViennaRNA) predict functional RNA structures in transcriptomics.",
+      "slug_base": "rna-energy-scorer",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The codon adaptation index measures how well a gene's codon choices match a reference set of highly expressed genes, computed as the geometric mean of relative adaptiveness values. High CAI predicts high expression. The tool builds the reference table from supplied genes and scores query genes.",
+      "data_idea": "The demo synthesizes seeded-RNG random genes with tuned bias levels and checks CAI tracks the planted bias.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "query_genes": "genes to score",
+        "reference_genes": "high-expression set",
+        "table": "genetic code"
+      },
+      "name": "Codon Adaptation Index Calculator",
+      "real_world_use": "CAI guides synthetic-gene design for industrial protein production.",
+      "slug_base": "codon-adaptation-index",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Translation elongation is not uniform: ribosomes pause at rare codons, so simulating ribosome movement with codon-specific dwell times predicts protein production rates and traffic jams. The simulator steps ribosomes along transcripts with exclusion (no passing) and reports throughput and queue statistics.",
+      "data_idea": "The demo simulates seeded-RNG random transcripts with rare-codon clusters and measures queue formation behind them.",
+      "difficulty": "advanced",
+      "key_params": {
+        "dwell_times": "per-codon dwell map",
+        "initiation_rate": "ribosome loading rate",
+        "transcript": "coding sequence"
+      },
+      "name": "Translation Elongation Traffic Simulator",
+      "real_world_use": "Elongation models optimize codon usage in mRNA therapeutics and recombinant expression.",
+      "slug_base": "translation-elongation-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "A protein contact map marks residue pairs whose atoms lie within a distance cutoff, summarizing 3D structure as a 2D binary matrix; alpha helices appear as bands along the diagonal. The generator builds contact maps from synthetic 3D coordinates and detects secondary-structure patterns in them.",
+      "data_idea": "The demo folds seeded-RNG random chains into helices and sheets geometrically and checks the contact-map patterns.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "coordinates": "list of (x,y,z)",
+        "cutoff": "contact distance",
+        "show_patterns": "detect helices"
+      },
+      "name": "Protein Contact Map Generator",
+      "real_world_use": "Contact maps represent structures in folding prediction and comparison tools.",
+      "slug_base": "contact-map-generator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The Ramachandran plot maps backbone dihedral angles phi and psi; only certain regions are sterically allowed, defining alpha and beta basins. The sampler draws angle pairs from a mixture model over allowed regions and renders the plot with basin labels. Outlier detection flags disallowed conformations.",
+      "data_idea": "The demo samples seeded-RNG random angle pairs and verifies the allowed-region occupancy matches the mixture weights.",
+      "difficulty": "beginner",
+      "key_params": {
+        "basins": "allowed region definitions",
+        "outlier_check": "flag disallowed pairs",
+        "samples": "number of draws"
+      },
+      "name": "Ramachandran Plot Sampler",
+      "real_world_use": "Ramachandran validation checks protein structures in crystallography and prediction.",
+      "slug_base": "ramachandran-sampler",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Gene density maps count annotated genes in sliding windows along chromosomes, revealing gene-rich and gene-poor regions and correlating with GC content and recombination. The mapper bins GFF features into windows and reports density tracks plus correlation statistics. It exports data ready for genome-browser tracks.",
+      "data_idea": "The demo synthesizes seeded-RNG random annotations with clustered genes and checks the mapper recovers the clusters.",
+      "difficulty": "beginner",
+      "key_params": {
+        "features": "list of (chrom, start, end)",
+        "step": "window step",
+        "window": "window size"
+      },
+      "name": "Gene Density Track Mapper",
+      "real_world_use": "Density tracks annotate genome browsers and compare chromosome organization.",
+      "slug_base": "gene-density-mapper",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "The genetic code's degeneracy means most amino acids have multiple codons; a quiz engine drills this mapping with spaced repetition, tracking per-codon accuracy. Questions cover codon-to-amino-acid, amino-acid-to-codons, and start/stop identification. The engine adapts difficulty to the learner's weak spots.",
+      "data_idea": "The demo generates seeded-RNG random quiz sessions and verifies scoring and adaptive selection logic.",
+      "difficulty": "beginner",
+      "key_params": {
+        "questions": "quiz length",
+        "seed": "RNG seed",
+        "tables": "codon tables to drill"
+      },
+      "name": "Genetic Code Quiz Engine",
+      "real_world_use": "Code drills teach molecular biology in classrooms and lab onboarding.",
+      "slug_base": "genetic-code-quiz",
+      "suggested_types": [
+        "quiz_engine",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "K-means clustering of gene expression profiles groups genes with similar patterns across conditions, revealing co-regulated modules. Log-transformed, standardized expression vectors are clustered with multiple restarts. The tool reports cluster assignments, centroids, and silhouette-style cohesion scores.",
+      "data_idea": "The demo synthesizes seeded-RNG random expression matrices with planted co-regulated modules and measures recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "conditions": "number of conditions",
+        "genes": "expression matrix",
+        "k": "cluster count"
+      },
+      "name": "Gene Expression K-Means Clusterer",
+      "real_world_use": "Expression clustering discovers pathways in RNA-seq and drug-response studies.",
+      "slug_base": "expression-kmeans-clusterer",
+      "suggested_types": [
+        "kmeans_clustering",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Variant effect classifiers sort variants into categories (synonymous, missense, nonsense, splice-region) using rule-based decision logic on codon changes and position context. A small decision tree learns the mapping from labeled examples and explains each prediction as a rule path. It reports class distributions over a VCF.",
+      "data_idea": "The demo synthesizes seeded-RNG random variants with known effects and checks classifier accuracy.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "max_depth": "tree depth",
+        "variants": "list of variant dicts",
+        "verbose": "show rule paths"
+      },
+      "name": "Variant Effect Decision-Tree Classifier",
+      "real_world_use": "Effect classification triages variants in clinical exome interpretation.",
+      "slug_base": "variant-effect-classifier",
+      "suggested_types": [
+        "decision_tree",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Simple gene finders score candidate ORFs with naive Bayes: coding versus noncoding likelihoods from hexamer frequencies and length distributions. Training on known genes yields the likelihood tables. The predictor scores ORFs and reports log-odds plus the winning hexamer evidence.",
+      "data_idea": "The demo trains on seeded-RNG random synthetic genes and tests ranking of held-out coding versus intergenic ORFs.",
+      "difficulty": "advanced",
+      "key_params": {
+        "k": "oligo length for frequencies",
+        "orfs": "candidate ORFs",
+        "training_genes": "known coding sequences"
+      },
+      "name": "Naive Bayes Gene Predictor",
+      "real_world_use": "Statistical gene finders (Glimmer) annotate bacterial genomes.",
+      "slug_base": "gene-predictor-naive-bayes",
+      "suggested_types": [
+        "naive_bayes",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "A REST API wraps sequence utilities (translate, reverse complement, GC content, motif scan) behind HTTP endpoints with JSON in and out, demonstrating service design for bioinformatics tools. The project defines routes, validates inputs, and returns structured results with error codes. A tiny stdlib HTTP server hosts it.",
+      "data_idea": "The demo exercises every endpoint with seeded-RNG random sequences through an in-process test client.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "endpoints": "which tools to expose",
+        "port": "server port",
+        "rate_limit": "requests per minute"
+      },
+      "name": "Sequence Utilities REST API",
+      "real_world_use": "Bioinformatics web services (EBI, NCBI) expose exactly these utilities as APIs.",
+      "slug_base": "sequence-search-api",
+      "suggested_types": [
+        "rest_api",
+        "api_client_sim"
+      ]
+    },
+    {
+      "concept": "GC skew, the (G-C)/(G+C) ratio in sliding windows, flips sign at replication origins and termini because leading and lagging strands mutate differently. The analyzer computes skew tracks and finds zero-crossing points as origin candidates. It reports candidate origins ranked by skew amplitude.",
+      "data_idea": "The demo synthesizes seeded-RNG random circular genomes with planted origins and checks detection accuracy.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "genome": "circular DNA string",
+        "min_amplitude": "origin call threshold",
+        "window": "sliding window size"
+      },
+      "name": "GC Skew Replication Origin Finder",
+      "real_world_use": "Skew analysis locates origins in newly sequenced bacterial genomes.",
+      "slug_base": "gc-skew-origin-finder",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Phylogenetic distance matrices can be embedded in low dimensions with principal coordinates analysis to visualize tree structure as a scatter plot. The visualizer performs the double-centering and eigendecomposition, then plots taxa in 2D with cluster coloring. Stress statistics report embedding quality.",
+      "data_idea": "The demo embeds seeded-RNG random tree distance matrices and checks the 2D layout preserves major clades.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "distance_matrix": "pairwise distances",
+        "labels": "taxon names",
+        "show_stress": "report embedding stress"
+      },
+      "name": "Phylogenetic Ordination Visualizer",
+      "real_world_use": "Ordination plots summarize microbiome and population structure in papers.",
+      "slug_base": "phylo-ordination-visualizer",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Sequencing run monitors tail instrument log streams, tracking cluster density, quality-score trends, and error rates per cycle to catch failing runs early. The agent parses synthetic log lines, maintains rolling statistics, and raises alerts when metrics cross thresholds. It emits a run-health summary report.",
+      "data_idea": "The demo streams seeded-RNG random synthetic instrument logs with a planted failure and checks alert timing.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alert_thresholds": "metric cutoffs",
+        "log_lines": "instrument log stream",
+        "window": "rolling window size"
+      },
+      "name": "Sequencing Run Monitor Agent",
+      "real_world_use": "Run monitoring (Illumina SAV style) protects expensive sequencing runs in core facilities.",
+      "slug_base": "sequencing-run-monitor",
+      "suggested_types": [
+        "monitoring_agent",
+        "log_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Pipeline configs declare samples, references, and parameters in a structured file; the manager validates schemas, resolves file paths, and expands sample wildcards into concrete job lists. It detects missing inputs before compute starts. Version stamping makes runs reproducible.",
+      "data_idea": "The demo validates seeded-RNG random synthetic configs, catching planted schema violations.",
+      "difficulty": "beginner",
+      "key_params": {
+        "config_text": "raw config content",
+        "schema": "expected schema",
+        "strict": "fail on unknown keys"
+      },
+      "name": "Pipeline Config Manager",
+      "real_world_use": "Config management (Nextflow/Snakemake style) organizes production bioinformatics workflows.",
+      "slug_base": "pipeline-config-manager",
+      "suggested_types": [
+        "config_manager",
+        "cli_tool",
+        "data_pipeline"
+      ]
+    }
+  ]
+}

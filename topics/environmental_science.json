@@ -1,0 +1,1720 @@
+{
+  "domain": "environmental_science",
+  "subdomain": "environmental_science",
+  "topics": [
+    {
+      "concept": "The Air Quality Index compresses pollutant concentrations into a single 0-to-500 scale with color-coded health categories from Good to Hazardous. Tracking daily AQI over months reveals seasonal patterns, like summer ozone peaks and winter particulate episodes.",
+      "data_idea": "Seeded RNG synthesizes multi-year daily AQI series with seasonal cycles and wildfire spikes for trend analysis.",
+      "difficulty": "beginner",
+      "key_params": {
+        "days": "number of days in series",
+        "pollutant": "primary pollutant tracked",
+        "trend": "long-term trend direction"
+      },
+      "name": "AQI Trend Analyzer",
+      "real_world_use": "City health departments publish AQI trends to justify clean-air policies and alert vulnerable residents.",
+      "slug_base": "aqi-trend-analyzer",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Short-term PM2.5 forecasts blend recent monitor readings with wind and mixing-height data to predict the next day's fine particle levels. The forecaster applies persistence plus a simple regression on meteorology to nowcast neighborhood-scale concentrations.",
+      "data_idea": "Seeded RNG creates monitor readings paired with wind and temperature series for the forecaster to train and test on.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "horizon_h": "forecast horizon in hours",
+        "wind_ms": "wind speed in meters per second"
+      },
+      "name": "PM2.5 Nowcast Forecaster",
+      "real_world_use": "Air agencies issue next-day particle forecasts that schools and hospitals use to plan outdoor activity.",
+      "slug_base": "pm25-nowcast-forecaster",
+      "suggested_types": [
+        "linear_regression",
+        "data_pipeline",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "Regulators count the days per year that ozone exceeds the health standard, since repeated exceedances trigger stricter planning requirements. The counter scans hourly ozone data, flags 8-hour averages above the threshold, and tallies exceedance days by season.",
+      "data_idea": "Seeded RNG generates summer ozone seasons with heat-wave episodes for the counter to evaluate.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "standard_ppb": "ozone standard in parts per billion",
+        "years": "years of hourly data"
+      },
+      "name": "Ozone Exceedance Day Counter",
+      "real_world_use": "State air agencies track exceedance days to demonstrate compliance with federal ozone standards.",
+      "slug_base": "ozone-exceedance-counter",
+      "suggested_types": [
+        "data_pipeline",
+        "log_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "An emission inventory multiplies activity data, like fuel burned or miles driven, by an emission factor per unit of activity. Summing across sources gives the total tons per year of each pollutant, the starting point for every air quality plan.",
+      "data_idea": "Seeded RNG creates source inventories with activity levels and emission factors for the calculator to total.",
+      "difficulty": "beginner",
+      "key_params": {
+        "activity": "activity amount per year",
+        "emission_factor": "pollutant per unit activity",
+        "source": "source category name"
+      },
+      "name": "Emission Inventory Calculator",
+      "real_world_use": "Cities and companies build emission inventories to target their biggest pollution sources.",
+      "slug_base": "emission-inventory-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "A smokestack plume spreads downwind in a bell-shaped Gaussian pattern, with concentrations falling as the plume widens and dilutes. The model combines wind speed, stack height, and atmospheric stability class to map ground-level concentrations.",
+      "data_idea": "Seeded RNG varies stack parameters and stability classes, and the model renders downwind concentration footprints.",
+      "difficulty": "advanced",
+      "key_params": {
+        "stability": "atmospheric stability class A-F",
+        "stack_h_m": "stack height in meters",
+        "wind_ms": "wind speed in meters per second"
+      },
+      "name": "Gaussian Plume Dispersion Simulator",
+      "real_world_use": "Permitting agencies model stack plumes to set emission limits that protect nearby neighborhoods.",
+      "slug_base": "gaussian-plume-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Indoor CO2 climbs when occupants exhale faster than ventilation replaces the air, and levels above about 1000 ppm signal stuffy, under-ventilated rooms. The tracker logs sensor readings and flags rooms and hours where ventilation falls short.",
+      "data_idea": "Seeded RNG simulates classroom occupancy schedules and ventilation rates, generating CO2 traces with exceedance events.",
+      "difficulty": "beginner",
+      "key_params": {
+        "occupants": "number of occupants",
+        "room_m3": "room volume in cubic meters",
+        "vent_ach": "ventilation air changes per hour"
+      },
+      "name": "Indoor CO2 Tracker",
+      "real_world_use": "Schools and offices monitor CO2 to verify ventilation and reduce airborne disease transmission.",
+      "slug_base": "indoor-co2-tracker",
+      "suggested_types": [
+        "monitoring_agent",
+        "data_pipeline",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Radon seeps from soil into basements where it decays into alpha-emitting particles that raise lung cancer risk, so long-term average concentration drives the risk estimate. The estimator converts picocuries per liter into lifetime risk and compares against action levels.",
+      "data_idea": "Seeded RNG generates home radon readings across seasons, and the estimator annualizes them into risk bands.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "pci_l": "radon concentration in picocuries per liter",
+        "years_exposed": "years of exposure"
+      },
+      "name": "Radon Risk Estimator",
+      "real_world_use": "Home inspectors and health departments use radon risk estimates to recommend mitigation systems.",
+      "slug_base": "radon-risk-estimator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Wildfire smoke travels hundreds of miles on prevailing winds, and a simple trajectory model advects the plume while diffusion spreads it. The model forecasts which downwind communities will see smoke hours ahead.",
+      "data_idea": "Seeded RNG creates fire locations and shifting wind fields, and the model maps the smoke footprint over 48 hours.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "fire_acres": "fire size in acres",
+        "hours": "forecast hours ahead",
+        "wind_dir_deg": "wind direction in degrees",
+        "wind_ms": "wind speed in meters per second"
+      },
+      "name": "Wildfire Smoke Drift Model",
+      "real_world_use": "Emergency managers issue smoke advisories from drift forecasts during fire season.",
+      "slug_base": "wildfire-smoke-drift-model",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A personal carbon footprint sums emissions from home energy, transport, diet, and consumption using per-activity emission factors. The estimator breaks the total into categories so the biggest levers for reduction are obvious.",
+      "data_idea": "Seeded RNG builds household profiles with varied energy use and travel habits for footprint comparison.",
+      "difficulty": "beginner",
+      "key_params": {
+        "diet": "diet type",
+        "home_kwh": "annual home electricity in kWh",
+        "miles_driven": "annual vehicle miles"
+      },
+      "name": "Carbon Footprint Estimator",
+      "real_world_use": "Sustainability programs and consumer apps use footprint estimators to guide household emission cuts.",
+      "slug_base": "carbon-footprint-estimator",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Corporate carbon accounting splits emissions into scope 1 (direct), scope 2 (purchased energy), and scope 3 (value chain) following the GHG Protocol. The ledger ingests activity records, applies emission factors, and rolls everything into an auditable inventory.",
+      "data_idea": "Seeded RNG generates company activity records across all three scopes for the ledger to compile.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "activities": "list of activity records",
+        "factors": "emission factor table"
+      },
+      "name": "Scope 1-2-3 Emissions Ledger",
+      "real_world_use": "Companies report scope 1-2-3 inventories for ESG disclosure and net-zero pledges.",
+      "slug_base": "scope-emissions-ledger",
+      "suggested_types": [
+        "data_pipeline",
+        "report_generator",
+        "rest_api"
+      ]
+    },
+    {
+      "concept": "A growing tree locks away carbon in its wood, roughly proportional to its biomass, which allometric equations estimate from trunk diameter and species. The calculator converts a tree inventory into tons of CO2 sequestered per year.",
+      "data_idea": "Seeded RNG grows synthetic urban forests with species mixes and diameters for sequestration totals.",
+      "difficulty": "beginner",
+      "key_params": {
+        "dbh_cm": "diameter at breast height in centimeters",
+        "species": "tree species",
+        "years": "growth years modeled"
+      },
+      "name": "Tree Sequestration Calculator",
+      "real_world_use": "Cities value street trees and offset projects quantify credits with sequestration math like this.",
+      "slug_base": "tree-sequestration-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "Soils hold more carbon than the atmosphere and vegetation combined, and practices like cover cropping and reduced tillage nudge the stock upward. The model tracks carbon inputs from residues against decomposition losses to project soil stock changes.",
+      "data_idea": "Seeded RNG simulates field management histories and the model projects soil carbon trajectories per practice.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "clay_pct": "soil clay content in percent",
+        "practice": "management practice",
+        "years": "simulation years"
+      },
+      "name": "Soil Carbon Stock Model",
+      "real_world_use": "Regenerative agriculture programs model soil carbon to design payments for sequestration.",
+      "slug_base": "soil-carbon-stock-model",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Methane leaks from valves, compressors, and pipelines, and each leak's rate times its duration gives the emitted mass, scaled by methane's high warming potential. The estimator combines leak survey data with emission factors to total a facility's methane footprint.",
+      "data_idea": "Seeded RNG plants leaks of varying sizes across facility components for the estimator to total.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "gwp": "methane global warming potential used",
+        "leak_rate_kgh": "leak rate in kg per hour",
+        "leaks": "number of leaks found"
+      },
+      "name": "Methane Leak Estimator",
+      "real_world_use": "Oil and gas operators quantify methane for leak repair programs and regulatory reporting.",
+      "slug_base": "methane-leak-estimator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Bright surfaces like ice and white roofs reflect sunlight while dark surfaces absorb it, so the planet's reflectivity, its albedo, directly controls how much solar energy stays. The demo shows how shrinking ice cover lowers albedo and amplifies warming in a feedback loop.",
+      "data_idea": "Seeded RNG varies surface mixes and the demo computes the resulting absorbed solar energy.",
+      "difficulty": "beginner",
+      "key_params": {
+        "albedo": "surface reflectivity 0 to 1",
+        "solar_wm2": "incoming solar in watts per square meter"
+      },
+      "name": "Albedo Effect Demo",
+      "real_world_use": "Climate educators use albedo demos to explain ice-loss feedback to students and policymakers.",
+      "slug_base": "albedo-effect-demo",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The Keeling Curve records atmospheric CO2 climbing year after year with a seasonal sawtooth as northern forests breathe. Plotting the long rise against the annual cycle makes both the trend and the biosphere's fingerprint visible.",
+      "data_idea": "Seeded RNG synthesizes CO2 records with a rising trend plus seasonal oscillation for the visualizer to plot.",
+      "difficulty": "beginner",
+      "key_params": {
+        "end_year": "series end year",
+        "start_year": "series start year"
+      },
+      "name": "Keeling Curve Visualizer",
+      "real_world_use": "Climate communicators use the Keeling Curve as the iconic evidence of rising CO2.",
+      "slug_base": "keeling-curve-visualizer",
+      "suggested_types": [
+        "web_dashboard",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Heating and cooling degree days measure how far daily temperatures stray from a comfort baseline, and building energy use scales almost linearly with them. The modeler converts a year of temperatures into degree days and then into expected heating and cooling energy.",
+      "data_idea": "Seeded RNG generates city temperature years and the modeler computes degree days and energy estimates.",
+      "difficulty": "beginner",
+      "key_params": {
+        "base_c": "comfort baseline in Celsius",
+        "temps_c": "daily mean temperatures in Celsius"
+      },
+      "name": "Degree-Day Energy Modeler",
+      "real_world_use": "Utilities normalize sales and forecast demand using degree-day models.",
+      "slug_base": "degree-day-energy-modeler",
+      "suggested_types": [
+        "cli_tool",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "A building energy audit walks through lighting, HVAC, and envelope loads to find the measures with the fastest payback. The helper scores candidate upgrades by annual savings, cost, and payback period to prioritize the audit report.",
+      "data_idea": "Seeded RNG creates building profiles with equipment ages and the helper ranks retrofit measures.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "area_m2": "floor area in square meters",
+        "measures": "list of candidate efficiency measures"
+      },
+      "name": "Building Energy Audit Helper",
+      "real_world_use": "Energy auditors prioritize retrofits for commercial buildings with payback-ranked measure lists.",
+      "slug_base": "building-energy-audit-helper",
+      "suggested_types": [
+        "report_generator",
+        "decision_tree"
+      ]
+    },
+    {
+      "concept": "A carbon tax adds a price per ton of CO2 to fossil fuels, and the modeler passes that cost through to household energy bills and driving costs by fuel. Comparing bills before and after shows who pays and how much behavior must shift to dodge the tax.",
+      "data_idea": "Seeded RNG builds household energy mixes and the modeler computes tax burden at several price levels.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "tax_per_ton": "carbon price in dollars per ton",
+        "use_kwh": "electricity use in kWh",
+        "use_therms": "gas use in therms"
+      },
+      "name": "Carbon Tax Impact Modeler",
+      "real_world_use": "Policy analysts model household impacts to design rebates alongside carbon pricing.",
+      "slug_base": "carbon-tax-impact-modeler",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Cap-and-trade sets a total emissions cap and lets firms buy and sell allowances, so the allowance price emerges where supply meets demand. The simulator runs trading rounds among firms with different abatement costs to find the clearing price.",
+      "data_idea": "Seeded RNG assigns firms random abatement cost curves and the simulator clears the allowance market.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cap_tons": "total cap in tons",
+        "firms": "number of participating firms",
+        "rounds": "trading rounds"
+      },
+      "name": "Cap-and-Trade Market Simulator",
+      "real_world_use": "Regulators and traders study allowance price dynamics in carbon markets like the EU ETS.",
+      "slug_base": "cap-and-trade-simulator",
+      "suggested_types": [
+        "simulation",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "The rational method estimates peak storm runoff as Q = C x I x A, where the runoff coefficient, rainfall intensity, and drainage area multiply together. Engineers use it to size culverts and inlets for small urban catchments.",
+      "data_idea": "Seeded RNG generates catchment characteristics and design storms for runoff calculations.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "area_ha": "drainage area in hectares",
+        "c_coeff": "runoff coefficient 0 to 1",
+        "intensity_mmh": "rainfall intensity in mm per hour"
+      },
+      "name": "Watershed Runoff Estimator (Rational Method)",
+      "real_world_use": "Civil engineers size storm drains and culverts with the rational method.",
+      "slug_base": "watershed-runoff-rational",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "The water quality index rolls dissolved oxygen, pH, turbidity, nutrients, and bacteria into one 0-to-100 score with plain-language ratings. The calculator weights each parameter's sub-index so a single bad reading drags the score down visibly.",
+      "data_idea": "Seeded RNG generates river monitoring records across seasons for index scoring and rating.",
+      "difficulty": "beginner",
+      "key_params": {
+        "do_mgl": "dissolved oxygen in mg per liter",
+        "ph": "pH value",
+        "turbidity_ntu": "turbidity in NTU"
+      },
+      "name": "Water Quality Index Calculator",
+      "real_world_use": "Riverkeeper groups and agencies publish WQI scores to communicate river health to the public.",
+      "slug_base": "water-quality-index-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "When organic waste enters a river, bacteria consume oxygen as they digest it, creating a dissolved-oxygen sag curve downstream that recovers as reaeration catches up. The Streeter-Phelps equations predict the sag's depth and location from the waste load and stream hydraulics.",
+      "data_idea": "Seeded RNG varies waste loads and stream velocities while the model traces the oxygen sag curve.",
+      "difficulty": "advanced",
+      "key_params": {
+        "bod_mgl": "waste BOD in mg per liter",
+        "flow_ms": "stream velocity in meters per second",
+        "k1": "deoxygenation rate per day",
+        "k2": "reaeration rate per day"
+      },
+      "name": "Dissolved Oxygen Sag Model (Streeter-Phelps)",
+      "real_world_use": "Wastewater permits set discharge limits using oxygen sag models to protect fish.",
+      "slug_base": "streeter-phelps-do-sag",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Darcy's law says groundwater flows in proportion to the hydraulic gradient times the aquifer's conductivity, like water seeping through a tilted sponge. The simulator maps flow velocity and travel time between wells from head measurements.",
+      "data_idea": "Seeded RNG creates aquifer head fields and the simulator computes flow paths and travel times.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "conductivity_ms": "hydraulic conductivity in meters per second",
+        "gradient": "hydraulic gradient",
+        "porosity": "aquifer porosity 0 to 1"
+      },
+      "name": "Darcy Groundwater Flow Simulator",
+      "real_world_use": "Hydrogeologists predict contaminant travel times and well capture zones with Darcy-based models.",
+      "slug_base": "darcy-groundwater-flow",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Pumping a well creates a cone of depression whose drawdown over time follows the Theis solution, spreading outward logarithmically. The model forecasts drawdown at observation wells so new pumping does not dry up neighbors.",
+      "data_idea": "Seeded RNG lays out well fields with pumping schedules and the model forecasts drawdown cones.",
+      "difficulty": "advanced",
+      "key_params": {
+        "pump_m3day": "pumping rate in cubic meters per day",
+        "storativity": "aquifer storativity",
+        "transmissivity_m2day": "transmissivity in square meters per day"
+      },
+      "name": "Aquifer Drawdown Model (Theis)",
+      "real_world_use": "Water utilities use Theis analysis to permit new wells without harming existing ones.",
+      "slug_base": "theis-drawdown-model",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A rooftop catchment times rainfall times a runoff coefficient gives harvestable gallons, and the sizer matches tank volume to dry-season demand. The tool balances roof area, rainfall patterns, and household use to recommend a tank size.",
+      "data_idea": "Seeded RNG generates household demand profiles and rainfall years for tank sizing trials.",
+      "difficulty": "beginner",
+      "key_params": {
+        "demand_lpd": "daily demand in liters per day",
+        "rainfall_mm": "annual rainfall in millimeters",
+        "roof_m2": "roof area in square meters"
+      },
+      "name": "Rainwater Harvesting Sizer",
+      "real_world_use": "Homesteads and off-grid buildings size cisterns with harvest potential calculations.",
+      "slug_base": "rainwater-harvesting-sizer",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Greywater from showers and laundry can irrigate landscaping after simple filtration, offsetting potable demand. The planner matches household greywater production to landscape water needs month by month.",
+      "data_idea": "Seeded RNG builds household water-use profiles and the planner sizes the reuse system.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "grey_lpd": "greywater produced in liters per day",
+        "landscape_m2": "irrigated area in square meters"
+      },
+      "name": "Greywater Reuse Planner",
+      "real_world_use": "Drought-region homes install greywater systems to keep landscaping alive under restrictions.",
+      "slug_base": "greywater-reuse-planner",
+      "suggested_types": [
+        "cli_tool",
+        "scheduler"
+      ]
+    },
+    {
+      "concept": "A detention basin holds stormwater and releases it slowly so downstream channels do not flood, sized from the inflow hydrograph minus the allowed outflow. The sizer routes a design storm through trial basin volumes until the peak outflow meets the limit.",
+      "data_idea": "Seeded RNG generates design storms and the sizer finds the smallest basin meeting outflow limits.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "area_ha": "tributary area in hectares",
+        "outflow_m3s": "allowed outflow in cubic meters per second",
+        "storm_mm": "design storm depth in millimeters"
+      },
+      "name": "Stormwater Detention Basin Sizer",
+      "real_world_use": "Subdivision engineers design detention ponds to meet municipal stormwater permits.",
+      "slug_base": "detention-basin-sizer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Flood frequency analysis fits annual peak flows to a probability distribution to estimate the 100-year flood engineers design against. The analyzer ranks peaks, fits the curve, and reports flow magnitudes for standard return periods.",
+      "data_idea": "Seeded RNG generates annual peak flow records with a known distribution for the analyzer to recover.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "peaks_m3s": "annual peak flows in cubic meters per second",
+        "return_years": "return periods to estimate"
+      },
+      "name": "Flood Frequency Analyzer",
+      "real_world_use": "Bridge designers and floodplain mappers set design floods with frequency analysis.",
+      "slug_base": "flood-frequency-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Crop irrigation scheduling replaces the water crops actually use, estimated as reference evapotranspiration times a crop coefficient. The scheduler tracks soil moisture day by day and triggers irrigation just before stress begins.",
+      "data_idea": "Seeded RNG creates weather seasons and the scheduler logs irrigation events versus a fixed schedule.",
+      "difficulty": "beginner",
+      "key_params": {
+        "crop_kc": "crop coefficient",
+        "et0_mm": "reference evapotranspiration in mm per day",
+        "root_mm": "root zone storage in mm"
+      },
+      "name": "Irrigation Scheduler",
+      "real_world_use": "Farmers schedule center pivots and drip lines with evapotranspiration-based tools.",
+      "slug_base": "irrigation-scheduler",
+      "suggested_types": [
+        "scheduler",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Desalination's energy appetite dominates its cost, with reverse osmosis needing roughly 3 to 4 kWh per cubic meter of seawater. The estimator converts plant capacity and energy price into water cost per thousand gallons.",
+      "data_idea": "Seeded RNG varies plant sizes and energy prices to compare desalinated water costs.",
+      "difficulty": "beginner",
+      "key_params": {
+        "capacity_m3day": "plant capacity in cubic meters per day",
+        "kwh_per_m3": "energy intensity in kWh per cubic meter",
+        "price_kwh": "energy price per kWh"
+      },
+      "name": "Desalination Energy Estimator",
+      "real_world_use": "Water planners compare desalination against conservation and imports on energy cost.",
+      "slug_base": "desalination-energy-estimator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Constructed wetlands clean wastewater as plants and microbes remove BOD, nitrogen, and phosphorus with first-order decay kinetics adjusted for temperature. The simulator sizes wetland cells to hit effluent targets for a given flow.",
+      "data_idea": "Seeded RNG varies influent strength and temperature while the simulator checks effluent compliance.",
+      "difficulty": "advanced",
+      "key_params": {
+        "bod_in_mgl": "influent BOD in mg per liter",
+        "flow_m3day": "flow in cubic meters per day",
+        "temp_c": "water temperature in Celsius"
+      },
+      "name": "Constructed Wetland Treatment Simulator",
+      "real_world_use": "Small towns and eco-resorts treat sewage with constructed wetlands designed by these kinetics.",
+      "slug_base": "wetland-treatment-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Excess nitrogen and phosphorus grow algae that then decay, stripping oxygen and creating dead zones. The model links nutrient loads to chlorophyll and oxygen response so managers can see which source cuts matter most.",
+      "data_idea": "Seeded RNG generates lake nutrient budgets and the model predicts chlorophyll and oxygen outcomes.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "n_load_kgyr": "nitrogen load in kg per year",
+        "p_load_kgyr": "phosphorus load in kg per year",
+        "volume_m3": "lake volume in cubic meters"
+      },
+      "name": "Lake Eutrophication Model",
+      "real_world_use": "Lake managers set nutrient limits to prevent the algal blooms behind fish kills.",
+      "slug_base": "eutrophication-model",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Warm, nutrient-rich, calm water lets cyanobacteria explode into harmful blooms, and the predictor combines temperature, nutrients, and weather into a bloom-risk score. Early warnings let water plants adjust treatment before toxins arrive.",
+      "data_idea": "Seeded RNG creates lake summers with varying heat and nutrient pulses for risk scoring.",
+      "difficulty": "advanced",
+      "key_params": {
+        "temp_c": "water temperature in Celsius",
+        "tn_mgl": "total nitrogen in mg per liter",
+        "tp_mgl": "total phosphorus in mg per liter"
+      },
+      "name": "Algal Bloom Risk Predictor",
+      "real_world_use": "Drinking-water utilities use bloom forecasts to prepare treatment for algal toxins.",
+      "slug_base": "algal-bloom-predictor",
+      "suggested_types": [
+        "naive_bayes",
+        "data_pipeline",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "Microplastics sampling filters known water volumes through fine nets, and counts per cubic meter reveal hotspots near outfalls and currents. The simulator plans tow transects and estimates the sampling effort needed to detect a target concentration.",
+      "data_idea": "Seeded RNG seeds particle fields and the simulator estimates counts from virtual net tows.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "particles_m3": "true concentration per cubic meter",
+        "tow_m3": "volume filtered per tow in cubic meters",
+        "tows": "number of tows"
+      },
+      "name": "Microplastics Sampler Simulator",
+      "real_world_use": "Researchers design trawl surveys with power calculations like these before going to sea.",
+      "slug_base": "microplastics-sampler",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Tides are sums of harmonic constituents, each with an amplitude and phase set by the moon and sun's cycles, and a handful of constituents predict most ports well. The predictor evaluates the harmonic sum to forecast high and low water times.",
+      "data_idea": "Seeded RNG assigns constituent sets to synthetic harbors and the predictor forecasts their tide tables.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "constituents": "list of tidal constituent amplitudes and phases",
+        "days": "forecast days"
+      },
+      "name": "Tide Predictor (Harmonic)",
+      "real_world_use": "Ports and mariners plan transits and dredging around harmonic tide predictions.",
+      "slug_base": "tide-harmonic-predictor",
+      "suggested_types": [
+        "simulation",
+        "scheduler"
+      ]
+    },
+    {
+      "concept": "Spilled oil drifts with currents plus a fraction of the wind speed, spreading and weathering as it travels. The simulator advects particles through current and wind fields to forecast shoreline impacts.",
+      "data_idea": "Seeded RNG creates spill scenarios with varying winds and the simulator maps the slick over 72 hours.",
+      "difficulty": "advanced",
+      "key_params": {
+        "spill_m3": "spill volume in cubic meters",
+        "wind_ms": "wind speed in meters per second"
+      },
+      "name": "Oil Spill Drift Simulator",
+      "real_world_use": "Coast guards run drift forecasts to stage booms and skimmers ahead of a slick.",
+      "slug_base": "oil-spill-drift-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The ocean absorbs about a quarter of human CO2, forming carbonic acid that lowers pH and makes it harder for shellfish and corals to build skeletons. The demo converts atmospheric CO2 levels into surface ocean pH to show the acidification trend.",
+      "data_idea": "Seeded RNG walks CO2 from preindustrial to future levels and the demo computes the pH at each step.",
+      "difficulty": "beginner",
+      "key_params": {
+        "co2_ppm": "atmospheric CO2 in parts per million"
+      },
+      "name": "Ocean Acidification Demo",
+      "real_world_use": "Marine educators demonstrate acidification's threat to shellfish hatcheries with this chemistry.",
+      "slug_base": "ocean-acidification-demo",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Thermal expansion plus melting ice sheets raise seas at rates that accelerate under higher emissions scenarios. The projector combines scenario curves with local land motion to estimate relative sea-level rise for a coastline.",
+      "data_idea": "Seeded RNG samples scenario parameters and the projector bands sea-level outcomes per decade.",
+      "difficulty": "advanced",
+      "key_params": {
+        "scenario": "emissions scenario name",
+        "subsidence_mmyr": "local subsidence in mm per year",
+        "year": "projection year"
+      },
+      "name": "Sea-Level Rise Projector",
+      "real_world_use": "Coastal cities plan seawalls and zoning setbacks from sea-level projections.",
+      "slug_base": "sea-level-rise-projector",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Corals bleach when sea temperatures exceed their summer maximum by about one degree for several weeks, tracked as degree heating weeks. The model converts temperature forecasts into bleaching risk categories for reef sites.",
+      "data_idea": "Seeded RNG generates reef temperature summers and the model classifies bleaching risk per site.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "dhw": "degree heating weeks",
+        "sst_c": "sea surface temperature in Celsius"
+      },
+      "name": "Coral Bleaching Risk Model",
+      "real_world_use": "Reef managers issue bleaching alerts from degree-heating-week forecasts.",
+      "slug_base": "coral-bleaching-risk-model",
+      "suggested_types": [
+        "decision_tree",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "Compost microbes want roughly 30 parts carbon to 1 part nitrogen; too much carbon stalls the pile and too much nitrogen stinks of ammonia. The balancer mixes browns and greens from a materials table to hit the target ratio.",
+      "data_idea": "Seeded RNG deals random material inventories and the balancer finds a mix hitting 30:1.",
+      "difficulty": "beginner",
+      "key_params": {
+        "browns_kg": "carbon-rich materials in kg",
+        "greens_kg": "nitrogen-rich materials in kg",
+        "target_cn": "target carbon-to-nitrogen ratio"
+      },
+      "name": "Compost Carbon-Nitrogen Balancer",
+      "real_world_use": "Compost facilities and gardeners tune feedstock mixes to keep piles hot and odor-free.",
+      "slug_base": "compost-cn-balancer",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A recycling sorter must separate paper, plastics, glass, and metals at belt speed, and the simulator models optical and eddy-current sorters with realistic mis-sort rates. It reports recovery purity per stream so MRF operators can tune the line.",
+      "data_idea": "Seeded RNG generates waste items with material labels and the simulator sorts them with configurable accuracy.",
+      "difficulty": "beginner",
+      "key_params": {
+        "items": "number of items on belt",
+        "sort_accuracy_pct": "sorter accuracy in percent"
+      },
+      "name": "Recycling Sorter Simulator",
+      "real_world_use": "Materials recovery facilities tune sorter settings to hit buyer purity specs.",
+      "slug_base": "recycling-sorter-simulator",
+      "suggested_types": [
+        "simulation",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "A waste stream audit weighs and categorizes discards to reveal what is recyclable, compostable, or true trash. The analyzer turns audit tallies into diversion-rate estimates and flags the categories with the biggest recovery upside.",
+      "data_idea": "Seeded RNG creates facility audit tallies across material categories for analysis.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "categories": "material category weights in kg",
+        "total_kg": "total waste weighed in kg"
+      },
+      "name": "Waste Stream Analyzer",
+      "real_world_use": "Campuses and companies run waste audits to set zero-waste targets.",
+      "slug_base": "waste-stream-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Buried organics decompose anaerobically into landfill gas, roughly half methane, following first-order decay over decades. The estimator projects gas generation by year so operators can size collection wells and flares.",
+      "data_idea": "Seeded RNG builds landfill waste placement histories and the estimator projects gas curves.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "decay_rate": "first-order decay rate per year",
+        "waste_tons": "waste in place in tons",
+        "years": "projection years"
+      },
+      "name": "Landfill Gas Estimator",
+      "real_world_use": "Landfill operators size gas collection and energy projects from generation models.",
+      "slug_base": "landfill-gas-estimator",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "E-waste holds recoverable copper, gold, and rare earths alongside hazardous lead and mercury, so an inventory tracks both value and risk. The tracker logs devices by type and estimates material recovery and hazardous content.",
+      "data_idea": "Seeded RNG generates device retirement batches and the tracker totals materials and hazards.",
+      "difficulty": "beginner",
+      "key_params": {
+        "devices": "list of device types and counts"
+      },
+      "name": "E-Waste Inventory Tracker",
+      "real_world_use": "IT asset disposition firms inventory e-waste for recycling revenue and compliance.",
+      "slug_base": "e-waste-inventory-tracker",
+      "suggested_types": [
+        "data_pipeline",
+        "report_generator",
+        "file_organizer"
+      ]
+    },
+    {
+      "concept": "A food waste audit weighs prep waste, spoilage, and plate waste separately because each points to a different fix in the kitchen. The tool converts audit weights into cost and emissions, ranking reduction actions by payback.",
+      "data_idea": "Seeded RNG creates restaurant audit weeks and the tool ranks waste reduction actions.",
+      "difficulty": "beginner",
+      "key_params": {
+        "covers": "meals served",
+        "waste_kg": "waste by category in kg"
+      },
+      "name": "Food Waste Audit Tool",
+      "real_world_use": "Restaurants and grocers audit food waste to cut purchasing costs and methane emissions.",
+      "slug_base": "food-waste-audit-tool",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "A materials recovery facility's throughput is limited by its slowest sorting stage, and the simulator finds that bottleneck under varying inbound mixes. It reports tons per hour, recovery rates, and residue per shift.",
+      "data_idea": "Seeded RNG varies inbound waste mixes and the simulator finds the constraining stage.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "inbound_tph": "inbound tons per hour",
+        "stages": "list of stage capacities"
+      },
+      "name": "MRF Throughput Simulator",
+      "real_world_use": "Recycling plant managers use throughput models to justify equipment upgrades.",
+      "slug_base": "mrf-throughput-simulator",
+      "suggested_types": [
+        "simulation",
+        "task_queue"
+      ]
+    },
+    {
+      "concept": "Material flow analysis traces tons of a material from extraction through use to disposal, exposing where it leaks out of the circular economy. The mapper builds the flow Sankey from production, trade, and waste statistics.",
+      "data_idea": "Seeded RNG assembles regional material accounts and the mapper balances the flow diagram.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "flows_tons": "flow quantities in tons",
+        "material": "material name"
+      },
+      "name": "Material Flow Mapper",
+      "real_world_use": "Governments map material flows to design circular-economy policies.",
+      "slug_base": "material-flow-mapper",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Rooftop solar potential starts with usable roof area after setbacks and shading, times local sunshine hours and panel efficiency. The estimator turns an address's roof geometry into annual kilowatt-hours and bill savings.",
+      "data_idea": "Seeded RNG generates roof geometries with shading obstacles for potential estimates.",
+      "difficulty": "beginner",
+      "key_params": {
+        "area_m2": "usable roof area in square meters",
+        "sun_hours": "annual peak sun hours",
+        "tilt_deg": "roof tilt in degrees"
+      },
+      "name": "Solar Potential Estimator",
+      "real_world_use": "Solar installers pre-qualify rooftops with remote potential estimates before site visits.",
+      "slug_base": "solar-potential-estimator",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Sizing a rooftop system means matching panel wattage and inverter capacity to the household's load profile and roof space. The sizer picks string layouts and checks the design against utility interconnection limits.",
+      "data_idea": "Seeded RNG creates roof layouts and load profiles for the sizer to design against.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "load_kwh": "annual load in kWh",
+        "roof_kw": "roof capacity limit in kW"
+      },
+      "name": "Rooftop PV System Sizer",
+      "real_world_use": "Residential solar designers produce permit-ready system sizes with tools like this.",
+      "slug_base": "rooftop-pv-sizer",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager"
+      ]
+    },
+    {
+      "concept": "Wind resource assessment fits measured wind speeds to a Weibull distribution, because energy scales with the cube of wind speed and the distribution's shape. The assessor converts a year of anemometer data into expected turbine output.",
+      "data_idea": "Seeded RNG generates wind years from Weibull parameters for the assessor to analyze.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "shape_k": "Weibull shape parameter",
+        "speeds_ms": "wind speed series in meters per second"
+      },
+      "name": "Wind Resource Assessor",
+      "real_world_use": "Wind farm developers screen sites with resource assessments before installing met towers.",
+      "slug_base": "wind-resource-assessor",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Capacity factor is the actual energy a generator produces divided by what it would make running at full rating all year, typically 15 to 25 percent for solar and 35 to 45 for wind. The calculator turns generation records into this headline performance metric.",
+      "data_idea": "Seeded RNG generates plant output series and the calculator reports capacity factor by month.",
+      "difficulty": "beginner",
+      "key_params": {
+        "gen_mwh": "energy generated in MWh",
+        "rating_mw": "nameplate rating in MW"
+      },
+      "name": "Capacity Factor Calculator",
+      "real_world_use": "Investors compare renewable projects on capacity factor and expected generation.",
+      "slug_base": "capacity-factor-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Net metering credits rooftop solar exports against imports, and the comparer runs a household's load and solar profiles through the utility's rate structure. It shows the bill with and without solar plus the payback year.",
+      "data_idea": "Seeded RNG builds load and solar profiles under several rate structures for bill comparison.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "export_rate": "export credit rate per kWh",
+        "import_rate": "import rate per kWh"
+      },
+      "name": "Net Metering Bill Comparer",
+      "real_world_use": "Solar sales teams show homeowners bill savings under their specific utility tariff.",
+      "slug_base": "net-metering-bill-comparer",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "A home battery is sized to carry critical loads through an outage or to shift solar into expensive evening hours. The sizer simulates the battery against load profiles to find the kilowatt-hours that meet the backup target.",
+      "data_idea": "Seeded RNG creates outage scenarios and load profiles for the sizer to cover.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "backup_h": "target backup hours",
+        "critical_kw": "critical load in kW"
+      },
+      "name": "Home Battery Backup Sizer",
+      "real_world_use": "Installers size Powerwall-class batteries for outage resilience and time-of-use arbitrage.",
+      "slug_base": "home-battery-backup-sizer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Energy payback time asks how long a solar panel must operate to generate the energy used in manufacturing it, usually one to three years against a 25-year life. The calculator divides embodied energy by annual output for the answer.",
+      "data_idea": "Seeded RNG varies panel embodied energy and site sunshine to compare payback times.",
+      "difficulty": "beginner",
+      "key_params": {
+        "embodied_kwh": "manufacturing energy in kWh",
+        "output_kwhyr": "annual output in kWh per year"
+      },
+      "name": "Energy Payback Calculator",
+      "real_world_use": "Life-cycle analysts quote energy payback to counter claims that panels never repay their making.",
+      "slug_base": "energy-payback-calculator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Satellite-style forest cover grids let analysts flag where tree cover disappears year over year, the signature of deforestation. The tracker diffs synthetic cover maps and reports cleared hectares by region.",
+      "data_idea": "Seeded RNG grows forest cover maps with clearing events for the tracker to detect.",
+      "difficulty": "beginner",
+      "key_params": {
+        "cell_ha": "grid cell size in hectares",
+        "years": "years of cover maps"
+      },
+      "name": "Deforestation Tracker (Synthetic)",
+      "real_world_use": "Conservation groups monitor forest loss alerts to direct field enforcement.",
+      "slug_base": "deforestation-tracker-synthetic",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard",
+        "kmeans_clustering"
+      ]
+    },
+    {
+      "concept": "A pollinator garden needs overlapping bloom times, native host plants, and pesticide-free management to feed bees through the seasons. The planner assembles plant lists whose bloom windows tile across spring to fall.",
+      "data_idea": "Seeded RNG draws from a native plant table with bloom windows for the planner to sequence.",
+      "difficulty": "beginner",
+      "key_params": {
+        "area_m2": "garden area in square meters",
+        "region": "planting region"
+      },
+      "name": "Pollinator Garden Planner",
+      "real_world_use": "Cities and homeowners plant pollinator gardens to support declining bee populations.",
+      "slug_base": "pollinator-garden-planner",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Migratory birds time their journeys to daylight and food peaks, and the tracker follows banded or tagged birds along flyways. It maps stopover sites and flags where habitat loss pinches the route.",
+      "data_idea": "Seeded RNG flies tagged birds along flyways with stopovers for the tracker to map.",
+      "difficulty": "beginner",
+      "key_params": {
+        "birds": "number of tagged birds",
+        "waypoints": "migration waypoint list"
+      },
+      "name": "Bird Migration Tracker",
+      "real_world_use": "Ornithologists track flyways to prioritize stopover habitat protection.",
+      "slug_base": "bird-migration-tracker",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Soil texture names like loam or clay come from the sand-silt-clay percentages plotted on the texture triangle. The classifier takes lab percentages and returns the official texture class.",
+      "data_idea": "Seeded RNG generates lab texture analyses for the classifier to name.",
+      "difficulty": "beginner",
+      "key_params": {
+        "clay_pct": "clay percent",
+        "sand_pct": "sand percent",
+        "silt_pct": "silt percent"
+      },
+      "name": "Soil Texture Triangle Classifier",
+      "real_world_use": "Agronomists classify texture to predict drainage and nutrient behavior.",
+      "slug_base": "soil-texture-classifier",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "decision_tree"
+      ]
+    },
+    {
+      "concept": "Species richness estimators like Chao1 infer how many species a site really holds from how many were seen once or twice in surveys. The estimator corrects raw counts upward so rare species are not ignored.",
+      "data_idea": "Seeded RNG simulates surveys over species pools and the estimator recovers the true richness.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "surveys": "list of survey species counts"
+      },
+      "name": "Species Richness Estimator",
+      "real_world_use": "Ecologists estimate true biodiversity from incomplete field surveys.",
+      "slug_base": "species-richness-estimator",
+      "suggested_types": [
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Fragmentation splits habitat into patches, and edge-heavy small patches support fewer interior species. The analyzer measures patch sizes, edge density, and connectivity from a habitat map.",
+      "data_idea": "Seeded RNG fragments habitat maps and the analyzer scores fragmentation per scenario.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "map": "habitat grid map",
+        "patch_ha": "patch sizes in hectares"
+      },
+      "name": "Habitat Fragmentation Analyzer",
+      "real_world_use": "Land trusts score parcels for conservation value using fragmentation metrics.",
+      "slug_base": "habitat-fragmentation-analyzer",
+      "suggested_types": [
+        "data_pipeline",
+        "kmeans_clustering"
+      ]
+    },
+    {
+      "concept": "Invasive species spread like a reaction-diffusion wave, advancing each year from the invasion front. The model projects the invaded area over time under different control intensities.",
+      "data_idea": "Seeded RNG seeds invasions on landscapes and the model projects spread with and without control.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "growth_rate": "intrinsic growth rate per year",
+        "years": "projection years"
+      },
+      "name": "Invasive Species Spread Model",
+      "real_world_use": "Agencies plan early-detection surveys ahead of modeled invasion fronts.",
+      "slug_base": "invasive-species-spread-model",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Carrying capacity is the population an environment can sustain, where logistic growth levels off as resources run out. The simulator runs logistic curves under harvest and habitat scenarios to find sustainable levels.",
+      "data_idea": "Seeded RNG varies growth rates and capacities while the simulator tracks population trajectories.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "capacity": "carrying capacity individuals",
+        "growth_rate": "growth rate per year",
+        "years": "simulation years"
+      },
+      "name": "Carrying Capacity Simulator",
+      "real_world_use": "Wildlife managers set harvest quotas from carrying-capacity models.",
+      "slug_base": "carrying-capacity-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Predator and prey populations cycle as each drives the other, the classic Lotka-Volterra oscillation taught in every ecology course. The simulator integrates the coupled equations and plots the phase-plane cycles.",
+      "data_idea": "Seeded RNG picks interaction coefficients and the simulator renders the population cycles.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alpha": "prey growth rate",
+        "beta": "predation rate",
+        "years": "simulation years"
+      },
+      "name": "Predator-Prey Cycle Simulator",
+      "real_world_use": "Fisheries scientists interpret population swings with predator-prey dynamics.",
+      "slug_base": "lotka-volterra-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Mark-recapture estimates a hidden population by marking animals, releasing them, and seeing what fraction of a second catch is marked. The Lincoln-Petersen estimator turns those counts into a population estimate with confidence bounds.",
+      "data_idea": "Seeded RNG runs capture sessions over known populations for the estimator to recover.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "marked": "animals marked in first catch",
+        "recaptured": "marked animals in second catch",
+        "second_catch": "total second catch"
+      },
+      "name": "Mark-Recapture Population Estimator",
+      "real_world_use": "Biologists estimate fish, bird, and mammal populations with mark-recapture studies.",
+      "slug_base": "mark-recapture-estimator",
+      "suggested_types": [
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Warming springs shift flowering and migration earlier, and the tracker measures phenology shifts in days per decade from dated observations. Consistent advances across species signal a climate fingerprint.",
+      "data_idea": "Seeded RNG generates dated phenology records with trends for the tracker to quantify.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "records": "dated phenology observations",
+        "species": "species name"
+      },
+      "name": "Phenology Shift Tracker",
+      "real_world_use": "Climate researchers document ecological timing shifts as warming evidence.",
+      "slug_base": "phenology-shift-tracker",
+      "suggested_types": [
+        "linear_regression",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Fertilizer planning converts a soil test into nitrogen, phosphorus, and potassium rates matched to the crop's removal. The planner computes product amounts and cost per acre from the nutrient prescription.",
+      "data_idea": "Seeded RNG creates soil tests and crop targets for the planner to prescribe.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "crop": "crop type",
+        "soil_n": "soil nitrogen in ppm",
+        "target_yield": "target yield per acre"
+      },
+      "name": "NPK Fertilizer Planner",
+      "real_world_use": "Crop consultants write fertilizer prescriptions from soil tests each season.",
+      "slug_base": "npk-fertilizer-planner",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Crop water need equals reference evapotranspiration times the crop coefficient, summed over the season. The calculator turns weather data into seasonal irrigation demand per field.",
+      "data_idea": "Seeded RNG generates weather seasons and the calculator totals crop water demand.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "crop_kc": "crop coefficient",
+        "et0_mm": "daily reference ET in mm"
+      },
+      "name": "Crop Water Requirement Calculator",
+      "real_world_use": "Irrigation districts allocate water using crop ET calculations.",
+      "slug_base": "crop-water-et-calculator",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The Universal Soil Loss Equation multiplies rainfall erosivity, soil erodibility, slope, cover, and practice factors into tons of soil lost per acre per year. The estimator shows which factor dominates so conservation targets the right lever.",
+      "data_idea": "Seeded RNG builds field factor sets and the estimator ranks erosion drivers.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_factor": "cover management factor",
+        "k_factor": "soil erodibility",
+        "r_factor": "rainfall erosivity"
+      },
+      "name": "Soil Erosion Estimator (USLE)",
+      "real_world_use": "Conservation planners use USLE to justify terracing and cover crops.",
+      "slug_base": "usle-erosion-estimator",
+      "suggested_types": [
+        "cli_tool",
+        "decision_tree"
+      ]
+    },
+    {
+      "concept": "Wildlife corridors link habitat patches so animals can move, mate, and migrate, and the planner scores candidate linkages by width, length, and land cost. Least-cost path analysis finds routes that balance ecology against acquisition cost.",
+      "data_idea": "Seeded RNG builds landscape cost grids and the planner routes corridors between reserves.",
+      "difficulty": "advanced",
+      "key_params": {
+        "budget": "acquisition budget",
+        "patches": "habitat patch locations"
+      },
+      "name": "Wildlife Corridor Planner",
+      "real_world_use": "Conservation NGOs design corridor networks to reconnect fragmented reserves.",
+      "slug_base": "wildlife-corridor-planner",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Life-cycle assessment totals a product's environmental impacts from raw material extraction through manufacturing, use, and disposal. The mini tool walks an inventory of inputs through impact factors to a footprint per functional unit.",
+      "data_idea": "Seeded RNG assembles product bills of materials and the tool computes cradle-to-grave impacts.",
+      "difficulty": "advanced",
+      "key_params": {
+        "bom": "bill of materials with quantities",
+        "unit": "functional unit"
+      },
+      "name": "Product Life-Cycle Assessment Tool",
+      "real_world_use": "Sustainability teams run LCAs to eco-label products and find hotspots.",
+      "slug_base": "lca-mini-tool",
+      "suggested_types": [
+        "data_pipeline",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Species distribution models relate occurrence records to climate and habitat variables, then project where else the species could live. The modeler fits the climate envelope and maps suitable habitat under current and future climates.",
+      "data_idea": "Seeded RNG places virtual species on climate gradients and the modeler recovers their envelopes.",
+      "difficulty": "advanced",
+      "key_params": {
+        "occurrences": "species occurrence records",
+        "variables": "climate variable grids"
+      },
+      "name": "Species Distribution Modeler",
+      "real_world_use": "Biologists forecast range shifts to plan protected areas under climate change.",
+      "slug_base": "species-distribution-modeler",
+      "suggested_types": [
+        "naive_bayes",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Metapopulation viability analysis simulates linked subpopulations blinking in and out as local extinctions and recolonizations play out. The analyzer estimates the chance the whole network persists over a century.",
+      "data_idea": "Seeded RNG wires patch networks and the analyzer runs extinction-colonization trials.",
+      "difficulty": "advanced",
+      "key_params": {
+        "patches": "patch count and sizes",
+        "years": "simulation years"
+      },
+      "name": "Metapopulation Viability Analyzer",
+      "real_world_use": "Endangered species recovery plans set population targets from viability analysis.",
+      "slug_base": "metapopulation-viability-analyzer",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Dissolved contaminants ride groundwater flow while spreading by dispersion and decaying or sorbing along the way. The transport model forecasts plume arrival at wells so monitoring networks are placed ahead of it.",
+      "data_idea": "Seeded RNG releases plumes in aquifer models and the transport model forecasts breakthrough curves.",
+      "difficulty": "advanced",
+      "key_params": {
+        "source_mgl": "source concentration in mg per liter",
+        "velocity_mday": "groundwater velocity in meters per day"
+      },
+      "name": "Groundwater Contaminant Transport Model",
+      "real_world_use": "Remediation engineers design pump-and-treat systems from plume transport models.",
+      "slug_base": "contaminant-transport-model",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "An airshed box model treats a city as a well-mixed volume where emissions in minus ventilation out sets the concentration. It is the simplest way to link a city's total emissions to its average pollution level.",
+      "data_idea": "Seeded RNG varies city emissions and wind ventilation while the box model computes concentrations.",
+      "difficulty": "advanced",
+      "key_params": {
+        "emissions_kgs": "emission rate in kg per second",
+        "mixing_h_m": "mixing height in meters",
+        "wind_ms": "wind speed in meters per second"
+      },
+      "name": "Airshed Box Model",
+      "real_world_use": "Policy analysts sanity-check city emission targets with box-model arithmetic.",
+      "slug_base": "airshed-box-model",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Reservoirs trap incoming sediment, losing storage year by year until the dead pool fills. The modeler projects capacity loss from sediment yield so dam operators can plan dredging or flushing.",
+      "data_idea": "Seeded RNG builds watershed sediment yields and the modeler projects reservoir life.",
+      "difficulty": "advanced",
+      "key_params": {
+        "capacity_mcm": "reservoir capacity in million cubic meters",
+        "sediment_tyr": "annual sediment in tons per year"
+      },
+      "name": "Reservoir Sedimentation Modeler",
+      "real_world_use": "Dam operators schedule sediment management from storage-loss projections.",
+      "slug_base": "reservoir-sedimentation-modeler",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Decibels add logarithmically, so two 70 dB machines together make 73 dB, not 140. The calculator sums noise sources the correct logarithmic way and shows how much the loudest source dominates.",
+      "data_idea": "Seeded RNG deals sets of source levels for the calculator to combine and rank.",
+      "difficulty": "beginner",
+      "key_params": {
+        "levels_db": "list of source levels in dB"
+      },
+      "name": "Decibel Addition Calculator",
+      "real_world_use": "Acousticians combine equipment noise specs to predict total site levels.",
+      "slug_base": "db-addition-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Noise maps color city blocks by modeled sound level from roads, rail, and industry. The mapper grids sources over streets and computes the level at each receiver point with distance falloff.",
+      "data_idea": "Seeded RNG lays out road networks with traffic volumes and the mapper renders the noise grid.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "grid_m": "grid cell size in meters",
+        "sources": "list of noise source levels and positions"
+      },
+      "name": "Noise Pollution Mapper",
+      "real_world_use": "Cities publish noise maps to guide zoning and quiet-zone planning.",
+      "slug_base": "noise-pollution-mapper",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A noise barrier's insertion loss depends on how far it breaks the line of sight between source and receiver, following diffraction theory. The estimator sizes barrier height to hit a target reduction at nearby homes.",
+      "data_idea": "Seeded RNG places highways and homes, and the estimator sizes barriers per receiver.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "distance_m": "source-to-receiver distance in meters",
+        "target_db": "target reduction in dB"
+      },
+      "name": "Traffic Noise Barrier Estimator",
+      "real_world_use": "Highway agencies design sound walls with barrier diffraction calculations.",
+      "slug_base": "traffic-noise-barrier-estimator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Skyglow from city lights scatters in the atmosphere and washes out the night sky, modeled from light emissions, distance, and atmospheric clarity. The model maps sky brightness so dark-sky advocates can show what is being lost.",
+      "data_idea": "Seeded RNG distributes city light sources and the model maps sky brightness outward.",
+      "difficulty": "advanced",
+      "key_params": {
+        "city_lumens": "city light output in lumens",
+        "distance_km": "distance from city in km"
+      },
+      "name": "Light Pollution Skyglow Model",
+      "real_world_use": "Astronomers and dark-sky reserves quantify skyglow to push lighting ordinances.",
+      "slug_base": "light-pollution-skyglow-model",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A quiet-route planner weights street segments by modeled noise so pedestrians and cyclists can trade a slightly longer path for a calmer one. It runs shortest-path on a noise-weighted graph.",
+      "data_idea": "Seeded RNG builds street graphs with noise weights and the planner compares quiet versus fast routes.",
+      "difficulty": "beginner",
+      "key_params": {
+        "destination": "end node",
+        "noise_weight": "noise penalty factor",
+        "origin": "start node"
+      },
+      "name": "Quiet Route Planner",
+      "real_world_use": "Wellness apps route joggers and walkers away from roaring arterials.",
+      "slug_base": "quiet-route-planner",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A water footprint sums the green, blue, and grey water behind a product or diet: rainwater, irrigation, and pollution dilution. The calculator turns consumption choices into liters so tradeoffs are visible.",
+      "data_idea": "Seeded RNG builds diet and product baskets and the calculator totals their water footprints.",
+      "difficulty": "beginner",
+      "key_params": {
+        "items": "list of consumed items with quantities"
+      },
+      "name": "Water Footprint Calculator",
+      "real_world_use": "Food companies label water footprints to guide sustainable sourcing.",
+      "slug_base": "water-footprint-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "ESG reports organize environmental metrics, from emissions to water to waste, into the disclosures investors expect. The generator pulls metric records into a structured report with year-over-year trends.",
+      "data_idea": "Seeded RNG creates company metric histories and the generator compiles the disclosure tables.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "metrics": "list of ESG metric records",
+        "years": "reporting years"
+      },
+      "name": "ESG Report Generator",
+      "real_world_use": "Sustainability teams assemble investor-grade ESG disclosures from metric pipelines.",
+      "slug_base": "esg-report-generator",
+      "suggested_types": [
+        "report_generator",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Environmental justice screening overlays pollution burden with demographics to find communities facing disproportionate exposure. The mapper scores census tracts on combined burden and vulnerability indices.",
+      "data_idea": "Seeded RNG builds tract-level burden and demographic layers for the mapper to score.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "tracts": "census tract records with indicators"
+      },
+      "name": "Environmental Justice Screen Mapper",
+      "real_world_use": "Agencies target enforcement and grants with EJ screening maps.",
+      "slug_base": "ej-screen-mapper",
+      "suggested_types": [
+        "web_dashboard",
+        "kmeans_clustering",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "A product carbon label distills life-cycle emissions into a per-unit footprint shoppers can compare. The labeler allocates supply-chain emissions down to the product level and bands the result.",
+      "data_idea": "Seeded RNG assembles product supply chains and the labeler computes per-unit footprints.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "supply_chain": "supply chain emission records",
+        "units": "units produced"
+      },
+      "name": "Product Carbon Labeler",
+      "real_world_use": "Retailers pilot carbon labels so buyers can compare footprints shelf-side.",
+      "slug_base": "product-carbon-labeler",
+      "suggested_types": [
+        "data_pipeline",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Green procurement scores suppliers on emissions, certifications, and take-back programs to steer contracts toward cleaner vendors. The scorer weights criteria into a single comparable rating per bid.",
+      "data_idea": "Seeded RNG generates supplier bids with sustainability attributes for scoring.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "criteria_weights": "weight per criterion",
+        "suppliers": "supplier attribute records"
+      },
+      "name": "Green Procurement Scorer",
+      "real_world_use": "Corporate buyers embed sustainability scores in vendor selection.",
+      "slug_base": "green-procurement-scorer",
+      "suggested_types": [
+        "decision_tree",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "A sustainability dashboard tracks energy, water, waste, and emissions KPIs against targets with red-amber-green status. The dashboard ingests monthly metric feeds and flags the indicators drifting off track.",
+      "data_idea": "Seeded RNG streams facility metrics with drift events for the dashboard to flag.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "kpis": "list of KPI definitions with targets"
+      },
+      "name": "Sustainability KPI Dashboard",
+      "real_world_use": "Plant managers watch sustainability dashboards the way they watch production KPIs.",
+      "slug_base": "sustainability-kpi-dashboard",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "rest_api"
+      ]
+    },
+    {
+      "concept": "Carbon offsets need additionality, permanence, and verification before they can credibly cancel emissions. The verifier checks project documents against a criteria checklist and scores credit quality.",
+      "data_idea": "Seeded RNG creates offset project dossiers and the verifier scores them against the checklist.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "project": "offset project record"
+      },
+      "name": "Carbon Offset Verifier",
+      "real_world_use": "Buyers diligence offset portfolios to avoid worthless credits.",
+      "slug_base": "carbon-offset-verifier",
+      "suggested_types": [
+        "decision_tree",
+        "report_generator",
+        "chatbot"
+      ]
+    },
+    {
+      "concept": "Cities run hotter than surrounding countryside as pavement and buildings store daytime heat, mapped from land cover and temperature sensors. The mapper identifies the hottest blocks where cooling interventions pay off most.",
+      "data_idea": "Seeded RNG builds city land-cover grids with sensor readings for heat mapping.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "grid_m": "grid cell size in meters",
+        "land_cover": "land cover classification grid"
+      },
+      "name": "Urban Heat Island Mapper",
+      "real_world_use": "Cities target tree planting and cool roofs at mapped heat hotspots.",
+      "slug_base": "urban-heat-island-mapper",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard",
+        "kmeans_clustering"
+      ]
+    },
+    {
+      "concept": "Heat index combines temperature and humidity into what the air actually feels like, with danger thresholds where outdoor work must stop. The calculator maps forecast conditions into caution, danger, and extreme-danger bands.",
+      "data_idea": "Seeded RNG generates heat-wave forecasts and the calculator classifies each hour.",
+      "difficulty": "beginner",
+      "key_params": {
+        "humidity_pct": "relative humidity in percent",
+        "temp_c": "air temperature in Celsius"
+      },
+      "name": "Heat Index Danger Calculator",
+      "real_world_use": "OSHA and sports leagues set work and play rules from heat index bands.",
+      "slug_base": "heat-index-danger-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "The Standardized Precipitation Index fits rainfall records to a probability distribution, turning dry spells into comparable drought severity scores. The calculator flags drought onset, duration, and intensity from rain gauges.",
+      "data_idea": "Seeded RNG generates rainfall records with embedded droughts for the calculator to detect.",
+      "difficulty": "advanced",
+      "key_params": {
+        "rain_mm": "monthly rainfall series in mm",
+        "scale_months": "accumulation window in months"
+      },
+      "name": "Drought Index Calculator (SPI)",
+      "real_world_use": "Drought monitors trigger relief programs from SPI-classified drought severity.",
+      "slug_base": "spi-drought-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Wildfire risk blends fuel dryness, wind, ignition history, and terrain into a score that prioritizes prevention work. The scorer rates landscape cells so crews thin fuels and stage equipment where risk runs highest.",
+      "data_idea": "Seeded RNG builds landscape fuel and weather layers for the scorer to rank.",
+      "difficulty": "advanced",
+      "key_params": {
+        "fuel_load": "fuel load index",
+        "wind_ms": "wind speed in meters per second"
+      },
+      "name": "Wildfire Risk Scorer",
+      "real_world_use": "Fire agencies pre-position crews using daily risk maps.",
+      "slug_base": "wildfire-risk-scorer",
+      "suggested_types": [
+        "decision_tree",
+        "web_dashboard",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "Storm surge piles water against the coast as hurricane winds push the sea ashore, amplified by shallow shelves and high tide. The estimator combines storm parameters with bathymetry to forecast inundation depth.",
+      "data_idea": "Seeded RNG spins up synthetic hurricanes and the estimator maps surge heights along the coast.",
+      "difficulty": "advanced",
+      "key_params": {
+        "pressure_mb": "central pressure in millibars",
+        "wind_ms": "max wind speed in meters per second"
+      },
+      "name": "Storm Surge Estimator",
+      "real_world_use": "Emergency managers order evacuations from surge inundation forecasts.",
+      "slug_base": "storm-surge-estimator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Field crews sample water on a schedule that captures storms, seasons, and permit deadlines without wasting lab budget. The scheduler places sampling events to cover required conditions at minimum cost.",
+      "data_idea": "Seeded RNG creates monitoring requirements and the scheduler outputs the sampling calendar.",
+      "difficulty": "beginner",
+      "key_params": {
+        "samples_per_year": "required samples per site",
+        "sites": "monitoring site list"
+      },
+      "name": "Water Sampler Scheduler",
+      "real_world_use": "Watershed groups schedule volunteer sampling around storms and seasons.",
+      "slug_base": "water-sampler-scheduler",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A sensor network must place enough stations to catch pollution gradients without redundant overlap. The planner scores candidate layouts on coverage versus cost to recommend station counts and positions.",
+      "data_idea": "Seeded RNG generates candidate station layouts and the planner scores coverage per dollar.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "area_km2": "monitoring area in square kilometers",
+        "budget": "station budget"
+      },
+      "name": "Sensor Network Planner",
+      "real_world_use": "Air agencies design monitoring networks to cover populations efficiently.",
+      "slug_base": "sensor-network-planner",
+      "suggested_types": [
+        "simulation",
+        "config_manager"
+      ]
+    },
+    {
+      "concept": "Citizen science data needs validation because volunteers vary in skill and equipment, so the validator flags outliers and cross-checks against reference stations. Clean records graduate into the trusted dataset.",
+      "data_idea": "Seeded RNG mixes volunteer observations with errors for the validator to filter.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "observations": "volunteer observation records",
+        "reference": "reference station readings"
+      },
+      "name": "Citizen Science Data Validator",
+      "real_world_use": "Community air and water programs QA volunteer data before publishing it.",
+      "slug_base": "citizen-science-validator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "log_analyzer"
+      ]
+    },
+    {
+      "concept": "NDVI contrasts near-infrared and red reflectance to measure vegetation vigor from above, the workhorse index of remote sensing. The simulator renders synthetic multispectral scenes and computes NDVI to track crop and forest health.",
+      "data_idea": "Seeded RNG paints land-cover scenes with spectral signatures and the simulator maps NDVI.",
+      "difficulty": "advanced",
+      "key_params": {
+        "nir": "near-infrared reflectance grid",
+        "red": "red reflectance grid"
+      },
+      "name": "NDVI Vegetation Simulator (Synthetic)",
+      "real_world_use": "Agronomists and foresters monitor crop stress from NDVI imagery.",
+      "slug_base": "ndvi-synthetic-simulator",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Drone surveys need flight lines spaced for the camera's footprint and overlap at the target altitude. The planner lays out the grid, estimates flight time and battery swaps, and totals image count.",
+      "data_idea": "Seeded RNG defines survey areas and the planner outputs flight plans.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "area_ha": "survey area in hectares",
+        "overlap_pct": "image overlap in percent"
+      },
+      "name": "Drone Survey Planner",
+      "real_world_use": "Ecologists and surveyors plan mapping flights with tools like this.",
+      "slug_base": "drone-survey-planner",
+      "suggested_types": [
+        "scheduler",
+        "config_manager"
+      ]
+    },
+    {
+      "concept": "Low-cost air sensors drift, so collocation against a reference monitor lets a calibration regression correct their readings. The calibrator fits the correction model and reports the sensor's accuracy after adjustment.",
+      "data_idea": "Seeded RNG collocates virtual sensors with drift against references for calibration.",
+      "difficulty": "advanced",
+      "key_params": {
+        "raw": "raw sensor readings",
+        "reference": "reference monitor readings"
+      },
+      "name": "Air Sensor Calibrator",
+      "real_world_use": "Community networks calibrate low-cost sensors against regulatory monitors.",
+      "slug_base": "air-sensor-calibrator",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "api_client_sim"
+      ]
+    },
+    {
+      "concept": "A rain garden captures roof runoff in a shallow planted basin, sized so a design storm ponds and infiltrates within a day. The sizer balances contributing area, soil infiltration rate, and ponding depth.",
+      "data_idea": "Seeded RNG varies roof areas and soil rates while the sizer checks drain-down time.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "contrib_m2": "contributing area in square meters",
+        "infil_mmhr": "soil infiltration in mm per hour"
+      },
+      "name": "Rain Garden Sizer",
+      "real_world_use": "Green infrastructure programs size rain gardens to meet stormwater credits.",
+      "slug_base": "rain-garden-sizer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Permeable pavement infiltrates rain where it falls, and the sizer checks that the design storm drains through the surface and stone reservoir without ponding. Clogging factors derate the long-term infiltration rate.",
+      "data_idea": "Seeded RNG ages pavement with clogging and the sizer verifies performance over time.",
+      "difficulty": "beginner",
+      "key_params": {
+        "area_m2": "pavement area in square meters",
+        "infil_mmhr": "surface infiltration in mm per hour"
+      },
+      "name": "Permeable Pavement Sizer",
+      "real_world_use": "Parking lots earn stormwater credits with permeable pavement designs.",
+      "slug_base": "permeable-pavement-sizer",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Green roofs cut stormwater runoff, insulate the building, and cool the air, and the estimator totals those benefits against installation cost. It reports payback from energy savings and stormwater fee reductions.",
+      "data_idea": "Seeded RNG creates building profiles and the estimator compares green versus conventional roofs.",
+      "difficulty": "beginner",
+      "key_params": {
+        "area_m2": "roof area in square meters",
+        "depth_cm": "growing medium depth in cm"
+      },
+      "name": "Green Roof Benefit Estimator",
+      "real_world_use": "Developers justify green roofs with benefit-cost estimates like these.",
+      "slug_base": "green-roof-benefit-estimator",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Charging an EV on a coal-heavy grid still beats gasoline on carbon, and the comparer runs both against the local grid mix. It reports grams per mile for the EV versus the gasoline baseline.",
+      "data_idea": "Seeded RNG varies grid mixes and driving patterns for the comparer to rank.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "grid_gkwh": "grid carbon intensity in grams per kWh",
+        "miles_yr": "annual miles driven"
+      },
+      "name": "EV Charging Carbon Comparer",
+      "real_world_use": "Fleet managers compare EV adoption scenarios on emissions per mile.",
+      "slug_base": "ev-charging-carbon-comparer",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Aquifers recharge where rain infiltrates faster than it runs off, estimated from rainfall, soil, and land cover. The estimator maps recharge potential to guide where development must preserve open ground.",
+      "data_idea": "Seeded RNG builds watershed land-cover grids and the estimator maps recharge zones.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "rain_mm": "annual rainfall in millimeters",
+        "soil": "soil infiltration class"
+      },
+      "name": "Aquifer Recharge Estimator",
+      "real_world_use": "Water districts protect recharge zones to sustain well fields.",
+      "slug_base": "aquifer-recharge-estimator",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Glaciers release meltwater on a seasonal curve set by temperature and snowpack, and warming shifts the peak earlier and shrinks late-summer flow. The modeler projects runoff timing that downstream irrigators depend on.",
+      "data_idea": "Seeded RNG warms synthetic glacier basins and the modeler shifts the melt curves.",
+      "difficulty": "advanced",
+      "key_params": {
+        "area_km2": "glacier area in square kilometers",
+        "warming_c": "warming in Celsius"
+      },
+      "name": "Glacier Melt Runoff Modeler",
+      "real_world_use": "Water managers in mountain basins plan reservoirs around shifting melt timing.",
+      "slug_base": "glacier-melt-runoff-modeler",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Food miles multiply each ingredient's transport distance by its weight and the mode's emission factor. The calculator totals the plate's transport footprint and suggests lower-mile swaps.",
+      "data_idea": "Seeded RNG assembles meals from sourced ingredients and the calculator totals food miles.",
+      "difficulty": "beginner",
+      "key_params": {
+        "ingredients": "list of ingredients with origin and weight"
+      },
+      "name": "Food Miles Calculator",
+      "real_world_use": "Farm-to-table programs market low food miles as a freshness and climate signal.",
+      "slug_base": "food-miles-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    }
+  ]
+}

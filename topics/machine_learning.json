@@ -1,0 +1,2462 @@
+{
+  "domain": "computer_science",
+  "subdomain": "machine_learning",
+  "topics": [
+    {
+      "slug_base": "ordinary-least-squares",
+      "name": "Ordinary Least Squares from Scratch",
+      "concept": "Ordinary least squares fits a line (or hyperplane) by minimizing the sum of squared residuals, with a closed-form solution via the normal equation. Building it with pure-Python matrix ops shows exactly how coefficients, residuals, and R-squared relate. It is the baseline every fancier regressor must beat.",
+      "key_params": {
+        "features": "number of input features",
+        "noise": "noise level in the synthetic targets",
+        "fit_intercept": "whether an intercept term is included"
+      },
+      "data_idea": "Generates seeded datasets from known linear coefficients with Gaussian noise, fits OLS, and checks recovered coefficients match the truth within tolerance.",
+      "real_world_use": "Baseline regression in economics, pricing models, and as the reference model in ML pipelines.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gradient-descent-visualizer",
+      "name": "Gradient Descent Visualizer",
+      "concept": "Gradient descent minimizes a loss by stepping downhill along the negative gradient: the learning rate controls step size, and too large a rate diverges while too small crawls. Visualizing the loss surface and the optimization path makes learning-rate tuning intuitive. Variants like momentum smooth the path through ravines.",
+      "key_params": {
+        "learning_rate": "step size per iteration",
+        "iterations": "number of descent steps",
+        "momentum": "momentum coefficient 0-1"
+      },
+      "data_idea": "Creates seeded quadratic and Rosenbrock-like loss surfaces, runs descent from random starts, and records the trajectory and final loss.",
+      "real_world_use": "Training every neural network and large-scale linear model relies on gradient-based optimization.",
+      "suggested_types": [
+        "simulation",
+        "linear_regression",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ridge-regression-l2",
+      "name": "Ridge Regression (L2)",
+      "concept": "Ridge adds an L2 penalty on coefficient magnitudes to the least-squares loss, shrinking coefficients and taming multicollinearity. The penalty strength lambda trades bias against variance: larger lambda means simpler, more stable models. The closed form just adds lambda to the diagonal of the Gram matrix.",
+      "key_params": {
+        "alpha": "L2 penalty strength",
+        "features": "feature count including correlated pairs",
+        "noise": "target noise level"
+      },
+      "data_idea": "Generates seeded datasets with correlated features, fits ridge across an alpha grid, and shows coefficient shrinkage vs plain OLS.",
+      "real_world_use": "Used in finance factor models and genomics where features are highly correlated.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lasso-regression-l1",
+      "name": "Lasso Regression (L1)",
+      "concept": "Lasso penalizes the sum of absolute coefficient values, which drives some coefficients exactly to zero and performs automatic feature selection. Coordinate descent optimizes it one coefficient at a time with soft thresholding. The sparsity makes lasso a favorite when only a few features truly matter.",
+      "key_params": {
+        "alpha": "L1 penalty strength",
+        "max_iter": "coordinate descent iterations",
+        "true_sparse": "number of truly nonzero coefficients"
+      },
+      "data_idea": "Builds seeded sparse linear problems, fits lasso, and measures how often the true support (nonzero set) is recovered.",
+      "real_world_use": "Gene-expression analysis and sparse signal recovery use lasso for feature selection.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "elastic-net-blend",
+      "name": "Elastic Net Blend",
+      "concept": "Elastic net mixes L1 and L2 penalties, keeping lasso's sparsity while letting correlated features share coefficient weight instead of picking one arbitrarily. The mixing ratio rho interpolates between ridge and lasso. It is the pragmatic default when you suspect both sparsity and grouped correlation.",
+      "key_params": {
+        "alpha": "overall penalty strength",
+        "l1_ratio": "mix between L1 and L2",
+        "corr_groups": "number of correlated feature groups"
+      },
+      "data_idea": "Generates seeded data with grouped correlated features, fits elastic net across mixing ratios, and compares selection stability.",
+      "real_world_use": "Chemometrics and bioinformatics with grouped correlated predictors favor elastic net.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "polynomial-feature-expansion",
+      "name": "Polynomial Feature Expansion",
+      "concept": "Linear models can fit curves if you first expand features into polynomial terms: x becomes [x, x^2, x^3], and OLS fits the rest. Degree controls flexibility, and high degrees overfit wildly without regularization. It is the simplest way to see the bias-variance trade-off in action.",
+      "key_params": {
+        "degree": "polynomial degree",
+        "alpha": "ridge penalty to tame high degrees",
+        "noise": "target noise level"
+      },
+      "data_idea": "Samples seeded points from a known curve with noise, fits polynomial regressions of several degrees, and plots train vs validation error.",
+      "real_world_use": "Introductory ML courses and quick nonlinear baselines use polynomial expansion before kernels.",
+      "suggested_types": [
+        "linear_regression",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "logistic-regression-binary",
+      "name": "Logistic Regression (Binary)",
+      "concept": "Logistic regression models class probability with the sigmoid of a linear score, trained by minimizing log loss with gradient descent. Despite the name it is a classifier, and its coefficients are interpretable as log-odds changes. L2 regularization keeps it stable on small data.",
+      "key_params": {
+        "learning_rate": "gradient descent step size",
+        "l2": "regularization strength",
+        "threshold": "probability cutoff for class 1"
+      },
+      "data_idea": "Generates seeded two-class Gaussian blobs, trains logistic regression, and reports accuracy plus calibration of predicted probabilities.",
+      "real_world_use": "Credit scoring, medical risk models, and click prediction all start with logistic regression.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "naive_bayes"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "softmax-multiclass",
+      "name": "Softmax Multiclass Classifier",
+      "concept": "Softmax regression generalizes logistic regression to many classes: each class gets a linear score, the softmax turns scores into probabilities, and cross-entropy loss trains the weights. It is the standard final layer of neural classifiers. Temperature scaling later can recalibrate its probabilities.",
+      "key_params": {
+        "classes": "number of classes",
+        "learning_rate": "training step size",
+        "l2": "regularization strength"
+      },
+      "data_idea": "Generates seeded multi-class blobs, trains softmax regression, and evaluates per-class precision and recall.",
+      "real_world_use": "Multinomial text classification and neural network output layers use softmax with cross-entropy.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "knn-classifier",
+      "name": "k-Nearest Neighbors Classifier",
+      "concept": "kNN classifies a point by majority vote of its k closest training examples: no training phase, just a distance metric and a stored dataset. Small k is noisy, large k oversmooths, and feature scaling decides what 'close' means. Its simplicity makes it the perfect first classifier to implement.",
+      "key_params": {
+        "k": "number of neighbors voting",
+        "metric": "euclidean vs manhattan distance",
+        "weights": "uniform vs distance-weighted votes"
+      },
+      "data_idea": "Generates seeded class blobs, classifies held-out points for several k, and charts accuracy vs k.",
+      "real_world_use": "Recommendation prototypes, digit recognition demos, and low-data classification use kNN.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "knn-regressor",
+      "name": "k-Nearest Neighbors Regressor",
+      "concept": "kNN regression predicts by averaging the targets of the k nearest training points, producing a flexible nonlinear fit with no parameters to learn. Distance weighting gives closer neighbors more say, smoothing the prediction surface. Like all kNN, it slows down as the dataset grows without an index.",
+      "key_params": {
+        "k": "neighbors averaged",
+        "metric": "distance metric choice",
+        "weights": "uniform vs distance weighting"
+      },
+      "data_idea": "Samples seeded points from a wavy function with noise, fits kNN regression, and measures RMSE across k values.",
+      "real_world_use": "House-price estimation and sensor interpolation use kNN regression as an interpretable baseline.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "decision-tree-gini",
+      "name": "Decision Tree (Gini Splits)",
+      "concept": "Decision trees split data recursively on the feature and threshold that most reduces impurity (Gini or entropy), producing human-readable if-then rules. Building one from scratch means implementing the split search, stopping criteria, and leaf prediction. Trees overfit eagerly, which is why depth limits exist.",
+      "key_params": {
+        "max_depth": "tree depth cap",
+        "min_samples_split": "minimum samples to split a node",
+        "criterion": "gini vs entropy impurity"
+      },
+      "data_idea": "Generates seeded classification data with known structure, grows trees, and verifies depth limits and split quality on held-out data.",
+      "real_world_use": "Interpretable models in medicine and finance; the building block of random forests.",
+      "suggested_types": [
+        "decision_tree",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "decision-tree-pruning",
+      "name": "Decision Tree Pruning",
+      "concept": "Fully grown trees memorize noise, so pruning trades tree size for generalization: cost-complexity pruning penalizes leaf count and picks the subtree minimizing penalized validation error. Pre-pruning (depth limits) is cruder; post-pruning usually wins. The pruning path shows the whole accuracy-vs-size frontier.",
+      "key_params": {
+        "ccp_alpha": "cost-complexity penalty",
+        "min_samples_leaf": "minimum leaf size",
+        "noise": "label noise level"
+      },
+      "data_idea": "Grows seeded trees on noisy data, prunes along the alpha path, and selects the subtree with best validation accuracy.",
+      "real_world_use": "Production tree models prune to stay interpretable and robust on noisy real data.",
+      "suggested_types": [
+        "decision_tree",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "random-forest-bagging",
+      "name": "Random Forest (Bagging)",
+      "concept": "Random forests average many trees trained on bootstrap samples with random feature subsets at each split, which decorrelates the trees and crushes variance. Out-of-bag samples give a free validation estimate. More trees help up to a point; depth and feature-subset size are the real knobs.",
+      "key_params": {
+        "n_trees": "trees in the forest",
+        "max_features": "features considered per split",
+        "max_depth": "per-tree depth cap"
+      },
+      "data_idea": "Trains seeded forests on noisy classification data and compares OOB error and test accuracy against single trees.",
+      "real_world_use": "Kaggle tabular winners, bioinformatics, and credit risk modeling rely on random forests.",
+      "suggested_types": [
+        "decision_tree",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "extra-trees-randomized",
+      "name": "Extremely Randomized Trees",
+      "concept": "Extra Trees push randomization further than random forests: split thresholds are chosen randomly rather than optimally, making training much faster and often reducing variance more. The extra randomness can slightly increase bias, which the forest averaging usually absorbs. It is the speed-vs-precision sibling of random forests.",
+      "key_params": {
+        "n_trees": "trees in the ensemble",
+        "max_features": "features per split",
+        "random_splits": "thresholds drawn per candidate feature"
+      },
+      "data_idea": "Benchmarks seeded extra-trees vs random forests on timing and accuracy across noisy datasets.",
+      "real_world_use": "High-dimensional problems (text, genomics) where split search is expensive use Extra Trees.",
+      "suggested_types": [
+        "decision_tree",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "gradient-boosting-stumps",
+      "name": "Gradient Boosting (Decision Stumps)",
+      "concept": "Gradient boosting builds trees sequentially, each one fitting the residual errors of the ensemble so far, with a learning rate shrinking each contribution. Shallow trees plus many rounds plus shrinkage generalize remarkably well. Implementing it on stumps reveals the whole mechanism without distraction.",
+      "key_params": {
+        "n_rounds": "boosting iterations",
+        "learning_rate": "shrinkage per round",
+        "max_depth": "weak learner depth"
+      },
+      "data_idea": "Fits seeded regression data round by round, tracking train/validation loss to show the boosting trajectory and overfitting point.",
+      "real_world_use": "XGBoost/LightGBM dominate tabular ML; this is their core idea in miniature.",
+      "suggested_types": [
+        "decision_tree",
+        "linear_regression",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "adaboost-weighted-voting",
+      "name": "AdaBoost (Weighted Voting)",
+      "concept": "AdaBoost reweights training examples after each round so the next weak learner focuses on previous mistakes, then combines learners by weighted vote based on their accuracy. It turns slightly-better-than-chance stumps into a strong classifier. Noisy labels can make it chase outliers, which the demo shows clearly.",
+      "key_params": {
+        "n_rounds": "boosting rounds",
+        "noise": "label noise fraction",
+        "weak_depth": "stump vs slightly deeper learners"
+      },
+      "data_idea": "Trains AdaBoost on seeded data with varying label noise, measuring accuracy and showing weight concentration on hard examples.",
+      "real_world_use": "Face detection (Viola-Jones) famously used AdaBoost; it remains a teaching classic for ensemble theory.",
+      "suggested_types": [
+        "decision_tree",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "naive-bayes-gaussian",
+      "name": "Gaussian Naive Bayes",
+      "concept": "Naive Bayes applies Bayes' theorem with a bold independence assumption: each feature is modeled as Gaussian per class, and probabilities multiply. Training is just computing means and variances, so it is blazing fast and needs little data. The independence assumption is usually wrong yet the classifier is often right.",
+      "key_params": {
+        "var_smoothing": "variance floor for stability",
+        "priors": "class prior probabilities",
+        "classes": "number of classes"
+      },
+      "data_idea": "Generates seeded Gaussian class blobs, trains the classifier, and compares accuracy to the Bayes-optimal boundary.",
+      "real_world_use": "Spam filtering, medical diagnosis aids, and real-time classification with tiny training sets.",
+      "suggested_types": [
+        "naive_bayes",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "naive-bayes-multinomial-text",
+      "name": "Multinomial Naive Bayes for Text",
+      "concept": "For text, multinomial naive Bayes models word-count vectors per class with Laplace smoothing for unseen words. Log-probabilities keep the math stable over long documents. It remains a brutally strong baseline for topic and spam classification despite its simplicity.",
+      "key_params": {
+        "alpha": "Laplace smoothing strength",
+        "vocab": "vocabulary size",
+        "classes": "document classes"
+      },
+      "data_idea": "Generates seeded synthetic documents from per-class word distributions, trains the classifier, and reports accuracy vs training size.",
+      "real_world_use": "Spam filters, sentiment baselines, and news-topic routers still use multinomial NB.",
+      "suggested_types": [
+        "naive_bayes",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "perceptron-online",
+      "name": "Perceptron (Online Learning)",
+      "concept": "The perceptron updates weights only on mistakes, adding the misclassified example's features with the correct sign: on linearly separable data it is guaranteed to converge. It is the ancestor of all neural networks and the clearest demo of online learning. Non-separable data makes it oscillate, motivating the pocket variant.",
+      "key_params": {
+        "learning_rate": "update step size",
+        "epochs": "passes over the data",
+        "separable": "whether the data is linearly separable"
+      },
+      "data_idea": "Trains on seeded separable and non-separable data, verifying convergence on the former and mistake-bound behavior.",
+      "real_world_use": "Historical foundation of neural nets; online learning for streaming classification.",
+      "suggested_types": [
+        "linear_regression",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "linear-svm-sgd",
+      "name": "Linear SVM via SGD (Hinge Loss)",
+      "concept": "Support vector machines maximize the margin between classes, which the hinge loss plus L2 penalty encodes for SGD training. Only points near the boundary (support vectors) matter, giving sparsity in the dual view. The regularization parameter C trades margin width against training errors.",
+      "key_params": {
+        "C": "inverse regularization strength",
+        "learning_rate": "SGD step size",
+        "epochs": "training epochs"
+      },
+      "data_idea": "Trains on seeded two-class data, verifies margin geometry, and compares decision boundaries across C values.",
+      "real_world_use": "Text classification with sparse features is the classic linear-SVM success story.",
+      "suggested_types": [
+        "linear_regression",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rbf-kernel-demo",
+      "name": "RBF Kernel Trick Demo",
+      "concept": "The kernel trick fits nonlinear boundaries without ever computing high-dimensional features: the RBF kernel measures similarity as a Gaussian of distance, implicitly mapping data to infinite dimensions. Gamma controls the similarity radius; too large memorizes, too small oversmooths. Kernel ridge regression makes the demo exact.",
+      "key_params": {
+        "gamma": "RBF width parameter",
+        "alpha": "ridge regularization",
+        "pattern": "circles vs moons vs blobs data"
+      },
+      "data_idea": "Fits kernel ridge on seeded nonlinear patterns and visualizes decision regions across gamma values.",
+      "real_world_use": "SVMs on nonlinear data (bioinformatics, image kernels) rely on the kernel trick.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "kmeans-from-scratch",
+      "name": "k-Means Clustering from Scratch",
+      "concept": "k-Means alternates between assigning points to the nearest centroid and recomputing centroids as cluster means, monotonically decreasing within-cluster variance. Random initialization can trap it in poor local minima, which k-means++ fixes. It is the first clustering algorithm everyone should implement.",
+      "key_params": {
+        "k": "number of clusters",
+        "init": "random vs k-means++ seeding",
+        "max_iter": "iteration cap"
+      },
+      "data_idea": "Clusters seeded Gaussian blobs and measures adjusted Rand index against true labels across initializations.",
+      "real_world_use": "Customer segmentation, image color quantization, and document clustering start with k-means.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "kmeans-plus-plus-init",
+      "name": "k-Means++ Initialization",
+      "concept": "k-Means++ seeds centroids by picking each new center with probability proportional to its squared distance from existing centers, spreading them across the data. This single change gives theoretical approximation guarantees and far better practical results than uniform random seeding. The demo quantifies the gap.",
+      "key_params": {
+        "k": "cluster count",
+        "trials": "repeated runs compared",
+        "blobs": "true cluster layout"
+      },
+      "data_idea": "Runs seeded k-means with both initializations many times, comparing final inertia distributions.",
+      "real_world_use": "scikit-learn's default k-means init; production clustering pipelines use it universally.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "elbow-method-selector",
+      "name": "Elbow Method for k Selection",
+      "concept": "Choosing k is k-means' hardest part: the elbow method plots inertia against k and looks for the bend where adding clusters stops paying off. The knee-detection algorithm automates the eyeball test. It works best when clusters are well separated and similarly sized.",
+      "key_params": {
+        "k_range": "k values evaluated",
+        "knee": "knee-detection sensitivity",
+        "blobs": "true cluster count in data"
+      },
+      "data_idea": "Generates seeded data with known cluster counts, runs the elbow analysis, and checks the detected k matches truth.",
+      "real_world_use": "Exploratory customer segmentation and any unsupervised analysis needing a principled k.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "silhouette-score-evaluator",
+      "name": "Silhouette Score Evaluator",
+      "concept": "The silhouette score measures clustering quality per point: how much closer it is to its own cluster than to the nearest other cluster, averaged over the data. Scores near 1 mean tight, separated clusters; near 0 mean overlap. It lets you compare k values or algorithms without ground truth.",
+      "key_params": {
+        "k_range": "cluster counts compared",
+        "metric": "distance metric used",
+        "sample": "subsample size for large data"
+      },
+      "data_idea": "Clusters seeded datasets with varying overlap, computing silhouette curves to select k and compare algorithms.",
+      "real_world_use": "Model selection for clustering in market segmentation and anomaly grouping.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dbscan-density-clustering",
+      "name": "DBSCAN Density Clustering",
+      "concept": "DBSCAN groups points with enough neighbors within radius eps, labeling sparse regions as noise: it finds arbitrarily shaped clusters and needs no k. Core/border/noise classification falls out of the two parameters. Tuning eps via the k-distance plot is the practical skill the demo teaches.",
+      "key_params": {
+        "eps": "neighborhood radius",
+        "min_samples": "density threshold",
+        "pattern": "moons vs blobs vs varied density"
+      },
+      "data_idea": "Clusters seeded shapes (moons, varied density) and measures cluster recovery plus noise labeling accuracy.",
+      "real_world_use": "Geospatial hotspot detection, fraud rings, and sensor anomaly grouping use DBSCAN.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hierarchical-agglomerative",
+      "name": "Hierarchical Agglomerative Clustering",
+      "concept": "Agglomerative clustering starts with every point alone and repeatedly merges the closest pair, building a dendrogram that shows cluster structure at every scale. Linkage choice (single, complete, average, Ward) defines cluster distance and shapes the result. Cutting the tree at a height yields flat clusters.",
+      "key_params": {
+        "linkage": "single vs complete vs average vs ward",
+        "n_clusters": "where to cut the dendrogram",
+        "metric": "distance metric"
+      },
+      "data_idea": "Clusters seeded nested blob structures, renders the merge tree as text, and compares linkage behaviors.",
+      "real_world_use": "Phylogenetics, document taxonomy building, and gene-expression analysis use hierarchical clustering.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gaussian-mixture-em",
+      "name": "Gaussian Mixture Models (EM)",
+      "concept": "GMMs model data as a weighted sum of Gaussians, fit by expectation-maximization: the E-step computes soft cluster responsibilities, the M-step updates means, covariances, and weights. Soft assignments handle overlapping clusters where k-means' hard assignments fail. BIC selects the component count.",
+      "key_params": {
+        "components": "number of Gaussians",
+        "covariance": "full vs diagonal vs spherical",
+        "max_iter": "EM iterations"
+      },
+      "data_idea": "Fits seeded overlapping mixtures, verifying parameter recovery and comparing BIC across component counts.",
+      "real_world_use": "Speaker diarization, background subtraction in vision, and density estimation use GMMs.",
+      "suggested_types": [
+        "kmeans_clustering",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "pca-2d-projection",
+      "name": "PCA 2D Projection",
+      "concept": "Principal component analysis finds the orthogonal directions of maximum variance via eigendecomposition of the covariance matrix, letting you project high-dimensional data to 2D for visualization. The explained-variance ratio tells how much information each component keeps. It is the default first look at any high-dimensional dataset.",
+      "key_params": {
+        "n_components": "dimensions kept",
+        "whiten": "whether components are whitened",
+        "features": "original dimensionality"
+      },
+      "data_idea": "Projects seeded high-dimensional blobs to 2D, verifying variance explained and that cluster structure is preserved.",
+      "real_world_use": "Exploratory analysis, eigenfaces, and preprocessing before clustering use PCA.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pca-scree-plot",
+      "name": "PCA Scree Plot Analyzer",
+      "concept": "The scree plot graphs each principal component's explained variance, and the elbow suggests how many components to keep. Cumulative-variance thresholds (95% rules) automate the choice. It turns the abstract 'how many dimensions' question into a picture.",
+      "key_params": {
+        "variance_target": "cumulative variance to retain",
+        "features": "original dimensionality",
+        "decay": "eigenvalue decay profile of the data"
+      },
+      "data_idea": "Generates seeded data with known intrinsic dimensionality and checks the scree analysis recovers it.",
+      "real_world_use": "Dimensionality decisions in genomics and finance factor models use scree analysis.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "neighbor-embedding-visualizer",
+      "name": "Neighbor Embedding Visualizer",
+      "concept": "Neighbor-embedding methods (t-SNE/UMAP style) preserve local structure for visualization: they convert high-dimensional similarities to probabilities, then optimize a low-dimensional layout matching them. Perplexity balances local vs global structure. The demo implements the simplified core so the intuition, not the library, is what you learn.",
+      "key_params": {
+        "perplexity": "effective neighborhood size",
+        "iterations": "layout optimization steps",
+        "learning_rate": "embedding step size"
+      },
+      "data_idea": "Embeds seeded clustered high-dimensional data and verifies clusters separate in the 2D layout.",
+      "real_world_use": "Single-cell genomics, word-embedding inspection, and dataset exploration use t-SNE/UMAP plots.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "truncated-svd-text",
+      "name": "Truncated SVD for Text",
+      "concept": "Truncated SVD factorizes a term-document matrix into low-rank components, revealing latent topics (latent semantic analysis) and compressing sparse text features. Unlike PCA it skips centering, which suits sparse data. Power iteration computes it without a full SVD.",
+      "key_params": {
+        "rank": "latent dimensions kept",
+        "docs": "synthetic document count",
+        "vocab": "vocabulary size"
+      },
+      "data_idea": "Factorizes seeded term-document matrices with planted topics and measures topic recovery in the latent space.",
+      "real_world_use": "Search engines (LSA), recommender preprocessing, and sparse-feature compression use truncated SVD.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nmf-parts-recommender",
+      "name": "NMF Parts-Based Decomposition",
+      "concept": "Non-negative matrix factorization splits a matrix into non-negative parts, yielding interpretable components (faces into eyes/noses, users into taste profiles). Multiplicative updates keep everything non-negative. The parts-based representation is NMF's signature advantage over SVD.",
+      "key_params": {
+        "rank": "number of parts",
+        "max_iter": "multiplicative update steps",
+        "pattern": "planted parts structure"
+      },
+      "data_idea": "Factorizes seeded non-negative data with known parts and verifies the recovered factors match the planted ones.",
+      "real_world_use": "Recommender systems, topic modeling with interpretable topics, and audio source separation use NMF.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "isolation-forest-anomaly",
+      "name": "Isolation Forest Anomaly Detection",
+      "concept": "Isolation forest detects anomalies by how easy they are to isolate: random splits isolate outliers in few steps, so short average path lengths across trees flag anomalies. It needs no labeled anomalies and scales well. The contamination parameter sets the expected anomaly fraction.",
+      "key_params": {
+        "n_trees": "trees in the forest",
+        "contamination": "expected anomaly fraction",
+        "anomaly_ratio": "true anomaly fraction in data"
+      },
+      "data_idea": "Plants seeded anomalies in normal data and measures precision/recall of the flagged points.",
+      "real_world_use": "Fraud detection, network intrusion, and manufacturing defect detection use isolation forests.",
+      "suggested_types": [
+        "decision_tree",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "zscore-anomaly-detector",
+      "name": "Z-Score Anomaly Detector",
+      "concept": "The z-score flags points more than k standard deviations from the mean, the simplest anomaly rule there is. Robust variants use median and MAD so outliers cannot mask themselves by inflating the standard deviation. Rolling windows adapt it to drifting streams.",
+      "key_params": {
+        "threshold": "z-score cutoff",
+        "robust": "mean/std vs median/MAD",
+        "window": "rolling window for streams"
+      },
+      "data_idea": "Injects seeded spikes into normal series and measures detection rate vs false alarms across thresholds.",
+      "real_world_use": "Server metric alerting, sensor monitoring, and data-quality checks start with z-score rules.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "iqr-outlier-filter",
+      "name": "IQR Outlier Filter",
+      "concept": "Tukey's fences label points outside [Q1 - k*IQR, Q3 + k*IQR] as outliers, a distribution-free rule that boxplots visualize. It needs no normality assumption and resists masking better than z-scores on skewed data. The multiplier k tunes aggressiveness.",
+      "key_params": {
+        "k": "fence multiplier (1.5 standard)",
+        "skew": "data skewness in the demo",
+        "contamination": "outlier fraction planted"
+      },
+      "data_idea": "Plants seeded outliers in skewed distributions and compares IQR vs z-score detection accuracy.",
+      "real_world_use": "Exploratory data analysis and ETL data-quality gates use IQR fences.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "mahalanobis-detector",
+      "name": "Mahalanobis Distance Detector",
+      "concept": "Mahalanobis distance measures how many correlated-standard-deviations a point is from a distribution's center, accounting for feature covariance that Euclidean distance ignores. Points beyond a chi-squared threshold are anomalies. It shines when features correlate strongly.",
+      "key_params": {
+        "threshold": "chi-squared cutoff",
+        "correlation": "feature correlation strength",
+        "contamination": "anomaly fraction"
+      },
+      "data_idea": "Generates seeded correlated data with planted anomalies and compares Mahalanobis vs Euclidean detection.",
+      "real_world_use": "Multivariate process control and correlated-sensor anomaly detection use Mahalanobis distance.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "confusion-matrix-analyzer",
+      "name": "Confusion Matrix Analyzer",
+      "concept": "The confusion matrix breaks predictions into true/false positives and negatives per class, from which precision, recall, F1, and specificity all derive. For imbalanced data, accuracy lies and these metrics tell the truth. The analyzer also shows which classes get confused with which.",
+      "key_params": {
+        "classes": "number of classes",
+        "imbalance": "class imbalance ratio",
+        "cost": "optional misclassification cost matrix"
+      },
+      "data_idea": "Generates seeded predictions with known error patterns and verifies every derived metric matches hand computation.",
+      "real_world_use": "Model evaluation in medicine, fraud, and any imbalanced classification uses these metrics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "precision-recall-tradeoff",
+      "name": "Precision-Recall Trade-off Explorer",
+      "concept": "Moving the classification threshold trades precision against recall: strict thresholds catch only sure positives (high precision, low recall), lenient ones catch everything (high recall, low precision). The PR curve visualizes the frontier, and the F-beta score picks the operating point. Imbalanced problems live on this curve.",
+      "key_params": {
+        "thresholds": "threshold grid evaluated",
+        "beta": "F-beta emphasis on recall vs precision",
+        "imbalance": "positive-class rarity"
+      },
+      "data_idea": "Sweeps thresholds on seeded scored data and verifies the PR curve and optimal F-beta point.",
+      "real_world_use": "Fraud detection, medical screening, and information retrieval tune thresholds on PR curves.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "roc-auc-scorer",
+      "name": "ROC-AUC Scorer",
+      "concept": "The ROC curve plots true-positive rate against false-positive rate across thresholds, and AUC summarizes ranking quality as the probability a random positive outranks a random negative. AUC 0.5 is chance, 1.0 is perfect. It is threshold-independent, which is both its strength and its limitation.",
+      "key_params": {
+        "thresholds": "ROC grid resolution",
+        "imbalance": "class imbalance in demo",
+        "ties": "how tied scores are handled"
+      },
+      "data_idea": "Scores seeded ranked predictions, verifying AUC equals the pairwise concordance probability.",
+      "real_world_use": "Binary classifier benchmarking in medicine and finance reports ROC-AUC as standard.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "kfold-cv-splitter",
+      "name": "K-Fold Cross-Validation Splitter",
+      "concept": "K-fold CV partitions data into k folds, training on k-1 and validating on the held-out fold, rotating so every point is validated once. Stratification preserves class ratios per fold; shuffling avoids order effects. It estimates generalization far better than a single split.",
+      "key_params": {
+        "k": "number of folds",
+        "stratified": "whether class ratios are preserved",
+        "shuffle": "whether data is shuffled first"
+      },
+      "data_idea": "Splits seeded datasets and verifies fold sizes, stratification ratios, and that every index appears in exactly one validation fold.",
+      "real_world_use": "Model selection everywhere: CV scores drive hyperparameter and algorithm choices.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "learning-curve-diagnoser",
+      "name": "Learning Curve Diagnoser",
+      "concept": "Learning curves plot train and validation error against training-set size: both high means high bias (underfit), a gap means high variance (overfit). The diagnosis prescribes the fix: more data helps variance, more capacity helps bias. It is the first plot to draw when a model disappoints.",
+      "key_params": {
+        "sizes": "training sizes evaluated",
+        "model_capacity": "low vs high capacity models",
+        "noise": "irreducible noise level"
+      },
+      "data_idea": "Trains seeded models of two capacities across data sizes and verifies the diagnosed regime matches the planted one.",
+      "real_world_use": "ML debugging workflows at every serious team start with learning curves.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "validation-curve-tuner",
+      "name": "Validation Curve Tuner",
+      "concept": "Validation curves sweep one hyperparameter (like tree depth or regularization) plotting train vs validation score: the peak marks the sweet spot before overfitting. It isolates one knob's effect cleanly. Combined with learning curves it covers most diagnosis needs.",
+      "key_params": {
+        "param_range": "hyperparameter values swept",
+        "param": "which hyperparameter is tuned",
+        "cv_folds": "folds per evaluation"
+      },
+      "data_idea": "Sweeps seeded hyperparameters and verifies the selected value sits at the validation peak.",
+      "real_world_use": "Hyperparameter tuning for trees, SVMs, and regularized linear models uses validation curves.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "grid-search-tuner",
+      "name": "Grid Search Tuner",
+      "concept": "Grid search evaluates every combination in a hyperparameter grid with cross-validation, guaranteeing the best of the listed options at exponential cost. It is embarrassingly parallel and the baseline all smarter tuners compare against. Coarse-to-fine grids manage the cost.",
+      "key_params": {
+        "grid": "hyperparameter value lists",
+        "cv_folds": "folds per combination",
+        "scoring": "metric optimized"
+      },
+      "data_idea": "Tunes a seeded model over a small grid, verifying the winner matches exhaustive evaluation and timing is reported.",
+      "real_world_use": "Baseline hyperparameter tuning in sklearn-style workflows.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "random-search-tuner",
+      "name": "Random Search Tuner",
+      "concept": "Random search samples hyperparameter combinations uniformly, which beats grid search when only a few parameters matter: random draws explore more distinct values of the important ones. It is simpler than Bayesian optimization and embarrassingly parallel. Budget in trials, not grid resolution.",
+      "key_params": {
+        "n_trials": "random combinations evaluated",
+        "distributions": "per-parameter sampling distributions",
+        "seed": "RNG seed for reproducibility"
+      },
+      "data_idea": "Tunes seeded models where one parameter dominates, showing random search finds good values faster than a grid.",
+      "real_world_use": "Deep-learning hyperparameter sweeps commonly use random search as the strong baseline.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "successive-halving-tuner",
+      "name": "Successive Halving Tuner",
+      "concept": "Successive halving spends budget wisely: evaluate many configs cheaply (few epochs), keep the top half, double their budget, and repeat until one remains. It formalizes the intuition of killing bad runs early. Hyperband extends it across different early-stopping aggressiveness.",
+      "key_params": {
+        "n_configs": "initial candidate count",
+        "budgets": "budget schedule per round",
+        "eta": "fraction surviving each round"
+      },
+      "data_idea": "Tunes seeded models with cheap-vs-expensive fidelity, verifying the survivor matches full-budget evaluation of finalists.",
+      "real_world_use": "Large-scale tuning (AutoML, neural architecture search) uses halving to afford big search spaces.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "scheduler",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "early-stopping-monitor",
+      "name": "Early Stopping Monitor",
+      "concept": "Early stopping halts training when validation loss stops improving, with patience tolerating noisy plateaus and restore-best-weights keeping the peak model. It is free regularization that also saves compute. The demo shows how patience choice affects the final model.",
+      "key_params": {
+        "patience": "epochs without improvement tolerated",
+        "min_delta": "minimum improvement counted",
+        "restore_best": "whether best weights are restored"
+      },
+      "data_idea": "Trains seeded models with noisy validation curves, verifying stopping epoch and restored weights are correct.",
+      "real_world_use": "Neural network training universally uses early stopping to prevent overfitting.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "platt-calibration",
+      "name": "Platt Scaling Calibrator",
+      "concept": "Classifiers often rank well but misstate probabilities: Platt scaling fits a logistic regression on the model's raw scores to map them to calibrated probabilities. Isotonic regression is the non-parametric alternative. Calibration matters whenever probabilities drive decisions, not just rankings.",
+      "key_params": {
+        "method": "platt vs isotonic",
+        "bins": "reliability-diagram bins",
+        "cv": "cross-validated calibration folds"
+      },
+      "data_idea": "Trains seeded overconfident classifiers, calibrates them, and verifies reliability diagrams flatten toward the diagonal.",
+      "real_world_use": "Ad click prediction, medical risk scores, and weather forecasting all require calibrated probabilities.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "threshold-optimizer-f1",
+      "name": "Threshold Optimizer (F1)",
+      "concept": "The default 0.5 threshold is rarely optimal: the optimizer sweeps thresholds on validation data maximizing F1 (or a cost-weighted metric) and reports the chosen operating point with confidence intervals. Different business costs imply different optima, which the cost matrix makes explicit.",
+      "key_params": {
+        "metric": "F1 vs cost-weighted objective",
+        "cost_matrix": "FP vs FN business costs",
+        "cv_folds": "folds for threshold stability"
+      },
+      "data_idea": "Sweeps seeded validation scores, verifying the chosen threshold maximizes the objective and beats 0.5.",
+      "real_world_use": "Deployment of classifiers in fraud and medicine tunes thresholds to business costs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "one-hot-encoder",
+      "name": "One-Hot Encoder",
+      "concept": "One-hot encoding turns categories into binary columns so linear models can use them: each category gets its own 0/1 column, with the first often dropped to avoid collinearity. High-cardinality features explode dimensionality, which motivates hashing or target encoding. Unseen categories at predict time need a defined policy.",
+      "key_params": {
+        "drop_first": "whether to drop one column",
+        "handle_unknown": "ignore vs error on new categories",
+        "max_categories": "cap before grouping rare ones"
+      },
+      "data_idea": "Encodes seeded categorical columns (including unseen test categories) and verifies matrix shape and unknown-category handling.",
+      "real_world_use": "Every tabular ML pipeline encodes categoricals; pandas get_dummies is the quick version.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "target-encoder-smoothing",
+      "name": "Target Encoder with Smoothing",
+      "concept": "Target encoding replaces a category with the mean target of its rows, capturing signal in one column, but rare categories overfit without smoothing toward the global mean. Cross-validated encoding prevents leakage. It is powerful and dangerous in equal measure.",
+      "key_params": {
+        "smoothing": "strength pulling rare categories to global mean",
+        "min_samples": "rows before trusting the category mean",
+        "cv_folds": "folds for leakage-free encoding"
+      },
+      "data_idea": "Encodes seeded high-cardinality categoricals and verifies rare-category shrinkage plus no leakage via CV comparison.",
+      "real_world_use": "Kaggle tabular competitions use target encoding for high-cardinality features like zip codes.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "feature-scaling-comparison",
+      "name": "Feature Scaling Comparison",
+      "concept": "Gradient-based and distance-based models need scaled features: standardization (zero mean, unit variance) suits roughly Gaussian data, min-max suits bounded data, and robust scaling resists outliers. Trees do not care. The demo shows kNN and logistic regression failing unscaled and recovering scaled.",
+      "key_params": {
+        "method": "standard vs minmax vs robust",
+        "outliers": "outlier fraction in demo data",
+        "model": "knn vs logistic vs tree comparison"
+      },
+      "data_idea": "Trains seeded models on unscaled and scaled data, quantifying the accuracy gap per scaler and model.",
+      "real_world_use": "Standard preprocessing step in every ML pipeline for distance and gradient methods.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "missing-value-imputer",
+      "name": "Missing Value Imputer",
+      "concept": "Missing data needs a strategy: mean/median/mode imputation is fast but understates variance, kNN imputation borrows from similar rows, and missingness-indicator columns preserve the signal that data was missing. The mechanism (MCAR/MAR/MNAR) decides which strategies are valid.",
+      "key_params": {
+        "strategy": "mean vs median vs knn vs indicator",
+        "mechanism": "MCAR vs MAR missingness planted",
+        "k": "neighbors for knn imputation"
+      },
+      "data_idea": "Plants seeded missingness under known mechanisms, imputes, and measures downstream model impact per strategy.",
+      "real_world_use": "Clinical datasets and survey data pipelines all impute; indicator columns are standard practice.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "outlier-winsorizer",
+      "name": "Outlier Winsorizer",
+      "concept": "Winsorizing caps extreme values at chosen percentiles instead of deleting rows, keeping sample size while limiting outlier influence. It suits heavy-tailed data where extremes are real but disproportionate. Trimming (deleting) is the alternative when extremes are errors.",
+      "key_params": {
+        "limits": "lower/upper percentile caps",
+        "strategy": "winsorize vs trim",
+        "tail": "heavy-tail strength in demo"
+      },
+      "data_idea": "Applies winsorizing to seeded heavy-tailed data and compares model stability vs raw and trimmed variants.",
+      "real_world_use": "Finance return series and sensor data pipelines winsorize before modeling.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "datetime-feature-extractor",
+      "name": "Datetime Feature Extractor",
+      "concept": "Timestamps hide predictive structure: the extractor pulls hour, weekday, month, cyclical sine/cosine encodings, holidays, and time-since-event features. Cyclical encoding keeps midnight adjacent to 1am. Leakage discipline matters: features must only use information available at prediction time.",
+      "key_params": {
+        "features": "which datetime parts to extract",
+        "cyclical": "sin/cos vs raw hour encoding",
+        "holidays": "holiday calendar included"
+      },
+      "data_idea": "Extracts features from seeded timestamp series with planted weekly patterns and verifies a model captures them.",
+      "real_world_use": "Demand forecasting, fraud detection, and web-traffic modeling all engineer time features.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "tfidf-vectorizer",
+      "name": "TF-IDF Vectorizer",
+      "concept": "TF-IDF weights words by frequency in the document discounted by rarity across documents, turning text into sparse numeric vectors where distinctive words dominate. Sublinear TF scaling and n-gram ranges tune it. It remains the default text representation for linear models.",
+      "key_params": {
+        "ngram_range": "unigrams vs bigrams etc.",
+        "sublinear": "whether log TF scaling is used",
+        "max_features": "vocabulary cap"
+      },
+      "data_idea": "Vectorizes seeded document collections and verifies IDF weights downweight corpus-common words correctly.",
+      "real_world_use": "Search ranking, text classification baselines, and duplicate detection use TF-IDF.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "naive_bayes"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hashing-trick-vectorizer",
+      "name": "Hashing Trick Vectorizer",
+      "concept": "The hashing trick maps tokens directly to a fixed-size vector via hashing, needing no vocabulary: memory stays constant and new words just work. Collisions add noise that signed hashing keeps unbiased. It is the streaming-friendly alternative to vocabularies.",
+      "key_params": {
+        "n_features": "hash space size",
+        "signed": "whether signed hashing is used",
+        "alternate_sign": "collision noise reduction"
+      },
+      "data_idea": "Vectorizes seeded streams and measures collision rates plus downstream accuracy vs vocabulary vectorizer.",
+      "real_world_use": "Large-scale ad-click models (VW) and streaming text pipelines use feature hashing.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ngram-language-model",
+      "name": "N-gram Language Model",
+      "concept": "N-gram models predict the next word from the previous n-1: counting n-grams on a corpus with add-k smoothing handles unseen sequences. Perplexity measures quality on held-out text. It is the classical baseline that neural LMs replaced, and still the clearest intro to language modeling.",
+      "key_params": {
+        "n": "n-gram order",
+        "smoothing": "add-k smoothing strength",
+        "vocab": "vocabulary size"
+      },
+      "data_idea": "Trains on seeded synthetic corpora, generates text, and reports perplexity vs n and smoothing.",
+      "real_world_use": "Autocomplete, speech-recognition language models, and historical NLP pipelines used n-grams.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "chatbot"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "skipgram-word2vec-lite",
+      "name": "Skip-gram Word2Vec (Lite)",
+      "concept": "Skip-gram learns word vectors by predicting context words from each center word with negative sampling for efficiency: words in similar contexts get similar vectors. Analogies (king - man + woman) famously emerge. The lite version trains on a tiny corpus so the mechanism is visible.",
+      "key_params": {
+        "dim": "embedding dimensionality",
+        "window": "context window size",
+        "negatives": "negative samples per positive"
+      },
+      "data_idea": "Trains on a seeded tiny corpus with planted analogies and verifies nearest-neighbor and analogy queries.",
+      "real_world_use": "Pretrained embeddings (word2vec, GloVe) power classic NLP features and retrieval.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "chatbot"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "pmi-word-associations",
+      "name": "PMI Word Associations",
+      "concept": "Pointwise mutual information scores how much more often two words co-occur than chance, surfacing collocations like 'hot dog' and domain pairings. PPMI floors negatives at zero; significance filtering removes rare-pair noise. It is the count-based route to word association.",
+      "key_params": {
+        "window": "co-occurrence window",
+        "min_count": "minimum pair frequency",
+        "ppmi": "whether negative values are floored"
+      },
+      "data_idea": "Computes PMI on seeded corpora with planted collocations and verifies they top the rankings.",
+      "real_world_use": "Collocation extraction, terminology mining, and market-basket-style text analysis use PMI.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "permutation-importance",
+      "name": "Permutation Feature Importance",
+      "concept": "Permutation importance measures a feature's value by shuffling it and watching the score drop: model-agnostic and honest about what the model actually uses. Correlated features share credit, which the demo shows. It beats built-in importances that can be biased.",
+      "key_params": {
+        "n_repeats": "shuffle repetitions",
+        "scoring": "metric tracked",
+        "correlated": "whether correlated decoys are planted"
+      },
+      "data_idea": "Computes importances on seeded data with known signal features and verifies the ranking recovers them.",
+      "real_world_use": "Model debugging and regulatory explanations use permutation importance as the honest baseline.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "recursive-feature-elimination",
+      "name": "Recursive Feature Elimination",
+      "concept": "RFE trains a model, drops the least important features, and repeats, producing a ranked feature list and a performance-vs-count curve. Cross-validated RFE picks the count automatically. It is wrapper-based: accurate but expensive, since it retrains many times.",
+      "key_params": {
+        "step": "features dropped per round",
+        "cv_folds": "folds for count selection",
+        "signal": "true signal feature count"
+      },
+      "data_idea": "Runs RFE on seeded data with known signal features and verifies the ranking and selected count.",
+      "real_world_use": "Biomarker selection and sensor-feature pruning use RFE when model accuracy is the criterion.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "mutual-information-selector",
+      "name": "Mutual Information Selector",
+      "concept": "Mutual information captures any dependency (linear or not) between a feature and the target, making it a strong filter for feature selection. kNN-based estimation handles continuous variables. It finds nonlinear signal that correlation misses.",
+      "key_params": {
+        "k": "neighbors in MI estimation",
+        "discrete": "handling of discrete features",
+        "top_n": "features selected"
+      },
+      "data_idea": "Selects features on seeded data with planted nonlinear signal and verifies MI recovers what correlation misses.",
+      "real_world_use": "Nonlinear feature screening in bioinformatics and sensor analytics uses MI.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "chi-square-feature-selector",
+      "name": "Chi-Square Feature Selector",
+      "concept": "The chi-square test scores categorical features by independence from the target: high scores mean strong association. It is fast, univariate, and the classic filter for text classification feature selection. SelectKBest keeps the top scorers.",
+      "key_params": {
+        "k": "top features kept",
+        "min_expected": "minimum expected count guard",
+        "classes": "target class count"
+      },
+      "data_idea": "Scores seeded categorical features with planted associations and verifies selection recovers them.",
+      "real_world_use": "Text classification pipelines routinely chi-square-select features before naive Bayes or SVMs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "naive_bayes",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "correlation-filter",
+      "name": "Correlation Filter",
+      "concept": "Highly correlated feature pairs are redundant: the filter finds pairs above a threshold and drops the one less correlated with the target. It is the cheapest multicollinearity fix and a standard first cleaning step. The threshold trades information loss against simplicity.",
+      "key_params": {
+        "threshold": "absolute correlation cutoff",
+        "method": "pearson vs spearman",
+        "planted_corr": "correlation strength planted"
+      },
+      "data_idea": "Builds seeded correlated feature sets and verifies the filter keeps the informative representative of each group.",
+      "real_world_use": "First-pass feature cleaning in finance and sensor modeling.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "binning-discretizer",
+      "name": "Binning Discretizer",
+      "concept": "Discretization turns continuous features into bins: equal-width is simple, equal-frequency balances counts, and supervised binning (decision-tree splits) maximizes target separation. Binned features feed linear models nonlinear structure and naive Bayes clean categories.",
+      "key_params": {
+        "strategy": "equal-width vs equal-frequency vs supervised",
+        "bins": "number of bins",
+        "encode": "ordinal vs one-hot bin encoding"
+      },
+      "data_idea": "Discretizes seeded features with planted thresholds and compares strategies on downstream accuracy.",
+      "real_world_use": "Credit scoring (WOE binning) and naive Bayes pipelines discretize continuous features.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "naive_bayes"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rare-category-grouper",
+      "name": "Rare Category Grouper",
+      "concept": "Rare categories overfit: the grouper pools categories below a frequency threshold into 'other', shrinking cardinality while keeping signal. The threshold trades granularity against reliability. It is a mandatory step before one-hot or target encoding high-cardinality features.",
+      "key_params": {
+        "min_freq": "frequency threshold for keeping",
+        "other_label": "name of the pooled bucket",
+        "cardinality": "original category count"
+      },
+      "data_idea": "Groups seeded categoricals with long-tail distributions and verifies rare-category pooling and downstream stability.",
+      "real_world_use": "Zip-code, product-SKU, and job-title features get rare-grouped in production pipelines.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sentiment-lexicon-scorer",
+      "name": "Sentiment Lexicon Scorer",
+      "concept": "Lexicon sentiment scores text by summing word polarities from a dictionary, handling negations ('not good') and intensifiers ('very good'). No training data needed, and the scores are explainable word by word. Domain mismatch is the weakness: 'bullish' is positive in finance, nowhere else.",
+      "key_params": {
+        "lexicon": "seeded polarity word lists",
+        "negation": "negation window size",
+        "intensifiers": "booster word handling"
+      },
+      "data_idea": "Scores seeded sentences with planted sentiment and negations, verifying sign correctness and negation flips.",
+      "real_world_use": "Social listening dashboards and review summaries use lexicon scoring as the explainable baseline.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "chatbot",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "spam-filter-naive-bayes",
+      "name": "Spam Filter (Naive Bayes)",
+      "concept": "The canonical naive Bayes application: word-count vectors per class with Laplace smoothing classify email as spam or ham. Log-probability ratios show exactly which words drove the decision. It trains in one pass and updates incrementally as users mark mail.",
+      "key_params": {
+        "alpha": "smoothing strength",
+        "vocab_cap": "vocabulary size cap",
+        "threshold": "spam probability cutoff"
+      },
+      "data_idea": "Trains on seeded ham/spam corpora with planted trigger words and measures precision/recall plus top spam words.",
+      "real_world_use": "The original production spam filters (and the textbook example) are naive Bayes.",
+      "suggested_types": [
+        "naive_bayes",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "textrank-summarizer",
+      "name": "TextRank Extractive Summarizer",
+      "concept": "TextRank builds a graph of sentences linked by similarity and runs PageRank: central sentences are the summary. Extractive summaries quote the original, so they cannot hallucinate. Redundancy filtering (MMR-style) keeps the summary diverse.",
+      "key_params": {
+        "sentences": "summary sentence count",
+        "similarity": "sentence similarity threshold",
+        "damping": "PageRank damping factor"
+      },
+      "data_idea": "Summarizes seeded multi-topic documents and verifies the extracted sentences cover the planted key points.",
+      "real_world_use": "News digests, meeting-note summarizers, and research assistants use extractive summarization.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "chatbot"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "keyword-extractor-tfidf",
+      "name": "Keyword Extractor (TF-IDF)",
+      "concept": "Keywords are the highest TF-IDF terms per document: distinctive words that summarize content. Candidate filtering (nouns, length, stopwords) cleans the output, and phrase candidates capture multi-word terms. It is the unsupervised route to document labels.",
+      "key_params": {
+        "top_n": "keywords per document",
+        "ngram": "unigram vs phrase candidates",
+        "pos_filter": "part-of-speech filtering"
+      },
+      "data_idea": "Extracts keywords from seeded topic documents and verifies planted topic words rank at the top.",
+      "real_world_use": "SEO tools, tag suggestion, and document triage extract keywords this way.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "language-detector-ngram",
+      "name": "Language Detector (N-gram Profiles)",
+      "concept": "Language detection compares a text's character n-gram profile against per-language profiles with a distance metric: the closest profile wins. Short texts need smoothing; script detection (Latin vs Cyrillic) shortcuts first. It needs no ML training beyond counting.",
+      "key_params": {
+        "n": "n-gram order",
+        "profile_size": "top n-grams per language",
+        "min_chars": "minimum text length"
+      },
+      "data_idea": "Builds profiles from seeded multilingual text and verifies detection accuracy vs text length.",
+      "real_world_use": "Browsers, translation APIs, and tweet processing detect language with n-gram profiles.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "naive_bayes",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "readability-scorer",
+      "name": "Readability Scorer",
+      "concept": "Readability formulas estimate reading difficulty from sentence length and syllable counts: Flesch-Kincaid maps to US grade levels. Syllable counting heuristics drive it. Writers use it to hit target audiences; it is approximate but directionally reliable.",
+      "key_params": {
+        "formula": "flesch-kincaid vs gunning-fog vs smog",
+        "target_grade": "desired reading level",
+        "syllable": "syllable counting heuristic"
+      },
+      "data_idea": "Scores seeded passages written at different levels and verifies the grade ordering matches.",
+      "real_world_use": "Content platforms, education tech, and government plain-language tools score readability.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dict-ner-tagger",
+      "name": "Dictionary NER Tagger",
+      "concept": "Dictionary-based named-entity recognition matches gazetteers of people, places, and organizations against text with longest-match priority and case rules. No training needed; precision is high for known entities and recall misses novel ones. It is the baseline every neural NER must beat on known-entity text.",
+      "key_params": {
+        "gazetteers": "entity lists per type",
+        "case": "case-sensitive vs insensitive matching",
+        "overlap": "longest-match vs all-matches policy"
+      },
+      "data_idea": "Tags seeded sentences with planted entities and measures precision/recall against the planted spans.",
+      "real_world_use": "Rule-based extraction in finance (company names) and biomedical text mining starts here.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "chatbot"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hmm-pos-tagger",
+      "name": "HMM Part-of-Speech Tagger",
+      "concept": "Hidden Markov models tag words by modeling tag-to-tag transitions and tag-to-word emissions, decoded with the Viterbi algorithm. Training counts transitions and emissions from labeled text with smoothing for unseen words. It is the classical sequence-labeling baseline.",
+      "key_params": {
+        "smoothing": "emission smoothing for unknown words",
+        "tags": "tag set size",
+        "order": "bigram vs trigram transitions"
+      },
+      "data_idea": "Trains on seeded tagged sentences and verifies Viterbi decoding accuracy on held-out text.",
+      "real_world_use": "The pre-neural standard for POS tagging; Viterbi decoding appears throughout sequence modeling.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "chatbot"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "norvig-spell-corrector",
+      "name": "Norvig Spell Corrector",
+      "concept": "Norvig's corrector generates all edits within distance 1-2 of a misspelling and picks the candidate most probable under a word-frequency model. Edit generation plus a unigram prior solves most typos with startling simplicity. Bigram context disambiguates real-word errors.",
+      "key_params": {
+        "edits": "max edit distance considered",
+        "corpus": "word frequency source size",
+        "context": "whether bigram context is used"
+      },
+      "data_idea": "Corrects seeded typos and measures correction accuracy vs edit distance and word frequency.",
+      "real_world_use": "The famous 21-line spell corrector; the pattern behind many production spellcheckers.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "chatbot",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "duplicate-question-detector",
+      "name": "Duplicate Question Detector",
+      "concept": "Duplicate detection scores pair similarity with TF-IDF cosine plus features like length ratio and shared rare words, thresholding for duplicates. Near-duplicate hashing (SimHash) scales it to millions of pairs. Forums use it to merge repeat questions automatically.",
+      "key_params": {
+        "threshold": "similarity cutoff",
+        "features": "similarity feature set",
+        "blocking": "candidate-pair blocking strategy"
+      },
+      "data_idea": "Scores seeded question pairs (dupes, near-dupes, distinct) and measures precision/recall at the threshold.",
+      "real_world_use": "Stack Overflow, Quora, and support-ticket dedup merge duplicates this way.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "naive_bayes",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lsa-topic-model",
+      "name": "LSA Topic Model",
+      "concept": "Latent semantic analysis applies truncated SVD to the term-document matrix: the latent dimensions act as topics, with top terms per dimension labeling them. It is the linear-algebra route to topic discovery, simpler and more stable than LDA. Coherence scoring judges topic quality.",
+      "key_params": {
+        "topics": "latent dimensions (topic count)",
+        "terms": "top terms shown per topic",
+        "weighting": "TF-IDF vs raw counts input"
+      },
+      "data_idea": "Factorizes seeded corpora with planted topics and measures planted-topic recovery via term overlap.",
+      "real_world_use": "Early search engines and document-clustering pipelines used LSA for topic structure.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "user-user-collaborative-filter",
+      "name": "User-User Collaborative Filtering",
+      "concept": "User-user CF recommends what similar users liked: cosine similarity over co-rated items finds neighbors, and their weighted ratings predict yours. It is intuitive and needs no item features, but sparse data and new users (cold start) hurt. Similarity shrinkage tames noisy small overlaps.",
+      "key_params": {
+        "neighbors": "neighbor count k",
+        "min_overlap": "minimum co-rated items",
+        "shrinkage": "similarity shrinkage for small overlaps"
+      },
+      "data_idea": "Generates seeded user-item matrices with planted tastes and measures recommendation precision for held-out likes.",
+      "real_world_use": "Early Amazon and Netflix recommenders were neighborhood-based collaborative filters.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "item-item-collaborative-filter",
+      "name": "Item-Item Collaborative Filtering",
+      "concept": "Item-item CF precomputes item similarities offline, then recommends items similar to what the user already liked: more stable than user-user since item relations change slowly. It scales to serving time as a lookup. Amazon's famous 'customers who bought' is item-item.",
+      "key_params": {
+        "top_n": "similar items stored per item",
+        "min_overlap": "minimum co-raters",
+        "similarity": "cosine vs pearson vs jaccard"
+      },
+      "data_idea": "Builds seeded purchase histories with planted affinities and verifies recommended items match the planted pairs.",
+      "real_world_use": "Amazon 'frequently bought together' and e-commerce recommendations run item-item CF.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "matrix-factorization-sgd",
+      "name": "Matrix Factorization (SGD)",
+      "concept": "Matrix factorization learns latent user and item vectors whose dot products approximate ratings, trained by SGD on observed entries with regularization. The latent dimensions capture taste without any content features. It is the algorithm that won the Netflix Prize lineage.",
+      "key_params": {
+        "factors": "latent dimension count",
+        "lr": "SGD learning rate",
+        "reg": "regularization strength"
+      },
+      "data_idea": "Factorizes seeded low-rank rating matrices and measures RMSE on held-out entries vs rank.",
+      "real_world_use": "Netflix Prize winners, Spotify, and classic recommender stacks use matrix factorization.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "popularity-baseline-recommender",
+      "name": "Popularity Baseline Recommender",
+      "concept": "The popularity baseline recommends globally (or segment-) popular items: trivial to build, hard to beat for new users, and the honest benchmark every fancier recommender must clear. Time-decayed popularity keeps it fresh. If your model cannot beat popularity, it is not learning personalization.",
+      "key_params": {
+        "decay": "recency half-life for popularity",
+        "segment": "global vs per-segment popularity",
+        "top_n": "recommendations served"
+      },
+      "data_idea": "Simulates seeded consumption with planted personal tastes and shows where popularity wins (cold users) and loses (niche tastes).",
+      "real_world_use": "New-user onboarding and the evaluation baseline in every recommender paper.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "content-based-tfidf-recommender",
+      "name": "Content-Based TF-IDF Recommender",
+      "concept": "Content-based recommendation builds user profiles from TF-IDF vectors of items they liked and recommends the closest unseen items by cosine similarity. It needs no other users, explains itself ('because you liked X'), but never surprises. Hybrid systems blend it with collaborative signals.",
+      "key_params": {
+        "profile": "how liked-item vectors combine",
+        "top_n": "recommendations served",
+        "diversity": "penalty for near-duplicate suggestions"
+      },
+      "data_idea": "Generates seeded item corpora and user likes, verifying recommendations match the user's topic profile.",
+      "real_world_use": "News apps, job boards, and Pandora-style radio use content-based matching.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "naive_bayes",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "cold-start-fallback",
+      "name": "Cold-Start Fallback Chain",
+      "concept": "New users and items have no history, so a fallback chain degrades gracefully: personalized model to segment popularity to global popularity to editorial picks. The chain guarantees every request gets sensible recommendations. Measuring fallback coverage shows how cold your start really is.",
+      "key_params": {
+        "chain": "ordered fallback stages",
+        "segment_by": "attributes defining segments",
+        "coverage": "fraction served by each stage"
+      },
+      "data_idea": "Simulates seeded onboarding flows and verifies every user gets recommendations with stage attribution logged.",
+      "real_world_use": "Every production recommender (Spotify, Netflix onboarding) chains fallbacks for cold starts.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "implicit-als-lite",
+      "name": "Implicit ALS (Lite)",
+      "concept": "Implicit feedback (clicks, views) has no ratings, so ALS treats observed interactions as positive with confidence weights and unobserved as weak negatives, alternating least squares between user and item factors. It scales to huge interaction logs. The confidence scaling is the key modeling choice.",
+      "key_params": {
+        "factors": "latent dimensions",
+        "alpha": "confidence scaling on interactions",
+        "iterations": "ALS alternations"
+      },
+      "data_idea": "Factorizes seeded implicit matrices with planted preferences and measures ranking quality on held-out interactions.",
+      "real_world_use": "Spotify and YouTube-style recommenders learn from implicit feedback with ALS variants.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "hitrate-ndcg-evaluator",
+      "name": "Hit-Rate and NDCG Evaluator",
+      "concept": "Recommender quality is measured by ranking metrics: hit-rate asks if a held-out item appears in top-N, NDCG rewards putting it near the top. Leave-one-out evaluation per user makes them computable offline. The evaluator also reports coverage and popularity bias so you see what the metrics hide.",
+      "key_params": {
+        "n": "top-N cutoff",
+        "protocol": "leave-one-out vs temporal split",
+        "bias_report": "whether popularity bias is measured"
+      },
+      "data_idea": "Evaluates seeded recommenders with known quality tiers and verifies metric orderings match.",
+      "real_world_use": "Offline recommender evaluation in industry and RecSys papers standardizes on these metrics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "moving-average-forecaster",
+      "name": "Moving Average Forecaster",
+      "concept": "The moving average forecasts by averaging the last w observations: simple, robust to noise, but lagging on trends. The window trades smoothness against responsiveness. It is the baseline every time-series model must beat and the core of many dashboards.",
+      "key_params": {
+        "window": "lookback periods averaged",
+        "trend": "trend strength in demo data",
+        "noise": "observation noise level"
+      },
+      "data_idea": "Forecasts seeded series with known trends and measures lag and error vs window size.",
+      "real_world_use": "Dashboard trend lines, inventory smoothing, and naive forecast baselines use moving averages.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "holt-exponential-smoothing",
+      "name": "Holt Exponential Smoothing",
+      "concept": "Holt's method tracks level and trend with exponential smoothing: recent observations weigh more, and the trend component projects forward. Two smoothing constants control adaptation speed. It handles trended data where moving averages lag.",
+      "key_params": {
+        "alpha": "level smoothing",
+        "beta": "trend smoothing",
+        "trend_strength": "true trend in demo"
+      },
+      "data_idea": "Forecasts seeded trended series and compares error against moving-average baselines.",
+      "real_world_use": "Business forecasting (sales, demand) uses exponential smoothing as the workhorse.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "holt-winters-seasonal",
+      "name": "Holt-Winters Seasonal Forecaster",
+      "concept": "Holt-Winters adds a seasonal component to level and trend, with additive or multiplicative seasonality. It needs at least two full seasons of history to initialize. The three smoothing parameters adapt each component. It is the classic for strongly seasonal business data.",
+      "key_params": {
+        "seasonal_periods": "season length",
+        "model": "additive vs multiplicative",
+        "history": "seasons of training data"
+      },
+      "data_idea": "Forecasts seeded seasonal series and verifies seasonal pattern capture vs non-seasonal methods.",
+      "real_world_use": "Retail demand, energy load, and call-center forecasting use Holt-Winters.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "autoregressive-model",
+      "name": "Autoregressive (AR) Model",
+      "concept": "AR models predict the next value as a linear combination of past values: order p sets the memory, and OLS or Yule-Walker fits the coefficients. PACF plots guide order selection. Stationarity is required, which differencing provides.",
+      "key_params": {
+        "order": "AR lag order p",
+        "fit": "OLS vs Yule-Walker estimation",
+        "true_order": "planted order in demo"
+      },
+      "data_idea": "Fits seeded AR processes and verifies coefficient recovery and order selection via PACF.",
+      "real_world_use": "Economic forecasting and signal processing build on autoregressive models.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "seasonal-decomposition",
+      "name": "Seasonal Decomposition (Trend/Seasonal/Residual)",
+      "concept": "Classical decomposition splits a series into trend (moving-average smoothing), seasonal (period averages), and residual components. The residual reveals anomalies the structure cannot explain. Multiplicative mode suits growing seasonality. It is the first diagnostic for any seasonal series.",
+      "key_params": {
+        "period": "season length",
+        "model": "additive vs multiplicative",
+        "trend_window": "trend smoothing window"
+      },
+      "data_idea": "Decomposes seeded series with known components and verifies each recovered component matches the planted one.",
+      "real_world_use": "Economic time-series analysis and anomaly triage start with decomposition.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "autocorrelation-analyzer",
+      "name": "Autocorrelation (ACF/PACF) Analyzer",
+      "concept": "ACF measures correlation of a series with its lags, revealing seasonality and persistence; PACF isolates direct lag effects for AR order selection. Confidence bands mark significant lags. Reading these plots is the core skill of Box-Jenkins modeling.",
+      "key_params": {
+        "max_lag": "lags computed",
+        "significance": "confidence band level",
+        "pattern": "seasonal vs AR patterns planted"
+      },
+      "data_idea": "Computes ACF/PACF on seeded AR and seasonal processes and verifies the plots reveal the planted structure.",
+      "real_world_use": "Time-series model identification in econometrics and engineering uses ACF/PACF.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "differencing-stationarity",
+      "name": "Differencing for Stationarity",
+      "concept": "Most time-series models need stationarity (stable mean/variance): first differencing removes trends, seasonal differencing removes seasonal unit roots. Over-differencing adds noise, so the demo shows the balance. Rolling statistics visualize when stationarity is achieved.",
+      "key_params": {
+        "d": "non-seasonal differences",
+        "D": "seasonal differences",
+        "period": "seasonal period"
+      },
+      "data_idea": "Differences seeded trended/seasonal random walks and verifies rolling stats stabilize at the right differencing order.",
+      "real_world_use": "ARIMA preprocessing in every forecasting pipeline differences to stationarity.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "seasonal-anomaly-flags",
+      "name": "Seasonal Anomaly Flags",
+      "concept": "Seasonal data needs seasonal baselines: the detector compares each observation to the same period's history (median and MAD), flagging deviations as anomalies. Pointwise z-scores would false-alarm on every peak. It is how monitoring handles daily/weekly rhythms.",
+      "key_params": {
+        "period": "season length",
+        "threshold": "MAD-based cutoff",
+        "anomalies": "planted anomaly count"
+      },
+      "data_idea": "Flags seeded seasonal series with planted spikes and measures precision/recall vs naive thresholds.",
+      "real_world_use": "Datadog, Prometheus alerting, and business-metric monitoring deseasonalize before alerting.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cusum-changepoint-detector",
+      "name": "CUSUM Changepoint Detector",
+      "concept": "CUSUM detects mean shifts by accumulating deviations from target: the cumulative sum drifts when the mean moves and resets otherwise, with a threshold triggering the alarm. It catches small persistent shifts that single-point rules miss. The reference value k filters noise.",
+      "key_params": {
+        "threshold": "alarm threshold h",
+        "k": "reference slack value",
+        "shift": "planted mean shift size"
+      },
+      "data_idea": "Runs CUSUM on seeded series with planted shifts and measures detection delay vs false alarms.",
+      "real_world_use": "Industrial quality control and latency-regression detection use CUSUM for shift detection.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "forecast-interval-quantiles",
+      "name": "Forecast Intervals via Quantiles",
+      "concept": "Point forecasts hide uncertainty: quantile regression estimates prediction intervals (e.g., 10th/90th percentiles) so planners see the range. Pinball loss trains the quantiles; coverage calibration checks the 80% interval really covers 80%. Inventory and capacity planning run on intervals, not points.",
+      "key_params": {
+        "quantiles": "interval bounds estimated",
+        "loss": "pinball loss training",
+        "coverage_target": "nominal coverage level"
+      },
+      "data_idea": "Forecasts seeded heteroscedastic series and verifies empirical coverage matches nominal levels.",
+      "real_world_use": "Supply-chain safety stock and energy-trading risk use quantile forecast intervals.",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "epsilon-greedy-bandit",
+      "name": "Epsilon-Greedy Multi-Armed Bandit",
+      "concept": "The bandit problem trades exploration against exploitation: epsilon-greedy tries a random arm with probability epsilon and otherwise pulls the best-known arm. Regret measures the cost of learning. It is the simplest policy that provably learns, and the baseline for fancier bandits.",
+      "key_params": {
+        "arms": "number of arms",
+        "epsilon": "exploration rate",
+        "gaps": "reward gaps between arms"
+      },
+      "data_idea": "Simulates seeded bandits and plots cumulative regret vs epsilon, verifying learning converges.",
+      "real_world_use": "Ad creative selection, clinical trials, and website optimization frame choices as bandits.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine",
+        "terminal_game"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ucb-bandit",
+      "name": "UCB Bandit (Optimism in the Face of Uncertainty)",
+      "concept": "UCB picks the arm with the highest upper confidence bound: estimated reward plus an exploration bonus shrinking with pulls. It explores systematically instead of randomly, with strong regret guarantees. The confidence width parameter tunes exploration.",
+      "key_params": {
+        "arms": "number of arms",
+        "c": "exploration bonus scale",
+        "horizon": "total pulls"
+      },
+      "data_idea": "Simulates seeded bandits comparing UCB vs epsilon-greedy regret, verifying UCB's advantage.",
+      "real_world_use": "Recommender exploration and dynamic pricing use UCB-style optimism.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine",
+        "terminal_game"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "thompson-sampling-beta",
+      "name": "Thompson Sampling (Beta-Bernoulli)",
+      "concept": "Thompson sampling keeps a Beta posterior per arm, samples from each, and pulls the winner: exploration emerges naturally from posterior uncertainty. It is simple, Bayesian, and empirically excellent. The demo shows posteriors concentrating as evidence accumulates.",
+      "key_params": {
+        "arms": "number of arms",
+        "prior": "Beta prior parameters",
+        "horizon": "total pulls"
+      },
+      "data_idea": "Simulates seeded Bernoulli bandits and verifies regret competitiveness plus posterior concentration.",
+      "real_world_use": "Microsoft, LinkedIn, and ad platforms run Thompson sampling for online optimization.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine",
+        "terminal_game"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "qlearning-gridworld",
+      "name": "Q-Learning Gridworld",
+      "concept": "Q-learning learns action values from experience with the Bellman update, no model needed: epsilon-greedy exploration fills the Q-table and the max over next actions bootstraps values. The gridworld makes policies visible as arrows. Learning rate and discount shape the result.",
+      "key_params": {
+        "size": "grid dimensions",
+        "alpha": "learning rate",
+        "gamma": "discount factor"
+      },
+      "data_idea": "Trains on seeded gridworlds with walls and goals, verifying the learned policy reaches the goal optimally.",
+      "real_world_use": "The pedagogical RL algorithm; Q-learning variants drive game AI and robotics.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "statistical_analyzer",
+        "terminal_game"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sarsa-vs-qlearning",
+      "name": "SARSA vs Q-Learning Comparison",
+      "concept": "SARSA updates with the actually-taken next action (on-policy) while Q-learning uses the max (off-policy): near cliffs, SARSA learns the safe path and Q-learning the optimal-but-risky one. The comparison reveals what 'on-policy' really means. Both converge with proper exploration decay.",
+      "key_params": {
+        "env": "cliff vs open gridworld",
+        "alpha": "learning rate",
+        "epsilon": "exploration schedule"
+      },
+      "data_idea": "Trains both on a seeded cliff gridworld, comparing learned paths and fall counts during training.",
+      "real_world_use": "RL courses use the cliff-walking demo to teach on-policy vs off-policy.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "statistical_analyzer",
+        "terminal_game"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "epsilon-decay-scheduler",
+      "name": "Epsilon Decay Scheduler",
+      "concept": "Exploration should fade as knowledge grows: the scheduler decays epsilon per episode (exponential, linear, or stepwise), balancing early exploration against late exploitation. Too-fast decay strands the agent in local optima. The schedule is a hyperparameter the demo tunes empirically.",
+      "key_params": {
+        "schedule": "exponential vs linear decay",
+        "decay_rate": "decay speed",
+        "min_epsilon": "exploration floor"
+      },
+      "data_idea": "Trains seeded agents under several schedules and compares final policy quality and learning speed.",
+      "real_world_use": "Every epsilon-greedy RL training run tunes an exploration schedule.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer",
+        "terminal_game"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "monte-carlo-policy-eval",
+      "name": "Monte Carlo Policy Evaluation",
+      "concept": "Monte Carlo evaluation estimates state values by averaging complete episode returns: unbiased but high-variance and only usable in episodic tasks. First-visit vs every-visit differ in which returns count. It is the simplest policy-evaluation method and the baseline for TD methods.",
+      "key_params": {
+        "episodes": "episodes averaged",
+        "visit": "first-visit vs every-visit",
+        "gamma": "discount factor"
+      },
+      "data_idea": "Evaluates seeded gridworld policies, verifying estimates converge to dynamic-programming ground truth.",
+      "real_world_use": "Policy evaluation in episodic RL (games, finance simulations) starts with Monte Carlo.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine",
+        "terminal_game"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "policy-iteration-mdp",
+      "name": "Policy Iteration (Small MDP)",
+      "concept": "Policy iteration alternates policy evaluation (solving Bellman equations) and policy improvement (greedy updates) until the policy stops changing, converging to optimal in few iterations for small MDPs. It is the exact dynamic-programming solution that learning algorithms approximate. The demo runs it on tiny MDPs where exactness is checkable.",
+      "key_params": {
+        "states": "MDP state count",
+        "gamma": "discount factor",
+        "theta": "evaluation convergence threshold"
+      },
+      "data_idea": "Solves seeded small MDPs and verifies the policy is optimal by brute-force comparison.",
+      "real_world_use": "Operations research, inventory control, and RL theory ground out in policy iteration.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "statistical_analyzer",
+        "terminal_game"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "mlp-forward-pass",
+      "name": "MLP Forward Pass",
+      "concept": "A multilayer perceptron composes affine transforms and nonlinear activations: the forward pass is just matrix multiplies plus activation functions, layer by layer. Implementing it from scratch demystifies 'neural network' into arithmetic. Shape bookkeeping is the practical skill.",
+      "key_params": {
+        "layers": "layer sizes",
+        "activation": "relu vs tanh vs sigmoid",
+        "batch": "batch size"
+      },
+      "data_idea": "Runs seeded inputs through the network, verifying output shapes and matching a reference computation.",
+      "real_world_use": "Every deep-learning model is stacked forward passes; this is the foundation.",
+      "suggested_types": [
+        "simulation",
+        "linear_regression",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "backprop-from-scratch",
+      "name": "Backpropagation from Scratch",
+      "concept": "Backprop applies the chain rule layer by layer to compute gradients of the loss with respect to every weight: forward pass caches activations, backward pass propagates error signals. Gradient checking against numerical derivatives verifies the implementation. It is the algorithm that made deep learning possible.",
+      "key_params": {
+        "layers": "network architecture",
+        "loss": "mse vs cross-entropy",
+        "check": "gradient-check tolerance"
+      },
+      "data_idea": "Trains a seeded tiny network, verifying analytic gradients match numerical ones within tolerance.",
+      "real_world_use": "All neural network training runs backprop; implementing it once removes the magic.",
+      "suggested_types": [
+        "simulation",
+        "linear_regression",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "activation-function-zoo",
+      "name": "Activation Function Zoo",
+      "concept": "Activations give networks nonlinearity: sigmoid saturates, tanh centers, ReLU is fast but can die, leaky ReLU and GELU fix the downsides. The zoo compares their shapes, derivatives, and effect on a tiny training task. Choice of activation measurably changes training dynamics.",
+      "key_params": {
+        "functions": "sigmoid, tanh, relu, leaky, gelu",
+        "task": "tiny regression/classification task",
+        "lr": "shared learning rate"
+      },
+      "data_idea": "Trains seeded tiny networks per activation and compares convergence speed and final loss.",
+      "real_world_use": "Architecture design in deep learning selects activations deliberately (ReLU/GELU defaults).",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "weight-init-effects",
+      "name": "Weight Initialization Effects",
+      "concept": "Initialization decides whether deep networks train at all: zeros symmetry-break nothing, large random values saturate, while Xavier/He scaling keeps activation variances stable across layers. The demo trains identical networks from different inits and watches some fail. It is a five-line change with outsized impact.",
+      "key_params": {
+        "init": "zeros vs large vs xavier vs he",
+        "depth": "network depth",
+        "activation": "matched to init scheme"
+      },
+      "data_idea": "Trains seeded deep narrow networks per init, verifying He/Xavier train while naive inits stall or explode.",
+      "real_world_use": "Every deep-learning framework defaults to He/Xavier init for this reason.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sgd-vs-adam",
+      "name": "SGD vs Adam Optimizer Shootout",
+      "concept": "SGD with momentum and Adam adapt differently: Adam's per-parameter adaptive rates converge fast early, while tuned SGD+momentum often generalizes slightly better. The shootout trains identical models with both on seeded tasks, tracking loss curves and final test accuracy. Optimizer choice is empirical, not dogmatic.",
+      "key_params": {
+        "lr": "base learning rates tried",
+        "task": "regression vs classification task",
+        "epochs": "training budget"
+      },
+      "data_idea": "Compares seeded training runs, reporting convergence speed and final generalization per optimizer.",
+      "real_world_use": "Deep-learning practice picks optimizers per task; Adam is the default, SGD the challenger.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "learning-rate-schedulers",
+      "name": "Learning Rate Schedulers",
+      "concept": "Learning-rate schedules (step decay, cosine annealing, warmup) start fast and finish precise: large early steps explore, small late steps settle into minima. Warmup avoids early instability in big models. The scheduler is often worth more than the optimizer choice.",
+      "key_params": {
+        "schedule": "step vs cosine vs warmup+cosine",
+        "base_lr": "initial learning rate",
+        "epochs": "training budget"
+      },
+      "data_idea": "Trains seeded models per schedule and compares final loss and stability.",
+      "real_world_use": "Training large models (vision, language) relies on warmup + cosine schedules.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "layer-norm-demo",
+      "name": "Layer Normalization Demo",
+      "concept": "Layer norm normalizes each example's activations across features, stabilizing training independent of batch size (unlike batch norm). It is the default in transformers. The demo shows internal activation statistics staying healthy through deep stacks with and without it.",
+      "key_params": {
+        "depth": "network depth",
+        "norm": "none vs layer vs batch",
+        "batch": "batch sizes compared"
+      },
+      "data_idea": "Trains seeded deep networks per norm choice, verifying activation stats and convergence, especially at small batch sizes.",
+      "real_world_use": "Transformers (GPT, BERT) normalize with layer norm; the demo shows why.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dropout-regularizer",
+      "name": "Dropout Regularizer",
+      "concept": "Dropout randomly zeroes activations during training, preventing co-adaptation and approximating an ensemble of subnetworks; at test time outputs scale by the keep probability. The dropout rate trades regularization strength against training speed. It was the regularization that made early deep nets work.",
+      "key_params": {
+        "rate": "dropout probability",
+        "layers": "where dropout is applied",
+        "overfit": "planted overfitting level"
+      },
+      "data_idea": "Trains seeded overfitting-prone networks with and without dropout, comparing train/test gaps.",
+      "real_world_use": "Classic regularization in MLPs and convnets; less used in modern transformers but conceptually central.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nn-early-stopping",
+      "name": "Neural Net Early Stopping",
+      "concept": "Neural nets overfit fast, so early stopping with patience and best-weight restoration is standard: it stops training when validation loss plateaus. Combined with learning-rate schedules it is the cheapest regularization available. The demo tunes patience on noisy validation curves.",
+      "key_params": {
+        "patience": "epochs tolerated",
+        "min_delta": "improvement threshold",
+        "restore": "best-weight restoration"
+      },
+      "data_idea": "Trains seeded nets with noisy validation, verifying stopping points and restored weights.",
+      "real_world_use": "Universal in neural network training pipelines.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "gradient-clipping-demo",
+      "name": "Gradient Clipping Demo",
+      "concept": "Exploding gradients destabilize RNN and deep-net training: clipping rescales gradients whose norm exceeds a threshold, keeping steps bounded without changing their direction. It is the standard stabilizer for recurrent models. The demo shows loss curves with and without clipping on a pathological task.",
+      "key_params": {
+        "clip_norm": "max gradient norm",
+        "task": "RNN-style pathological task",
+        "lr": "learning rate"
+      },
+      "data_idea": "Trains seeded recurrent-style models, verifying clipping prevents divergence while preserving learning.",
+      "real_world_use": "RNN and transformer training pipelines clip gradients as standard practice.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "denoising-autoencoder",
+      "name": "Denoising Autoencoder",
+      "concept": "Autoencoders compress input through a bottleneck and reconstruct it; denoising variants train on corrupted inputs, forcing the network to learn robust structure rather than the identity. Reconstruction error then flags anomalies. The bottleneck size controls the compression.",
+      "key_params": {
+        "bottleneck": "latent dimension",
+        "noise": "corruption level",
+        "anomalies": "planted anomaly fraction"
+      },
+      "data_idea": "Trains on seeded normal data, then verifies reconstruction error separates planted anomalies.",
+      "real_world_use": "Pretraining, dimensionality reduction, and unsupervised anomaly detection use autoencoders.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "embedding-layer-demo",
+      "name": "Embedding Layer Demo",
+      "concept": "Embedding layers map discrete tokens to dense vectors learned by backprop: the demo trains tiny embeddings on a synthetic co-occurrence task and inspects nearest neighbors. It is the same mechanism behind word vectors, scaled down to visibility. Vocabulary size and dimension are the knobs.",
+      "key_params": {
+        "vocab": "vocabulary size",
+        "dim": "embedding dimension",
+        "task": "synthetic analogy task"
+      },
+      "data_idea": "Trains seeded embeddings and verifies planted analogies appear as nearest neighbors.",
+      "real_world_use": "NLP models, recommender systems, and categorical features all learn embeddings this way.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "chatbot"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "conv1d-demo",
+      "name": "1D Convolution Demo",
+      "concept": "Convolutions apply learned local filters sliding across sequences, sharing weights across positions for translation invariance: the demo hand-builds edge/motif detectors on synthetic signals before learning them. Pooling downsamples. It is the pattern-matching core of CNNs in one dimension.",
+      "key_params": {
+        "filters": "filter count and width",
+        "motifs": "planted signal patterns",
+        "pool": "pooling window"
+      },
+      "data_idea": "Trains seeded 1D CNNs on planted motifs and verifies filters recover them plus classification accuracy.",
+      "real_world_use": "Time-series classification, audio keyword spotting, and DNA motif finding use 1D convolutions.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vanilla-rnn-sequence",
+      "name": "Vanilla RNN Sequence Predictor",
+      "concept": "Vanilla RNNs carry a hidden state across time steps, learning sequential patterns by backprop through time. They struggle with long dependencies (vanishing gradients), which the demo shows on copy tasks of increasing length. It motivates gating (LSTM/GRU) honestly.",
+      "key_params": {
+        "hidden": "hidden state size",
+        "seq_len": "sequence lengths tried",
+        "task": "copy vs next-step prediction"
+      },
+      "data_idea": "Trains seeded RNNs on sequences of increasing length, measuring where learning breaks down.",
+      "real_world_use": "The historical sequence model; the failure mode motivates LSTMs and transformers.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "attention-weights-visualizer",
+      "name": "Attention Weights Visualizer",
+      "concept": "Attention computes weighted averages of values by query-key similarity: the visualizer shows the weight matrix as a heatmap over a tiny translation-like task, revealing which inputs each output attends to. It makes the 'attention is all you need' claim concrete and inspectable.",
+      "key_params": {
+        "heads": "attention head count",
+        "dim": "key/query dimension",
+        "task": "tiny copy/translation task"
+      },
+      "data_idea": "Trains seeded tiny attention models and verifies weights concentrate on the planted alignments.",
+      "real_world_use": "Model interpretability for transformers starts with attention visualization.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "chatbot"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "self-attention-scratch",
+      "name": "Self-Attention from Scratch",
+      "concept": "Self-attention lets every position attend to every other: queries, keys, and values derive from the same input, scaled dot-products give weights, and multiple heads learn different relations. Implementing it from scratch on a tiny sequence makes transformers legible. Positional encodings add order.",
+      "key_params": {
+        "seq_len": "sequence length",
+        "heads": "attention heads",
+        "dim": "model dimension"
+      },
+      "data_idea": "Runs seeded sequences through the implementation, verifying output shapes and that attention weights sum to one per row.",
+      "real_world_use": "The core of GPT/BERT; implementing it once demystifies the architecture.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "chatbot"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "ks-drift-detector",
+      "name": "KS Drift Detector",
+      "concept": "The Kolmogorov-Smirnov test detects distribution drift by the maximum gap between reference and current CDFs: no distributional assumptions, one threshold. Running it per feature (with multiple-testing correction) monitors production data. It catches the slow drift that silently rots models.",
+      "key_params": {
+        "threshold": "KS statistic cutoff",
+        "features": "features monitored",
+        "drift": "planted drift magnitude"
+      },
+      "data_idea": "Streams seeded data with planted drift and measures detection delay vs false alarms.",
+      "real_world_use": "Production ML monitoring (Evidently, WhyLabs) runs KS-style drift tests per feature.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "page-hinkley-drift",
+      "name": "Page-Hinkley Drift Detector",
+      "concept": "Page-Hinkley tracks the cumulative deviation of a stream from its mean, alarming when the drift exceeds a threshold: it catches gradual concept drift in error rates or metrics. The sensitivity parameter trades detection speed against false alarms. It is CUSUM's cousin for streaming ML.",
+      "key_params": {
+        "threshold": "alarm threshold",
+        "alpha": "forgetting factor",
+        "drift": "planted gradual drift"
+      },
+      "data_idea": "Monitors seeded streams with sudden and gradual drift, comparing detection delays.",
+      "real_world_use": "Streaming ML (River, scikit-multiflow) uses Page-Hinkley for concept-drift detection.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fairness-metrics-auditor",
+      "name": "Fairness Metrics Auditor",
+      "concept": "Fairness audits slice metrics by group: demographic parity compares positive rates, equalized odds compares true/false positive rates, and disparate impact ratios flag violations. The auditor reports all three because no single metric captures fairness. It turns an abstract requirement into numbers.",
+      "key_params": {
+        "groups": "protected groups in demo",
+        "metrics": "parity, equalized odds, impact ratio",
+        "threshold": "violation flag level"
+      },
+      "data_idea": "Audits seeded classifiers with planted group disparities and verifies each metric flags correctly.",
+      "real_world_use": "Regulated ML (hiring, lending) audits fairness metrics for compliance.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "reweighting-fairness",
+      "name": "Reweighting for Fairness",
+      "concept": "Reweighting gives training examples weights inversely proportional to their group-label frequency, so the learner optimizes as if groups were balanced. It is a preprocessing fix needing no model changes. The demo shows disparity metrics improving with small accuracy cost.",
+      "key_params": {
+        "groups": "protected groups",
+        "target": "parity vs equalized-odds objective",
+        "strength": "reweighting aggressiveness"
+      },
+      "data_idea": "Trains seeded biased classifiers with and without reweighting, comparing fairness metrics and accuracy.",
+      "real_world_use": "IBM AI Fairness 360 includes reweighting as a standard bias-mitigation technique.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "fgsm-adversarial-lite",
+      "name": "FGSM Adversarial Examples (Lite)",
+      "concept": "The fast gradient sign method crafts adversarial examples by nudging inputs along the gradient sign within an epsilon ball: imperceptible changes flip predictions. The lite demo attacks a tiny linear/logistic model to show the mechanism plainly. Adversarial training is the standard defense.",
+      "key_params": {
+        "epsilon": "perturbation budget",
+        "model": "linear vs tiny MLP victim",
+        "norm": "linf perturbation constraint"
+      },
+      "data_idea": "Attacks seeded classifiers and measures fooling rate vs epsilon, plus defense via adversarial training.",
+      "real_world_use": "ML security research and robust-model evaluation use FGSM as the baseline attack.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "label-noise-robustness",
+      "name": "Label Noise Robustness Lab",
+      "concept": "Real labels are noisy: the lab plants symmetric and asymmetric label noise, then compares plain training against robust variants (loss correction, sample reweighting, early stopping). It quantifies how much noise each method tolerates. Data cleaning budgets follow from the curves.",
+      "key_params": {
+        "noise_rate": "fraction of flipped labels",
+        "noise_type": "symmetric vs asymmetric",
+        "defense": "robust method compared"
+      },
+      "data_idea": "Trains seeded classifiers under noise regimes and compares accuracy degradation per defense.",
+      "real_world_use": "Crowdsourced labeling and web-scraped datasets motivate noise-robust training.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "model-registry-lite",
+      "name": "Model Registry (Lite)",
+      "concept": "A model registry versions trained models with metadata (metrics, data hash, code version) and manages stage transitions (staging to production to archived). The lite version implements versioning, stage promotion with approval gates, and rollback. It brings software-release discipline to models.",
+      "key_params": {
+        "stages": "staging/production/archived lifecycle",
+        "approval": "promotion gate policy",
+        "retention": "versions retained"
+      },
+      "data_idea": "Registers seeded model versions, promotes through stages, and verifies rollback restores the previous production model.",
+      "real_world_use": "MLflow Model Registry and SageMaker Model Registry manage model lifecycles in production.",
+      "suggested_types": [
+        "config_manager",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "feature-store-lite",
+      "name": "Feature Store (Lite)",
+      "concept": "A feature store centralizes feature definitions so training and serving compute identical values: the lite version registers feature specs, materializes batch features, serves point-in-time-correct online lookups, and tracks lineage. Consistency between train and serve is the whole point.",
+      "key_params": {
+        "features": "registered feature definitions",
+        "ttl": "online store freshness",
+        "backfill": "historical recompute policy"
+      },
+      "data_idea": "Registers seeded features, serves lookups, and verifies train/serve parity on identical inputs.",
+      "real_world_use": "Uber Michelangelo, Feast, and Tecton all centralize features to kill train-serve skew.",
+      "suggested_types": [
+        "data_pipeline",
+        "config_manager",
+        "rest_api"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "shadow-deploy-evaluator",
+      "name": "Shadow Deployment Evaluator",
+      "concept": "Shadow deployments score a challenger model on live production inputs without affecting users: the evaluator routes copies of requests to both models, compares predictions and latency, and reports disagreement rates. It de-risks model swaps with real traffic evidence.",
+      "key_params": {
+        "traffic": "fraction shadowed",
+        "compare": "prediction agreement metric",
+        "latency_slo": "challenger latency budget"
+      },
+      "data_idea": "Shadows seeded challenger models against champions and verifies disagreement reports and latency checks.",
+      "real_world_use": "Safe ML rollouts at LinkedIn, Uber, and banks shadow-score challengers before promotion.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "prediction-drift-monitor",
+      "name": "Prediction Drift Monitor",
+      "concept": "Prediction distributions drifting signal upstream or model problems: the monitor tracks prediction histograms over time, alarms on PSI/KS drift, and correlates with feature drift to localize causes. It watches the model's outputs, not just its inputs.",
+      "key_params": {
+        "metric": "PSI vs KS drift measure",
+        "window": "comparison windows",
+        "alarm": "drift threshold"
+      },
+      "data_idea": "Monitors seeded prediction streams with planted drift and verifies alarm timing and cause attribution.",
+      "real_world_use": "Production ML platforms monitor prediction drift as the top-level model health signal.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lime-explainer-lite",
+      "name": "LIME Explainer (Lite)",
+      "concept": "LIME explains a prediction by fitting an interpretable local surrogate: perturb the input, weight by proximity, and fit a sparse linear model whose coefficients are the explanation. The lite version does this for tabular data with readable output. Local fidelity is the quality metric.",
+      "key_params": {
+        "samples": "perturbations per explanation",
+        "kernel": "proximity weighting width",
+        "top_k": "features shown"
+      },
+      "data_idea": "Explains seeded model predictions and verifies the surrogate recovers the planted locally-important features.",
+      "real_world_use": "Regulated-model explanations and debugging misclassifications use LIME-style local surrogates.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "shapley-value-demo",
+      "name": "Shapley Value Demo",
+      "concept": "Shapley values fairly attribute a prediction among features using cooperative game theory: each feature's marginal contribution averaged over all orderings. Exact computation is exponential, so the demo runs small-n exact and sampling approximations. It is the principled answer to 'which feature mattered'.",
+      "key_params": {
+        "n_features": "feature count (small for exact)",
+        "samples": "approximation samples",
+        "baseline": "reference baseline value"
+      },
+      "data_idea": "Computes exact Shapley values on seeded tiny models and verifies efficiency and symmetry properties.",
+      "real_world_use": "SHAP is the industry standard for model explanations in finance and healthcare.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "partial-dependence-plotter",
+      "name": "Partial Dependence Plotter",
+      "concept": "Partial dependence shows a feature's average effect by sweeping its values while holding others fixed: the plot reveals nonlinearities and interactions the coefficients hide. ICE curves show per-instance variation around the average. It is the classic global interpretability plot.",
+      "key_params": {
+        "features": "features plotted",
+        "grid": "sweep resolution",
+        "ice": "whether ICE curves are shown"
+      },
+      "data_idea": "Plots PDPs for seeded models with planted nonlinear effects and verifies the curves recover them.",
+      "real_world_use": "Model documentation and regulator explanations include PDPs as standard.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "counterfactual-explainer-lite",
+      "name": "Counterfactual Explainer (Lite)",
+      "concept": "Counterfactuals answer 'what would change the decision': the explainer searches for the smallest input change flipping the prediction, favoring sparse, actionable changes ('income +5k' over 'age -10 years'). It gives users recourse, not just reasons. Plausibility constraints keep suggestions realistic.",
+      "key_params": {
+        "sparsity": "penalty on changed features",
+        "actionable": "which features may change",
+        "target": "desired flipped outcome"
+      },
+      "data_idea": "Generates seeded counterfactuals and verifies minimality, actionability, and prediction flip.",
+      "real_world_use": "Credit-adverse-action notices and recourse research use counterfactual explanations.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "chatbot"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "active-learning-uncertainty",
+      "name": "Active Learning (Uncertainty Sampling)",
+      "concept": "Active learning labels the most informative points first: uncertainty sampling queries points where the model is least confident, cutting labeling cost dramatically. The demo compares learning curves against random sampling. It is how teams label efficiently with expert annotators.",
+      "key_params": {
+        "budget": "labels allowed",
+        "strategy": "uncertainty vs margin vs random",
+        "batch": "queries per round"
+      },
+      "data_idea": "Runs seeded active learning and verifies the learning curve beats random sampling at equal budgets.",
+      "real_world_use": "Medical imaging and legal-document review use active learning to minimize expert labeling.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "self-training-semisupervised",
+      "name": "Self-Training (Semi-Supervised)",
+      "concept": "Self-training leverages unlabeled data: train on labeled points, predict confidently on unlabeled ones, add the confident predictions to training, and repeat. The confidence threshold controls error reinforcement. It helps when labels are scarce but unlabeled data is plentiful.",
+      "key_params": {
+        "threshold": "confidence for pseudo-labeling",
+        "rounds": "self-training iterations",
+        "labeled": "initial labeled count"
+      },
+      "data_idea": "Runs self-training on seeded data with few labels and verifies accuracy gains vs supervised-only baseline.",
+      "real_world_use": "Text classification with abundant unlabeled documents uses self-training and its variants.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "naive_bayes"
+      ],
+      "difficulty": "intermediate"
+    }
+  ]
+}

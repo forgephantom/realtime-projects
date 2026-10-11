@@ -1,0 +1,1950 @@
+{
+  "domain": "healthcare",
+  "subdomain": "health_informatics",
+  "topics": [
+    {
+      "slug_base": "appointment-scheduler",
+      "name": "Clinic Appointment Scheduler",
+      "concept": "An outpatient clinic booking engine that assigns appointment slots to visit types while respecting provider calendars, room availability, and buffer time between visits. It keeps a per-provider day grid and detects double bookings before they are confirmed. Cancellations free the slot back into the pool automatically.",
+      "key_params": {
+        "slot_minutes": "length of one appointment block",
+        "providers": "number of clinicians on the day grid",
+        "buffer_minutes": "gap enforced between consecutive visits"
+      },
+      "data_idea": "A seeded RNG invents provider names, visit types, and patient request times to fill the day grid.",
+      "real_world_use": "Used by clinic front desks and patient portals to manage outpatient bookings.",
+      "suggested_types": [
+        "scheduler",
+        "rest_api",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "wait-time-tracker",
+      "name": "Waiting Room Wait-Time Tracker",
+      "concept": "A check-in desk monitor that records arrival, rooming, and provider-entry timestamps for each visit and computes live wait statistics. It flags patients whose wait exceeds a configurable threshold so staff can intervene. End-of-day summaries show average and worst-case waits by hour.",
+      "key_params": {
+        "warn_threshold_min": "wait minutes before a flag is raised",
+        "checkins_per_hour": "arrival rate driving the simulation",
+        "rooms": "exam rooms available"
+      },
+      "data_idea": "A seeded RNG generates patient arrivals with realistic morning and afternoon peaks plus service times.",
+      "real_world_use": "Used by clinic managers to spot bottlenecks and report on patient experience metrics.",
+      "suggested_types": [
+        "monitoring_agent",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bmi-trend-tracker",
+      "name": "BMI Trend Tracker",
+      "concept": "A personal health log that stores dated height and weight entries and computes body mass index for each, plotting the trend over time. It classifies each reading into standard adult BMI bands and reports the direction and rate of change. The tool is educational and never gives medical advice.",
+      "key_params": {
+        "height_cm": "user height used in the calculation",
+        "entries": "number of log entries",
+        "band_warnings": "whether band changes are highlighted"
+      },
+      "data_idea": "A seeded RNG creates a year of plausible weight entries drifting around a baseline with weekly noise.",
+      "real_world_use": "Used in wellness apps and health-education programs as a simple self-monitoring example.",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "blood-pressure-log",
+      "name": "Blood Pressure Log Analyzer",
+      "concept": "A home blood-pressure journal that stores systolic, diastolic, and pulse readings with timestamps and computes rolling averages. It groups readings into morning and evening series and highlights readings above configurable alert bands. All thresholds are labeled as informational defaults the user can change.",
+      "key_params": {
+        "alert_systolic": "systolic value that triggers an alert band",
+        "window_days": "rolling average window",
+        "readings_per_day": "simulated readings per day"
+      },
+      "data_idea": "A seeded RNG synthesizes twice-daily readings with circadian variation and occasional spikes.",
+      "real_world_use": "Used by remote patient monitoring pilots and hypertension education tools.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "medication-reminder-scheduler",
+      "name": "Medication Reminder Scheduler",
+      "concept": "A dosing schedule builder that turns prescriptions into daily reminder times, handling frequencies like twice daily, every 8 hours, or with meals. It detects overlapping doses across medications and produces a printable daily timetable. A missed-dose policy marks how long a dose stays actionable.",
+      "key_params": {
+        "doses": "list of medication name, frequency, and start time",
+        "grace_minutes": "how long a reminder stays valid",
+        "days": "schedule horizon in days"
+      },
+      "data_idea": "A seeded RNG invents a synthetic medication list with varied frequencies for the demo schedule.",
+      "real_world_use": "Used in patient-engagement apps and caregiver tools for adherence support.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vaccination-record-keeper",
+      "name": "Vaccination Record Keeper",
+      "concept": "A synthetic immunization registry that stores vaccine doses with lot numbers and administration dates for fictional patients. It computes which doses in a series are complete and which are due next based on configurable interval rules. The registry exports a printable record card per patient.",
+      "key_params": {
+        "series_rules": "dose intervals per vaccine series",
+        "patients": "number of synthetic records",
+        "as_of_date": "date used for due-date math"
+      },
+      "data_idea": "A seeded RNG creates fictional patient records with partial vaccine series at random completion stages.",
+      "real_world_use": "Used by school health offices and travel clinics in training environments.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "immunization-due-calculator",
+      "name": "Immunization Due-Date Calculator",
+      "concept": "A date engine that applies minimum-interval rules between vaccine doses to compute the earliest date each next dose may be given. It handles multi-dose series with different spacing per dose number and flags doses given too early as invalid. Results are shown as a per-patient due calendar.",
+      "key_params": {
+        "intervals_days": "minimum days between consecutive doses",
+        "birth_date": "anchor date for age-based doses",
+        "doses_given": "dates of already administered doses"
+      },
+      "data_idea": "A seeded RNG fabricates dose histories for fictional children across several vaccine series.",
+      "real_world_use": "Used by pediatric scheduling staff to book follow-up vaccine visits at valid intervals.",
+      "suggested_types": [
+        "cli_tool",
+        "scheduler",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "patient-intake-validator",
+      "name": "Patient Intake Form Validator",
+      "concept": "A front-desk data quality gate that checks registration forms for completeness and format: required demographics, phone and email shape, insurance ID patterns, and emergency contact presence. It returns a field-by-field verdict with plain-language fix hints. Nothing is stored beyond the validation session.",
+      "key_params": {
+        "required_fields": "which fields must be present",
+        "strict_mode": "whether warnings become errors",
+        "forms": "number of synthetic forms to validate"
+      },
+      "data_idea": "A seeded RNG generates synthetic intake forms with a controlled mix of valid and defective entries.",
+      "real_world_use": "Used by registration teams to catch data-entry errors before they reach the billing system.",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "consent-form-manager",
+      "name": "Consent Form Manager",
+      "concept": "A document tracker that records which consent forms each synthetic patient has signed, the form version, and the signature date. It flags expired or superseded versions and lists patients missing a required consent before a procedure. Audit entries record every status change.",
+      "key_params": {
+        "form_types": "consent forms tracked",
+        "validity_days": "how long a signature stays valid",
+        "patients": "number of synthetic patients"
+      },
+      "data_idea": "A seeded RNG assigns signed, expired, and missing consents across fictional patients and procedures.",
+      "real_world_use": "Used by surgical scheduling and research coordinators to keep consent paperwork complete.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "interpreter-request-scheduler",
+      "name": "Interpreter Request Scheduler",
+      "concept": "A language-services dispatcher that matches interpreter requests to available interpreters by language, modality, and time window. It prioritizes urgent clinical requests and reports unfilled requests per language. The schedule view shows each interpreter's booked blocks.",
+      "key_params": {
+        "languages": "languages covered",
+        "interpreters": "staff count per language",
+        "urgent_ratio": "share of requests marked urgent"
+      },
+      "data_idea": "A seeded RNG creates appointment requests with language needs spread over a clinic week.",
+      "real_world_use": "Used by hospital language-access offices to staff interpreters across departments.",
+      "suggested_types": [
+        "scheduler",
+        "web_dashboard",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "transport-dispatcher",
+      "name": "Patient Transport Dispatcher",
+      "concept": "A non-emergency transport coordinator that batches ride requests by pickup zone and appointment time, assigning them to vehicles with seat and wheelchair capacity. It builds routes that respect pickup windows and flags requests that cannot be served. Daily manifests list stops in order.",
+      "key_params": {
+        "vehicles": "fleet size and capacities",
+        "zones": "pickup zones",
+        "window_minutes": "allowed pickup window"
+      },
+      "data_idea": "A seeded RNG generates ride requests with zones, times, and mobility needs for fictional patients.",
+      "real_world_use": "Used by hospital transport desks coordinating non-emergency medical rides.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bed-occupancy-simulator",
+      "name": "Hospital Bed Occupancy Simulator",
+      "concept": "A discrete-event simulation of admissions, transfers, and discharges across nursing units with fixed bed counts. It tracks occupancy, average length of stay, and boarding time for patients waiting on a bed. Managers can test how adding or removing beds changes peak occupancy.",
+      "key_params": {
+        "beds_per_unit": "capacity of each unit",
+        "arrival_rate": "admissions per day",
+        "avg_los_days": "mean length of stay"
+      },
+      "data_idea": "A seeded RNG drives admissions with daily and weekly seasonality and random lengths of stay.",
+      "real_world_use": "Used by hospital operations teams for capacity planning and surge exercises.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "triage-queue-simulator",
+      "name": "Emergency Triage Queue Simulator",
+      "concept": "A priority-queue model of an emergency department where arrivals carry an acuity level and are served in acuity order with waiting-time tracking. It reports time-to-provider by acuity band and shows how a surge of low-acuity arrivals affects the wait of high-acuity ones. Staffing levels are adjustable knobs.",
+      "key_params": {
+        "arrival_rate": "patients per hour",
+        "providers": "clinicians seeing patients",
+        "acuity_mix": "share of arrivals per acuity level"
+      },
+      "data_idea": "A seeded RNG produces arrivals with acuity levels and treatment durations for a simulated shift.",
+      "real_world_use": "Used in emergency-department staffing studies and operations coursework.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "referral-tracker",
+      "name": "Specialist Referral Tracker",
+      "concept": "A referral lifecycle board that follows each referral from order through scheduling, visit completion, and report return. It ages open referrals and escalates those waiting past a service-level target. Completion-rate reports break down by specialty and ordering provider.",
+      "key_params": {
+        "sla_days": "target days from order to completed visit",
+        "specialties": "specialties tracked",
+        "referrals": "number of synthetic referrals"
+      },
+      "data_idea": "A seeded RNG creates referrals at various lifecycle stages with realistic lag distributions.",
+      "real_world_use": "Used by primary-care referral coordinators to close the loop on specialist orders.",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "prior-auth-tracker",
+      "name": "Prior Authorization Tracker",
+      "concept": "A payer-workflow tracker that records prior authorization requests with procedure codes, submission dates, and status transitions. It predicts which pending requests are at risk of missing the procedure date and summarizes approval and denial rates by payer. Denial reasons are coded for trending.",
+      "key_params": {
+        "sla_days": "days before procedure date that triggers a risk flag",
+        "payers": "payers in the demo",
+        "requests": "number of synthetic requests"
+      },
+      "data_idea": "A seeded RNG generates authorization requests with payer-specific approval odds and turnaround times.",
+      "real_world_use": "Used by revenue-cycle teams to keep scheduled procedures from slipping on paperwork.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "claims-scrubber",
+      "name": "Claim Scrubber",
+      "concept": "A pre-submission claim checker that validates synthetic claim lines against configurable edits: diagnosis-procedure compatibility, required modifiers, and duplicate-line detection. Each claim gets a clean-or-hold verdict with the specific edit codes that fired. Held claims can be corrected and resubmitted in the demo.",
+      "key_params": {
+        "edit_rules": "which validation edits are active",
+        "claims": "number of synthetic claims",
+        "payer_rules": "payer-specific edit variants"
+      },
+      "data_idea": "A seeded RNG builds synthetic claims with procedure and diagnosis codes plus a defect injection rate.",
+      "real_world_use": "Used by billing departments to reduce payer rejections before claims go out.",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "eligibility-checker",
+      "name": "Insurance Eligibility Checker",
+      "concept": "A batch eligibility verifier that takes a roster of scheduled patients and returns coverage status, plan type, and copay estimates from a synthetic payer database. It flags inactive coverage and mismatched member IDs before the visit date. Results export as a day-of-visit eligibility report.",
+      "key_params": {
+        "roster_size": "patients checked per batch",
+        "payers": "synthetic payer plans",
+        "inactive_rate": "share of lapsed coverage"
+      },
+      "data_idea": "A seeded RNG creates a patient roster and a payer master file with matching and mismatched member IDs.",
+      "real_world_use": "Used by front-office staff running day-before eligibility sweeps.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "on-call-roster",
+      "name": "Clinical On-Call Roster Builder",
+      "concept": "A fair-rotation scheduler that assigns on-call shifts across a clinician pool while honoring blackout dates, max consecutive nights, and specialty coverage rules. It balances total call nights per person and produces a monthly calendar. Swap requests are logged and re-balance the totals.",
+      "key_params": {
+        "clinicians": "pool size",
+        "max_consecutive": "night cap per stretch",
+        "blackouts": "unavailable dates per clinician"
+      },
+      "data_idea": "A seeded RNG builds a clinician pool with specialties, blackout dates, and seniority weights.",
+      "real_world_use": "Used by department administrators publishing fair monthly call schedules.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "shift-scheduler",
+      "name": "Nurse Shift Scheduler",
+      "concept": "A unit staffing planner that fills shift slots with nurses while respecting contracted hours, rest gaps between shifts, and skill-mix rules per shift. It reports understaffed shifts and overtime risk before the schedule is published. The demo scores schedule fairness across the roster.",
+      "key_params": {
+        "nurses": "roster size",
+        "shifts_per_day": "shift blocks",
+        "min_skill_mix": "required senior-to-junior ratio"
+      },
+      "data_idea": "A seeded RNG generates nurse availability, contracted hours, and skill levels for the roster.",
+      "real_world_use": "Used by nurse managers building equitable unit schedules.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "staffing-ratio-calculator",
+      "name": "Staffing Ratio Calculator",
+      "concept": "A shift-safety calculator that compares scheduled nurse headcount against patient census to produce nurse-to-patient ratios by unit and shift. It flags ratios worse than configurable targets and estimates the extra staff needed to close the gap. Census can be entered manually or simulated.",
+      "key_params": {
+        "target_ratio": "patients per nurse target",
+        "units": "nursing units",
+        "census": "patient counts per shift"
+      },
+      "data_idea": "A seeded RNG simulates shift census with acuity-driven staffing demand across units.",
+      "real_world_use": "Used by staffing offices checking shift coverage against ratio targets.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "or-schedule-optimizer",
+      "name": "Operating Room Schedule Optimizer",
+      "concept": "A block-schedule packer that sequences surgical cases into OR time blocks, accounting for case duration estimates, turnover time, and surgeon availability. It minimizes idle block time and flags cases likely to run past the block end. The demo compares first-fit and best-fit packing strategies.",
+      "key_params": {
+        "rooms": "operating rooms",
+        "turnover_min": "cleaning time between cases",
+        "block_hours": "scheduled block length"
+      },
+      "data_idea": "A seeded RNG creates a case list with procedure durations drawn from surgeon-specific distributions.",
+      "real_world_use": "Used by perioperative services to improve block utilization.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bed-turnover-timer",
+      "name": "Bed Turnover Timer",
+      "concept": "An environmental-services workflow tracker that timestamps bed-clean requests, assignment, cleaning start, and ready-for-patient events. It computes turnaround time by unit and shift and flags beds waiting past the target. A live board shows every bed in a dirty-to-ready pipeline.",
+      "key_params": {
+        "target_minutes": "turnaround target",
+        "units": "nursing units",
+        "cleaning_crews": "EVS teams on shift"
+      },
+      "data_idea": "A seeded RNG simulates discharge events and cleaning durations with shift-based crew counts.",
+      "real_world_use": "Used by EVS supervisors and bed-management teams to speed admissions.",
+      "suggested_types": [
+        "monitoring_agent",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "census-reporter",
+      "name": "Midnight Census Reporter",
+      "concept": "A daily census compiler that snapshots admissions, discharges, transfers, and deaths from synthetic ADT events into a midnight census per unit. It reconciles the census against bed capacity and produces the standard morning report with occupancy percentages. Variance flags catch units over capacity.",
+      "key_params": {
+        "units": "nursing units",
+        "days": "reporting horizon",
+        "capacity": "staffed beds per unit"
+      },
+      "data_idea": "A seeded RNG emits admission, discharge, and transfer events across units for a multi-week period.",
+      "real_world_use": "Used by hospital administration for the daily operational census report.",
+      "suggested_types": [
+        "report_generator",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "discharge-summary-builder",
+      "name": "Discharge Summary Template Builder",
+      "concept": "A structured discharge paperwork generator that assembles synthetic discharge summaries from templates: diagnoses, procedures, medication lists, and follow-up plans drawn from a fictional case library. It checks that every required section is present before marking the summary complete. Output is plain text suitable for training review.",
+      "key_params": {
+        "sections": "required summary sections",
+        "cases": "synthetic case library size",
+        "completeness_rules": "which sections are mandatory"
+      },
+      "data_idea": "A seeded RNG picks diagnoses, procedures, and follow-up items for fictional discharge cases.",
+      "real_world_use": "Used in clinical documentation training and EHR template design.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "care-plan-checklist",
+      "name": "Care Plan Checklist Engine",
+      "concept": "A goal-tracking board for synthetic care plans that lists problems, measurable goals, interventions, and review dates per fictional patient. It marks goals met, in progress, or overdue and rolls progress up to a plan-level score. The engine is educational and carries no clinical advice.",
+      "key_params": {
+        "goals_per_plan": "goals per care plan",
+        "review_cycle_days": "days between reviews",
+        "patients": "synthetic patients"
+      },
+      "data_idea": "A seeded RNG builds care plans with goal statuses distributed across met, in-progress, and overdue.",
+      "real_world_use": "Used in care-management training and population-health coursework.",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "chronic-care-registry",
+      "name": "Chronic Care Registry",
+      "concept": "A population registry for fictional patients with chronic conditions that tracks last visit, key lab values, and care-gap flags like overdue screenings. It stratifies patients into risk tiers and lists outreach candidates per tier. All patients and values are synthetic.",
+      "key_params": {
+        "conditions": "conditions tracked",
+        "patients": "registry size",
+        "gap_rules": "what counts as a care gap"
+      },
+      "data_idea": "A seeded RNG generates patient panels with visit dates, lab values, and condition lists.",
+      "real_world_use": "Used by population-health teams to find care gaps in training datasets.",
+      "suggested_types": [
+        "data_pipeline",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "population-health-dashboard",
+      "name": "Population Health Dashboard",
+      "concept": "An aggregate analytics board over a synthetic patient population: condition prevalence, screening completion rates, and utilization trends by segment. It refreshes from a simulated data feed and highlights segments drifting off target. No individual-level data is displayed.",
+      "key_params": {
+        "segments": "population segments",
+        "metrics": "tracked measures",
+        "refresh_seconds": "feed update interval"
+      },
+      "data_idea": "A seeded RNG emits aggregate metric snapshots with seasonal drift for each segment.",
+      "real_world_use": "Used by health-system strategy teams exploring population analytics patterns.",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "readmission-risk-scorer",
+      "name": "Readmission Risk Scorer (Synthetic Demo)",
+      "concept": "A transparent scoring demo that combines synthetic risk factors like prior admissions, length of stay, and comorbidity counts into a readmission risk score with an explained breakdown. It is a teaching model with invented weights, clearly labeled as not for clinical use. Score distributions can be compared across synthetic cohorts.",
+      "key_params": {
+        "weights": "factor weights in the demo model",
+        "cohorts": "synthetic patient cohorts",
+        "threshold": "score that flags high risk"
+      },
+      "data_idea": "A seeded RNG creates fictional discharge records with risk-factor values and synthetic outcomes.",
+      "real_world_use": "Used in health-data-science courses to teach risk-score construction and calibration.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "no-show-predictor",
+      "name": "Appointment No-Show Predictor (Synthetic Demo)",
+      "concept": "A teaching classifier that predicts no-show probability from synthetic features like lead time, prior no-shows, and time of day, using a simple decision tree trained on invented data. It reports feature importance and accuracy on a held-out synthetic split. Labeled as a classroom demo, not a production model.",
+      "key_params": {
+        "features": "predictor features",
+        "train_size": "synthetic training rows",
+        "max_depth": "tree depth cap"
+      },
+      "data_idea": "A seeded RNG generates appointment histories with a known no-show generating process.",
+      "real_world_use": "Used in healthcare analytics courses to demonstrate classification on tabular data.",
+      "suggested_types": [
+        "decision_tree",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "lab-result-tracker",
+      "name": "Lab Result Tracker",
+      "concept": "A result-management queue that logs synthetic lab orders, expected turnaround times, and result values against reference ranges. It escalates critical values immediately and overdue results past their expected time. A daily digest lists pending, resulted, and critical counts.",
+      "key_params": {
+        "tests": "lab tests tracked",
+        "critical_rules": "critical value thresholds",
+        "tat_hours": "expected turnaround per test"
+      },
+      "data_idea": "A seeded RNG creates lab orders with result values, some critical and some overdue.",
+      "real_world_use": "Used by lab managers and in informatics training for result-communication workflows.",
+      "suggested_types": [
+        "monitoring_agent",
+        "web_dashboard",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "radiology-order-tracker",
+      "name": "Radiology Order Tracker",
+      "concept": "An imaging workflow board that follows synthetic orders from placement through scheduling, completion, and final report signing. It measures order-to-report turnaround by modality and flags studies waiting past target. Contrast and prep requirements are tracked per order.",
+      "key_params": {
+        "modalities": "imaging modalities",
+        "tat_targets": "turnaround target per modality",
+        "orders": "synthetic order count"
+      },
+      "data_idea": "A seeded RNG generates imaging orders with modality-specific durations and prep needs.",
+      "real_world_use": "Used by radiology operations to monitor report turnaround in training scenarios.",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "telehealth-session-scheduler",
+      "name": "Telehealth Session Scheduler",
+      "concept": "A virtual-visit planner that books video sessions across provider availability and patient time zones, attaching meeting links and pre-visit checklist items. It prevents double booking and sends synthetic reminder events at configurable lead times. Time-zone conversion is handled explicitly.",
+      "key_params": {
+        "providers": "virtual provider pool",
+        "timezones": "patient time zones",
+        "reminder_hours": "reminder lead times"
+      },
+      "data_idea": "A seeded RNG creates visit requests across time zones with provider availability windows.",
+      "real_world_use": "Used by virtual-care programs coordinating multi-time-zone scheduling.",
+      "suggested_types": [
+        "scheduler",
+        "rest_api",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fhir-record-simulator",
+      "name": "FHIR-like Record Simulator",
+      "concept": "A synthetic clinical record generator that emits patient, encounter, observation, and medication resources in a FHIR-shaped JSON structure with invented identifiers. It validates resources against a small local schema and serves them from an in-memory store with search by patient. Every record is fictional and clearly watermarked synthetic.",
+      "key_params": {
+        "patients": "synthetic patient count",
+        "resources_per_patient": "records per patient",
+        "validate": "whether schema checks run"
+      },
+      "data_idea": "A seeded RNG builds patient demographics, encounters, observations, and medication lists.",
+      "real_world_use": "Used by health-IT developers learning FHIR resource shapes without touching real data.",
+      "suggested_types": [
+        "rest_api",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "hl7-message-simulator",
+      "name": "HL7 Message Simulator",
+      "concept": "A teaching parser for synthetic HL7v2-style pipe-delimited messages covering admissions, orders, and results. It parses segments into fields, validates required segments per message type, and reports structural errors with line numbers. Messages are invented for the demo and carry no real patient data.",
+      "key_params": {
+        "message_types": "ADT, ORM, ORU style messages",
+        "messages": "synthetic message count",
+        "strict": "whether unknown segments error"
+      },
+      "data_idea": "A seeded RNG assembles HL7-shaped messages with controlled structural defects for parser testing.",
+      "real_world_use": "Used in interface-engine training to teach HL7 message structure and validation.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "deidentification-tool",
+      "name": "Clinical Text De-identifier",
+      "concept": "A safe-harbor style scrubber that replaces names, dates, locations, and contact details in synthetic clinical notes with realistic surrogates. It reports what was replaced per category and keeps a consistent surrogate mapping within a document set. Input notes are fictional and generated for the demo.",
+      "key_params": {
+        "categories": "identifier categories to scrub",
+        "notes": "synthetic note count",
+        "surrogate_style": "replacement format"
+      },
+      "data_idea": "A seeded RNG writes fictional clinical notes seeded with invented identifiers to scrub.",
+      "real_world_use": "Used in research-data preparation training for de-identification concepts.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "synthetic-patient-generator",
+      "name": "Synthetic Patient Population Generator",
+      "concept": "A demographic and clinical profile generator that creates internally consistent fictional patients: age, sex, conditions, medications, and visit histories with plausible correlations. It exports the population as CSV or JSON for downstream demos. A fixed seed reproduces the same population exactly.",
+      "key_params": {
+        "population": "patient count",
+        "conditions": "condition list",
+        "seed": "RNG seed for reproducibility"
+      },
+      "data_idea": "A seeded RNG with a fixed default seed builds correlated demographic and clinical attributes.",
+      "real_world_use": "Used across health-IT demos and classrooms as a stand-in for real patient data.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hipaa-audit-logger",
+      "name": "Access Audit Logger",
+      "concept": "An access-event ledger that records who viewed which synthetic record, when, and for what stated purpose, in an append-only log. It detects anomalous patterns like bulk access outside business hours and produces auditor-ready summaries. Log integrity is protected with per-entry checksums.",
+      "key_params": {
+        "users": "synthetic workforce size",
+        "records": "synthetic record count",
+        "anomaly_rules": "detection thresholds"
+      },
+      "data_idea": "A seeded RNG emits access events with a small injected anomaly rate for detection demos.",
+      "real_world_use": "Used by compliance teams demonstrating audit-trail concepts in training.",
+      "suggested_types": [
+        "log_analyzer",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "incident-report-logger",
+      "name": "Patient Safety Incident Logger",
+      "concept": "A safety-event reporting intake that captures synthetic incident reports with category, severity, location, and contributing factors from a controlled vocabulary. It routes high-severity events for review and trends event counts by category over time. All incidents are fictional training cases.",
+      "key_params": {
+        "categories": "incident categories",
+        "reports": "synthetic report count",
+        "severity_levels": "severity scale"
+      },
+      "data_idea": "A seeded RNG creates incident reports with category and severity distributions.",
+      "real_world_use": "Used by patient-safety teams training staff on event reporting and trending.",
+      "suggested_types": [
+        "cli_tool",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "satisfaction-survey-analyzer",
+      "name": "Patient Satisfaction Survey Analyzer",
+      "concept": "A survey analytics tool that ingests synthetic patient-experience responses, scores domains like communication and cleanliness, and computes top-box percentages. It surfaces the lowest-scoring questions per unit and tracks trends across survey waves. Comment text is fictional and analyzed for keyword themes.",
+      "key_params": {
+        "questions": "survey items",
+        "responses": "synthetic response count",
+        "waves": "survey periods"
+      },
+      "data_idea": "A seeded RNG generates Likert responses with unit-level biases and fictional comments.",
+      "real_world_use": "Used by patient-experience teams practicing survey analytics on synthetic data.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pharmacy-inventory-tracker",
+      "name": "Pharmacy Inventory Tracker",
+      "concept": "A medication stock manager for a synthetic formulary that tracks on-hand quantities, reorder points, and expiration dates by drug and storage location. It raises reorder and expiring-soon alerts and values inventory at unit cost. Controlled-substance counts get a separate audit report.",
+      "key_params": {
+        "drugs": "formulary size",
+        "reorder_policy": "reorder point rules",
+        "locations": "storage locations"
+      },
+      "data_idea": "A seeded RNG simulates dispensing events that draw down stock with seasonal demand.",
+      "real_world_use": "Used by pharmacy operations training for inventory and expiration management.",
+      "suggested_types": [
+        "monitoring_agent",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "vaccine-cold-chain-monitor",
+      "name": "Vaccine Cold-Chain Monitor",
+      "concept": "A temperature telemetry simulator for vaccine refrigerators that streams synthetic sensor readings and alarms on excursions outside the safe band. It computes mean kinetic temperature over the window and logs door-open events. Excursion reports list affected lots for the demo.",
+      "key_params": {
+        "fridges": "monitored units",
+        "safe_band_c": "acceptable temperature range",
+        "reading_interval_s": "sensor cadence"
+      },
+      "data_idea": "A seeded RNG streams temperature readings with compressor cycles and injected excursion events.",
+      "real_world_use": "Used by immunization programs training staff on cold-chain monitoring.",
+      "suggested_types": [
+        "monitoring_agent",
+        "simulation",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ehr-downtime-checklist",
+      "name": "EHR Downtime Procedure Checklist",
+      "concept": "A downtime operations runner that walks staff through paper-backup procedures during a simulated EHR outage: registration, ordering, and documentation on downtime forms. It tracks which steps are complete per unit and times how long each takes. A recovery checklist guides re-entry when the system returns.",
+      "key_params": {
+        "units": "participating units",
+        "steps": "procedure steps",
+        "drill_duration_min": "simulated outage length"
+      },
+      "data_idea": "A seeded RNG assigns step completion times and occasional missed steps across units.",
+      "real_world_use": "Used by clinical informatics teams running downtime drills.",
+      "suggested_types": [
+        "cli_tool",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "clinical-document-organizer",
+      "name": "Clinical Document Organizer",
+      "concept": "A file organizer that sorts scanned clinical documents into a folder tree by document type, synthetic patient ID, and date, renaming files to a standard convention. It flags unreadable or duplicate scans for review. A manifest records every move for audit.",
+      "key_params": {
+        "doc_types": "document categories",
+        "convention": "filename pattern",
+        "patients": "synthetic patient IDs"
+      },
+      "data_idea": "A seeded RNG creates dummy scan files with varied names, types, and some duplicates.",
+      "real_world_use": "Used by health-information-management teams in scanning-workflow training.",
+      "suggested_types": [
+        "file_organizer",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "medical-coding-quiz",
+      "name": "Medical Coding Practice Quiz",
+      "concept": "A quiz engine that drills synthetic coding scenarios: a short fictional case vignette followed by multiple-choice code options from a demo code set. It explains each answer, tracks accuracy by category, and adapts difficulty based on recent performance. All cases are invented for practice.",
+      "key_params": {
+        "questions": "question bank size",
+        "categories": "coding categories",
+        "adaptive": "whether difficulty adapts"
+      },
+      "data_idea": "A seeded RNG assembles vignettes from fictional diagnoses, procedures, and code options.",
+      "real_world_use": "Used by coding students preparing for certification exams.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "terminology-flashcards",
+      "name": "Medical Terminology Flashcards",
+      "concept": "A spaced-repetition flashcard deck for medical roots, prefixes, and suffixes with definitions written from scratch for the demo. It schedules reviews using a simple Leitner box system and tracks mastery per term. Sessions are short by design with daily review targets.",
+      "key_params": {
+        "terms": "deck size",
+        "boxes": "Leitner box count",
+        "daily_target": "reviews per day"
+      },
+      "data_idea": "A seeded RNG shuffles an original term list and simulates review outcomes.",
+      "real_world_use": "Used by health-science students building vocabulary.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "provider-directory",
+      "name": "Provider Directory Service",
+      "concept": "A searchable directory of synthetic providers with specialty, location, languages, and accepting-new-patients status. It supports filters by specialty and distance band and returns a formatted provider card. The directory refreshes from a generated roster on a schedule.",
+      "key_params": {
+        "providers": "directory size",
+        "specialties": "specialties covered",
+        "refresh_days": "roster refresh cadence"
+      },
+      "data_idea": "A seeded RNG builds provider profiles with specialties, locations, and languages.",
+      "real_world_use": "Used by patient-access teams demonstrating directory search in portals.",
+      "suggested_types": [
+        "rest_api",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "appointment-reminder-engine",
+      "name": "Appointment Reminder Engine",
+      "concept": "A reminder dispatcher that sends synthetic notifications at configurable lead times before appointments and records confirmations, cancellations, and no-responses. It computes confirmation rates by lead time and message channel. Quiet hours are respected per patient time zone.",
+      "key_params": {
+        "lead_times_hours": "reminder schedule",
+        "channels": "message channels",
+        "appointments": "synthetic appointment count"
+      },
+      "data_idea": "A seeded RNG creates appointments with patient response behaviors per channel.",
+      "real_world_use": "Used by clinics reducing no-shows through automated reminders.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "referral-leakage-analyzer",
+      "name": "Referral Leakage Analyzer (Synthetic)",
+      "concept": "An analytics demo that measures what share of synthetic referrals stay in-network versus going elsewhere, broken down by specialty and ordering provider. It estimates the associated visit volume and flags the largest leakage sources. All providers and patients are fictional.",
+      "key_params": {
+        "referrals": "synthetic referral count",
+        "specialties": "specialties analyzed",
+        "network": "in-network facility list"
+      },
+      "data_idea": "A seeded RNG generates referrals with destination choices influenced by synthetic distance and wait.",
+      "real_world_use": "Used by health-system strategy teams learning network-integrity analytics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "data_pipeline"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "denial-management-tracker",
+      "name": "Claim Denial Management Tracker",
+      "concept": "A denial worklist that ingests synthetic denied claims with reason codes, routes them to follow-up queues by reason, and tracks appeal outcomes and recovered amounts. It trends denial rates by reason and payer to guide prevention work. All claims and dollars are fictional.",
+      "key_params": {
+        "claims": "synthetic denied claim count",
+        "reason_codes": "denial reason set",
+        "appeal_win_rate": "demo appeal success rate"
+      },
+      "data_idea": "A seeded RNG creates denied claims with reason codes and appeal timelines.",
+      "real_world_use": "Used by revenue-cycle teams practicing denial prevention analytics.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "charge-capture-auditor",
+      "name": "Charge Capture Auditor",
+      "concept": "A reconciliation demo that compares synthetic procedure logs against billed charges to find missing or mismatched charges. It scores each encounter for capture completeness and lists the top missing-charge patterns. Findings export as an audit worklist.",
+      "key_params": {
+        "encounters": "synthetic encounter count",
+        "procedures": "procedure catalog",
+        "miss_rate": "injected missing-charge rate"
+      },
+      "data_idea": "A seeded RNG pairs procedure logs with charge records, injecting omissions.",
+      "real_world_use": "Used by revenue-integrity teams demonstrating charge reconciliation.",
+      "suggested_types": [
+        "data_pipeline",
+        "log_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "price-transparency-estimator",
+      "name": "Price Transparency Estimator",
+      "concept": "A patient-facing estimate tool that combines a synthetic chargemaster with plan benefit rules to produce good-faith cost estimates for common procedures. It shows the facility fee, professional fee, and estimated patient responsibility side by side. Estimates are labeled as educational approximations.",
+      "key_params": {
+        "procedures": "shoppable procedure list",
+        "plans": "synthetic benefit designs",
+        "discount": "self-pay discount rate"
+      },
+      "data_idea": "A seeded RNG builds a chargemaster and benefit rules for fictional facilities and plans.",
+      "real_world_use": "Used by patient-financial-services teams demonstrating price transparency.",
+      "suggested_types": [
+        "cli_tool",
+        "rest_api",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "credentialing-tracker",
+      "name": "Provider Credentialing Tracker",
+      "concept": "A credential lifecycle manager that tracks synthetic provider licenses, board certifications, and privileging with expiration dates. It sends renewal reminders at configurable lead times and flags lapsed credentials blocking scheduling. A compliance dashboard shows percent current by department.",
+      "key_params": {
+        "providers": "synthetic provider count",
+        "credential_types": "tracked credentials",
+        "reminder_days": "reminder lead times"
+      },
+      "data_idea": "A seeded RNG assigns credentials with staggered expirations and renewal lags.",
+      "real_world_use": "Used by medical-staff offices managing credentialing workflows.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "peer-review-tracker",
+      "name": "Clinical Peer Review Tracker",
+      "concept": "A case-review workflow for synthetic quality reviews: cases are assigned to reviewers, scored against criteria, and summarized for committee discussion. It tracks review turnaround and score distributions while keeping reviewer identities separate from case lists in the demo. All cases are fictional.",
+      "key_params": {
+        "cases": "synthetic review cases",
+        "reviewers": "reviewer pool",
+        "criteria": "scoring criteria"
+      },
+      "data_idea": "A seeded RNG creates review cases with findings and reviewer score patterns.",
+      "real_world_use": "Used by quality departments demonstrating peer-review administration.",
+      "suggested_types": [
+        "task_queue",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hand-hygiene-audit",
+      "name": "Hand Hygiene Audit Tool",
+      "concept": "An observational audit collector for synthetic hand-hygiene observations across units, recording opportunities and compliant actions by role and moment. It computes compliance rates with confidence intervals and trends them by unit over audit periods. Data entry works offline-first in the demo.",
+      "key_params": {
+        "observations": "synthetic observation count",
+        "units": "audited units",
+        "moments": "hygiene moment categories"
+      },
+      "data_idea": "A seeded RNG generates observations with unit-level compliance differences.",
+      "real_world_use": "Used by infection-prevention teams training auditors on data collection.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "antibiotic-stewardship-tracker",
+      "name": "Antibiotic Stewardship Tracker",
+      "concept": "A prescribing-pattern monitor over synthetic antibiotic orders that flags broad-spectrum use, prolonged durations, and missing de-escalation reviews. It computes days-of-therapy per thousand patient-days by unit. Prescriber feedback reports are anonymized in the demo.",
+      "key_params": {
+        "orders": "synthetic order count",
+        "agents": "antibiotics tracked",
+        "review_day": "day de-escalation is expected"
+      },
+      "data_idea": "A seeded RNG creates antibiotic orders with durations and de-escalation behaviors.",
+      "real_world_use": "Used by stewardship programs demonstrating prescribing analytics.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "fall-risk-rounds",
+      "name": "Fall Risk Rounds Planner",
+      "concept": "A rounding scheduler that prioritizes synthetic patients by fall-risk score for hourly safety rounds, balancing high-risk coverage with staff workload. It logs completed rounds and missed checks, and reports coverage of high-risk patients per shift. Risk factors are synthetic and educational.",
+      "key_params": {
+        "patients": "synthetic census",
+        "staff": "rounding staff",
+        "risk_factors": "scored risk inputs"
+      },
+      "data_idea": "A seeded RNG assigns fall-risk scores and generates round completion events.",
+      "real_world_use": "Used by nursing quality teams demonstrating risk-based rounding.",
+      "suggested_types": [
+        "scheduler",
+        "monitoring_agent",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pressure-injury-tracker",
+      "name": "Pressure Injury Tracker",
+      "concept": "A skin-integrity surveillance log for synthetic patients that records risk assessments, prevention interventions, and any injury events with staging. It computes unit-level injury rates and intervention compliance. All patients and events are fictional training data.",
+      "key_params": {
+        "patients": "synthetic patient count",
+        "assessments": "risk tools used",
+        "units": "tracked units"
+      },
+      "data_idea": "A seeded RNG generates assessments, interventions, and rare injury events.",
+      "real_world_use": "Used by wound-care teams practicing surveillance analytics.",
+      "suggested_types": [
+        "data_pipeline",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sepsis-screening-drill",
+      "name": "Sepsis Screening Drill",
+      "concept": "A training simulator that streams synthetic vital-sign sets and asks the learner to apply screening criteria, scoring their sensitivity against the hidden labels. It explains each miss with the criteria that were met. Vital signs are invented for education and the tool gives no clinical advice.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "criteria": "screening rule set",
+        "vitals": "vital sign parameters"
+      },
+      "data_idea": "A seeded RNG produces vital-sign trajectories, some meeting screening criteria.",
+      "real_world_use": "Used in nursing education for early-recognition drills.",
+      "suggested_types": [
+        "quiz_engine",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rapid-response-logger",
+      "name": "Rapid Response Event Logger",
+      "concept": "An event log for synthetic rapid-response activations capturing triggers, response times, interventions, and outcomes. It trends activations by unit and trigger type and computes median response time. Cases are fictional and used for quality review training.",
+      "key_params": {
+        "events": "synthetic activation count",
+        "triggers": "activation trigger list",
+        "units": "hospital units"
+      },
+      "data_idea": "A seeded RNG creates activation events with response-time distributions.",
+      "real_world_use": "Used by rapid-response committees reviewing system performance.",
+      "suggested_types": [
+        "log_analyzer",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "code-blue-drill-tracker",
+      "name": "Code Drill Performance Tracker",
+      "concept": "A mock-code debrief tool that times synthetic resuscitation drill milestones like first compression and first defibrillation against targets. It scores team performance per drill and tracks improvement across drill series. All drills are simulated training events.",
+      "key_params": {
+        "drills": "simulated drill count",
+        "milestones": "timed milestones",
+        "targets": "target times"
+      },
+      "data_idea": "A seeded RNG generates milestone times with team-level learning curves.",
+      "real_world_use": "Used by resuscitation committees running mock-code programs.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "patient-flow-board",
+      "name": "Emergency Patient Flow Board",
+      "concept": "A live-status board simulator for an emergency department showing each synthetic patient in arrival, triage, treatment, or boarding stages with elapsed times. It highlights stage waits past targets and computes overall length of stay. The board refreshes on a configurable tick.",
+      "key_params": {
+        "beds": "treatment spaces",
+        "target_los_min": "length-of-stay target",
+        "tick_seconds": "board refresh cadence"
+      },
+      "data_idea": "A seeded RNG moves synthetic patients through stages with stage-time distributions.",
+      "real_world_use": "Used by ED leadership for flow-visibility demos and training.",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "discharge-lounge-scheduler",
+      "name": "Discharge Lounge Scheduler",
+      "concept": "A throughput optimizer that schedules discharged synthetic patients into lounge seats while they await rides or prescriptions, freeing inpatient beds sooner. It matches lounge capacity to discharge waves and reports bed-hours saved. The demo compares lounge versus no-lounge flow.",
+      "key_params": {
+        "seats": "lounge capacity",
+        "discharges_per_day": "discharge volume",
+        "avg_lounge_min": "mean lounge dwell"
+      },
+      "data_idea": "A seeded RNG generates discharge times clustered in afternoon waves.",
+      "real_world_use": "Used by patient-flow teams evaluating discharge-lounge programs.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "language-line-usage",
+      "name": "Language Services Usage Analyzer",
+      "concept": "A utilization report over synthetic interpreter encounters by language, modality, and department with cost estimates per encounter type. It identifies under-served languages and peak demand windows. All encounters are fictional.",
+      "key_params": {
+        "encounters": "synthetic encounter count",
+        "languages": "languages",
+        "cost_per_min": "rate card"
+      },
+      "data_idea": "A seeded RNG creates interpreter encounters with language and duration patterns.",
+      "real_world_use": "Used by language-access programs justifying staffing levels.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "visitor-management-log",
+      "name": "Hospital Visitor Management Log",
+      "concept": "A front-desk visitor register for synthetic guests with host department, badge issuance, and check-in/check-out times. It enforces visitor policy rules like per-patient limits and produces a who-is-in-the-building report for emergencies. Data is fictional.",
+      "key_params": {
+        "visitors_per_day": "volume",
+        "policy": "visitor rules",
+        "departments": "host departments"
+      },
+      "data_idea": "A seeded RNG generates visitor arrivals tied to synthetic patient stays.",
+      "real_world_use": "Used by facilities teams demonstrating visitor tracking.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "equipment-tracking-board",
+      "name": "Medical Equipment Tracking Board",
+      "concept": "An asset-location board for synthetic mobile equipment like infusion pumps and wheelchairs, tracking which unit holds each item and its clean or dirty status. It flags units hoarding equipment and lists items due for preventive maintenance. All assets are fictional.",
+      "key_params": {
+        "assets": "equipment count",
+        "units": "hospital units",
+        "pm_interval_days": "maintenance cadence"
+      },
+      "data_idea": "A seeded RNG moves equipment between units with usage and cleaning cycles.",
+      "real_world_use": "Used by clinical engineering demonstrating asset-tracking workflows.",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "lru_cache"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "maintenance-workorder-queue",
+      "name": "Facilities Work-Order Queue",
+      "concept": "A hospital facilities ticket system for synthetic work orders with priority, trade, location, and SLA targets. It ages open tickets, escalates SLA breaches, and reports completion rates by trade. Technicians are fictional staff.",
+      "key_params": {
+        "tickets": "synthetic ticket count",
+        "trades": "maintenance trades",
+        "sla_hours": "SLA per priority"
+      },
+      "data_idea": "A seeded RNG creates work orders with priorities and completion-time distributions.",
+      "real_world_use": "Used by facilities management training on work-order triage.",
+      "suggested_types": [
+        "task_queue",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "linen-usage-tracker",
+      "name": "Linen Usage Tracker",
+      "concept": "A laundry-demand model for synthetic linen consumption by unit, tracking par levels and daily usage against deliveries. It forecasts next-day demand from census and flags units below par. The demo tunes par levels to avoid both stockouts and overstock.",
+      "key_params": {
+        "units": "nursing units",
+        "par_levels": "target stock per unit",
+        "items": "linen item types"
+      },
+      "data_idea": "A seeded RNG simulates daily linen use tied to census and turnover.",
+      "real_world_use": "Used by materials management optimizing linen par levels.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dietary-order-manager",
+      "name": "Dietary Order Manager",
+      "concept": "A meal-service coordinator for synthetic patients that maps diet orders to menu choices, tracks allergies and restrictions, and builds tray tickets per meal service. It flags diet-order conflicts and reports diet-type counts for the kitchen. All patients and allergies are fictional.",
+      "key_params": {
+        "patients": "synthetic census",
+        "diets": "diet types",
+        "meals_per_day": "services"
+      },
+      "data_idea": "A seeded RNG assigns diet orders, allergies, and meal selections.",
+      "real_world_use": "Used by food-and-nutrition services demonstrating tray-line workflows.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pharmacy-rounds-checklist",
+      "name": "Pharmacy Rounds Checklist",
+      "concept": "A clinical rounding aid that walks a synthetic pharmacist through per-patient review items: renal dosing, interactions, duplicate therapy, and allergy checks against a fictional medication list. It scores review completeness and lists flagged items for follow-up. Educational, with invented drug data.",
+      "key_params": {
+        "patients": "synthetic census",
+        "checks": "review item types",
+        "drugs": "demo formulary"
+      },
+      "data_idea": "A seeded RNG builds patient medication lists with injected review findings.",
+      "real_world_use": "Used in pharmacy education for systematic medication review.",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dosage-calculator-edu",
+      "name": "Dosage Calculator (Educational)",
+      "concept": "A weight-based dose calculator for training that computes doses from mg-per-kg orders, converts units, and checks the result against a configurable maximum. It shows every arithmetic step so learners can verify the math. Labeled strictly educational with fictional drug examples.",
+      "key_params": {
+        "weight_kg": "patient weight",
+        "dose_mg_per_kg": "ordered dose",
+        "max_dose_mg": "safety cap"
+      },
+      "data_idea": "A seeded RNG generates practice problems with weights and ordered doses.",
+      "real_world_use": "Used in nursing and pharmacy math education.",
+      "suggested_types": [
+        "unit_converter",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "iv-drip-rate-trainer",
+      "name": "IV Drip Rate Trainer",
+      "concept": "An infusion-math drill that computes drip rates in drops per minute and mL per hour from volume, time, and drop-factor inputs, with step-by-step solutions. It generates practice problems at graduated difficulty and tracks learner accuracy. Fictional scenarios only.",
+      "key_params": {
+        "problems": "practice set size",
+        "drop_factors": "tubing options",
+        "difficulty": "problem complexity"
+      },
+      "data_idea": "A seeded RNG creates infusion scenarios with volumes, times, and drop factors.",
+      "real_world_use": "Used in nursing education for dosage-calculation practice.",
+      "suggested_types": [
+        "quiz_engine",
+        "unit_converter",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "growth-chart-plotter",
+      "name": "Pediatric Growth Chart Plotter (Educational)",
+      "concept": "A growth-tracking visualizer that plots synthetic child measurements against simplified percentile bands drawn for the demo, computing z-score style deviations from the band midpoints. It flags crossings of major percentile lines as discussion points for training. Not a clinical growth standard.",
+      "key_params": {
+        "measurements": "synthetic measurement series",
+        "bands": "demo percentile bands",
+        "age_range_months": "plotted age span"
+      },
+      "data_idea": "A seeded RNG generates growth trajectories, some crossing percentile bands.",
+      "real_world_use": "Used in pediatric training to teach growth-chart interpretation.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "screening-recall-system",
+      "name": "Preventive Screening Recall System",
+      "concept": "A recall engine that scans a synthetic patient registry for overdue preventive screenings based on age and interval rules, then builds outreach lists by screening type. It tracks outreach attempts and completion, computing recall effectiveness. All patients are fictional.",
+      "key_params": {
+        "screenings": "screening types and intervals",
+        "patients": "registry size",
+        "outreach_rounds": "attempts per patient"
+      },
+      "data_idea": "A seeded RNG creates patient ages and last-screening dates with completion behaviors.",
+      "real_world_use": "Used by primary-care teams demonstrating population outreach.",
+      "suggested_types": [
+        "scheduler",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "care-gap-closure-tracker",
+      "name": "Care Gap Closure Tracker",
+      "concept": "A quality-measure dashboard over synthetic data that tracks open and closed care gaps per measure, provider, and month. It attributes closures to outreach, visits, or data correction and projects year-end closure rates. Measures use simplified demo definitions.",
+      "key_params": {
+        "measures": "quality measures",
+        "providers": "provider count",
+        "months": "tracking horizon"
+      },
+      "data_idea": "A seeded RNG generates gap opens and closures with provider-level variation.",
+      "real_world_use": "Used by quality teams learning gap-closure analytics.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "telehealth-visit-analyzer",
+      "name": "Telehealth Visit Analyzer (Synthetic)",
+      "concept": "A visit-pattern analysis over synthetic telehealth encounters: visit reasons, durations, no-show rates, and technical-issue flags by specialty. It compares telehealth versus in-person mix and reports after-hours volume. All encounters are fictional.",
+      "key_params": {
+        "visits": "synthetic visit count",
+        "specialties": "specialties",
+        "tech_issue_rate": "injected issue rate"
+      },
+      "data_idea": "A seeded RNG generates encounters with durations, outcomes, and tech flags.",
+      "real_world_use": "Used by virtual-care programs exploring utilization analytics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "referral-wait-benchmark",
+      "name": "Specialty Wait-Time Benchmark",
+      "concept": "A benchmarking demo that computes third-next-available appointment waits per specialty from synthetic schedules and compares them against access targets. It ranks specialties by access and simulates how added template slots change the ranking. Schedules are fictional.",
+      "key_params": {
+        "specialties": "specialties",
+        "templates": "weekly slot templates",
+        "target_days": "access target"
+      },
+      "data_idea": "A seeded RNG builds slot templates with booked and open slots per specialty.",
+      "real_world_use": "Used by access-management teams studying appointment availability.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "clinic-throughput-model",
+      "name": "Clinic Throughput Model",
+      "concept": "A session model that estimates how many patients a clinic template can serve given visit lengths, no-show rates, and room constraints. It tests template changes like longer slots or added rooms and reports patients served and overtime risk. Inputs are synthetic.",
+      "key_params": {
+        "template": "slot layout",
+        "no_show_rate": "missed appointment share",
+        "rooms": "exam rooms"
+      },
+      "data_idea": "A seeded RNG simulates clinic sessions with service-time and no-show randomness.",
+      "real_world_use": "Used by clinic managers right-sizing appointment templates.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "scheduler"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "surgery-schedule-board",
+      "name": "Surgery Schedule Board",
+      "concept": "A day-of-surgery status board for synthetic cases showing patient readiness milestones: consent signed, site marked, anesthesia ready, and wheels-in time. It flags cases at risk of delay and computes on-time start rates by surgeon. All cases are fictional.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "rooms": "operating rooms",
+        "milestones": "readiness checkpoints"
+      },
+      "data_idea": "A seeded RNG generates cases with milestone completion times.",
+      "real_world_use": "Used by perioperative teams demonstrating day-of-surgery coordination.",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "anesthesia-drug-log",
+      "name": "Anesthesia Drug Log (Training)",
+      "concept": "A training log that records synthetic anesthesia medication administrations with dose, route, and time for fictional cases. It checks doses against weight-based demo ranges and flags out-of-range entries for instructor review. Clearly labeled as a training simulation.",
+      "key_params": {
+        "cases": "synthetic case count",
+        "drugs": "demo drug list",
+        "weight_range_kg": "patient weight band"
+      },
+      "data_idea": "A seeded RNG creates case drug administrations with occasional out-of-range doses.",
+      "real_world_use": "Used in anesthesia training for documentation practice.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "blood-bank-inventory",
+      "name": "Blood Bank Inventory Simulator",
+      "concept": "A blood-product inventory model tracking synthetic units by blood type with shelf lives, daily demand, and wastage from expiration. It sets reorder points per type and simulates emergency release events. All units and patients are fictional.",
+      "key_params": {
+        "types": "blood types",
+        "shelf_life_days": "unit viability",
+        "demand_per_day": "usage rate"
+      },
+      "data_idea": "A seeded RNG drives transfusions with type-specific demand and rare massive-transfusion events.",
+      "real_world_use": "Used by transfusion services training on inventory management.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "organ-waitlist-model",
+      "name": "Organ Waitlist Model (Educational)",
+      "concept": "A simplified allocation teaching model that ranks synthetic waitlist candidates by a transparent demo score combining waiting time, medical urgency inputs, and compatibility factors. It simulates match runs when fictional donor organs arrive. Labeled as a simplified educational model of a complex real process.",
+      "key_params": {
+        "candidates": "synthetic waitlist size",
+        "organs": "donor arrivals",
+        "score_weights": "demo scoring weights"
+      },
+      "data_idea": "A seeded RNG creates candidates with wait times, urgency inputs, and compatibility profiles.",
+      "real_world_use": "Used in health-policy education to teach allocation concepts.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "dialysis-schedule-planner",
+      "name": "Dialysis Schedule Planner",
+      "concept": "A chair-scheduling tool for synthetic dialysis patients across shifts, chairs, and isolation needs, respecting treatment durations and nurse ratios. It balances chair utilization and flags unaccommodated patients. All patients are fictional.",
+      "key_params": {
+        "chairs": "station count",
+        "shifts": "daily shifts",
+        "patients": "synthetic patient count"
+      },
+      "data_idea": "A seeded RNG generates patients with shift preferences, durations, and isolation flags.",
+      "real_world_use": "Used by dialysis centers demonstrating chair scheduling.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "infusion-center-scheduler",
+      "name": "Infusion Center Scheduler",
+      "concept": "A chair-and-nurse scheduler for synthetic infusion appointments with drug-specific durations and monitoring levels. It sequences appointments to smooth nurse workload and minimize chair idle time. Reactions are simulated as rare events for the demo.",
+      "key_params": {
+        "chairs": "infusion chairs",
+        "nurses": "nursing staff",
+        "appointments": "synthetic appointment count"
+      },
+      "data_idea": "A seeded RNG creates appointments with durations and acuity-driven nurse assignments.",
+      "real_world_use": "Used by infusion centers optimizing chair turnover.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "home-health-visit-router",
+      "name": "Home Health Visit Router",
+      "concept": "A route planner for synthetic home-health visits that sequences patient stops by geography, visit duration, and time windows, assigning them to clinicians by skill. It minimizes drive time while honoring visit priorities. Addresses are fictional map points.",
+      "key_params": {
+        "visits": "daily visit count",
+        "clinicians": "field staff",
+        "map_size": "service area grid"
+      },
+      "data_idea": "A seeded RNG places fictional patient addresses on a grid with visit windows.",
+      "real_world_use": "Used by home-health agencies demonstrating route optimization.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "hospice-census-tracker",
+      "name": "Hospice Census Tracker (Synthetic)",
+      "concept": "A census and visit tracker for a fictional hospice program: admissions, discharges, average daily census, and visit counts by discipline. It projects census trends and staffing needs from admission patterns. All data is synthetic.",
+      "key_params": {
+        "days": "tracking horizon",
+        "disciplines": "visit disciplines",
+        "admit_rate": "admissions per week"
+      },
+      "data_idea": "A seeded RNG generates admissions, lengths of stay, and visit completions.",
+      "real_world_use": "Used in hospice administration training for census analytics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "behavioral-health-scheduler",
+      "name": "Behavioral Health Scheduler",
+      "concept": "An appointment book for synthetic behavioral-health services handling intake assessments, therapy sessions, and group slots with provider specialty matching. It tracks waitlists for intake and reports time-to-first-appointment. All clients are fictional.",
+      "key_params": {
+        "providers": "clinician pool",
+        "services": "service types",
+        "intake_sla_days": "access target"
+      },
+      "data_idea": "A seeded RNG creates service requests with acuity and modality preferences.",
+      "real_world_use": "Used by behavioral-health programs demonstrating access management.",
+      "suggested_types": [
+        "scheduler",
+        "web_dashboard",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dental-claims-tracker",
+      "name": "Dental Claims Tracker",
+      "concept": "A dental billing demo that tracks synthetic claims by procedure category, submitted amounts, and payer responses. It computes collection rates and average reimbursement per category and flags frequently denied codes. All claims are fictional.",
+      "key_params": {
+        "claims": "synthetic claim count",
+        "categories": "procedure categories",
+        "payers": "demo payers"
+      },
+      "data_idea": "A seeded RNG generates claims with category-specific denial odds.",
+      "real_world_use": "Used by dental practice managers learning claims analytics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "vision-benefits-checker",
+      "name": "Vision Benefits Checker",
+      "concept": "An eligibility demo for synthetic vision plans that returns exam and eyewear benefits, copays, and frequency limits per member. It computes patient responsibility for a sample eyewear order. Members and plans are fictional.",
+      "key_params": {
+        "members": "synthetic member count",
+        "plans": "plan designs",
+        "orders": "sample orders"
+      },
+      "data_idea": "A seeded RNG builds members, plan rules, and eyewear orders.",
+      "real_world_use": "Used by optical shops demonstrating benefits verification.",
+      "suggested_types": [
+        "cli_tool",
+        "rest_api",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "wellness-challenge-tracker",
+      "name": "Workplace Wellness Challenge Tracker",
+      "concept": "A team step-challenge scorer for synthetic participants that aggregates daily step counts into team totals, computes leaderboards, and awards streak badges. It handles late data entry and prorates partial weeks. All participants are fictional.",
+      "key_params": {
+        "participants": "synthetic participant count",
+        "teams": "team count",
+        "days": "challenge length"
+      },
+      "data_idea": "A seeded RNG generates daily steps with weekday and weekend patterns.",
+      "real_world_use": "Used by corporate wellness programs running step challenges.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "health-risk-assessment",
+      "name": "Health Risk Assessment Scorer (Educational)",
+      "concept": "A lifestyle questionnaire scorer for training that converts synthetic answers about activity, nutrition, sleep, and tobacco into domain scores and an overall wellness index. It generates a plain-language feedback report with no medical advice. All respondents are fictional.",
+      "key_params": {
+        "questions": "questionnaire items",
+        "respondents": "synthetic respondent count",
+        "domains": "scored domains"
+      },
+      "data_idea": "A seeded RNG creates questionnaire responses with correlated lifestyle patterns.",
+      "real_world_use": "Used by wellness vendors demonstrating HRA reporting.",
+      "suggested_types": [
+        "quiz_engine",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "biometric-screening-log",
+      "name": "Biometric Screening Event Log",
+      "concept": "An event manager for synthetic workplace screening events: station throughput, measured values, and participant flow from check-in to exit. It computes average station times and identifies the bottleneck station. All participants and values are fictional.",
+      "key_params": {
+        "participants": "synthetic participant count",
+        "stations": "screening stations",
+        "event_hours": "event duration"
+      },
+      "data_idea": "A seeded RNG simulates participant flow through stations with service times.",
+      "real_world_use": "Used by wellness vendors planning screening events.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "flu-clinic-planner",
+      "name": "Flu Clinic Planner",
+      "concept": "A mass-vaccination throughput planner that sizes stations, staff, and vaccine supply for a synthetic flu clinic from expected turnout. It simulates queueing at registration, screening, vaccination, and observation to find the bottleneck. All numbers are fictional planning inputs.",
+      "key_params": {
+        "turnout": "expected patients",
+        "stations": "per-stage station counts",
+        "supply": "vaccine doses on hand"
+      },
+      "data_idea": "A seeded RNG models arrivals in waves with per-stage service times.",
+      "real_world_use": "Used by occupational health teams planning vaccination events.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "travel-vaccine-advisor",
+      "name": "Travel Vaccine Planner (Educational)",
+      "concept": "A trip-based vaccine checklist builder for education that maps fictional itineraries to recommended vaccine considerations from a demo rule set, with timing guidance before departure. It produces a printable pre-travel checklist. Labeled educational with simplified demo rules.",
+      "key_params": {
+        "destinations": "demo destination list",
+        "trip_weeks_out": "weeks until departure",
+        "travelers": "synthetic traveler count"
+      },
+      "data_idea": "A seeded RNG creates itineraries with destinations, durations, and traveler ages.",
+      "real_world_use": "Used by travel clinics demonstrating pre-travel planning.",
+      "suggested_types": [
+        "cli_tool",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "school-health-log",
+      "name": "School Health Office Log",
+      "concept": "A visit log for a synthetic school health office recording student visits by complaint category, disposition, and time out of class. It trends visit reasons by month and flags students with frequent visits for counselor review. All students are fictional.",
+      "key_params": {
+        "visits": "synthetic visit count",
+        "categories": "complaint categories",
+        "students": "fictional student body"
+      },
+      "data_idea": "A seeded RNG generates visits with seasonal illness patterns.",
+      "real_world_use": "Used by school nurses demonstrating visit documentation and trending.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sports-physical-tracker",
+      "name": "Sports Physical Tracker",
+      "concept": "A clearance tracker for synthetic student athletes recording physical exam dates, clearance status, and expiration per sport season. It lists athletes with expiring or missing clearances before tryouts. All athletes are fictional.",
+      "key_params": {
+        "athletes": "synthetic athlete count",
+        "sports": "sports",
+        "validity_days": "clearance duration"
+      },
+      "data_idea": "A seeded RNG assigns exam dates and clearance outcomes across rosters.",
+      "real_world_use": "Used by school athletic departments managing physical paperwork.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "nutrition-label-analyzer",
+      "name": "Nutrition Label Analyzer (Educational)",
+      "concept": "A label-reading trainer that parses synthetic nutrition facts panels, computes percent daily values, and flags high sodium, added sugars, and saturated fat per serving. It compares two products side by side for a healthier-choice exercise. Labels are fictional.",
+      "key_params": {
+        "products": "synthetic product count",
+        "nutrients": "tracked nutrients",
+        "serving_rules": "serving-size handling"
+      },
+      "data_idea": "A seeded RNG builds nutrition panels with realistic nutrient correlations.",
+      "real_world_use": "Used in nutrition education for label-literacy exercises.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "meal-plan-builder",
+      "name": "Meal Plan Builder (Educational)",
+      "concept": "A weekly meal planner for education that assembles synthetic meals meeting calorie and macronutrient targets from a fictional food database. It balances variety across the week and produces a shopping list. Labeled educational with no medical nutrition advice.",
+      "key_params": {
+        "calorie_target": "daily calorie goal",
+        "meals_per_day": "meals",
+        "days": "plan length"
+      },
+      "data_idea": "A seeded RNG draws meals from a fictional food database with macro values.",
+      "real_world_use": "Used in nutrition courses demonstrating meal-planning logic.",
+      "suggested_types": [
+        "scheduler",
+        "unit_converter",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sleep-diary-analyzer",
+      "name": "Sleep Diary Analyzer",
+      "concept": "A sleep-journal tool that takes synthetic bedtimes, wake times, and quality ratings and computes sleep duration, efficiency, and weekly averages. It charts the sleep schedule and flags irregular patterns. All entries are fictional and the tool gives no medical advice.",
+      "key_params": {
+        "nights": "diary length",
+        "entries": "synthetic diary count",
+        "quality_scale": "rating scale"
+      },
+      "data_idea": "A seeded RNG generates sleep entries with weekday and weekend differences.",
+      "real_world_use": "Used in sleep-hygiene education and wellness programs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "fitness-goal-tracker",
+      "name": "Fitness Goal Tracker",
+      "concept": "A workout-goal monitor for synthetic training logs that tracks progress toward weekly targets for sessions, minutes, or distance. It computes streaks, completion rates, and projected goal dates. All athletes and workouts are fictional.",
+      "key_params": {
+        "athletes": "synthetic athlete count",
+        "goals": "goal definitions",
+        "weeks": "tracking horizon"
+      },
+      "data_idea": "A seeded RNG generates workouts with adherence patterns and rest days.",
+      "real_world_use": "Used by fitness apps demonstrating goal-tracking features.",
+      "suggested_types": [
+        "web_dashboard",
+        "statistical_analyzer",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "hydration-reminder-log",
+      "name": "Hydration Reminder Log",
+      "concept": "A water-intake logger for education that records synthetic drink entries against a daily target, sending reminders at configurable intervals. It charts intake by hour and computes streak days meeting the goal. All data is fictional.",
+      "key_params": {
+        "target_ml": "daily intake target",
+        "reminders": "reminder schedule",
+        "days": "log length"
+      },
+      "data_idea": "A seeded RNG creates drink entries clustered around meals and workouts.",
+      "real_world_use": "Used in wellness apps as a simple habit-tracking example.",
+      "suggested_types": [
+        "cli_tool",
+        "scheduler",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "posture-break-timer",
+      "name": "Posture Break Timer",
+      "concept": "A desk-health timer that schedules micro-breaks through the workday, logs completed stretch breaks, and reports adherence by day and week. Break routines rotate from a demo exercise list. It is a wellness reminder, not medical guidance.",
+      "key_params": {
+        "work_hours": "workday length",
+        "break_interval_min": "minutes between breaks",
+        "routines": "exercise list"
+      },
+      "data_idea": "A seeded RNG simulates break completions with meeting-driven skips.",
+      "real_world_use": "Used in workplace wellness programs for break reminders.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "medication-interaction-demo",
+      "name": "Drug Interaction Checker Demo (Educational)",
+      "concept": "An educational interaction demo over a fictional drug database that flags pair, triple, and food interactions with severity levels and plain-language explanations. It demonstrates how interaction severity is graded without using real drug data. Labeled strictly educational.",
+      "key_params": {
+        "drugs": "fictional drug count",
+        "interactions": "demo interaction pairs",
+        "severity_levels": "grading scale"
+      },
+      "data_idea": "A seeded RNG builds a fictional drug list and interaction pairs with severity grades.",
+      "real_world_use": "Used in pharmacy education to teach interaction-checking concepts.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "allergy-alert-card",
+      "name": "Allergy Alert Card Generator",
+      "concept": "A wallet-card generator for fictional patients that lists allergies, reaction types, and severity on a printable card with emergency instructions. It validates that reaction descriptions use the controlled demo vocabulary. All patients are synthetic.",
+      "key_params": {
+        "patients": "synthetic patient count",
+        "allergens": "demo allergen list",
+        "card_format": "output layout"
+      },
+      "data_idea": "A seeded RNG assigns allergies and reaction severities to fictional patients.",
+      "real_world_use": "Used in patient-education materials demonstrating allergy documentation.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "advance-directive-registry",
+      "name": "Advance Directive Registry (Demo)",
+      "concept": "A document registry demo tracking synthetic advance directives with type, execution date, witness status, and surrogate contacts. It flags documents needing review after major health events in the fictional timeline. All persons are fictional and the tool gives no legal advice.",
+      "key_params": {
+        "records": "synthetic record count",
+        "directive_types": "document types",
+        "review_triggers": "events prompting review"
+      },
+      "data_idea": "A seeded RNG creates directive records with execution dates and surrogate contacts.",
+      "real_world_use": "Used in advance-care-planning education.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "patient-portal-simulator",
+      "name": "Patient Portal Simulator",
+      "concept": "A mock patient portal with synthetic accounts offering appointment lists, test-result views, messaging, and bill-pay demos. It demonstrates portal navigation and feature layout with entirely fictional data. Useful as a UI and API design reference.",
+      "key_params": {
+        "patients": "synthetic account count",
+        "features": "portal modules",
+        "messages": "demo message threads"
+      },
+      "data_idea": "A seeded RNG populates accounts with appointments, results, and messages.",
+      "real_world_use": "Used by health-IT teams prototyping portal features.",
+      "suggested_types": [
+        "web_dashboard",
+        "rest_api",
+        "chat_server"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "provider-messaging-queue",
+      "name": "Provider Inbox Queue Simulator",
+      "concept": "A clinical inbox simulator routing synthetic patient messages to pools by message type with response-time targets. It prioritizes urgent messages, measures time-to-response, and reports inbox backlog by pool. All messages are fictional.",
+      "key_params": {
+        "messages": "synthetic message count",
+        "pools": "inbox pools",
+        "sla_hours": "response targets"
+      },
+      "data_idea": "A seeded RNG generates messages with types, urgency, and arrival patterns.",
+      "real_world_use": "Used by clinics designing inbox management workflows.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "results-release-timer",
+      "name": "Test Result Release Timer",
+      "concept": "A result-embargo simulator that holds synthetic test results for a configurable review window before patient-portal release, with immediate release for critical values. It logs release times and computes embargo compliance. Results are fictional.",
+      "key_params": {
+        "results": "synthetic result count",
+        "embargo_hours": "hold window",
+        "critical_tests": "immediate-release list"
+      },
+      "data_idea": "A seeded RNG creates results with critical flags and provider review delays.",
+      "real_world_use": "Used by informatics teams demonstrating results-release policies.",
+      "suggested_types": [
+        "scheduler",
+        "monitoring_agent",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "appointment-recall-engine",
+      "name": "Preventive Recall Engine",
+      "concept": "A recall campaign tool that identifies synthetic patients due for annual visits or follow-ups, builds outreach batches, and tracks booking conversion per batch. It staggers batches to match scheduling capacity. All patients are fictional.",
+      "key_params": {
+        "patients": "registry size",
+        "batches": "outreach batch count",
+        "capacity_per_week": "bookable slots"
+      },
+      "data_idea": "A seeded RNG assigns due dates and booking responses to fictional patients.",
+      "real_world_use": "Used by clinics running recall campaigns for annual visits.",
+      "suggested_types": [
+        "scheduler",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    }
+  ]
+}

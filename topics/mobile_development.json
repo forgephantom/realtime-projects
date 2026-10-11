@@ -1,0 +1,906 @@
+{
+  "domain": "computer_science",
+  "subdomain": "mobile_development",
+  "topics": [
+    {
+      "slug_base": "offline-sync-engine",
+      "name": "Offline Sync Engine",
+      "concept": "Mobile apps must work without connectivity, queuing changes locally and merging when the network returns. The engine implements an outbox with conflict resolution strategies like last-write-wins and field merge. It makes airplane mode a non-event.",
+      "key_params": {
+        "queue": "pending change outbox",
+        "conflicts": "resolution strategies",
+        "retry": "backoff on failure",
+        "merge": "server reconciliation"
+      },
+      "data_idea": "A seeded RNG generates local edits with server-side conflicts.",
+      "real_world_use": "Used in field-work and messaging apps.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "api_client_sim",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "push-notification-scheduler",
+      "name": "Push Notification Scheduler",
+      "concept": "Push notifications need scheduling with quiet hours, batching, and per-user preferences. The scheduler queues messages with delivery windows and priority. It respects attention.",
+      "key_params": {
+        "messages": "notification payloads",
+        "windows": "quiet hours",
+        "batch": "digest grouping",
+        "priority": "urgent bypass"
+      },
+      "data_idea": "A seeded RNG creates notification streams with user prefs.",
+      "real_world_use": "Used in engagement platforms.",
+      "suggested_types": [
+        "scheduler",
+        "api_client_sim",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "deep-link-router",
+      "name": "Deep Link Router",
+      "concept": "Deep links route URLs into specific app screens, handling cold starts and deferred links. The router parses link patterns dispatching to screens with parameters. Marketing links land in the right place.",
+      "key_params": {
+        "patterns": "URL route table",
+        "params": "extracted arguments",
+        "deferred": "install-then-route",
+        "fallback": "web handling"
+      },
+      "data_idea": "A seeded RNG generates links with valid and broken routes.",
+      "real_world_use": "Used in mobile marketing.",
+      "suggested_types": [
+        "api_client_sim",
+        "cli_tool",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "app-state-persistence",
+      "name": "App State Persistence",
+      "concept": "Apps should restore exactly where the user left off, so state persistence snapshots navigation and form data. The tool saves and restores state across simulated process death. Continuity survives the OS killer.",
+      "key_params": {
+        "snapshot": "state capture",
+        "restore": "rehydration",
+        "death": "process kill simulation",
+        "forms": "draft preservation"
+      },
+      "data_idea": "A seeded RNG drives navigation with random kills.",
+      "real_world_use": "Used improving app UX.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "backup_tool",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "battery-profiler",
+      "name": "Battery Profiler",
+      "concept": "Background work drains batteries, so the profiler attributes energy to wakelocks, GPS, and network. It models consumption per component recommending batching. Efficient apps get used more.",
+      "key_params": {
+        "components": "gps, radio, cpu tracked",
+        "sessions": "usage scenarios",
+        "attribute": "per-feature cost",
+        "recommend": "batching hints"
+      },
+      "data_idea": "A seeded RNG synthesizes component activity.",
+      "real_world_use": "Used optimizing mobile apps.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "memory-warning-handler",
+      "name": "Memory Warning Handler",
+      "concept": "iOS and Android warn apps before killing them for memory, and graceful degradation beats a crash. The handler simulates pressure levels triggering cache eviction and quality reduction. It survives the squeeze.",
+      "key_params": {
+        "levels": "warning severity",
+        "evict": "cache clearing policy",
+        "degrade": "quality steps",
+        "measure": "survival rate"
+      },
+      "data_idea": "A seeded RNG ramps memory pressure.",
+      "real_world_use": "Used in media-heavy apps.",
+      "suggested_types": [
+        "simulation",
+        "lru_cache",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "crash-report-grouper",
+      "name": "Crash Report Grouper",
+      "concept": "Thousands of crashes reduce to a few stack signatures, and the grouper clusters them. It normalizes frames, hashes signatures, and ranks by affected users. Triage starts with groups.",
+      "key_params": {
+        "normalize": "frame cleaning",
+        "signature": "hashing method",
+        "rank": "user impact",
+        "trend": "new versus regressed"
+      },
+      "data_idea": "A seeded RNG fabricates crashes from root bugs.",
+      "real_world_use": "Used by mobile teams triaging stability.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "anr-detector",
+      "name": "ANR Detector",
+      "concept": "Application Not Responding errors happen when the main thread blocks, and the detector finds the culprits. It analyzes main-thread traces attributing stalls to disk, network, or lock contention. Jank gets a name.",
+      "key_params": {
+        "traces": "main thread samples",
+        "threshold_ms": "stall definition",
+        "attribute": "cause classification",
+        "report": "worst offenders"
+      },
+      "data_idea": "A seeded RNG generates traces with blocking calls.",
+      "real_world_use": "Used improving Android responsiveness.",
+      "suggested_types": [
+        "log_analyzer",
+        "statistical_analyzer",
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "reachability-monitor",
+      "name": "Reachability Monitor",
+      "concept": "Apps must adapt to connectivity changes: wifi to cellular to offline. The monitor tracks network state transitions informing sync and quality decisions. The app degrades gracefully.",
+      "key_params": {
+        "states": "wifi, cellular, offline",
+        "transitions": "change events",
+        "policy": "behavior per state",
+        "notify": "UI updates"
+      },
+      "data_idea": "A seeded RNG simulates commutes with tunnels.",
+      "real_world_use": "Used in network-aware apps.",
+      "suggested_types": [
+        "monitoring_agent",
+        "simulation",
+        "api_client_sim",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "request-retry-queue",
+      "name": "Request Retry Queue",
+      "concept": "Failed API calls deserve persistent retry with backoff, surviving app restarts. The queue stores requests durably retrying with exponential backoff. Nothing gets lost to a tunnel.",
+      "key_params": {
+        "persist": "disk-backed queue",
+        "backoff": "retry schedule",
+        "dedupe": "idempotency keys",
+        "priority": "urgent first"
+      },
+      "data_idea": "A seeded RNG fails requests with network gaps.",
+      "real_world_use": "Used in offline-capable apps.",
+      "suggested_types": [
+        "task_queue",
+        "api_client_sim",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "image-cache-manager",
+      "name": "Image Cache Manager",
+      "concept": "Image-heavy feeds need memory and disk caches with eviction, or scrolling janks and data balloons. The manager implements two-level caching with LRU and size caps. Smooth scrolling, bounded storage.",
+      "key_params": {
+        "memory_mb": "RAM cache",
+        "disk_mb": "disk cache",
+        "evict": "LRU policy",
+        "prefetch": "lookahead"
+      },
+      "data_idea": "A seeded RNG scrolls feeds with image loads.",
+      "real_world_use": "Used in social and commerce apps.",
+      "suggested_types": [
+        "lru_cache",
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pagination-controller",
+      "name": "Pagination Controller",
+      "concept": "Infinite lists page data with cursors, handling refresh, prepend, and error states. The controller manages page state machine with placeholders. Lists feel endless but stay correct.",
+      "key_params": {
+        "pages": "page size",
+        "cursor": "pagination token",
+        "states": "loading, error, empty",
+        "refresh": "pull-to-refresh"
+      },
+      "data_idea": "A seeded RNG serves pages with occasional errors.",
+      "real_world_use": "Used in feed-based apps.",
+      "suggested_types": [
+        "api_client_sim",
+        "simulation",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "form-validation-engine",
+      "name": "Form Validation Engine",
+      "concept": "Forms need field-level validation with clear errors, from email formats to cross-field rules. The engine validates with composable rules showing messages inline. Bad input gets kind feedback.",
+      "key_params": {
+        "rules": "per-field validators",
+        "cross": "multi-field rules",
+        "messages": "error copy",
+        "timing": "on blur versus submit"
+      },
+      "data_idea": "A seeded RNG fills forms with mistakes.",
+      "real_world_use": "Used in signup and checkout flows.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "biometric-auth-flow",
+      "name": "Biometric Auth Flow",
+      "concept": "Biometric login needs fallback paths when sensors fail or users opt out. The flow simulator handles success, failure, lockout, and PIN fallback. Security stays usable.",
+      "key_params": {
+        "methods": "face, fingerprint, PIN",
+        "fallback": "escalation chain",
+        "lockout": "attempt limits",
+        "enroll": "setup flow"
+      },
+      "data_idea": "A seeded RNG drives auth attempts with sensor failures.",
+      "real_world_use": "Used in banking apps.",
+      "suggested_types": [
+        "simulation",
+        "encryption_tool",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "secure-storage-vault",
+      "name": "Secure Storage Vault",
+      "concept": "Tokens and secrets belong in the keychain or keystore, not plain files. The vault simulates encrypted storage with biometric-gated access. Secrets stay secret.",
+      "key_params": {
+        "items": "stored secrets",
+        "encrypt": "AES-GCM simulation",
+        "gate": "biometric requirement",
+        "migrate": "version upgrades"
+      },
+      "data_idea": "A seeded RNG stores and retrieves secrets.",
+      "real_world_use": "Used for credential storage.",
+      "suggested_types": [
+        "encryption_tool",
+        "cli_tool",
+        "simulation",
+        "backup_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "certificate-pinning-checker",
+      "name": "Certificate Pinning Checker",
+      "concept": "Pinning ties the app to expected server certificates, defeating rogue CAs. The checker validates pins against certificate chains with backup pins for rotation. MITM gets much harder.",
+      "key_params": {
+        "pins": "expected SPKI hashes",
+        "chain": "presented certificates",
+        "backup": "rotation pins",
+        "enforce": "fail-closed behavior"
+      },
+      "data_idea": "A seeded RNG presents chains with pin matches and mismatches.",
+      "real_world_use": "Used in high-security apps.",
+      "suggested_types": [
+        "encryption_tool",
+        "cli_tool",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "app-version-gate",
+      "name": "App Version Gate",
+      "concept": "Old app versions break against new APIs, so gates enforce minimum versions with graceful messaging. The gate checks versions against policy with force and soft update paths. Fragmentation gets managed.",
+      "key_params": {
+        "policy": "min supported version",
+        "force": "hard block versions",
+        "soft": "nudge versions",
+        "message": "update prompts"
+      },
+      "data_idea": "A seeded RNG distributes version adoption.",
+      "real_world_use": "Used managing API evolution.",
+      "suggested_types": [
+        "config_manager",
+        "api_client_sim",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "feature-flag-client",
+      "name": "Feature Flag Client",
+      "concept": "Mobile feature flags need local evaluation with cached rules for offline use. The client fetches flag configs evaluating targeting on-device. Rollouts reach mobile safely.",
+      "key_params": {
+        "flags": "rule definitions",
+        "cache": "offline rules",
+        "evaluate": "on-device logic",
+        "exposure": "analytics logging"
+      },
+      "data_idea": "A seeded RNG assigns users to flag variants.",
+      "real_world_use": "Used in mobile experimentation.",
+      "suggested_types": [
+        "config_manager",
+        "simulation",
+        "api_client_sim",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "ab-test-assigner",
+      "name": "A/B Test Assigner",
+      "concept": "Experiments need sticky deterministic assignment so users see consistent variants. The assigner hashes user IDs into variants with stratification. Results stay valid.",
+      "key_params": {
+        "tests": "experiment definitions",
+        "hash": "assignment function",
+        "sticky": "consistency guarantee",
+        "strata": "balanced segments"
+      },
+      "data_idea": "A seeded RNG assigns large user bases.",
+      "real_world_use": "Used in product experimentation.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool",
+        "kmeans_clustering"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "analytics-event-batcher",
+      "name": "Analytics Event Batcher",
+      "concept": "Analytics events batch for efficiency with offline storage and upload policies. The batcher queues events flushing on size, time, or connectivity. Insights without battery drain.",
+      "key_params": {
+        "batch": "size and time triggers",
+        "store": "offline queue",
+        "upload": "connectivity policy",
+        "schema": "event validation"
+      },
+      "data_idea": "A seeded RNG emits app events.",
+      "real_world_use": "Used in product analytics.",
+      "suggested_types": [
+        "task_queue",
+        "data_pipeline",
+        "api_client_sim",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "session-tracker",
+      "name": "Session Tracker",
+      "concept": "Sessions define engagement metrics, with timeouts and background handling varying by platform. The tracker computes session boundaries from event streams. Analytics get consistent definitions.",
+      "key_params": {
+        "timeout": "inactivity end",
+        "background": "pause handling",
+        "events": "activity stream",
+        "metrics": "length, count"
+      },
+      "data_idea": "A seeded RNG generates app usage sessions.",
+      "real_world_use": "Used in analytics platforms.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "screen-flow-mapper",
+      "name": "Screen Flow Mapper",
+      "concept": "Understanding navigation paths reveals UX friction, so the mapper builds transition graphs from screen views. It finds common paths and drop-offs. Design gets data.",
+      "key_params": {
+        "screens": "view events",
+        "graph": "transition counts",
+        "paths": "top flows",
+        "dropoff": "exit analysis"
+      },
+      "data_idea": "A seeded RNG navigates apps with goals.",
+      "real_world_use": "Used in UX analytics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "onboarding-checklist",
+      "name": "Onboarding Checklist",
+      "concept": "Progressive onboarding completes steps like profile and permissions with skip handling. The checklist tracks completion optimizing for activation. First-run experience gets engineered.",
+      "key_params": {
+        "steps": "onboarding tasks",
+        "skip": "optional handling",
+        "progress": "completion tracking",
+        "optimize": "drop-off analysis"
+      },
+      "data_idea": "A seeded RNG walks users through onboarding.",
+      "real_world_use": "Used improving activation.",
+      "suggested_types": [
+        "task_queue",
+        "statistical_analyzer",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "permission-request-flow",
+      "name": "Permission Request Flow",
+      "concept": "Permission prompts need timing and rationale or users deny forever. The flow simulator tests pre-prompts and fallback UX. Access gets granted.",
+      "key_params": {
+        "permissions": "location, camera, notifications",
+        "timing": "request moment",
+        "rationale": "explanation screens",
+        "denied": "fallback paths"
+      },
+      "data_idea": "A seeded RNG simulates user grant decisions.",
+      "real_world_use": "Used designing permission UX.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "geofence-simulator",
+      "name": "Geofence Simulator",
+      "concept": "Geofences trigger actions on entering or leaving areas, with battery-efficient monitoring. The simulator models circular fences with dwell times and accuracy noise. Location features stay practical.",
+      "key_params": {
+        "fences": "circular regions",
+        "dwell": "minimum stay",
+        "accuracy": "GPS noise",
+        "events": "enter, exit, dwell"
+      },
+      "data_idea": "A seeded RNG moves users through fence areas.",
+      "real_world_use": "Used in retail and reminder apps.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "background-fetch-scheduler",
+      "name": "Background Fetch Scheduler",
+      "concept": "Background fetch updates content opportunistically within OS energy budgets. The scheduler models fetch intervals adapting to usage patterns. Fresh content, happy battery.",
+      "key_params": {
+        "interval": "fetch cadence",
+        "budget": "energy limits",
+        "adapt": "usage learning",
+        "result": "new-data handling"
+      },
+      "data_idea": "A seeded RNG simulates app usage and content changes.",
+      "real_world_use": "Used in news and feed apps.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "api_client_sim",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "local-notification-center",
+      "name": "Local Notification Center",
+      "concept": "Local notifications schedule reminders and timers without servers. The center manages scheduling, grouping, and actions. Timely nudges stay on-device.",
+      "key_params": {
+        "schedule": "fire dates",
+        "repeat": "recurrence",
+        "actions": "buttons",
+        "group": "threading"
+      },
+      "data_idea": "A seeded RNG schedules reminders.",
+      "real_world_use": "Used in productivity apps.",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool",
+        "task_queue",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "in-app-purchase-validator",
+      "name": "In-App Purchase Validator",
+      "concept": "Purchase receipts need server-side validation to prevent fraud. The validator checks receipt signatures and subscription states. Revenue stays real.",
+      "key_params": {
+        "receipts": "purchase tokens",
+        "verify": "signature checks",
+        "subscriptions": "status tracking",
+        "fraud": "replay detection"
+      },
+      "data_idea": "A seeded RNG generates receipts with forgeries.",
+      "real_world_use": "Used in apps with purchases.",
+      "suggested_types": [
+        "encryption_tool",
+        "api_client_sim",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "subscription-status-tracker",
+      "name": "Subscription Status Tracker",
+      "concept": "Subscriptions cycle through trial, active, grace, and expired with billing quirks. The tracker models state transitions driving entitlement. Access matches payment.",
+      "key_params": {
+        "states": "lifecycle",
+        "grace": "billing retry window",
+        "entitle": "feature mapping",
+        "webhooks": "store events"
+      },
+      "data_idea": "A seeded RNG drives subscription lifecycles.",
+      "real_world_use": "Used in subscription apps.",
+      "suggested_types": [
+        "scheduler",
+        "api_client_sim",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "paywall-experiment",
+      "name": "Paywall Experiment",
+      "concept": "Paywalls trade conversion against revenue with pricing and timing tests. The experiment framework tests variants measuring trial starts. Monetization gets scientific.",
+      "key_params": {
+        "variants": "paywall designs",
+        "metrics": "conversion, revenue",
+        "assign": "user bucketing",
+        "analyze": "significance"
+      },
+      "data_idea": "A seeded RNG simulates purchase decisions.",
+      "real_world_use": "Used optimizing app revenue.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "review-prompt-scheduler",
+      "name": "Review Prompt Scheduler",
+      "concept": "Review prompts must catch happy moments without nagging, respecting platform quotas. The scheduler triggers on positive signals with cooldowns. Ratings rise politely.",
+      "key_params": {
+        "triggers": "success moments",
+        "cooldown": "min interval",
+        "quota": "platform limits",
+        "sentiment": "targeting"
+      },
+      "data_idea": "A seeded RNG models user satisfaction.",
+      "real_world_use": "Used boosting app store ratings.",
+      "suggested_types": [
+        "scheduler",
+        "statistical_analyzer",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "app-size-analyzer",
+      "name": "App Size Analyzer",
+      "concept": "App size affects install conversion, so the analyzer attributes megabytes to modules and assets. It finds the heavy hitters. Smaller apps get installed.",
+      "key_params": {
+        "modules": "code size",
+        "assets": "resource size",
+        "attribute": "per-feature cost",
+        "recommend": "trimming hints"
+      },
+      "data_idea": "A seeded RNG builds app bundles.",
+      "real_world_use": "Used fighting bloat.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "file_organizer",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "asset-bundle-downloader",
+      "name": "Asset Bundle Downloader",
+      "concept": "On-demand assets keep initial downloads small, fetching packs as needed. The downloader manages pack manifests with resumable transfers. Big games fit in small installs.",
+      "key_params": {
+        "packs": "asset bundles",
+        "manifest": "version tracking",
+        "resume": "interrupted downloads",
+        "evict": "storage pressure"
+      },
+      "data_idea": "A seeded RNG requests asset packs.",
+      "real_world_use": "Used in games with DLC.",
+      "suggested_types": [
+        "backup_tool",
+        "api_client_sim",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "delta-update-simulator",
+      "name": "Delta Update Simulator",
+      "concept": "Delta updates ship only changed bytes, and the simulator diffs versions measuring patch sizes. It shows why small changes mean small downloads. Updates stay quick.",
+      "key_params": {
+        "versions": "app binaries",
+        "diff": "binary delta",
+        "measure": "patch size",
+        "apply": "patch application"
+      },
+      "data_idea": "A seeded RNG versions binaries with changes.",
+      "real_world_use": "Used in app update systems.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "backup_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "theme-manager",
+      "name": "Theme Manager",
+      "concept": "Dark mode and themes need centralized color tokens with smooth switching. The manager resolves themed values per mode with persistence. Apps look right everywhere.",
+      "key_params": {
+        "tokens": "color definitions",
+        "modes": "light, dark, system",
+        "switch": "transition",
+        "persist": "preference storage"
+      },
+      "data_idea": "Theme needs derive from design tokens.",
+      "real_world_use": "Used in polished apps.",
+      "suggested_types": [
+        "config_manager",
+        "cli_tool",
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "localization-checker",
+      "name": "Localization Checker",
+      "concept": "Translations break layouts with longer strings and missing keys, so the checker validates completeness and length. It flags untranslated strings and overflow risks. Global apps stay polished.",
+      "key_params": {
+        "locales": "languages",
+        "keys": "string catalog",
+        "length": "expansion limits",
+        "missing": "gap report"
+      },
+      "data_idea": "A seeded RNG translates with gaps.",
+      "real_world_use": "Used in internationalized apps.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "file_organizer",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rtl-layout-tester",
+      "name": "RTL Layout Tester",
+      "concept": "Right-to-left languages mirror layouts, and the tester verifies mirroring correctness. It checks alignment and icon flipping. Arabic and Hebrew users get proper UI.",
+      "key_params": {
+        "layouts": "screen definitions",
+        "mirror": "transformation rules",
+        "icons": "directional assets",
+        "check": "violation scan"
+      },
+      "data_idea": "A seeded RNG mirrors layouts with bugs.",
+      "real_world_use": "Used in global apps.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "accessibility-auditor",
+      "name": "Accessibility Auditor",
+      "concept": "Accessibility labels, contrast, and touch targets make apps usable for everyone. The auditor scans screens against guidelines. Inclusion gets measured.",
+      "key_params": {
+        "screens": "UI definitions",
+        "labels": "accessibility names",
+        "contrast": "ratio checks",
+        "targets": "touch sizes"
+      },
+      "data_idea": "A seeded RNG builds screens with a11y gaps.",
+      "real_world_use": "Used in accessibility programs.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "haptic-pattern-composer",
+      "name": "Haptic Pattern Composer",
+      "concept": "Haptics communicate through vibration patterns, from subtle ticks to alerts. The composer designs patterns with intensity curves. Touch gets a voice.",
+      "key_params": {
+        "patterns": "vibration sequences",
+        "intensity": "amplitude curves",
+        "preview": "simulated playback",
+        "library": "named effects"
+      },
+      "data_idea": "Patterns derive from UX intents.",
+      "real_world_use": "Used in tactile feedback design.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "config_manager",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "widget-data-provider",
+      "name": "Widget Data Provider",
+      "concept": "Home screen widgets show glanceable data with timeline updates. The provider builds timelines with refresh policies. Info stays fresh on the home screen.",
+      "key_params": {
+        "timeline": "entry schedule",
+        "refresh": "update policy",
+        "sizes": "widget families",
+        "placeholder": "loading states"
+      },
+      "data_idea": "A seeded RNG updates widget data.",
+      "real_world_use": "Used in iOS and Android widgets.",
+      "suggested_types": [
+        "scheduler",
+        "api_client_sim",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "shortcut-manager",
+      "name": "Shortcut Manager",
+      "concept": "App shortcuts and Siri intents surface actions outside the app. The manager registers shortcuts with donation analytics. Power users move faster.",
+      "key_params": {
+        "shortcuts": "action definitions",
+        "donate": "usage signals",
+        "rank": "suggestion ordering",
+        "deep": "link routing"
+      },
+      "data_idea": "A seeded RNG donates shortcut usage.",
+      "real_world_use": "Used in productivity apps.",
+      "suggested_types": [
+        "config_manager",
+        "statistical_analyzer",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "share-extension-handler",
+      "name": "Share Extension Handler",
+      "concept": "Share extensions receive content from other apps with type validation. The handler processes shared items with size limits. Apps join the share sheet.",
+      "key_params": {
+        "types": "accepted UTIs",
+        "validate": "content checks",
+        "limits": "size caps",
+        "handoff": "main app transfer"
+      },
+      "data_idea": "A seeded RNG shares content items.",
+      "real_world_use": "Used in content apps.",
+      "suggested_types": [
+        "api_client_sim",
+        "cli_tool",
+        "simulation",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "chat-message-sync",
+      "name": "Chat Message Sync",
+      "concept": "Chat needs ordered, deduplicated message sync with read receipts. The sync engine merges histories across devices. Conversations stay consistent.",
+      "key_params": {
+        "order": "sequence handling",
+        "dedupe": "idempotency",
+        "receipts": "read states",
+        "presence": "typing indicators"
+      },
+      "data_idea": "A seeded RNG exchanges messages with conflicts.",
+      "real_world_use": "Used in messaging apps.",
+      "suggested_types": [
+        "chat_server",
+        "task_queue",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "media-upload-manager",
+      "name": "Media Upload Manager",
+      "concept": "Photo and video uploads need chunking, retry, and background completion. The manager uploads with progress and compression choices. Sharing survives bad networks.",
+      "key_params": {
+        "chunk": "part size",
+        "retry": "failed part policy",
+        "compress": "quality options",
+        "background": "OS task handling"
+      },
+      "data_idea": "A seeded RNG uploads media over flaky networks.",
+      "real_world_use": "Used in social apps.",
+      "suggested_types": [
+        "task_queue",
+        "api_client_sim",
+        "simulation",
+        "backup_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "qr-code-ticket-wallet",
+      "name": "QR Code Ticket Wallet",
+      "concept": "Tickets as QR codes need offline rendering with anti-screenshot considerations. The wallet generates signed payloads with refresh. Entry stays smooth.",
+      "key_params": {
+        "payload": "signed ticket data",
+        "render": "QR generation",
+        "offline": "no-network display",
+        "refresh": "rotation policy"
+      },
+      "data_idea": "A seeded RNG issues tickets.",
+      "real_world_use": "Used in event apps.",
+      "suggested_types": [
+        "encryption_tool",
+        "cli_tool",
+        "simulation",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    }
+  ]
+}

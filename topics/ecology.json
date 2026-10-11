@@ -1,0 +1,627 @@
+{
+  "domain": "biology",
+  "subdomain": "ecology",
+  "topics": [
+    {
+      "concept": "The Lotka-Volterra predator-prey equations couple prey growth with predation and predator growth with prey consumption, producing sustained population cycles. Prey peaks lead predator peaks by a quarter phase. The simulator integrates the ODEs and reports cycle period, amplitude, and phase lag.",
+      "data_idea": "The demo integrates seeded-RNG random parameter sets and checks cycle periods against linearized predictions.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alpha": "prey growth rate",
+        "beta": "predation rate",
+        "delta": "conversion efficiency",
+        "gamma": "predator death rate",
+        "initial": "starting populations"
+      },
+      "name": "Lotka-Volterra Predator-Prey Simulator",
+      "real_world_use": "Predator-prey models inform fisheries management and pest biocontrol.",
+      "slug_base": "lotka-volterra-predator-prey",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Logistic growth adds density dependence to exponential growth: the per-capita rate declines linearly to zero at carrying capacity K, giving the classic S-shaped curve. The analytic solution makes fitting straightforward. The tool fits r and K to time-series data by nonlinear least squares.",
+      "data_idea": "The demo synthesizes seeded-RNG random logistic trajectories with noise and checks parameter recovery.",
+      "difficulty": "beginner",
+      "key_params": {
+        "K": "carrying capacity",
+        "r": "intrinsic growth rate",
+        "time_series": "observed counts"
+      },
+      "name": "Logistic Population Growth Fitter",
+      "real_world_use": "Logistic models describe bacterial cultures, tumor growth, and recovering wildlife.",
+      "slug_base": "logistic-growth-model",
+      "suggested_types": [
+        "simulation",
+        "linear_regression",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The SIR model splits a population into susceptible, infected, and recovered compartments with infection and recovery rates beta and gamma; the basic reproduction number R0 = beta/gamma decides whether an outbreak grows. The simulator integrates the ODEs and reports peak prevalence, final size, and herd-immunity threshold.",
+      "data_idea": "The demo runs seeded-RNG random parameter sets and verifies final-size against the transcendental final-size equation.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "beta": "transmission rate",
+        "gamma": "recovery rate",
+        "initial_infected": "seed infections",
+        "population": "total N"
+      },
+      "name": "SIR Epidemic Spread Simulator",
+      "real_world_use": "SIR models guided COVID-19 and influenza public-health planning (population-level modeling).",
+      "slug_base": "sir-epidemic-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "The SEIR model adds an exposed compartment for the latent period between infection and infectiousness, which delays and broadens epidemic curves. The extra sigma parameter is the progression rate. The simulator compares SEIR against SIR trajectories for matched R0.",
+      "data_idea": "The demo runs seeded-RNG random SEIR parameters and checks peak timing shifts with latent period.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "beta": "transmission rate",
+        "gamma": "recovery rate",
+        "sigma": "latency progression rate",
+        "population": "total N"
+      },
+      "name": "SEIR Epidemic Model with Latency",
+      "real_world_use": "SEIR models fit diseases with incubation periods like measles and COVID-19.",
+      "slug_base": "seir-epidemic-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Levins' metapopulation model tracks the fraction p of occupied patches: colonization of empty patches competes with local extinction, giving equilibrium p* = 1 - e/c. Persistence requires colonization to exceed extinction. The simulator runs a stochastic patch-occupancy version and compares with the deterministic equilibrium.",
+      "data_idea": "The demo simulates seeded-RNG random patch networks and checks occupancy converges near the Levins equilibrium.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "colonization": "c rate",
+        "extinction": "e rate",
+        "patches": "number of patches"
+      },
+      "name": "Levins Metapopulation Simulator",
+      "real_world_use": "Metapopulation theory designs reserve networks for threatened species.",
+      "slug_base": "metapopulation-levins-model",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Island biogeography predicts species richness from island area and isolation: immigration declines as species accumulate while extinction rises, equilibrating where the curves cross. Larger, nearer islands hold more species. The simulator computes equilibria across island configurations and plots the immigration-extinction balance.",
+      "data_idea": "The demo evaluates seeded-RNG random island configurations and checks richness ordering by area and distance.",
+      "difficulty": "beginner",
+      "key_params": {
+        "area": "island area",
+        "distance": "distance to mainland",
+        "mainland_pool": "source species count"
+      },
+      "name": "Island Biogeography Equilibrium Simulator",
+      "real_world_use": "Island theory predicts extinctions in habitat fragments and reserve design.",
+      "slug_base": "island-biogeography-simulator",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The species-area relationship S = c*A^z is one of ecology's few laws, with z typically 0.15-0.35; log-log regression estimates the exponent. The fitter takes area-richness observations, fits the power law, and reports z with confidence intervals. It flags undersampled areas from residuals.",
+      "data_idea": "The demo synthesizes seeded-RNG random species-area data with known z and checks the fitter recovers it.",
+      "difficulty": "beginner",
+      "key_params": {
+        "areas": "list of areas",
+        "richness": "species counts",
+        "show_ci": "confidence interval"
+      },
+      "name": "Species-Area Curve Fitter",
+      "real_world_use": "Species-area curves estimate total biodiversity from sampled areas.",
+      "slug_base": "species-area-curve-fitter",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "The Shannon index H = -sum(p_i ln p_i) measures diversity accounting for both richness and evenness, maximized when all species are equally abundant. Effective species number exp(H) converts it to an intuitive scale. The calculator reports H, evenness, and effective diversity from count data.",
+      "data_idea": "The demo computes indices for seeded-RNG random communities and checks H is maximized by even abundances.",
+      "difficulty": "beginner",
+      "key_params": {
+        "counts": "species abundance list",
+        "show_evenness": "report Pielou evenness",
+        "base": "log base"
+      },
+      "name": "Shannon Diversity Index Calculator",
+      "real_world_use": "Shannon diversity compares microbiomes, forests, and restoration outcomes.",
+      "slug_base": "shannon-diversity-index",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Simpson's index is the probability that two randomly drawn individuals belong to the same species, sum(p_i^2); its complement or inverse expresses diversity. It weights dominant species heavily, unlike Shannon. The calculator reports Simpson D, 1-D, and inverse Simpson from counts.",
+      "data_idea": "The demo computes Simpson indices for seeded-RNG random communities and verifies dominance sensitivity.",
+      "difficulty": "beginner",
+      "key_params": {
+        "counts": "species abundance list",
+        "form": "D, 1-D, or inverse",
+        "show_dominance": "flag dominant species"
+      },
+      "name": "Simpson Diversity Index Calculator",
+      "real_world_use": "Simpson indices monitor dominance shifts in polluted or disturbed habitats.",
+      "slug_base": "simpson-diversity-index",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The Lincoln-Petersen estimator infers population size N from mark-recapture: mark M animals, recapture C later with R marked among them, then N = M*C/R. Chapman's unbiased version corrects small samples. The tool reports the estimate with confidence intervals and warns when recaptures are too few.",
+      "data_idea": "The demo simulates seeded-RNG random capture sessions on a known virtual population and checks estimate accuracy.",
+      "difficulty": "beginner",
+      "key_params": {
+        "marked": "M marked in first session",
+        "recaptured": "C in second session",
+        "recaptured_marked": "R marked among recaptures"
+      },
+      "name": "Mark-Recapture Population Estimator",
+      "real_world_use": "Mark-recapture sizes fish stocks and elusive wildlife populations.",
+      "slug_base": "lincoln-petersen-estimator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A life table tracks a cohort through age classes with survivorship l_x and fecundity m_x, yielding net reproductive rate R0, generation time, and the Euler-Lotka intrinsic rate r. The builder constructs tables from age-specific data and reports all derived statistics. Type I/II/III survivorship curves are classified.",
+      "data_idea": "The demo builds tables from seeded-RNG random survivorship schedules and validates R0 and r computations.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "fecundity": "m_x per age class",
+        "survivorship": "l_x per age class",
+        "classify": "survivorship curve type"
+      },
+      "name": "Cohort Life Table Builder",
+      "real_world_use": "Life tables project endangered-species viability and pest outbreaks.",
+      "slug_base": "life-table-builder",
+      "suggested_types": [
+        "statistical_analyzer",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "A Leslie matrix projects an age-structured population: fecundities on the top row, survivorships on the subdiagonal. The dominant eigenvalue is the asymptotic growth rate lambda and its eigenvector the stable age distribution. The projector iterates the matrix and reports transient versus asymptotic dynamics.",
+      "data_idea": "The demo projects seeded-RNG random Leslie matrices and checks convergence to the dominant eigenvector.",
+      "difficulty": "advanced",
+      "key_params": {
+        "matrix": "Leslie matrix",
+        "periods": "projection steps",
+        "show_stable": "report stable age distribution"
+      },
+      "name": "Leslie Matrix Population Projector",
+      "real_world_use": "Leslie models manage harvested and threatened age-structured populations.",
+      "slug_base": "leslie-matrix-projector",
+      "suggested_types": [
+        "simulation",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "Lotka-Volterra competition extends the predator-prey form with competition coefficients alpha: each species inhibits itself and its rival. Four outcomes are possible: exclusion either way, unstable priority effects, or stable coexistence when intraspecific competition exceeds interspecific. The simulator maps outcomes across parameter space.",
+      "data_idea": "The demo sweeps seeded-RNG random competition coefficients and checks outcomes match the analytic inequalities.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alpha": "effect of species 2 on 1",
+        "beta": "effect of species 1 on 2",
+        "r1": "growth rate 1",
+        "r2": "growth rate 2"
+      },
+      "name": "Two-Species Competition Model",
+      "real_world_use": "Competition models predict invasive-native outcomes and crop-weed dynamics.",
+      "slug_base": "competition-lotka-volterra",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Mutualism models add positive cross-terms so each species boosts the other's growth, which can cause unbounded growth unless self-limitation is included. With logistic self-limitation the system settles at elevated joint carrying capacities. The simulator explores obligate versus facultative mutualism.",
+      "data_idea": "The demo runs seeded-RNG random mutualism parameters and checks equilibria against analytic solutions.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "benefit12": "effect of 2 on 1",
+        "benefit21": "effect of 1 on 2",
+        "obligate": "obligate or facultative"
+      },
+      "name": "Mutualism Dynamics Model",
+      "real_world_use": "Mutualism models describe pollinator-plant and coral-zooxanthellae systems.",
+      "slug_base": "mutualism-model",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Ecological succession moves a community through pioneer, intermediate, and climax stages as species modify conditions for their successors. A Markov transition model captures stage probabilities over time. The simulator runs the chain and reports expected time to climax and stage occupancy.",
+      "data_idea": "The demo runs seeded-RNG random succession chains and checks absorption times against Markov theory.",
+      "difficulty": "beginner",
+      "key_params": {
+        "stages": "succession stage list",
+        "steps": "simulation length",
+        "transitions": "stage transition matrix"
+      },
+      "name": "Succession Markov Simulator",
+      "real_world_use": "Succession models guide forest restoration and post-fire recovery planning.",
+      "slug_base": "succession-simulator",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Maximum sustainable yield harvests a logistic population at the growth-maximizing stock size K/2 with harvest rate rK/4; exceeding it collapses the stock. The model sweeps harvest effort and reports yield curves, collapse thresholds, and recovery times. It demonstrates why MSY is a limit, not a target.",
+      "data_idea": "The demo sweeps seeded-RNG random harvest efforts and checks collapse occurs past the theoretical threshold.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "K": "carrying capacity",
+        "effort": "harvest effort levels",
+        "r": "growth rate"
+      },
+      "name": "Maximum Sustainable Yield Harvest Model",
+      "real_world_use": "MSY concepts set fishing quotas and forestry rotations.",
+      "slug_base": "msy-harvest-model",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "The Allee effect makes per-capita growth negative below a critical density (mate-finding failure), creating an extinction threshold even in good habitat. The model adds a cubic term to logistic growth and finds the unstable threshold density. The simulator shows populations above it recover and below it crash.",
+      "data_idea": "The demo integrates seeded-RNG random Allee parameters and checks threshold predictions by bisection.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "A": "allee threshold",
+        "K": "carrying capacity",
+        "r": "growth rate"
+      },
+      "name": "Allee Effect Threshold Model",
+      "real_world_use": "Allee thresholds warn when rare species need density-boosting interventions.",
+      "slug_base": "allee-effect-model",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Trophic cascades propagate top-down: adding predators suppresses herbivores and releases plants, flipping ecosystem state. A three-level chain model demonstrates the cascade strength as a function of predator efficiency. The simulator runs removal and addition experiments.",
+      "data_idea": "The demo runs seeded-RNG random food-chain parameters and measures cascade strength across predator efficiencies.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "levels": "trophic level count",
+        "predator_efficiency": "top predator pressure",
+        "removal": "which level is removed"
+      },
+      "name": "Trophic Cascade Simulator",
+      "real_world_use": "Cascade theory explains wolf-elk-aspen dynamics and guides rewilding.",
+      "slug_base": "trophic-cascade-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A food web is a directed graph of who eats whom; connectance, mean chain length, and omnivory statistics summarize its structure. The analyzer builds webs from feeding links, computes degree distributions and trophic levels, and identifies basal, intermediate, and top species. It flags the most connected hub species.",
+      "data_idea": "The demo builds seeded-RNG random food webs and validates trophic-level assignments against known chains.",
+      "difficulty": "advanced",
+      "key_params": {
+        "links": "predator-prey pairs",
+        "show_hubs": "flag key connectors",
+        "species": "species list"
+      },
+      "name": "Food Web Structure Analyzer",
+      "real_world_use": "Food-web analysis assesses ecosystem robustness to species loss.",
+      "slug_base": "food-web-analyzer",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Niche overlap quantifies shared resource use between species pairs, commonly with Pianka's or Schoener's index from utilization proportions. High overlap predicts strong competition. The calculator builds the pairwise overlap matrix and clusters species by niche similarity.",
+      "data_idea": "The demo computes overlaps for seeded-RNG random utilization profiles and checks clustering recovers planted guilds.",
+      "difficulty": "beginner",
+      "key_params": {
+        "cluster": "group by overlap",
+        "index": "pianka or schoener",
+        "utilization": "species by resource matrix"
+      },
+      "name": "Niche Overlap Calculator",
+      "real_world_use": "Overlap analysis studies competition in bird and fish communities.",
+      "slug_base": "niche-overlap-calculator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "kmeans_clustering"
+      ]
+    },
+    {
+      "concept": "Rarefaction curves plot expected species count against sampling effort, letting fair diversity comparisons between unequally sampled sites. Individual-based rarefaction uses hypergeometric expectations. The tool builds curves from abundance data and reports the effort needed to reach coverage targets.",
+      "data_idea": "The demo rarefies seeded-RNG random communities and checks curves asymptote at true richness.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "abundances": "species counts",
+        "effort": "sampling levels",
+        "target_coverage": "coverage goal"
+      },
+      "name": "Rarefaction Curve Builder",
+      "real_world_use": "Rarefaction standardizes biodiversity surveys and microbiome comparisons.",
+      "slug_base": "rarefaction-curve",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Beta diversity measures compositional turnover between sites; Jaccard and Sorensen indices compare shared versus total species. The calculator builds pairwise dissimilarity matrices from site-by-species data and ordinates sites by similarity. It identifies the most distinct site pairs.",
+      "data_idea": "The demo computes beta diversity for seeded-RNG random site matrices and validates against manual calculations.",
+      "difficulty": "beginner",
+      "key_params": {
+        "index": "jaccard or sorensen",
+        "show_matrix": "display dissimilarities",
+        "sites": "site by species matrix"
+      },
+      "name": "Beta Diversity Turnover Calculator",
+      "real_world_use": "Beta diversity tracks community change along gradients and after disturbance.",
+      "slug_base": "beta-diversity-jaccard",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Ordination compresses community data into a few axes: PCA on transformed abundances reveals the main compositional gradients. The tool performs the eigendecomposition, reports variance explained per axis, and maps sites and species scores. It helps visualize high-dimensional survey data.",
+      "data_idea": "The demo ordinates seeded-RNG random communities with planted gradients and checks axis alignment.",
+      "difficulty": "advanced",
+      "key_params": {
+        "axes": "axes to report",
+        "data": "site by species matrix",
+        "transform": "hellinger or none"
+      },
+      "name": "Community Ordination (PCA) Tool",
+      "real_world_use": "Ordination visualizes microbiome and vegetation survey structure.",
+      "slug_base": "community-ordination-pca",
+      "suggested_types": [
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Hubbell's neutral theory assumes all individuals are ecologically equivalent, so diversity emerges from speciation, drift, and dispersal alone. The simulator runs a zero-sum community with immigration from a metacommunity and compares rank-abundance curves to neutral predictions. It tests whether observed patterns need niche explanations.",
+      "data_idea": "The demo simulates seeded-RNG random neutral communities and checks rank-abundance fits.",
+      "difficulty": "advanced",
+      "key_params": {
+        "community_size": "local individuals",
+        "immigration": "migration probability",
+        "speciation": "speciation rate"
+      },
+      "name": "Neutral Theory Community Simulator",
+      "real_world_use": "Neutral models serve as null hypotheses in biodiversity research.",
+      "slug_base": "neutral-theory-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Dispersal kernels describe the probability distribution of seed or larval travel distances; fat-tailed kernels allow rare long-distance colonization events. The model fits exponential versus power-law kernels to dispersal data and simulates range expansion. It reports expected spread velocity.",
+      "data_idea": "The demo fits kernels to seeded-RNG random dispersal distances and compares spread rates.",
+      "difficulty": "advanced",
+      "key_params": {
+        "distances": "observed dispersal distances",
+        "kernel": "exponential or power_law",
+        "simulate": "run spread simulation"
+      },
+      "name": "Dispersal Kernel Fitter",
+      "real_world_use": "Dispersal models predict invasive spread and forest migration under climate change.",
+      "slug_base": "dispersal-kernel-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Fire regimes are characterized by frequency, intensity, and seasonality; different plant strategies (resprouters, seeders) win under different regimes. The simulator runs a patch-mosaic model with stochastic fire events and tracks community composition. It identifies the regime maximizing diversity.",
+      "data_idea": "The demo runs seeded-RNG random fire histories and checks composition shifts with fire frequency.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "fire_interval": "mean years between fires",
+        "intensity": "fire severity",
+        "strategies": "plant strategy mix"
+      },
+      "name": "Fire Disturbance Regime Simulator",
+      "real_world_use": "Fire models guide prescribed-burn programs in savannas and forests.",
+      "slug_base": "fire-regime-simulator",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "Nutrient cycling box models track stocks (soil, biomass, litter) and flows (uptake, litterfall, mineralization) with mass-balance ODEs. Residence times reveal which pools turn over fastest. The model solves for steady-state stocks and simulates pulse perturbations like fertilization.",
+      "data_idea": "The demo runs seeded-RNG random nutrient budgets and verifies mass conservation.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "flows": "transfer rate matrix",
+        "pools": "initial stocks",
+        "pulse": "perturbation scenario"
+      },
+      "name": "Nutrient Cycling Box Model",
+      "real_world_use": "Box models manage fertilizer application and lake eutrophication.",
+      "slug_base": "nutrient-cycling-box-model",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Ecosystem carbon flux balances photosynthesis (GPP), respiration, and disturbance losses; net ecosystem exchange is the difference. The simulator drives fluxes with light and temperature response curves over a synthetic year. It reports annual carbon budget and sensitivity to warming.",
+      "data_idea": "The demo simulates seeded-RNG random weather years and checks carbon budgets close.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "light_curve": "daily PAR series",
+        "temp_curve": "temperature series",
+        "years": "simulation length"
+      },
+      "name": "Ecosystem Carbon Flux Simulator",
+      "real_world_use": "Flux models underpin carbon-credit accounting and climate projections.",
+      "slug_base": "carbon-flux-simulator",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Phenology models predict budburst or flowering from accumulated degree-days above a base temperature, capturing spring advancement under warming. The tool accumulates degree-days from temperature series and predicts event dates. It compares predictions across warming scenarios.",
+      "data_idea": "The demo predicts events from seeded-RNG random temperature series and checks threshold behavior.",
+      "difficulty": "beginner",
+      "key_params": {
+        "base_temp": "degree-day base",
+        "event_threshold": "required degree-days",
+        "temps": "daily temperature series"
+      },
+      "name": "Degree-Day Phenology Predictor",
+      "real_world_use": "Phenology models schedule agriculture and track climate-change impacts.",
+      "slug_base": "phenology-degree-day-model",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "Keystone species have disproportionate impact; removing them in silico reveals cascading extinctions through the food web. The experiment deletes each species in turn from a web model and counts secondary extinctions. It ranks species by keystone importance.",
+      "data_idea": "The demo runs removal experiments on seeded-RNG random food webs and checks hub species rank highest.",
+      "difficulty": "advanced",
+      "key_params": {
+        "links": "feeding links",
+        "removals": "species to test",
+        "threshold": "extinction criterion"
+      },
+      "name": "Keystone Removal Experiment",
+      "real_world_use": "Keystone analysis prioritizes species for conservation triage.",
+      "slug_base": "keystone-removal-experiment",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Invasive species spread combines local growth with stratified dispersal; the simulator runs a spatial lattice model with rare long jumps. It reports invasion front velocity and the effect of early-detection radius. Control scenarios test removal strategies.",
+      "data_idea": "The demo runs seeded-RNG random invasions and measures front velocity against analytic predictions.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "growth": "local growth rate",
+        "jump_rate": "long-distance jump probability",
+        "lattice": "grid size"
+      },
+      "name": "Invasive Species Spread Simulator",
+      "real_world_use": "Spread models plan early-detection networks for agricultural pests.",
+      "slug_base": "invasive-spread-simulator",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "Fragmentation creates edge habitat where microclimate and predation differ from interiors; edge effects penetrate a characteristic depth. The model overlays edge buffers on fragment shapes and computes core-area remaining. It compares reserve designs by core-area retention.",
+      "data_idea": "The demo evaluates seeded-RNG random fragment shapes and checks core area shrinks with edge depth.",
+      "difficulty": "beginner",
+      "key_params": {
+        "depth": "edge penetration depth",
+        "fragments": "polygon list",
+        "show_core": "report core areas"
+      },
+      "name": "Fragmentation Edge-Effect Analyzer",
+      "real_world_use": "Edge analysis designs reserves that protect interior-dependent species.",
+      "slug_base": "fragmentation-edge-effect",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Climate envelope models relate species occurrences to temperature and precipitation variables, then project suitable habitat under future climates. This educational version fits a simple rectilinear envelope and maps range shifts. It reports range contraction and expansion statistics.",
+      "data_idea": "The demo fits envelopes to seeded-RNG random occurrence data and validates projections on held-out climates.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "climate_vars": "variable names",
+        "future": "future climate scenario",
+        "occurrences": "presence records"
+      },
+      "name": "Climate Envelope Range Model",
+      "real_world_use": "Envelope models project biodiversity redistribution under climate change.",
+      "slug_base": "climate-envelope-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Ecosystem services (pollination, water filtration, carbon storage) can be valued by replacement cost or willingness-to-pay methods for policy comparison. The valuator combines land-cover areas with per-hectare service values and reports totals by service and scenario. It compares conservation versus development scenarios.",
+      "data_idea": "The demo values seeded-RNG random landscapes and checks scenario rankings are consistent.",
+      "difficulty": "beginner",
+      "key_params": {
+        "land_cover": "hectare by cover type",
+        "scenarios": "land-use scenarios",
+        "values": "per-hectare service values"
+      },
+      "name": "Ecosystem Service Valuator",
+      "real_world_use": "Service valuation informs land-use policy and natural-capital accounting.",
+      "slug_base": "ecosystem-service-valuator",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "r/K selection contrasts fast-reproducing colonizers (high r, low competitive ability) with slow efficient competitors (high K); the comparator places species on the continuum from life-history traits. It scores strategies from fecundity, lifespan, and parental-care inputs. It predicts disturbance responses.",
+      "data_idea": "The demo scores seeded-RNG random life histories and checks disturbance-response predictions.",
+      "difficulty": "beginner",
+      "key_params": {
+        "show_scores": "report r/K scores",
+        "species": "life-history trait dicts",
+        "weights": "trait weights"
+      },
+      "name": "r/K Life-History Strategy Comparator",
+      "real_world_use": "Life-history theory predicts weed versus crop-weed dynamics and fisheries responses.",
+      "slug_base": "rk-selection-comparator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The Schnabel method extends mark-recapture to multiple sessions, accumulating marked animals and weighting each recapture; it is more precise than single-session Petersen. The estimator processes session histories and reports N with confidence intervals. It tests the closure assumption via catchability trends.",
+      "data_idea": "The demo simulates seeded-RNG random multi-session captures on a known population and checks accuracy.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "closed": "assume closure",
+        "sessions": "list of (caught, recaptures)",
+        "show_trend": "catchability trend test"
+      },
+      "name": "Schnabel Multi-Session Estimator",
+      "real_world_use": "Schnabel estimates size closed populations like lake fish and island mammals.",
+      "slug_base": "schnabel-estimator",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation"
+      ]
+    }
+  ]
+}

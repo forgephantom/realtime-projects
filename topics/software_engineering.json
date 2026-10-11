@@ -1,0 +1,1806 @@
+{
+  "domain": "computer_science",
+  "subdomain": "software_engineering",
+  "topics": [
+    {
+      "slug_base": "singleton-registry",
+      "name": "Singleton Registry",
+      "concept": "A singleton guarantees one instance of a class: the registry variant holds named singletons (config, loggers) in a central map with lazy creation and thread-safety. It is convenient and famously overused, hiding dependencies and complicating tests. The demo shows both the pattern and the dependency-injection alternative.",
+      "key_params": {
+        "scope": "per-name vs single global instance",
+        "thread_safe": "locking on lazy creation",
+        "reset": "test-reset capability"
+      },
+      "data_idea": "Creates seeded registries under concurrent access, verifying exactly-once creation and test isolation via reset.",
+      "real_world_use": "Logging frameworks, configuration holders, and connection managers classically use singletons.",
+      "suggested_types": [
+        "config_manager",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "factory-method-parser",
+      "name": "Factory Method (Parser Factory)",
+      "concept": "Factory method defers instantiation to subclasses: a parser factory returns CSV, JSON, or XML parsers behind one interface based on file type. Clients never name concrete classes, so adding formats means adding classes, not editing call sites. It is the gentle introduction to creational patterns.",
+      "key_params": {
+        "formats": "parser types supported",
+        "detection": "extension vs content sniffing",
+        "fallback": "behavior on unknown format"
+      },
+      "data_idea": "Feeds seeded files of each format through the factory, verifying the right parser instantiates and parses.",
+      "real_world_use": "Document converters, import pipelines, and payment-gateway SDKs pick implementations via factories.",
+      "suggested_types": [
+        "file_organizer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "abstract-factory-reporters",
+      "name": "Abstract Factory (Reporters)",
+      "concept": "Abstract factory creates families of related objects: a reporter factory yields matching formatter, chart, and exporter for PDF vs HTML vs CSV outputs. Switching output kind swaps the whole family consistently. It prevents the mismatched-part bugs of piecemeal construction.",
+      "key_params": {
+        "families": "output families supported",
+        "parts": "formatter/chart/exporter per family",
+        "consistency": "cross-part compatibility checks"
+      },
+      "data_idea": "Generates seeded reports per family, verifying all parts belong to the requested family.",
+      "real_world_use": "UI toolkits (widgets per OS theme) and multi-format exporters use abstract factories.",
+      "suggested_types": [
+        "report_generator",
+        "file_organizer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "builder-query-builder",
+      "name": "Builder (Query Builder)",
+      "concept": "The builder constructs complex objects step by step: a query builder chains select/where/join/order calls, validating at build() time. It replaces telescoping constructors and unreadable parameter lists. Immutable intermediate states make it thread-safe.",
+      "key_params": {
+        "clauses": "select/where/join/order/limit supported",
+        "validate": "build-time validation rules",
+        "immutable": "whether steps return new builders"
+      },
+      "data_idea": "Builds seeded queries through chained calls, verifying generated SQL text and validation errors.",
+      "real_world_use": "SQLAlchemy, jOOQ, and HTTP request builders all use the builder pattern.",
+      "suggested_types": [
+        "cli_tool",
+        "api_client_sim",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "prototype-cloner",
+      "name": "Prototype (Cloner)",
+      "concept": "Prototype creates objects by cloning a template instead of constructing from scratch: useful when setup is expensive (database fixtures, document templates). Deep vs shallow copy semantics decide whether nested state is shared. Registries of named prototypes act as template libraries.",
+      "key_params": {
+        "templates": "named prototype registry",
+        "copy": "deep vs shallow cloning",
+        "overrides": "per-clone attribute overrides"
+      },
+      "data_idea": "Clones seeded templates with overrides, verifying independence of deep copies and shared refs of shallow.",
+      "real_world_use": "Game entity spawning, document templates, and test-fixture factories clone prototypes.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "adapter-legacy-wrapper",
+      "name": "Adapter (Legacy Wrapper)",
+      "concept": "Adapters let incompatible interfaces collaborate: a wrapper translates a legacy library's API into the interface new code expects, without touching either side. It is the pragmatic pattern for technical debt: new code stays clean while old code keeps running. Two-way adapters sync both directions.",
+      "key_params": {
+        "legacy": "legacy interface wrapped",
+        "target": "modern interface exposed",
+        "translate": "method/parameter mappings"
+      },
+      "data_idea": "Wraps seeded legacy APIs and verifies the modern interface behaves identically through the adapter.",
+      "real_world_use": "Third-party SDK integrations and database-driver shims universally use adapters.",
+      "suggested_types": [
+        "api_client_sim",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bridge-notifier-channels",
+      "name": "Bridge (Notifier Channels)",
+      "concept": "Bridge separates abstraction from implementation so both vary independently: notifiers (alert, reminder) work over channels (email, SMS, push) in a matrix, not a class explosion. Adding a channel means one new class, not N notifier subclasses. It tames two-dimensional variation.",
+      "key_params": {
+        "abstractions": "notifier types",
+        "implementations": "channel types",
+        "matrix": "valid abstraction/implementation pairs"
+      },
+      "data_idea": "Sends seeded notifications across the matrix, verifying every combination works with one implementation each.",
+      "real_world_use": "Cross-platform UI (abstraction over OS drawing) and multi-channel messaging use bridges.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "composite-file-system",
+      "name": "Composite (File System)",
+      "concept": "Composite treats leaves and containers uniformly: files and directories both implement the node interface (size, list, search), so clients recurse without type checks. It is the natural model for trees. The demo builds an in-memory filesystem with uniform operations.",
+      "key_params": {
+        "ops": "size/list/search/delete supported",
+        "depth": "tree depth in demo",
+        "symlink": "whether symlinks are modeled"
+      },
+      "data_idea": "Builds seeded trees and verifies uniform operations recurse correctly through nesting.",
+      "real_world_use": "DOM trees, UI component hierarchies, and org charts all use composite structure.",
+      "suggested_types": [
+        "file_organizer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "decorator-middleware-chain",
+      "name": "Decorator (Middleware Chain)",
+      "concept": "Decorators wrap behavior in layers: logging, auth, caching, and timing decorators compose around a core handler in any order. Each decorator has the same interface as what it wraps. Order matters (auth before caching), which the chain builder makes explicit.",
+      "key_params": {
+        "layers": "decorator types available",
+        "order": "composition order",
+        "short_circuit": "which layers can skip the chain"
+      },
+      "data_idea": "Composes seeded decorator chains and verifies execution order and short-circuit behavior.",
+      "real_world_use": "Python decorators, Express middleware, and Java I/O streams are decorator chains.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "facade-subsystem",
+      "name": "Facade (Subsystem)",
+      "concept": "A facade offers one simple interface over a complex subsystem: instead of orchestrating ten classes, clients call facade.deploy(). It does not hide the subsystem, it just provides the 80% path. Good facades are designed from use cases, not from the subsystem's structure.",
+      "key_params": {
+        "use_cases": "simplified operations exposed",
+        "subsystem": "underlying component count",
+        "escape_hatch": "direct subsystem access allowed"
+      },
+      "data_idea": "Drives seeded use cases through the facade, verifying they complete with single calls.",
+      "real_world_use": "Deployment scripts, compiler frontends, and SDK quick-start APIs are facades.",
+      "suggested_types": [
+        "cli_tool",
+        "task_queue",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "flyweight-glyph-cache",
+      "name": "Flyweight (Glyph Cache)",
+      "concept": "Flyweight shares intrinsic state across many objects: a text renderer caches one glyph per character instead of per occurrence, with extrinsic state (position, style) passed in. Memory drops from O(chars) to O(alphabet). The demo measures the savings.",
+      "key_params": {
+        "alphabet": "distinct glyphs cached",
+        "extrinsic": "per-use state (position/style)",
+        "evict": "cache eviction policy"
+      },
+      "data_idea": "Renders seeded documents and verifies memory use scales with alphabet, not character count.",
+      "real_world_use": "Text renderers, game particle systems, and string interning use flyweight sharing.",
+      "suggested_types": [
+        "lru_cache",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "proxy-lazy-loader",
+      "name": "Proxy (Lazy Loader)",
+      "concept": "Proxies stand in for expensive objects: a virtual proxy defers loading (images, remote resources) until first use, while protection proxies add access checks. The client cannot tell proxy from real object. Lazy loading is the performance win; access control is the security one.",
+      "key_params": {
+        "resource": "expensive resource proxied",
+        "trigger": "what forces loading",
+        "access": "permission checks on proxy"
+      },
+      "data_idea": "Accesses seeded proxied resources and verifies loading happens exactly once, on first use.",
+      "real_world_use": "ORM lazy loading, image lazy-load, and remote stubs are proxies.",
+      "suggested_types": [
+        "lru_cache",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "chain-of-responsibility-validators",
+      "name": "Chain of Responsibility (Validators)",
+      "concept": "A handler chain passes requests along until one handles them: validators check a request in sequence, each either passing or rejecting with its error. Chains configure dynamically (add/remove validators) without touching the core flow. It decouples senders from handlers.",
+      "key_params": {
+        "validators": "validator types in chain",
+        "stop": "fail-fast vs collect-all",
+        "order": "validator ordering"
+      },
+      "data_idea": "Validates seeded requests through chains, verifying each validator runs in order with correct short-circuiting.",
+      "real_world_use": "Servlet filters, validation pipelines, and event bubbling use handler chains.",
+      "suggested_types": [
+        "rest_api",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "command-undo-stack",
+      "name": "Command (Undo Stack)",
+      "concept": "Commands encapsulate actions as objects with execute/undo: the invoker queues them, the undo stack reverses them, and macros compose sequences. It separates what to do from when to do it. Every editor's Ctrl+Z is this pattern.",
+      "key_params": {
+        "commands": "command types (insert/delete/format)",
+        "history": "undo depth",
+        "macro": "macro recording support"
+      },
+      "data_idea": "Executes seeded command sequences with undos/redos, verifying state always matches the expected history.",
+      "real_world_use": "Text editors, Photoshop history, and job queues implement command stacks.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "interpreter-rule-engine",
+      "name": "Interpreter (Rule Engine)",
+      "concept": "The interpreter pattern evaluates sentences in a small language: a rule engine parses boolean expressions (age > 18 AND country = 'US') into an AST and evaluates against contexts. Tokenizer, parser, and evaluator are the three parts. It is how business rules become data instead of code.",
+      "key_params": {
+        "grammar": "operators and literals supported",
+        "precedence": "operator precedence rules",
+        "functions": "built-in functions available"
+      },
+      "data_idea": "Evaluates seeded rules against contexts, verifying parse correctness and evaluation results.",
+      "real_world_use": "Discount rules, feature-flag targeting, and spreadsheet formulas are interpreted languages.",
+      "suggested_types": [
+        "simulation",
+        "config_manager",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "iterator-paginator",
+      "name": "Iterator (Paginator)",
+      "concept": "Iterators expose sequential access without revealing structure: a paginator lazily fetches pages from an API, yielding items one by one while handling cursors and rate limits internally. Clients loop simply; complexity hides inside. Lazy evaluation keeps memory flat.",
+      "key_params": {
+        "page_size": "items per fetch",
+        "cursor": "cursor vs offset pagination",
+        "prefetch": "background prefetching"
+      },
+      "data_idea": "Iterates seeded paginated APIs, verifying all items arrive in order with minimal requests.",
+      "real_world_use": "Database cursors, API clients, and file readers all expose iterators.",
+      "suggested_types": [
+        "api_client_sim",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mediator-chatroom",
+      "name": "Mediator (Chatroom)",
+      "concept": "A mediator centralizes communication: chatroom members send messages to the mediator, which routes to recipients, instead of everyone referencing everyone. It turns N-to-N wiring into N-to-1. Private messages, moderation, and presence all live in the mediator.",
+      "key_params": {
+        "members": "participant count",
+        "routing": "broadcast vs direct vs rooms",
+        "moderation": "mute/ban capabilities"
+      },
+      "data_idea": "Routes seeded chat traffic through the mediator, verifying delivery rules and moderation.",
+      "real_world_use": "Chat servers, air-traffic control, and UI dialog coordinators use mediators.",
+      "suggested_types": [
+        "chat_server",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "memento-snapshot",
+      "name": "Memento (Snapshot)",
+      "concept": "Mementos capture state for later restore without exposing internals: the originator creates snapshots, the caretaker stores them, and restore rolls back. It powers undo across complex state. Snapshot frequency trades memory against undo granularity.",
+      "key_params": {
+        "state": "snapshotted state shape",
+        "depth": "snapshot history kept",
+        "diff": "full vs delta snapshots"
+      },
+      "data_idea": "Snapshots seeded stateful sessions and verifies restore returns exact prior states.",
+      "real_world_use": "Editor undo, game save states, and transaction savepoints use mementos.",
+      "suggested_types": [
+        "simulation",
+        "backup_tool",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "observer-event-bus",
+      "name": "Observer (Event Bus)",
+      "concept": "Observers subscribe to events instead of polling: the event bus maintains topic subscriptions and dispatches published events to listeners. It decouples producers from consumers completely. Ordering and error-isolation policies make it production-ready.",
+      "key_params": {
+        "topics": "event topics",
+        "delivery": "sync vs async dispatch",
+        "isolation": "listener error handling"
+      },
+      "data_idea": "Publishes seeded events and verifies every subscriber receives exactly its topics with errors isolated.",
+      "real_world_use": "GUIs, message brokers, and reactive frameworks are observer systems.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "chat_server"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "state-order-machine",
+      "name": "State (Order Machine)",
+      "concept": "The state pattern encodes each state as an object with legal transitions: an order moves new -> paid -> shipped -> delivered, and each state object defines valid next steps. Illegal transitions become impossible by construction. It replaces sprawling switch statements.",
+      "key_params": {
+        "states": "order lifecycle states",
+        "transitions": "legal transition map",
+        "guards": "conditions on transitions"
+      },
+      "data_idea": "Drives seeded orders through valid and invalid transitions, verifying only legal paths succeed.",
+      "real_world_use": "Order systems, TCP stacks, and game entities model lifecycles as state machines.",
+      "suggested_types": [
+        "simulation",
+        "rest_api",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "strategy-pricing",
+      "name": "Strategy (Pricing)",
+      "concept": "Strategy swaps algorithms at runtime behind one interface: pricing strategies (standard, premium, discount, surge) plug into checkout without branching. New strategies mean new classes, not modified code. It is the pattern behind every 'plugin' pricing rule.",
+      "key_params": {
+        "strategies": "pricing algorithms available",
+        "select": "runtime selection rule",
+        "combine": "whether strategies compose"
+      },
+      "data_idea": "Prices seeded carts under each strategy, verifying correct totals and runtime switching.",
+      "real_world_use": "Sorting algorithms, compression choices, and payment processors use strategies.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "template-method-pipeline",
+      "name": "Template Method (Pipeline)",
+      "concept": "Template method defines an algorithm's skeleton in a base class with overridable steps: an ETL pipeline fixes extract->transform->load order while subclasses customize each step. Hooks add optional extension points. It trades flexibility for enforced structure.",
+      "key_params": {
+        "steps": "pipeline stages fixed",
+        "hooks": "optional override points",
+        "variants": "subclass customizations"
+      },
+      "data_idea": "Runs seeded pipeline variants, verifying the skeleton order holds while steps vary.",
+      "real_world_use": "Test frameworks (setup/test/teardown) and ETL frameworks use template methods.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "visitor-report-exporter",
+      "name": "Visitor (Report Exporter)",
+      "concept": "Visitor separates operations from object structure: exporters (JSON, CSV, XML) visit each node of a document tree without the nodes knowing export formats. Adding a format means a new visitor, not modified nodes. Double dispatch is the mechanism.",
+      "key_params": {
+        "formats": "export formats as visitors",
+        "nodes": "document node types",
+        "traversal": "traversal order"
+      },
+      "data_idea": "Exports seeded document trees per format, verifying complete and correct output.",
+      "real_world_use": "Compilers (AST passes), document converters, and static analyzers use visitors.",
+      "suggested_types": [
+        "report_generator",
+        "file_organizer",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "layered-architecture-demo",
+      "name": "Layered Architecture Demo",
+      "concept": "Layered architecture separates presentation, business logic, and data access with strict downward dependencies: each layer exposes an interface to the one above. The demo enforces the dependency rule with import checks and shows what breaks when layers leak. It is the most common architecture for a reason: it is easy to reason about.",
+      "key_params": {
+        "layers": "presentation/domain/data",
+        "rule": "dependency direction enforced",
+        "leak_demo": "what a layer violation breaks"
+      },
+      "data_idea": "Builds seeded layered apps and verifies the dependency checker catches planted violations.",
+      "real_world_use": "Traditional web apps (MVC) and enterprise systems organize in layers.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "hexagonal-ports-adapters",
+      "name": "Hexagonal Architecture (Ports and Adapters)",
+      "concept": "Hexagonal architecture isolates domain logic behind ports (interfaces), with adapters for databases, UIs, and external services: the domain never imports infrastructure. Tests swap in fake adapters. Dependency direction points inward, always. It makes the core testable and technology-agnostic.",
+      "key_params": {
+        "ports": "driven/driving port definitions",
+        "adapters": "real vs fake adapters",
+        "domain": "pure domain logic"
+      },
+      "data_idea": "Runs seeded use cases against real and fake adapters, verifying identical domain behavior.",
+      "real_world_use": "DDD practitioners and test-heavy teams isolate domains with ports and adapters.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "plugin-architecture",
+      "name": "Plugin Architecture",
+      "concept": "Plugin systems load extensions at runtime through a stable extension-point API: the core defines hooks, plugins register handlers, and sandboxing limits their blast radius. Versioned APIs keep plugins compatible. It turns a product into a platform.",
+      "key_params": {
+        "hooks": "extension points defined",
+        "lifecycle": "load/enable/disable/unload",
+        "isolation": "plugin sandboxing level"
+      },
+      "data_idea": "Loads seeded plugins and verifies hook dispatch, lifecycle, and isolation of a crashing plugin.",
+      "real_world_use": "IDEs (VS Code), browsers, and WordPress all run plugin architectures.",
+      "suggested_types": [
+        "config_manager",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dependency-injection-container",
+      "name": "Dependency Injection Container",
+      "concept": "DI containers wire object graphs: register interfaces to implementations with lifetimes (singleton, transient, scoped), and the container resolves constructors recursively. It makes dependencies explicit and testing easy (swap fakes). The container is just automated composition.",
+      "key_params": {
+        "lifetimes": "singleton/transient/scoped",
+        "graph": "seeded dependency graph",
+        "circular": "circular-dependency detection"
+      },
+      "data_idea": "Resolves seeded object graphs, verifying lifetimes and that circular deps raise clear errors.",
+      "real_world_use": "Spring, ASP.NET Core, and Angular all center on DI containers.",
+      "suggested_types": [
+        "config_manager",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "event-driven-pubsub",
+      "name": "Event-Driven Pub/Sub",
+      "concept": "Pub/sub decouples services through events: publishers emit domain events, the bus routes to subscribers, and each service evolves independently. Event schemas version carefully; idempotent consumers survive redelivery. It is the backbone of microservice integration.",
+      "key_params": {
+        "events": "domain event catalog",
+        "routing": "topic/exchange routing",
+        "idempotent": "consumer dedupe on redelivery"
+      },
+      "data_idea": "Publishes seeded domain events and verifies routing, ordering guarantees, and idempotent handling.",
+      "real_world_use": "Kafka/RabbitMQ-based microservices and e-commerce order flows run on pub/sub.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "cqrs-lite",
+      "name": "CQRS (Lite)",
+      "concept": "CQRS separates read and write models: commands mutate through the write model with full validation, queries hit denormalized read models optimized for each view. Event sourcing often pairs with it for the audit trail. The complexity pays off when reads and writes scale differently.",
+      "key_params": {
+        "commands": "write-side operations",
+        "projections": "read-model builders",
+        "consistency": "read-model lag handling"
+      },
+      "data_idea": "Executes seeded commands and verifies read models converge to consistent views.",
+      "real_world_use": "High-scale read/write systems (trading, social) separate models with CQRS.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "repository-pattern",
+      "name": "Repository Pattern",
+      "concept": "Repositories abstract persistence behind collection-like interfaces: the domain asks for users by spec, never writing SQL. In-memory fakes make unit tests fast; the real repository hits the database. It draws the line between domain and infrastructure.",
+      "key_params": {
+        "entities": "domain entities stored",
+        "specs": "query specification objects",
+        "fake": "in-memory test double"
+      },
+      "data_idea": "Runs seeded domain logic against fake and real repositories, verifying identical behavior.",
+      "real_world_use": "DDD codebases and ORMs (as the underlying mechanism) use repositories.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "unit-of-work",
+      "name": "Unit of Work",
+      "concept": "Unit of work tracks changed objects during a business transaction and commits them atomically: it batches inserts/updates/deletes and rolls back on failure. Identity maps prevent duplicate in-memory copies. It is how ORMs turn object graphs into consistent transactions.",
+      "key_params": {
+        "track": "new/dirty/removed tracking",
+        "commit": "atomic flush order",
+        "rollback": "failure rollback"
+      },
+      "data_idea": "Executes seeded transactions with planted failures, verifying atomicity and identity-map consistency.",
+      "real_world_use": "SQLAlchemy sessions, Entity Framework DbContext implement unit of work.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "middleware-pipeline-composer",
+      "name": "Middleware Pipeline Composer",
+      "concept": "Middleware pipelines compose cross-cutting concerns (auth, logging, retry, metrics) around core logic in declarative order: the composer builds the chain from config and visualizes execution order. It is decorators made configurable. Order bugs become visible instead of tribal knowledge.",
+      "key_params": {
+        "middlewares": "available middleware types",
+        "order": "declared composition order",
+        "config": "per-middleware settings"
+      },
+      "data_idea": "Composes seeded pipelines and verifies execution order matches declaration with short-circuits honored.",
+      "real_world_use": "ASP.NET Core, Express, and gRPC interceptors compose middleware pipelines.",
+      "suggested_types": [
+        "config_manager",
+        "simulation",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "unit-test-harness-mini",
+      "name": "Mini Unit Test Harness",
+      "concept": "A test harness discovers test functions, runs them with setup/teardown, captures assertion failures with diffs, and reports pass/fail summaries. Building one reveals what pytest does: collection, fixtures, and reporting. The demo harness runs its own test suite (dogfooding).",
+      "key_params": {
+        "discovery": "test naming convention",
+        "fixtures": "setup/teardown support",
+        "report": "summary and failure diffs"
+      },
+      "data_idea": "Runs seeded test suites (passing, failing, erroring) through the harness, verifying reports are accurate.",
+      "real_world_use": "pytest, JUnit, and Go testing all implement discovery, fixtures, and reporting.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "assertion-library",
+      "name": "Assertion Library",
+      "concept": "Assertions are the vocabulary of tests: the library provides equality with deep diffs, approximate float comparison, exception assertions, and collection matchers. Good failure messages (showing actual vs expected with context) are the whole value. It is a small library with daily impact.",
+      "key_params": {
+        "assertions": "eq/approx/raises/contains",
+        "diffs": "deep-diff rendering",
+        "messages": "failure message quality"
+      },
+      "data_idea": "Asserts seeded values (passing and failing) and verifies failure messages pinpoint the mismatch.",
+      "real_world_use": "pytest asserts, Hamcrest, and Chai all compete on assertion ergonomics.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "test-doubles-mocks",
+      "name": "Test Doubles (Mocks/Stubs/Fakes)",
+      "concept": "Test doubles isolate units: stubs return canned answers, mocks verify interactions, fakes are working in-memory implementations. The demo shows when each is appropriate and the classic mock-overuse trap (testing the mock, not the code). Clear failure messages distinguish double misuse from real bugs.",
+      "key_params": {
+        "doubles": "stub/mock/fake/spot",
+        "verify": "interaction verification",
+        "strict": "strict vs lenient mocks"
+      },
+      "data_idea": "Tests seeded units with doubles, verifying isolation and that over-mocked tests get flagged.",
+      "real_world_use": "Mockito, unittest.mock, and test-fake repositories implement doubles.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fixture-builder",
+      "name": "Fixture Builder",
+      "concept": "Fixtures create the world tests need: the builder composes database seeds, fake users, and file trees declaratively, with teardown restoring isolation. Factories generate valid objects with overrides; traits define variants. Good fixtures make tests readable and independent.",
+      "key_params": {
+        "factories": "object factories with traits",
+        "scope": "per-test vs per-module fixtures",
+        "teardown": "isolation guarantees"
+      },
+      "data_idea": "Builds seeded fixtures and verifies test isolation (no cross-test leakage) and override correctness.",
+      "real_world_use": "FactoryBot, pytest fixtures, and test-data builders implement fixture patterns.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "property-based-tester-lite",
+      "name": "Property-Based Tester (Lite)",
+      "concept": "Property tests assert invariants over generated inputs (reverse(reverse(x)) == x, serialization round-trips) instead of examples: the generator produces random cases and shrinks failures to minimal repros. Shrinking is the magic that turns random failures into debuggable ones. It finds edge cases humans miss.",
+      "key_params": {
+        "properties": "invariants tested",
+        "generators": "input strategies",
+        "shrinking": "failure minimization"
+      },
+      "data_idea": "Tests seeded functions with planted bugs, verifying the tester finds and shrinks failures.",
+      "real_world_use": "Hypothesis, QuickCheck, and fast-check implement property-based testing with shrinking.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "mutation-tester",
+      "name": "Mutation Tester",
+      "concept": "Mutation testing judges test quality by breaking the code: mutants (changed operators, removed conditions) should be killed by failing tests; surviving mutants reveal weak tests. The mutation score is the honest coverage metric. It is expensive, so the lite version mutates selectively.",
+      "key_params": {
+        "operators": "mutation operators applied",
+        "select": "which code gets mutated",
+        "timeout": "per-mutant test budget"
+      },
+      "data_idea": "Mutates seeded code with known test gaps and verifies surviving mutants point at the gaps.",
+      "real_world_use": "PIT (Java), Stryker (JS) measure test-suite strength with mutation scores.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "coverage-tracker-line",
+      "name": "Line Coverage Tracker",
+      "concept": "Coverage tracks which lines execute during tests: the tracker instruments code (trace hooks), maps execution to lines, and reports per-file percentages with uncovered-line lists. It guides test writing but never proves correctness. Branch coverage is the stricter sibling.",
+      "key_params": {
+        "instrument": "tracing mechanism",
+        "report": "per-file and total percentages",
+        "exclude": "pragma-based exclusions"
+      },
+      "data_idea": "Runs seeded suites over instrumented code and verifies reported coverage matches actual execution.",
+      "real_world_use": "coverage.py, Istanbul, and JaCoCo all track execution for coverage reports.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "snapshot-tester",
+      "name": "Snapshot Tester",
+      "concept": "Snapshot tests capture output once and fail on changes: the tester serializes results (JSON, rendered text), stores baselines, and diffs on rerun with update commands. It is ideal for serializers and renderers where hand-writing assertions is impractical. Reviewing snapshot diffs is the discipline.",
+      "key_params": {
+        "serialize": "output serialization",
+        "update": "baseline update workflow",
+        "diff": "change rendering"
+      },
+      "data_idea": "Tests seeded renderers with planted output changes, verifying the tester flags exactly the diffs.",
+      "real_world_use": "Jest snapshots and pytest-snapshot guard serializers and UIs against regressions.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fuzz-tester",
+      "name": "Fuzz Tester",
+      "concept": "Fuzzing feeds random and malformed inputs hunting for crashes: the tester mutates valid seeds (bit flips, truncations, extreme values) and records crashing inputs with repro scripts. Coverage-guided fuzzing prioritizes interesting mutations. It finds the bugs unit tests never imagine.",
+      "key_params": {
+        "mutations": "bit-flip/truncate/dictionary",
+        "seeds": "valid input corpus",
+        "crash": "crash classification and dedupe"
+      },
+      "data_idea": "Fuzzes seeded parsers with planted crash bugs and verifies the tester finds and minimizes them.",
+      "real_world_use": "AFL, libFuzzer, and OSS-Fuzz find security bugs with fuzzing.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "load-test-harness",
+      "name": "Load Test Harness",
+      "concept": "Load tests measure behavior under traffic: the harness generates virtual users with ramp profiles, issues requests, and reports latency percentiles, throughput, and error rates. It finds the knee where latency explodes. Realistic scenarios (think times, data variation) separate useful tests from vanity numbers.",
+      "key_params": {
+        "users": "virtual user count and ramp",
+        "scenario": "request mix with think times",
+        "slo": "latency/error thresholds"
+      },
+      "data_idea": "Loads seeded fake services with planted bottlenecks and verifies the harness reports the knee correctly.",
+      "real_world_use": "k6, Locust, and Gatling all generate load and report percentile latencies.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "benchmark-runner-stats",
+      "name": "Benchmark Runner with Statistics",
+      "concept": "Benchmarks need statistics, not single timings: the runner warms up, measures many iterations, and reports mean, median, and confidence intervals, detecting noisy environments. It compares candidates with proper significance instead of eyeballing. Reproducible benchmarking is a discipline.",
+      "key_params": {
+        "iterations": "measurement count",
+        "warmup": "warmup iterations",
+        "compare": "A/B comparison with CIs"
+      },
+      "data_idea": "Benchmarks seeded functions with known speed ratios and verifies the runner detects the true difference.",
+      "real_world_use": "pytest-benchmark, Go benchmarks, and hyperfine all add statistics to timing.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "flaky-test-detector",
+      "name": "Flaky Test Detector",
+      "concept": "Flaky tests pass and fail nondeterministically: the detector reruns suites many times, quarantines order-dependent and timing-sensitive failures, and bisects the flakiness source. Quarantine keeps CI green while the root cause gets fixed. Flakiness erodes trust in the whole suite.",
+      "key_params": {
+        "runs": "rerun count",
+        "quarantine": "auto-quarantine policy",
+        "bisect": "order-dependence detection"
+      },
+      "data_idea": "Runs seeded suites with planted flaky tests and verifies detection and quarantine.",
+      "real_world_use": "CI systems (Buildkite, Jenkins flaky plugins) detect and quarantine flaky tests.",
+      "suggested_types": [
+        "monitoring_agent",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cyclomatic-complexity-analyzer",
+      "name": "Cyclomatic Complexity Analyzer",
+      "concept": "Cyclomatic complexity counts independent paths through code (decision points + 1): high values flag untestable functions. The analyzer parses code, counts branches, and ranks hot spots. Thresholds (10 is the classic) trigger refactor suggestions. It measures testability, not quality, but the correlation is real.",
+      "key_params": {
+        "threshold": "complexity flag level",
+        "language": "Python subset parsed",
+        "rank": "hot-spot ranking"
+      },
+      "data_idea": "Analyzes seeded functions with known complexity and verifies counts and flagging.",
+      "real_world_use": "SonarQube, linters, and code-review bots flag complex functions.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "code-duplication-detector",
+      "name": "Code Duplication Detector",
+      "concept": "Duplication detectors find copy-pasted code via token normalization (ignoring variable names) and sliding windows: the detector reports clone pairs with similarity scores. It distinguishes coincidental similarity from real clones. Removing clones is refactoring's bread and butter.",
+      "key_params": {
+        "window": "minimum clone token length",
+        "normalize": "identifier/literal normalization",
+        "threshold": "similarity cutoff"
+      },
+      "data_idea": "Scans seeded codebases with planted clones and verifies detection with correct locations.",
+      "real_world_use": "SonarQube duplication, CPD, and IDE inspections find clones.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dead-code-finder",
+      "name": "Dead Code Finder",
+      "concept": "Dead code (unreachable functions, unused imports, never-true branches) accumulates: the finder builds call graphs from entry points and flags unreachable code, with confidence levels for dynamic-language uncertainty. Removing it shrinks attack surface and confusion. Conservative flagging avoids false positives.",
+      "key_params": {
+        "entry": "entry points for reachability",
+        "confidence": "certainty levels",
+        "dynamic": "handling of dynamic calls"
+      },
+      "data_idea": "Analyzes seeded code with planted dead code and verifies flagging without false positives on live code.",
+      "real_world_use": "Vulture (Python), IDE inspections, and tree-shakers find dead code.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "import-graph-builder",
+      "name": "Import Graph Builder",
+      "concept": "Import graphs reveal architecture: the builder parses imports, constructs the module dependency graph, detects cycles, and computes layering violations. Visualizing it exposes the big ball of mud. Cycle breaking is the refactoring payoff.",
+      "key_params": {
+        "roots": "entry modules",
+        "cycles": "cycle detection and reporting",
+        "layers": "allowed dependency directions"
+      },
+      "data_idea": "Builds graphs of seeded codebases with planted cycles and verifies detection.",
+      "real_world_use": "pydeps, madge, and architecture fitness functions map dependencies.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "api-diff-checker",
+      "name": "API Diff Checker (Semver)",
+      "concept": "API diffs decide version bumps: the checker compares old and new public interfaces, classifying changes as breaking (removed/renamed), additive (new optional), or patch. It enforces semver from evidence, not memory. CI gates releases on its verdict.",
+      "key_params": {
+        "old": "baseline API surface",
+        "new": "candidate API surface",
+        "semver": "bump recommendation rules"
+      },
+      "data_idea": "Diffs seeded API evolutions and verifies breaking/additive classification and bump advice.",
+      "real_world_use": "Revapi, japicmp, and publint gate releases on API compatibility.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "changelog-generator",
+      "name": "Changelog Generator",
+      "concept": "Changelogs write themselves from conventional commits: the generator parses commit messages (feat/fix/breaking), groups by type, and renders release notes with links. It enforces commit conventions at the source. Good changelogs are a release's user interface.",
+      "key_params": {
+        "commits": "conventional-commit log",
+        "group": "feat/fix/breaking sections",
+        "links": "issue/PR link rendering"
+      },
+      "data_idea": "Generates seeded changelogs from commit logs and verifies grouping and formatting.",
+      "real_world_use": "semantic-release and standard-version generate changelogs from commits.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "file_organizer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "todo-scanner",
+      "name": "TODO Scanner",
+      "concept": "TODOs rot: the scanner finds TODO/FIXME/HACK comments, extracts owners and dates, flags stale ones, and reports debt by file. Age-sorted TODO lists make tech debt visible. It turns comments into a backlog.",
+      "key_params": {
+        "tags": "TODO/FIXME/HACK/XXX",
+        "stale_days": "age flag threshold",
+        "owners": "owner extraction patterns"
+      },
+      "data_idea": "Scans seeded code with planted TODOs of varying ages and verifies the stale report.",
+      "real_world_use": "IDE task lists and tech-debt dashboards surface TODOs.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "license-header-checker",
+      "name": "License Header Checker",
+      "concept": "License compliance starts with headers: the checker verifies every source file carries the required license header, with exemptions for generated files. It can also insert missing headers. Audits ask for this evidence.",
+      "key_params": {
+        "header": "required header template",
+        "exempt": "exemption patterns",
+        "fix": "auto-insert missing headers"
+      },
+      "data_idea": "Checks seeded trees with missing/wrong headers and verifies the report and auto-fix.",
+      "real_world_use": "Apache Rat, license-maven-plugin enforce header compliance.",
+      "suggested_types": [
+        "cli_tool",
+        "file_organizer",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "complexity-budget-enforcer",
+      "name": "Complexity Budget Enforcer",
+      "concept": "Complexity budgets cap per-function complexity in CI: the enforcer measures each changed function and fails the build over budget, with grandfathering for legacy code. It stops new debt while old debt gets scheduled. Budgets make quality a build gate.",
+      "key_params": {
+        "budget": "max complexity per function",
+        "grandfather": "legacy exemptions",
+        "gate": "warn vs fail"
+      },
+      "data_idea": "Evaluates seeded diffs against budgets and verifies gate decisions.",
+      "real_world_use": "CodeClimate, SonarQube quality gates enforce complexity budgets.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "long-method-splitter",
+      "name": "Long Method Splitter (Heuristic)",
+      "concept": "Long methods hide structure: the splitter analyzes a function, finds candidate extraction points (comment blocks, blank-line groups, single-purpose sections), and proposes splits with suggested names. It advises; humans decide. The heuristic view teaches what makes a good extraction.",
+      "key_params": {
+        "min_lines": "method length flag threshold",
+        "strategy": "comment/blank-line/data-flow splits",
+        "names": "suggested extracted names"
+      },
+      "data_idea": "Analyzes seeded long functions and verifies proposed splits are sensible and behavior-preserving in principle.",
+      "real_world_use": "IDE extract-method assists and refactoring guides teach method splitting.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "rename-refactor-tool",
+      "name": "Rename Refactor Tool",
+      "concept": "Renaming safely means updating every reference: the tool finds definitions and usages via scope analysis, previews the rename diff, and applies it atomically. It handles shadowing and imports. 'Rename' is the most common refactoring and the easiest to get wrong by hand.",
+      "key_params": {
+        "scope": "scope-aware reference finding",
+        "preview": "diff preview before apply",
+        "shadow": "shadowing warnings"
+      },
+      "data_idea": "Renames seeded identifiers and verifies all references update with shadowing flagged.",
+      "real_world_use": "IDE rename (LSP) implements scope-aware renaming.",
+      "suggested_types": [
+        "cli_tool",
+        "file_organizer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "magic-number-finder",
+      "name": "Magic Number Finder",
+      "concept": "Magic numbers (unexplained literals) hurt readability: the finder flags numeric literals outside allowlists (0, 1, -1, common constants), suggests named-constant extractions, and exempts test data. It is a style check with real comprehension payoff.",
+      "key_params": {
+        "allowlist": "permitted literals",
+        "suggest": "constant-name suggestions",
+        "exempt_tests": "test-file exemptions"
+      },
+      "data_idea": "Scans seeded code with planted magic numbers and verifies flagging and suggestions.",
+      "real_world_use": "Linters (pylint magic-value) and review checklists flag magic numbers.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "file_organizer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "god-class-detector",
+      "name": "God Class Detector",
+      "concept": "God classes do everything: the detector flags classes with too many methods, too many dependencies, or low cohesion (LCOM), suggesting splits by responsibility clusters. It quantifies what reviewers feel. Splitting by dependency clusters gives the seam.",
+      "key_params": {
+        "methods": "method-count threshold",
+        "coupling": "dependency-count threshold",
+        "lcom": "cohesion metric"
+      },
+      "data_idea": "Analyzes seeded classes with planted god classes and verifies detection and split suggestions.",
+      "real_world_use": "Structure101, SonarQube, and architecture reviews flag god classes.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "retry-with-backoff",
+      "name": "Retry with Backoff",
+      "concept": "Transient failures deserve retries: the retry wrapper applies exponential backoff with jitter, caps attempts, and retries only retryable errors (never on 4xx). Jitter prevents synchronized retry storms. Idempotency of the operation is the precondition.",
+      "key_params": {
+        "attempts": "max retry count",
+        "base": "backoff base seconds",
+        "retryable": "which errors retry"
+      },
+      "data_idea": "Retries seeded flaky operations and verifies success rates, backoff spacing, and non-retryable passthrough.",
+      "real_world_use": "Every HTTP client and queue consumer implements retry with backoff.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "circuit-breaker",
+      "name": "Circuit Breaker",
+      "concept": "Circuit breakers stop cascading failures: after enough failures the breaker opens, failing fast instead of hammering the dead downstream; after a cooldown it half-opens to probe recovery. It protects both caller and callee. Thresholds tune sensitivity.",
+      "key_params": {
+        "threshold": "failures to open",
+        "cooldown": "open-state seconds",
+        "half_open": "probe request count"
+      },
+      "data_idea": "Runs seeded failing/recovering downstreams through the breaker, verifying state transitions and fast-fail behavior.",
+      "real_world_use": "Polly, Hystrix, and Envoy implement circuit breaking for resilience.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "bulkhead-isolator",
+      "name": "Bulkhead Isolator",
+      "concept": "Bulkheads isolate failures: partitioned thread pools/queues per downstream mean one slow dependency cannot starve the others. The isolator enforces per-partition concurrency caps with queueing and rejection. It is the ship-compartment theory applied to services.",
+      "key_params": {
+        "partitions": "per-downstream partitions",
+        "concurrency": "cap per partition",
+        "queue": "queue depth before rejection"
+      },
+      "data_idea": "Loads seeded downstreams with one slow dependency, verifying healthy partitions stay unaffected.",
+      "real_world_use": "Hystrix bulkheads and Envoy connection pools isolate downstream failures.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "timeout-enforcer",
+      "name": "Timeout Enforcer",
+      "concept": "Timeouts bound every wait: the enforcer applies deadline propagation across calls, distinguishing connect vs read timeouts, and fails fast with clear errors. Without timeouts, one hung call hangs the request. Budgets split across the call chain.",
+      "key_params": {
+        "connect": "connection timeout ms",
+        "read": "read timeout ms",
+        "budget": "deadline propagation"
+      },
+      "data_idea": "Runs seeded hung/slow calls through the enforcer, verifying timely failure and budget propagation.",
+      "real_world_use": "gRPC deadlines, HTTP client timeouts implement timeout enforcement.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "idempotency-key-store",
+      "name": "Idempotency Key Store",
+      "concept": "Retries must not double-apply: clients send idempotency keys, the store records in-flight and completed results by key, and replays the original result on duplicate keys. TTLs bound storage. It makes 'at-least-once' delivery safe.",
+      "key_params": {
+        "ttl": "key retention",
+        "scope": "per-endpoint key namespaces",
+        "replay": "original-result replay"
+      },
+      "data_idea": "Processes seeded duplicate requests and verifies exactly-once effects with replayed responses.",
+      "real_world_use": "Stripe's idempotency keys and payment APIs implement keyed dedupe.",
+      "suggested_types": [
+        "rest_api",
+        "task_queue",
+        "lru_cache"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "saga-orchestrator-lite",
+      "name": "Saga Orchestrator (Lite)",
+      "concept": "Distributed transactions become sagas: the orchestrator runs local transactions in sequence, and on failure runs compensating actions in reverse. It trades ACID for eventual consistency with explicit rollback logic. Choreography vs orchestration is the design choice.",
+      "key_params": {
+        "steps": "saga step definitions",
+        "compensate": "per-step compensations",
+        "mode": "orchestration vs choreography"
+      },
+      "data_idea": "Executes seeded sagas with planted step failures, verifying compensations restore consistency.",
+      "real_world_use": "Travel booking and order fulfillment across services use sagas.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "rest_api"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "outbox-pattern-relay",
+      "name": "Outbox Pattern Relay",
+      "concept": "The outbox guarantees event publishing: the service writes business data and events atomically to an outbox table, and a relay publishes them to the broker, marking sent. It solves dual-write inconsistency. The relay handles ordering and dedupe.",
+      "key_params": {
+        "table": "outbox schema",
+        "poll": "relay poll interval",
+        "dedupe": "broker-side dedupe"
+      },
+      "data_idea": "Runs seeded transactions with relay crashes, verifying every event publishes exactly once.",
+      "real_world_use": "Microservices with Kafka/RabbitMQ use the transactional outbox for reliable publishing.",
+      "suggested_types": [
+        "task_queue",
+        "data_pipeline",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "graceful-degradation-switch",
+      "name": "Graceful Degradation Switch",
+      "concept": "When dependencies fail, degrade instead of dying: the switch serves cached/stale content, disables non-critical features, and shows friendly partial UI. Feature-level kill switches compose the degradation ladder. It turns outages into reduced functionality.",
+      "key_params": {
+        "levels": "degradation ladder",
+        "triggers": "per-level failure triggers",
+        "cache": "stale-content serving"
+      },
+      "data_idea": "Fails seeded dependencies and verifies the switch steps down the ladder correctly.",
+      "real_world_use": "Netflix, Amazon (degraded recommendations) design explicit degradation paths.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "feature-flag-evaluator",
+      "name": "Feature Flag Evaluator",
+      "concept": "Flags gate features at runtime: the evaluator checks targeting rules (user attributes, percentage rollouts) per request with deterministic bucketing. Kill switches disable broken features instantly. Flag evaluation must be fast and local, never a network call per request.",
+      "key_params": {
+        "flags": "flag definitions with rules",
+        "bucketing": "deterministic user hashing",
+        "default": "fail-safe default values"
+      },
+      "data_idea": "Evaluates seeded flags over user populations, verifying targeting and rollout percentages.",
+      "real_world_use": "LaunchDarkly, Unleash evaluate flags per request with local SDKs.",
+      "suggested_types": [
+        "config_manager",
+        "rest_api",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "config-loader-layered",
+      "name": "Layered Config Loader",
+      "concept": "Configuration layers (defaults < file < env < CLI flags) with later layers winning: the loader merges them, validates types and required keys, and reports the effective config with provenance. Twelve-factor apps live on env; the loader makes all layers coherent.",
+      "key_params": {
+        "layers": "default/file/env/cli precedence",
+        "schema": "type and required validation",
+        "provenance": "which layer set each value"
+      },
+      "data_idea": "Loads seeded layered configs and verifies merge precedence and provenance reporting.",
+      "real_world_use": "dynaconf, Spring config, and twelve-factor apps layer configuration.",
+      "suggested_types": [
+        "config_manager",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "secret-redactor-logs",
+      "name": "Secret Redactor for Logs",
+      "concept": "Secrets leak through logs: the redactor scans log records for patterns (API keys, tokens, passwords) and known field names, replacing values with placeholders before output. It runs as a logging filter so no code path bypasses it. Pattern lists update as new secret formats appear.",
+      "key_params": {
+        "patterns": "secret regex patterns",
+        "fields": "field names redacted",
+        "placeholder": "replacement format"
+      },
+      "data_idea": "Logs seeded records containing secrets and verifies every secret is redacted in output.",
+      "real_world_use": "Log pipelines (Datadog sensitive-data scanner) and SDKs redact secrets.",
+      "suggested_types": [
+        "log_analyzer",
+        "config_manager",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "structured-logger-json",
+      "name": "Structured JSON Logger",
+      "concept": "Structured logs emit JSON records with consistent fields (timestamp, level, message, context, trace id): the logger enforces schemas, handles context propagation, and formats for machines first. Queryability replaces grep. Level discipline keeps noise down.",
+      "key_params": {
+        "fields": "required record fields",
+        "context": "contextvar-style propagation",
+        "levels": "level filtering"
+      },
+      "data_idea": "Logs seeded events and verifies every record is valid JSON with required fields.",
+      "real_world_use": "structlog, ELK stacks, and cloud logging all assume structured JSON logs.",
+      "suggested_types": [
+        "log_analyzer",
+        "monitoring_agent",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "log-rotation-manager",
+      "name": "Log Rotation Manager",
+      "concept": "Unbounded logs fill disks: the rotation manager rolls files by size or time, compresses archives, and prunes beyond retention, all without losing in-flight writes. It coordinates with the logger via reopen signals. Disk-full outages are the failure it prevents.",
+      "key_params": {
+        "policy": "size vs time rotation",
+        "retain": "archives kept",
+        "compress": "archive compression"
+      },
+      "data_idea": "Rotates seeded log streams and verifies no lines lost and retention honored.",
+      "real_world_use": "logrotate and built-in rotating handlers manage log disk usage.",
+      "suggested_types": [
+        "file_organizer",
+        "scheduler",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "metrics-counter-gauge",
+      "name": "Metrics (Counter/Gauge/Histogram)",
+      "concept": "Metrics come in types: counters only increase (requests), gauges go up/down (connections), histograms sample distributions (latencies). The library implements all three with labels and exposition formats. Choosing the type correctly is the skill; the code is straightforward.",
+      "key_params": {
+        "types": "counter/gauge/histogram",
+        "labels": "label cardinality guards",
+        "exposition": "prometheus text format"
+      },
+      "data_idea": "Records seeded metric events and verifies type semantics and exposition output.",
+      "real_world_use": "Prometheus client libraries define the counter/gauge/histogram standard.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "health-check-aggregator",
+      "name": "Health Check Aggregator",
+      "concept": "Health aggregates subsystem checks: the aggregator runs database, disk, and dependency probes, combines them into overall status with per-check detail, and exposes liveness vs readiness separately. Degraded states carry explanations. Orchestrators consume the result.",
+      "key_params": {
+        "checks": "subsystem probes",
+        "combine": "worst-wins vs weighted",
+        "endpoints": "liveness vs readiness routes"
+      },
+      "data_idea": "Flaps seeded subsystems and verifies aggregated status transitions correctly.",
+      "real_world_use": "Kubernetes probes and Spring Boot Actuator aggregate health checks.",
+      "suggested_types": [
+        "monitoring_agent",
+        "rest_api",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "deploy-checklist-runner",
+      "name": "Deploy Checklist Runner",
+      "concept": "Deploys need checklists: the runner executes pre/post-deploy steps (migrations, smoke tests, cache warms) in order with approvals at gates, rolling back on failure. It turns tribal deploy knowledge into executable runbooks. Checklists prevent the 'forgot to' class of outages.",
+      "key_params": {
+        "steps": "ordered deploy steps",
+        "gates": "manual approval points",
+        "rollback": "automatic rollback on failure"
+      },
+      "data_idea": "Runs seeded deploys with planted step failures, verifying gate enforcement and rollback.",
+      "real_world_use": "Capistrano, deploy runbooks, and release pipelines execute deploy checklists.",
+      "suggested_types": [
+        "scheduler",
+        "task_queue",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "migration-runner-versioned",
+      "name": "Versioned Migration Runner",
+      "concept": "Schema migrations version like code: the runner applies up/down scripts in order, records applied versions, and supports dry-run and rollback. Expand/contract patterns enable zero-downtime changes. Migration order and idempotency are the correctness core.",
+      "key_params": {
+        "scripts": "versioned up/down scripts",
+        "state": "applied-version tracking",
+        "lock": "concurrent-runner locking"
+      },
+      "data_idea": "Applies seeded migration chains (including failures) and verifies order, state, and rollback.",
+      "real_world_use": "Alembic, Flyway, and Rails migrations version database schemas.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rollback-planner",
+      "name": "Rollback Planner",
+      "concept": "Rollbacks need planning, not panic: the planner snapshots pre-deploy state (schema version, artifact, config), defines reverse steps per deploy step, and rehearses them. Data migrations need backward-compatible windows. The plan exists before the deploy, not during the incident.",
+      "key_params": {
+        "snapshot": "pre-deploy state captured",
+        "reverse": "per-step reverse actions",
+        "compat": "backward-compat windows"
+      },
+      "data_idea": "Plans seeded deploys and executes rollbacks, verifying state restoration.",
+      "real_world_use": "Blue-green deploys and database expand/contract patterns enable planned rollbacks.",
+      "suggested_types": [
+        "task_queue",
+        "backup_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "canary-analyzer",
+      "name": "Canary Analyzer",
+      "concept": "Canary deploys shift a slice of traffic to the new version and compare metrics: the analyzer runs statistical tests on error rates and latencies between canary and baseline, promoting on success and rolling back on regression. It automates the judgment call. Metric selection decides what 'regression' means.",
+      "key_params": {
+        "traffic": "canary percentage steps",
+        "metrics": "compared metrics",
+        "test": "statistical comparison method"
+      },
+      "data_idea": "Analyzes seeded canary runs (good and regressed) and verifies promote/rollback decisions.",
+      "real_world_use": "Kayenta (Netflix), Argo Rollouts, and Flagger automate canary analysis.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "blue-green-switcher",
+      "name": "Blue-Green Switcher",
+      "concept": "Blue-green keeps two environments and flips traffic: the switcher drains connections from blue, warms green, switches the router, and keeps blue ready for instant rollback. Database compatibility spans the switch. The router flip is the atomic moment.",
+      "key_params": {
+        "drain": "connection drain timeout",
+        "warm": "green warmup checks",
+        "flip": "atomic traffic switch"
+      },
+      "data_idea": "Switches seeded traffic between environments, verifying zero dropped requests and rollback readiness.",
+      "real_world_use": "AWS CodeDeploy blue-green and database-compatible deploys use this pattern.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "backup-verifier-checksums",
+      "name": "Backup Verifier (Checksums)",
+      "concept": "Backups you cannot restore are theater: the verifier checksums every backup, test-restores samples into sandboxes, and alerts on corruption or staleness. It tracks backup age against RPO. Verification is the difference between backups and recoverability.",
+      "key_params": {
+        "schedule": "backup cadence",
+        "verify": "checksum + test-restore",
+        "rpo": "recovery-point objective"
+      },
+      "data_idea": "Verifies seeded backups (including a corrupted one) and checks detection plus RPO compliance.",
+      "real_world_use": "Bacula, restic, and enterprise backup all verify with checksums and test restores.",
+      "suggested_types": [
+        "backup_tool",
+        "scheduler",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "restore-drill-simulator",
+      "name": "Restore Drill Simulator",
+      "concept": "Restore drills rehearse disaster recovery: the simulator walks through RTO/RPO objectives, simulates partial failures during restore, and times each phase. It finds the gaps (missing credentials, undocumented steps) before a real incident. Drills are the only proof recovery works.",
+      "key_params": {
+        "objectives": "RTO/RPO targets",
+        "failures": "injected restore failures",
+        "phases": "timed restore phases"
+      },
+      "data_idea": "Runs seeded drills with injected failures and verifies timing reports and gap findings.",
+      "real_world_use": "GameDays and disaster-recovery testing rehearse restores regularly.",
+      "suggested_types": [
+        "simulation",
+        "backup_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dependency-vuln-scanner-lite",
+      "name": "Dependency Vulnerability Scanner (Lite)",
+      "concept": "Vulnerable dependencies are the easiest attack vector: the scanner inventories packages, matches against an advisory feed, and reports severity with fix versions. It fails builds on criticals. The SBOM it produces doubles as compliance evidence.",
+      "key_params": {
+        "inventory": "package manifest parsed",
+        "feed": "advisory database (seeded)",
+        "policy": "fail-on severity threshold"
+      },
+      "data_idea": "Scans seeded manifests against a seeded advisory feed and verifies findings and gate decisions.",
+      "real_world_use": "Dependabot, Snyk, and npm audit scan dependencies against advisories.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "build-cache-invalidator",
+      "name": "Build Cache Invalidator",
+      "concept": "Build caches speed rebuilds but stale caches cause bizarre bugs: the invalidator hashes inputs (sources, configs, tool versions) and invalidates precisely on change, with content-addressed storage. It distinguishes real changes from timestamp noise. Correct invalidation is famously hard; hashing makes it tractable.",
+      "key_params": {
+        "hash": "input fingerprinting",
+        "storage": "content-addressed cache",
+        "noise": "timestamp-only change handling"
+      },
+      "data_idea": "Rebuilds seeded projects with planted changes and verifies cache hits/misses are exactly correct.",
+      "real_world_use": "Bazel, ccache, and Docker layer caching invalidate on content hashes.",
+      "suggested_types": [
+        "file_organizer",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "artifact-version-resolver",
+      "name": "Artifact Version Resolver",
+      "concept": "Version resolution picks compatible artifacts: the resolver parses semver ranges, resolves transitive dependencies, and reports conflicts with explanations. Lockfiles pin the result for reproducibility. It is package-manager core logic in miniature.",
+      "key_params": {
+        "ranges": "semver range specs",
+        "transitive": "dependency tree resolution",
+        "lock": "lockfile generation"
+      },
+      "data_idea": "Resolves seeded dependency trees with conflicts and verifies chosen versions and conflict reports.",
+      "real_world_use": "npm, pip, and Maven all resolve version ranges into lockfiles.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "environment-promoter",
+      "name": "Environment Promoter (dev to prod)",
+      "concept": "Promotion moves artifacts through environments with gates: the promoter verifies artifact identity (same bytes), runs environment-specific checks, and requires approvals per stage. It forbids rebuilding between stages (build once, promote everywhere). Provenance tracks what went where.",
+      "key_params": {
+        "stages": "dev/staging/prod pipeline",
+        "gates": "per-stage checks and approvals",
+        "identity": "artifact hash verification"
+      },
+      "data_idea": "Promotes seeded artifacts through stages, verifying identity preservation and gate enforcement.",
+      "real_world_use": "Spinnaker, GitHub Environments, and release trains promote immutable artifacts.",
+      "suggested_types": [
+        "task_queue",
+        "config_manager",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "approval-gate-workflow",
+      "name": "Approval Gate Workflow",
+      "concept": "Some changes need human sign-off: the workflow pauses pipelines at gates, notifies approvers, records decisions with identity and timestamp, and expires stale requests. It balances safety with flow. Audit trails make approvals defensible.",
+      "key_params": {
+        "gates": "approval points defined",
+        "approvers": "who may approve",
+        "expiry": "stale-request handling"
+      },
+      "data_idea": "Runs seeded pipelines through gates with approvals, rejections, and expiries, verifying enforcement.",
+      "real_world_use": "ServiceNow change approvals and deploy gates implement approval workflows.",
+      "suggested_types": [
+        "task_queue",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "incident-timeline-builder",
+      "name": "Incident Timeline Builder",
+      "concept": "Incidents need timelines: the builder merges alerts, deploys, and chat messages into one chronological view, correlating events to the incident window. It distinguishes cause from coincidence with deploy markers. The timeline becomes the postmortem's source of truth.",
+      "key_params": {
+        "sources": "alert/deploy/chat feeds",
+        "window": "incident time window",
+        "correlate": "event correlation rules"
+      },
+      "data_idea": "Builds seeded incident timelines and verifies ordering and correlation accuracy.",
+      "real_world_use": "PagerDuty timelines and incident.io merge signals into incident views.",
+      "suggested_types": [
+        "log_analyzer",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "postmortem-template-generator",
+      "name": "Postmortem Template Generator",
+      "concept": "Blameless postmortems learn from incidents: the generator scaffolds timeline, impact, root causes (five whys), and action items with owners from incident data. It enforces blameless language checks. Follow-through tracking closes the loop.",
+      "key_params": {
+        "sections": "timeline/impact/causes/actions",
+        "blameless": "language linting",
+        "actions": "owner + due-date tracking"
+      },
+      "data_idea": "Generates seeded postmortems and verifies section completeness and action tracking.",
+      "real_world_use": "SRE culture (Google SRE book) runs blameless postmortems with action items.",
+      "suggested_types": [
+        "report_generator",
+        "log_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "oncall-rotation-scheduler",
+      "name": "On-Call Rotation Scheduler",
+      "concept": "On-call needs fair rotations: the scheduler builds weekly rotations honoring holidays, timezones, and max consecutive weeks, with escalation policies and overrides. It balances load and prevents burnout. Handoff notes travel with the rotation.",
+      "key_params": {
+        "rotation": "weekly rotation order",
+        "constraints": "holidays/timezone/max-weeks",
+        "escalation": "escalation policy"
+      },
+      "data_idea": "Schedules seeded teams and verifies fairness, constraint satisfaction, and escalation chains.",
+      "real_world_use": "PagerDuty and Opsgenie schedule rotations with constraints and escalations.",
+      "suggested_types": [
+        "scheduler",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "status-page-composer",
+      "name": "Status Page Composer",
+      "concept": "Status pages communicate incidents: the composer aggregates component health, posts incident updates with severity and ETA, and maintains history. Templates keep updates consistent under stress. Honest, frequent updates are the product.",
+      "key_params": {
+        "components": "service components tracked",
+        "severity": "severity levels",
+        "history": "incident history retention"
+      },
+      "data_idea": "Composes seeded status pages through incident lifecycles, verifying accuracy and history.",
+      "real_world_use": "Atlassian Statuspage and in-house status pages communicate reliability.",
+      "suggested_types": [
+        "web_dashboard",
+        "monitoring_agent",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "runbook-executor",
+      "name": "Runbook Executor",
+      "concept": "Runbooks automate incident response: the executor runs diagnostic and remediation steps (checks, restarts, failovers) with confirmations at dangerous steps and full audit logging. It turns expert knowledge into executable procedure. Dry-run mode rehearses safely.",
+      "key_params": {
+        "steps": "diagnostic/remediation steps",
+        "confirm": "dangerous-step confirmations",
+        "audit": "execution audit log"
+      },
+      "data_idea": "Executes seeded runbooks against simulated incidents, verifying step order and confirmations.",
+      "real_world_use": "Rundeck, AWS SSM automation, and SRE runbooks execute incident procedures.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "chaos-experiment-lite",
+      "name": "Chaos Experiment (Lite)",
+      "concept": "Chaos engineering tests resilience by injecting faults: the lite version kills processes, adds latency, and drops packets against a simulated service with a steady-state hypothesis. Blast-radius limits and automatic abort keep it safe. It finds weaknesses before incidents do.",
+      "key_params": {
+        "faults": "kill/latency/drop injections",
+        "hypothesis": "steady-state assertions",
+        "abort": "safety abort conditions"
+      },
+      "data_idea": "Runs seeded chaos experiments and verifies hypothesis checks catch the planted weaknesses.",
+      "real_world_use": "Chaos Monkey, Gremlin, and Litmus inject faults to prove resilience.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "scheduler"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "capacity-planner-service",
+      "name": "Capacity Planner Service",
+      "concept": "Capacity planning forecasts resource needs: the planner models growth trends, simulates peak loads, and recommends headroom with cost trade-offs. It prevents both outages and overprovisioning. Utilization targets encode the risk appetite.",
+      "key_params": {
+        "growth": "demand growth model",
+        "peak": "peak-to-average ratios",
+        "headroom": "target utilization"
+      },
+      "data_idea": "Plans seeded growth scenarios and verifies recommendations meet peaks within budget.",
+      "real_world_use": "SRE capacity planning and cloud cost teams forecast with these models.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cost-attribution-tagger",
+      "name": "Cost Attribution Tagger",
+      "concept": "Cloud bills need owners: the tagger enforces tagging policies on resources, attributes untagged spend heuristically, and reports cost by team/service. It finds the expensive orphans. Tagging discipline is a socio-technical problem the tooling supports.",
+      "key_params": {
+        "policy": "required tag keys",
+        "heuristic": "untagged attribution rules",
+        "report": "cost by team/service"
+      },
+      "data_idea": "Tags seeded resource inventories and verifies attribution coverage and reports.",
+      "real_world_use": "CloudHealth, Kubecost attribute cloud spend with tagging.",
+      "suggested_types": [
+        "report_generator",
+        "config_manager",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "docstring-doc-generator",
+      "name": "Docstring Documentation Generator",
+      "concept": "Docs from docstrings stay in sync: the generator parses docstrings (Google/NumPy style), extracts parameters and examples, and renders API reference pages with cross-links. It warns on undocumented public APIs. Examples get doctested.",
+      "key_params": {
+        "style": "google vs numpy docstrings",
+        "coverage": "undocumented-API warnings",
+        "doctest": "example testing"
+      },
+      "data_idea": "Generates seeded API docs and verifies completeness warnings and example tests.",
+      "real_world_use": "Sphinx, pdoc, and mkdocstrings generate API references from docstrings.",
+      "suggested_types": [
+        "report_generator",
+        "file_organizer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "adr-manager",
+      "name": "ADR Manager (Architecture Decision Records)",
+      "concept": "ADRs record why decisions were made: the manager scaffolds records (context, decision, consequences), numbers them, links superseded records, and keeps them with the code. Future maintainers thank you. The log becomes the architecture's memory.",
+      "key_params": {
+        "template": "context/decision/consequences",
+        "numbering": "sequential IDs",
+        "supersede": "supersession links"
+      },
+      "data_idea": "Manages seeded ADR collections and verifies numbering, links, and rendering.",
+      "real_world_use": "Architecture teams (per Michael Nygard's ADRs) record decisions as versioned docs.",
+      "suggested_types": [
+        "file_organizer",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "code-review-checklist",
+      "name": "Code Review Checklist",
+      "concept": "Checklists make reviews consistent: the checklist covers correctness, tests, security, performance, and readability with severity levels, tracking items per diff. It fights reviewer fatigue and bias. Custom rules encode team standards.",
+      "key_params": {
+        "categories": "correctness/security/perf/readability",
+        "severity": "blocker vs nit levels",
+        "custom": "team-specific rules"
+      },
+      "data_idea": "Reviews seeded diffs against the checklist and verifies findings per category.",
+      "real_world_use": "Review culture (Google's review guide) uses checklists for consistency.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pr-triage",
+      "name": "Pull Request Triage",
+      "concept": "PR queues need triage: the triager scores PRs by size, risk (files touched, author experience), and staleness, assigning reviewers by expertise and balancing load. It keeps review latency low. Small PRs get fast lanes.",
+      "key_params": {
+        "score": "size/risk/staleness scoring",
+        "assign": "reviewer expertise matching",
+        "sla": "review latency targets"
+      },
+      "data_idea": "Triages seeded PR queues and verifies scoring, assignment, and SLA tracking.",
+      "real_world_use": "LinearB, Velocity, and engineering managers triage review queues.",
+      "suggested_types": [
+        "task_queue",
+        "report_generator",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "release-notes-assembler",
+      "name": "Release Notes Assembler",
+      "concept": "Release notes assemble from merged PRs: the assembler categorizes changes (features, fixes, breaking), writes user-facing descriptions, and highlights migrations. It translates engineering activity into customer communication. Draft-then-edit beats blank-page writing.",
+      "key_params": {
+        "categories": "feature/fix/breaking/docs",
+        "audience": "user-facing tone",
+        "migrate": "migration callouts"
+      },
+      "data_idea": "Assembles seeded release notes from PR lists and verifies categorization and migration flags.",
+      "real_world_use": "GitHub Releases and product changelogs assemble notes from PRs.",
+      "suggested_types": [
+        "report_generator",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "semver-bump",
+      "name": "Semver Bump Calculator",
+      "concept": "Version bumps follow change types: the calculator inspects commits or API diffs to recommend major/minor/patch, with breaking-change detection overriding. It removes human judgment from versioning. Pre-release tags handle the in-between.",
+      "key_params": {
+        "changes": "commit/API change list",
+        "breaking": "breaking-change detection",
+        "prerelease": "alpha/beta/rc handling"
+      },
+      "data_idea": "Computes seeded bumps and verifies recommendations match semver rules.",
+      "real_world_use": "semantic-release and CI pipelines compute version bumps automatically.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "branch-protection-simulator",
+      "name": "Branch Protection Simulator",
+      "concept": "Branch protection guards main: the simulator enforces required reviews, status checks, and linear history on merge attempts, showing which rule blocks each PR. It teaches the policy by simulation. Bypass lists handle emergencies with audit.",
+      "key_params": {
+        "rules": "reviews/checks/linear-history",
+        "bypass": "emergency bypass with audit",
+        "attempts": "seeded merge attempts"
+      },
+      "data_idea": "Simulates seeded merges against rules and verifies block/allow decisions with reasons.",
+      "real_world_use": "GitHub branch protection enforces these merge rules.",
+      "suggested_types": [
+        "simulation",
+        "config_manager",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "three-way-merge-demo",
+      "name": "Three-Way Merge Demo",
+      "concept": "Three-way merge combines two changed versions using their common ancestor: unchanged-against-ancestor wins, both-changed-same wins, both-changed-differently conflicts. The demo visualizes hunks and conflict markers. Understanding the ancestor is what makes merge conflicts legible.",
+      "key_params": {
+        "ancestor": "common base version",
+        "hunks": "change hunk computation",
+        "conflict": "conflict marker rendering"
+      },
+      "data_idea": "Merges seeded version triples and verifies merged output and conflict detection.",
+      "real_world_use": "Git merge implements three-way merging on text hunks.",
+      "suggested_types": [
+        "simulation",
+        "file_organizer",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

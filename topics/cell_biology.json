@@ -1,0 +1,623 @@
+{
+  "domain": "biology",
+  "subdomain": "cell_biology",
+  "topics": [
+    {
+      "concept": "The cell cycle moves through G1, S, G2, and M phases with checkpoints gating each transition; cyclin-CDK complexes drive the transitions. The simulator models phase durations as stochastic and checkpoint pass probabilities as functions of damage signals. It reports phase distributions and division times across a cell population.",
+      "data_idea": "The demo simulates seeded-RNG random cell populations and checks phase fractions match the duration ratios.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "checkpoint_stringency": "damage sensitivity",
+        "damage_rate": "lesions per cycle",
+        "phase_durations": "mean G1/S/G2/M times"
+      },
+      "name": "Cell Cycle Checkpoint Simulator",
+      "real_world_use": "Cell-cycle models guide chemotherapy timing in cancer research.",
+      "slug_base": "cell-cycle-phase-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Mitosis stages (prophase, metaphase, anaphase, telophase) are identified by chromosome arrangement; a quiz engine drills stage recognition from textual descriptions of synthetic cell states. Spaced repetition targets the learner's weak stages. The engine tracks accuracy per phase.",
+      "data_idea": "The demo generates seeded-RNG random quiz sessions from a description bank and verifies scoring logic.",
+      "difficulty": "beginner",
+      "key_params": {
+        "questions": "quiz length",
+        "seed": "RNG seed",
+        "stages": "phases to include"
+      },
+      "name": "Mitosis Stage Quiz Engine",
+      "real_world_use": "Mitosis drills teach cell biology in schools and lab training.",
+      "slug_base": "mitosis-phase-quiz",
+      "suggested_types": [
+        "quiz_engine",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Passive diffusion moves molecules down concentration gradients with flux proportional to the gradient (Fick's first law); membrane permeability scales the rate. The simulator steps a 1D diffusion profile across a membrane and reports equilibration time. It compares small versus large molecule permeabilities.",
+      "data_idea": "The demo diffuses seeded-RNG random initial gradients and checks equilibration times scale with the diffusion coefficient.",
+      "difficulty": "beginner",
+      "key_params": {
+        "diffusion_coeff": "D value",
+        "gradient": "initial concentrations",
+        "permeability": "membrane permeability"
+      },
+      "name": "Membrane Diffusion Simulator (Fick's Law)",
+      "real_world_use": "Diffusion models predict drug absorption across membranes.",
+      "slug_base": "membrane-diffusion-simulator",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Osmosis drives water toward higher solute concentration; water potential combines solute and pressure potentials to predict direction. The simulator models two compartments separated by a semipermeable membrane and tracks volume shifts to equilibrium. It demonstrates plasmolysis and turgor.",
+      "data_idea": "The demo runs seeded-RNG random compartment setups and verifies equilibrium matches water-potential equality.",
+      "difficulty": "beginner",
+      "key_params": {
+        "compartment_a": "solute and pressure",
+        "compartment_b": "solute and pressure",
+        "membrane": "permeability"
+      },
+      "name": "Osmosis and Water Potential Simulator",
+      "real_world_use": "Osmosis models underlie dialysis, food preservation, and plant physiology.",
+      "slug_base": "osmosis-water-potential",
+      "suggested_types": [
+        "simulation",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "The Nernst equation gives the equilibrium potential for an ion from its concentration ratio across the membrane: E = (RT/zF) ln([out]/[in]). The calculator handles K+, Na+, Cl-, and Ca++ at body temperature and reports each ion's reversal potential. It shows how gradients set the resting voltage.",
+      "data_idea": "The demo computes potentials for seeded-RNG random concentration ratios and validates against the analytic formula.",
+      "difficulty": "beginner",
+      "key_params": {
+        "in_conc": "intracellular concentration",
+        "ion": "ion species and charge",
+        "out_conc": "extracellular concentration",
+        "temperature": "in Celsius"
+      },
+      "name": "Nernst Equilibrium Potential Calculator",
+      "real_world_use": "Nernst potentials are the basis of electrophysiology and neural modeling.",
+      "slug_base": "nernst-potential-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "The Goldman-Hodgkin-Katz equation extends Nernst to multiple ions, weighting each by membrane permeability to predict the resting potential (about -70 mV in neurons). The calculator takes ion concentrations and relative permeabilities and returns the membrane voltage. It shows sensitivity to potassium permeability.",
+      "data_idea": "The demo sweeps seeded-RNG random permeability sets and checks voltage stays within physiological bounds.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "concentrations": "ion conc dict",
+        "permeabilities": "relative permeabilities",
+        "temperature": "in Celsius"
+      },
+      "name": "Goldman-Hodgkin-Katz Voltage Calculator",
+      "real_world_use": "GHK calculations interpret patch-clamp recordings in neuroscience.",
+      "slug_base": "goldman-hodgkin-katz",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "The Hodgkin-Huxley model generates action potentials from voltage-gated Na+ and K+ conductances with activation/inactivation gating variables. This simplified simulator integrates the four ODEs and reproduces spike threshold, refractory period, and firing-rate versus current curves. It exports the voltage trace.",
+      "data_idea": "The demo injects seeded-RNG random current steps and verifies spike counts rise with current.",
+      "difficulty": "advanced",
+      "key_params": {
+        "current": "injected current",
+        "duration": "simulation ms",
+        "show_gates": "report gating variables"
+      },
+      "name": "Hodgkin-Huxley Action Potential Simulator",
+      "real_world_use": "Hodgkin-Huxley models are the foundation of computational neuroscience.",
+      "slug_base": "hodgkin-huxley-action-potential",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Michaelis-Menten kinetics relate reaction velocity to substrate concentration: v = Vmax*[S]/(Km+[S]). The fitter estimates Vmax and Km from velocity data by nonlinear least squares and compares against Lineweaver-Burk linearization. It reports parameter confidence intervals and residual plots data.",
+      "data_idea": "The demo synthesizes seeded-RNG random velocity data with known Km/Vmax and checks parameter recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "method": "nonlinear or lineweaver_burk",
+        "substrate": "[S] values",
+        "velocity": "measured rates"
+      },
+      "name": "Michaelis-Menten Kinetics Fitter",
+      "real_world_use": "Enzyme kinetics parameterize drug metabolism and industrial biocatalysis.",
+      "slug_base": "michaelis-menten-fitter",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Competitive inhibitors raise the apparent Km without changing Vmax; noncompetitive inhibitors lower Vmax without changing Km; uncompetitive inhibitors shift both. The modeler fits velocity data under each inhibition model and selects the best by residual error. It reports the inhibition constant Ki.",
+      "data_idea": "The demo synthesizes seeded-RNG random inhibition datasets per mechanism and checks model selection.",
+      "difficulty": "advanced",
+      "key_params": {
+        "inhibitor_conc": "[I] values",
+        "substrate": "[S] values",
+        "velocity": "measured rates"
+      },
+      "name": "Enzyme Inhibition Kinetics Modeler",
+      "real_world_use": "Inhibition kinetics characterize drug candidates against enzyme targets.",
+      "slug_base": "inhibition-kinetics-modeler",
+      "suggested_types": [
+        "statistical_analyzer",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "Glycolysis nets 2 ATP per glucose (4 made, 2 invested) plus 2 NADH; the calculator walks the ten enzymatic steps tallying ATP, NADH, and intermediates. It handles aerobic versus anaerobic fates of pyruvate. The tool reports the energy balance sheet per glucose.",
+      "data_idea": "The demo tallies seeded-RNG random glucose batches and verifies the 2-ATP net stoichiometry.",
+      "difficulty": "beginner",
+      "key_params": {
+        "fate": "aerobic or anaerobic",
+        "glucose": "molecules of glucose",
+        "show_steps": "list each reaction"
+      },
+      "name": "Glycolysis ATP Balance Calculator",
+      "real_world_use": "Energy bookkeeping teaches metabolism in biochemistry courses.",
+      "slug_base": "glycolysis-atp-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Photosynthetic rate rises with light intensity then saturates (light-response curve), with the initial slope giving quantum efficiency and the plateau giving Pmax. The fitter estimates these parameters plus the compensation point from rate-versus-light data. It compares C3 and C4 style parameter sets.",
+      "data_idea": "The demo synthesizes seeded-RNG random light curves with known parameters and checks recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "light": "PAR intensity values",
+        "rate": "measured photosynthetic rates",
+        "show_params": "report fitted values"
+      },
+      "name": "Photosynthesis Light-Response Fitter",
+      "real_world_use": "Light curves optimize greenhouse lighting and model crop productivity.",
+      "slug_base": "photosynthesis-light-curve",
+      "suggested_types": [
+        "linear_regression",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Transcription copies DNA into RNA 5' to 3' as RNA polymerase opens the bubble, pairs ribonucleotides, and terminates at signals. The simulator walks a template sequence, emitting the transcript with promoter recognition and terminator detection. It reports transcription time and error events.",
+      "data_idea": "The demo transcribes seeded-RNG random templates with planted promoters and checks transcript boundaries.",
+      "difficulty": "beginner",
+      "key_params": {
+        "error_rate": "misincorporation probability",
+        "promoter": "promoter sequence",
+        "template": "DNA template"
+      },
+      "name": "Transcription Process Simulator",
+      "real_world_use": "Transcription models teach gene expression in molecular biology courses.",
+      "slug_base": "transcription-simulator",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Translation builds proteins as ribosomes read mRNA codons, matching tRNA anticodons and forming peptide bonds until a stop codon recruits release factors. The simulator steps through initiation, elongation, and termination, reporting the peptide and translation time. Rare codons slow elongation realistically.",
+      "data_idea": "The demo translates seeded-RNG random mRNAs and verifies peptide lengths match codon counts.",
+      "difficulty": "beginner",
+      "key_params": {
+        "mrna": "mRNA sequence",
+        "rare_codons": "slow codon set",
+        "show_steps": "trace elongation"
+      },
+      "name": "Ribosome Translation Simulator",
+      "real_world_use": "Translation simulation teaches protein synthesis and codon biology.",
+      "slug_base": "translation-simulator",
+      "suggested_types": [
+        "simulation",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "The lac operon switches lactose metabolism on only when lactose is present and glucose absent: the repressor blocks transcription until allolactose binds it, and CAP activates only at low glucose. The model is a Boolean/logic gate combining both signals. It predicts expression across the four nutrient conditions.",
+      "data_idea": "The demo evaluates seeded-RNG random nutrient combinations and checks the truth table.",
+      "difficulty": "beginner",
+      "key_params": {
+        "cap_active": "CAP activation state",
+        "glucose": "glucose present",
+        "lactose": "lactose present"
+      },
+      "name": "Lac Operon Logic Model",
+      "real_world_use": "The lac operon is the canonical gene-regulation example in biology education.",
+      "slug_base": "lac-operon-model",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Signaling cascades (like MAPK) amplify signals: each kinase activates many downstream copies, giving thousand-fold amplification with switch-like ultrasensitivity. The simulator models a three-tier cascade with Michaelis-Menten steps and reports input-output dose-response curves. It demonstrates how feedback creates bistability.",
+      "data_idea": "The demo sweeps seeded-RNG random input doses and checks response steepness exceeds single-step curves.",
+      "difficulty": "advanced",
+      "key_params": {
+        "feedback": "feedback type",
+        "input": "signal dose range",
+        "tiers": "cascade depth"
+      },
+      "name": "Kinase Cascade Amplifier Model",
+      "real_world_use": "Cascade models study cancer signaling and drug-target inhibition.",
+      "slug_base": "signal-cascade-amplifier",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Apoptosis decisions integrate pro- and anti-apoptotic signals (Bcl-2 family balance, caspase activation) into an all-or-none commitment. The model thresholds weighted survival versus death signals with noise, producing a probabilistic decision boundary. It reports the death probability across signal combinations.",
+      "data_idea": "The demo evaluates seeded-RNG random signal combinations and checks decision sharpness.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "death_signals": "pro-apoptotic strengths",
+        "noise": "decision noise",
+        "survival_signals": "anti-apoptotic strengths"
+      },
+      "name": "Apoptosis Decision Model",
+      "real_world_use": "Apoptosis models guide cancer-therapy dosing strategies (research modeling).",
+      "slug_base": "apoptosis-decision-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Chemotaxis steers cells up attractant gradients by biasing run-and-tumble motion: runs lengthen when moving up-gradient. The simulator tracks bacterial agents sensing a diffusing attractant field and reports chemotactic drift velocity and accumulation. It compares wild-type with non-chemotactic mutants.",
+      "data_idea": "The demo runs seeded-RNG random cell populations and checks drift velocity scales with gradient steepness.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cells": "agent count",
+        "gradient": "attractant field",
+        "tumble_rate": "base tumble frequency"
+      },
+      "name": "Bacterial Chemotaxis Simulator",
+      "real_world_use": "Chemotaxis models study immune-cell homing and bacterial infection.",
+      "slug_base": "chemotaxis-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Microtubules show dynamic instability: growing plus ends switch stochastically to shrinking (catastrophe) and back (rescue). The simulator models tip state as a two-state Markov process and reports growth excursions, catastrophe frequency, and mean length. It demonstrates how drugs shift the balance.",
+      "data_idea": "The demo runs seeded-RNG random microtubule trajectories and checks length distributions.",
+      "difficulty": "advanced",
+      "key_params": {
+        "catastrophe_rate": "growth-to-shrink rate",
+        "growth_speed": "polymerization rate",
+        "rescue_rate": "shrink-to-growth rate"
+      },
+      "name": "Microtubule Dynamic Instability Simulator",
+      "real_world_use": "Dynamic instability models inform anti-mitotic chemotherapy research.",
+      "slug_base": "microtubule-dynamic-instability",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Vesicles bud from donor membranes, diffuse or ride motors, then fuse with targets via SNARE pairing; each step has rates governing cargo delivery. The trafficking simulator models vesicle populations moving between organelle compartments. It reports steady-state cargo distribution and delivery times.",
+      "data_idea": "The demo runs seeded-RNG random vesicle fleets and checks cargo conservation across compartments.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "budding_rate": "vesicle formation rate",
+        "compartments": "organelle list",
+        "fusion_rate": "target fusion rate"
+      },
+      "name": "Vesicle Trafficking Simulator",
+      "real_world_use": "Trafficking models study secretion defects and viral egress.",
+      "slug_base": "vesicle-trafficking-simulator",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "Endocytosis internalizes membrane cargo at rates depending on receptor density and clathrin-coat assembly kinetics. The model tracks surface versus internalized cargo pools with first-order rate constants. It fits internalization rates from time-course uptake data.",
+      "data_idea": "The demo synthesizes seeded-RNG random uptake curves and checks rate recovery.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cargo": "initial surface cargo",
+        "recycling": "recycling fraction",
+        "time": "time points",
+        "uptake": "observed internalized"
+      },
+      "name": "Endocytosis Rate Model",
+      "real_world_use": "Endocytosis kinetics optimize nanoparticle drug delivery.",
+      "slug_base": "endocytosis-rate-model",
+      "suggested_types": [
+        "simulation",
+        "linear_regression"
+      ]
+    },
+    {
+      "concept": "Cytosolic calcium oscillates via calcium-induced calcium release: IP3 opens ER channels, calcium spikes, then pumps clear it, repeating. The two-variable oscillator model reproduces spikes and waves. The simulator reports oscillation frequency versus stimulus strength.",
+      "data_idea": "The demo sweeps seeded-RNG random stimulus levels and checks frequency encoding.",
+      "difficulty": "advanced",
+      "key_params": {
+        "pump_rate": "clearance rate",
+        "release_rate": "channel open rate",
+        "stimulus": "IP3 level"
+      },
+      "name": "Calcium Signaling Oscillator",
+      "real_world_use": "Calcium models study muscle contraction and neuron signaling.",
+      "slug_base": "calcium-oscillator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Circadian clocks are transcription-translation feedback loops with ~24-hour periods: activators drive repressor expression, repressors shut activators off after a delay. The Goodwin-style oscillator reproduces sustained rhythms and phase resetting by light pulses. The simulator reports period and phase-response curves.",
+      "data_idea": "The demo runs seeded-RNG random clock parameters and checks period robustness near 24 hours.",
+      "difficulty": "advanced",
+      "key_params": {
+        "delay": "feedback delay",
+        "light_pulse": "zeitgeber strength",
+        "params": "loop rate constants"
+      },
+      "name": "Circadian Clock Oscillator Model",
+      "real_world_use": "Clock models study sleep disorders and shift-work health effects.",
+      "slug_base": "circadian-clock-model",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "The Henderson-Hasselbalch equation gives pH from the ratio of conjugate base to acid: pH = pKa + log([A-]/[HA]). The buffer tool computes pH for additions of strong acid or base and plots the titration curve. It identifies the maximum buffer capacity at pH = pKa.",
+      "data_idea": "The demo titrates seeded-RNG random buffer systems and validates against the analytic curve.",
+      "difficulty": "beginner",
+      "key_params": {
+        "acid": "initial HA concentration",
+        "base": "initial A- concentration",
+        "pka": "acid dissociation constant"
+      },
+      "name": "Henderson-Hasselbalch Buffer Calculator",
+      "real_world_use": "Buffer calculations formulate every biochemical assay and culture medium.",
+      "slug_base": "henderson-hasselbalch-buffer",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Protein folding can be visualized as diffusion on a funneled energy landscape where native contacts lower energy; this toy model folds a short lattice chain by Monte Carlo moves. It reports folding trajectories, contact formation order, and the energy gap. It demonstrates Levinthal's paradox resolution by guided landscapes.",
+      "data_idea": "The demo folds seeded-RNG random lattice sequences and checks native-state energies are minimal.",
+      "difficulty": "advanced",
+      "key_params": {
+        "moves": "MC move set",
+        "sequence": "HP lattice sequence",
+        "steps": "simulation steps"
+      },
+      "name": "Lattice Protein Folding Toy Model",
+      "real_world_use": "Lattice models teach folding theory in biophysics courses.",
+      "slug_base": "protein-folding-energy-landscape",
+      "suggested_types": [
+        "simulation",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Prion-like aggregation follows nucleated polymerization: a slow nucleation step creates a seed, then fast elongation grows fibrils, with fragmentation multiplying seeds. The simulator models monomer, oligomer, and fibril pools and reproduces the lag-then-explosion kinetic curve. It tests how seed dose shortens the lag.",
+      "data_idea": "The demo runs seeded-RNG random aggregation kinetics and checks lag times shrink with seed dose.",
+      "difficulty": "advanced",
+      "key_params": {
+        "elongation": "growth rate",
+        "fragmentation": "breakage rate",
+        "nucleation": "seed formation rate"
+      },
+      "name": "Nucleated Polymerization Aggregation Simulator",
+      "real_world_use": "Aggregation models study amyloid diseases (research modeling, not clinical).",
+      "slug_base": "nucleated-polymerization-prion",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Telomeres shorten with each division by the end-replication problem; when critically short, cells senesce (the Hayflick limit). The model tracks telomere length distributions across divisions with stochastic loss. It compares normal versus telomerase-positive immortalized cells.",
+      "data_idea": "The demo runs seeded-RNG random cell lineages and checks senescence timing against the loss rate.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "critical_length": "senescence threshold",
+        "lineages": "cell count",
+        "loss_per_division": "base pairs lost"
+      },
+      "name": "Telomere Shortening and Senescence Model",
+      "real_world_use": "Telomere models study aging and cancer immortalization.",
+      "slug_base": "telomere-shortening-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Stem cells choose fates at branch points: self-renewal versus differentiation into lineage-committed progeny, with probabilities set by niche signals. The branching-process simulator tracks lineage trees and clone-size distributions. It predicts how signal shifts change tissue composition.",
+      "data_idea": "The demo grows seeded-RNG random lineage trees and checks clone sizes follow branching-process theory.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "divisions": "generations",
+        "lineages": "starting stem cells",
+        "renewal_prob": "self-renewal probability"
+      },
+      "name": "Stem Cell Lineage Branching Simulator",
+      "real_world_use": "Lineage models interpret barcoding experiments in developmental biology.",
+      "slug_base": "stem-cell-branching",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Contact inhibition stops cell division at confluence: proliferation rate declines as local density approaches a maximum. The logistic-like growth model with spatial density dependence reproduces monolayer formation. The simulator grows cells on a lattice and reports confluence time and final density.",
+      "data_idea": "The demo grows seeded-RNG random lattices and checks growth halts at the density cap.",
+      "difficulty": "beginner",
+      "key_params": {
+        "density_cap": "max cells per area",
+        "division_rate": "base division rate",
+        "lattice": "grid size"
+      },
+      "name": "Contact Inhibition Growth Model",
+      "real_world_use": "Contact inhibition models tissue culture and tumor-suppressor loss.",
+      "slug_base": "contact-inhibition-growth",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The scratch assay measures cell migration: a gap is scratched in a monolayer and closure rate quantifies motility. The simulator models cells crawling into the gap with persistence and proliferation. It reports closure time and separates migration from division contributions.",
+      "data_idea": "The demo runs seeded-RNG random scratch assays and checks closure scales with motility parameters.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "gap_width": "initial scratch width",
+        "motility": "crawl speed",
+        "proliferation": "division rate"
+      },
+      "name": "Wound Healing Scratch Assay Simulator",
+      "real_world_use": "Scratch assays screen drugs affecting cell migration in cancer research.",
+      "slug_base": "wound-healing-assay-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "Oxidative phosphorylation yields roughly 30-32 ATP per glucose depending on shuttle costs; the calculator tallies NADH and FADH2 from glycolysis, pyruvate oxidation, and the citric acid cycle with P/O ratios. It compares the malate-aspartate versus glycerol-phosphate shuttles. The tool reports the full energy ledger.",
+      "data_idea": "The demo tallies seeded-RNG random glucose batches and verifies ATP totals match the stoichiometric ledger.",
+      "difficulty": "beginner",
+      "key_params": {
+        "po_ratio": "ATP per oxygen atom",
+        "shuttle": "NADH shuttle type",
+        "substrate": "fuel molecule"
+      },
+      "name": "Mitochondrial ATP Yield Calculator",
+      "real_world_use": "Energy ledgers teach bioenergetics and metabolic engineering.",
+      "slug_base": "mitochondrial-atp-yield",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "Cells regulate volume against osmotic shocks with ion transporters (regulatory volume increase/decrease); the model couples water flux to ion pump rates. The simulator applies osmotic shocks and tracks volume recovery trajectories. It predicts failure under pump inhibition.",
+      "data_idea": "The demo applies seeded-RNG random shocks and checks recovery times scale with pump rates.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "pump_rate": "ion transport rate",
+        "shock": "osmolarity change",
+        "volume": "initial cell volume"
+      },
+      "name": "Cell Volume Regulation Simulator",
+      "real_world_use": "Volume models study kidney function and cryopreservation.",
+      "slug_base": "cell-volume-regulator",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "Autophagy flux is measured by LC3-II turnover: blocking lysosomal degradation reveals the formation rate. The model tracks autophagosome formation, maturation, and clearance pools. It fits flux parameters from time-course data with and without inhibitors.",
+      "data_idea": "The demo synthesizes seeded-RNG random flux curves and checks parameter recovery.",
+      "difficulty": "advanced",
+      "key_params": {
+        "clearance": "lysosomal clearance rate",
+        "formation": "autophagosome formation rate",
+        "time": "time points"
+      },
+      "name": "Autophagy Flux Model",
+      "real_world_use": "Autophagy models study neurodegeneration and cancer metabolism (research).",
+      "slug_base": "autophagy-flux-model",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Actin filaments treadmill: subunits add at the barbed end and fall off the pointed end, so the filament appears to move while subunits cycle through. The simulator models end kinetics and reports treadmilling velocity and filament-length fluctuations. It shows how capping proteins freeze dynamics.",
+      "data_idea": "The demo runs seeded-RNG random filament trajectories and checks velocity predictions.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "off_rate": "subunit loss rate",
+        "on_rate": "subunit addition rate",
+        "subunits": "filament length"
+      },
+      "name": "Actin Treadmilling Simulator",
+      "real_world_use": "Treadmilling models explain cell crawling and growth-cone advance.",
+      "slug_base": "cytoskeleton-treadmilling",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Organelles maintain distinct pH values (lysosomes acidic, mitochondria alkaline matrix) via proton pumps; a quiz engine drills organelle-function-pH associations. Adaptive questioning focuses on confused pairs. The engine reports mastery per organelle.",
+      "data_idea": "The demo runs seeded-RNG random quiz sessions and verifies adaptive selection.",
+      "difficulty": "beginner",
+      "key_params": {
+        "organelles": "organelle set",
+        "questions": "quiz length",
+        "seed": "RNG seed"
+      },
+      "name": "Organelle Function Quiz Engine",
+      "real_world_use": "Organelle drills support cell-biology coursework and MCAT prep.",
+      "slug_base": "organelle-function-quiz",
+      "suggested_types": [
+        "quiz_engine",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Enzyme kinetics questions (Km meaning, Vmax interpretation, inhibition types) are drilled with numeric problems generated from random parameters. The engine creates fresh Michaelis-Menten problems each round with worked solutions. It tracks mastery of each concept.",
+      "data_idea": "The demo generates seeded-RNG random problem sets and validates answer keys.",
+      "difficulty": "beginner",
+      "key_params": {
+        "concepts": "topics to drill",
+        "questions": "quiz length",
+        "seed": "RNG seed"
+      },
+      "name": "Enzyme Kinetics Quiz Generator",
+      "real_world_use": "Kinetics quizzes train biochemistry students and lab staff.",
+      "slug_base": "enzyme-quiz-engine",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A rule-based chatbot answers cell-biology questions about organelles, transport, and energetics from a curated knowledge base with keyword matching and follow-up prompts. It handles definitions, comparisons, and simple calculations. Conversation state tracks the current topic.",
+      "data_idea": "The demo runs seeded-RNG random scripted conversations and checks response relevance.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "knowledge": "Q/A pair count",
+        "max_turns": "conversation length",
+        "topic": "starting topic"
+      },
+      "name": "Cell Biology Tutor Chatbot",
+      "real_world_use": "Tutor chatbots support biology self-study and flipped classrooms.",
+      "slug_base": "cell-biology-chatbot",
+      "suggested_types": [
+        "chatbot",
+        "quiz_engine"
+      ]
+    }
+  ]
+}

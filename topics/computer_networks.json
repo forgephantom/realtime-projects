@@ -1,0 +1,1212 @@
+{
+  "domain": "computer_science",
+  "subdomain": "computer_networks",
+  "topics": [
+    {
+      "slug_base": "tcp-handshake-simulator",
+      "name": "TCP Handshake Simulator",
+      "concept": "TCP connections open with a three-way handshake (SYN, SYN-ACK, ACK) negotiating sequence numbers and options like window scaling: the simulator walks through the state machine including simultaneous open and RST handling. It makes connection setup, the most diagrammed exchange in networking, executable.",
+      "key_params": {
+        "states": "closed/syn-sent/established transitions",
+        "options": "MSS/window-scale negotiation",
+        "scenarios": "normal/simultaneous-open/reset"
+      },
+      "data_idea": "Simulates seeded handshake scenarios and verifies state transitions and negotiated parameters.",
+      "real_world_use": "Every TCP connection (web, SSH, database) opens with the three-way handshake.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sliding-window-flow-control",
+      "name": "Sliding Window Flow Control",
+      "concept": "Flow control keeps fast senders from overwhelming slow receivers: the receiver advertises a window, the sender keeps unacknowledged bytes within it, and the window slides as ACKs arrive. The demo shows throughput as a function of window vs bandwidth-delay product. It is the mechanism behind TCP's self-clocking.",
+      "key_params": {
+        "window": "advertised window bytes",
+        "rtt": "round-trip time",
+        "bdp": "bandwidth-delay product sizing"
+      },
+      "data_idea": "Simulates seeded transfers and verifies throughput matches window/RTT math with correct sliding.",
+      "real_world_use": "TCP flow control governs every bulk transfer; BDP sizing tunes high-speed links.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "congestion-control-aimd",
+      "name": "Congestion Control (AIMD)",
+      "concept": "Congestion control probes for available bandwidth: additive increase grows the window gently, multiplicative decrease halves it on loss (the Reno approach). The demo shows the classic sawtooth and fairness convergence between flows. It is the algorithm that keeps the internet stable.",
+      "key_params": {
+        "flows": "competing flow count",
+        "increase": "additive increase rate",
+        "decrease": "multiplicative decrease factor"
+      },
+      "data_idea": "Simulates seeded competing flows and verifies sawtooth behavior and fairness convergence.",
+      "real_world_use": "TCP Reno/CUBIC congestion control stabilizes internet traffic.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "slow-start-explorer",
+      "name": "Slow Start Explorer",
+      "concept": "Slow start grows the congestion window exponentially (doubling per RTT) until loss or ssthresh, then hands off to congestion avoidance: the explorer visualizes the exponential ramp and the threshold handoff. It explains why short flows never reach full speed. Initial window size is the tuning knob.",
+      "key_params": {
+        "init_window": "initial congestion window",
+        "ssthresh": "slow-start threshold",
+        "rtts": "rounds simulated"
+      },
+      "data_idea": "Simulates seeded slow starts and verifies exponential growth and correct handoff.",
+      "real_world_use": "TCP connection startup and QUIC both begin with slow start.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rto-estimator-jacobson",
+      "name": "RTO Estimator (Jacobson/Karels)",
+      "concept": "Retransmission timeouts adapt to measured RTT: Jacobson/Karels smooth RTT and variance estimates, setting RTO to SRTT + 4*RTTVAR with Karn's rule ignoring retransmitted samples. The demo shows RTO tracking through RTT shifts. Wrong RTOs cause spurious retransmits or slow loss recovery.",
+      "key_params": {
+        "alpha": "SRTT smoothing",
+        "beta": "RTTVAR smoothing",
+        "rtt_shift": "planted RTT changes"
+      },
+      "data_idea": "Estimates RTO over seeded RTT traces and verifies tracking without spurious timeouts.",
+      "real_world_use": "TCP loss recovery in every stack implements Jacobson/Karels RTO.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "udp-reliability-layer",
+      "name": "Reliability Layer over UDP",
+      "concept": "UDP is unreliable by design, so applications add their own reliability: sequence numbers, ACKs, retransmission timers, and reordering buffers build TCP-like guarantees over datagrams. The demo implements stop-and-wait then selective repeat, showing the throughput difference. It reveals what TCP does for you.",
+      "key_params": {
+        "mode": "stop-and-wait vs selective-repeat",
+        "loss": "simulated packet loss rate",
+        "window": "sender window size"
+      },
+      "data_idea": "Transfers seeded data over lossy simulated links and verifies complete in-order delivery per mode.",
+      "real_world_use": "QUIC, game netcode, and VoIP build reliability over UDP selectively.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "chat_server"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fragmentation-reassembly",
+      "name": "IP Fragmentation and Reassembly",
+      "concept": "Packets bigger than the MTU fragment: the demo splits datagrams with correct offsets and MF flags, then reassembles at the receiver handling out-of-order and overlapping fragments. It shows why path-MTU discovery tries to avoid fragmentation. Overlapping fragments are also a classic IDS evasion.",
+      "key_params": {
+        "mtu": "link MTU",
+        "datagram": "original datagram size",
+        "overlap": "overlapping-fragment attack sim"
+      },
+      "data_idea": "Fragments seeded datagrams and verifies reassembly correctness including overlap policy.",
+      "real_world_use": "IP stacks fragment; VPNs and tunnels handle MTU issues constantly.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "port_scanner"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "internet-checksum-validator",
+      "name": "Internet Checksum Validator",
+      "concept": "The internet checksum (16-bit one's-complement sum) guards headers against corruption: the validator computes it over seeded headers and verifies against the transmitted value, demonstrating error detection on random bit flips. It is simple, fast, and weak by modern standards, which is why TCP/UDP add their own.",
+      "key_params": {
+        "corrupt": "bit-flip injection rate",
+        "coverage": "header vs pseudo-header",
+        "detect": "detection rate measured"
+      },
+      "data_idea": "Validates seeded packets with injected corruption and measures detection rates.",
+      "real_world_use": "IPv4/TCP/UDP headers carry internet checksums computed this way.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "crc-error-detector",
+      "name": "CRC Error Detector",
+      "concept": "Cyclic redundancy checks treat data as a polynomial divided by a generator: the remainder is the checksum, catching burst errors far better than simple sums. The demo implements CRC-32 table-free and shows detection of seeded corruptions. Ethernet and ZIP files rely on it.",
+      "key_params": {
+        "poly": "generator polynomial",
+        "corrupt": "burst-error injection",
+        "table": "table-driven vs bitwise"
+      },
+      "data_idea": "Checks seeded frames with injected burst errors and verifies detection.",
+      "real_world_use": "Ethernet FCS, ZIP, and PNG integrity all use CRCs.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool",
+        "encryption_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dns-recursive-resolver",
+      "name": "DNS Recursive Resolver (Simulated)",
+      "concept": "Recursive resolution walks the hierarchy: root to TLD to authoritative, following referrals and caching along the way. The simulator models the namespace tree, referral responses, and CNAME chasing. It demystifies the '8.8.8.8' magic into concrete steps.",
+      "key_params": {
+        "namespace": "seeded zone hierarchy",
+        "cname": "CNAME chain handling",
+        "cache": "per-level caching"
+      },
+      "data_idea": "Resolves seeded names and verifies the referral chain and final answers.",
+      "real_world_use": "Stub resolvers and public DNS (Cloudflare, Google) recurse the hierarchy.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dns-cache-ttl",
+      "name": "DNS Cache with TTL",
+      "concept": "DNS caching obeys TTLs: the cache stores records until expiry, serves stale-while-revalidate during refresh, and honors negative caching for NXDOMAIN. TTL choice trades propagation speed against query load. It is why DNS changes 'take time'.",
+      "key_params": {
+        "ttl": "record TTLs",
+        "negative": "NXDOMAIN caching",
+        "prefetch": "pre-expiry refresh"
+      },
+      "data_idea": "Resolves seeded queries against changing records and verifies TTL-governed freshness.",
+      "real_world_use": "Every resolver caches by TTL; operators tune TTLs for migration speed.",
+      "suggested_types": [
+        "lru_cache",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dns-load-distribution",
+      "name": "DNS Load Distribution",
+      "concept": "DNS spreads load by returning different address orderings (round-robin) or geo-aware answers: the demo rotates A records per query and measures distribution, plus weighted variants. It is the oldest load-balancing trick on the internet. Short TTLs make it adaptive.",
+      "key_params": {
+        "records": "address pool",
+        "rotate": "round-robin vs weighted",
+        "ttl": "rotation TTL"
+      },
+      "data_idea": "Queries seeded zones repeatedly and verifies even distribution across addresses.",
+      "real_world_use": "CDNs and early web farms balanced load with DNS rotation.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dhcp-lease-manager",
+      "name": "DHCP Lease Manager",
+      "concept": "DHCP automates addressing: the manager handles DISCOVER/OFFER/REQUEST/ACK, tracks leases with expiry and renewal (T1/T2 timers), and reclaims expired addresses. It prevents conflicts without manual bookkeeping. The lease lifecycle is the core state machine.",
+      "key_params": {
+        "pool": "address pool range",
+        "lease": "lease duration",
+        "renew": "T1/T2 renewal timers"
+      },
+      "data_idea": "Simulates seeded clients joining/leaving and verifies lease correctness and reclamation.",
+      "real_world_use": "Every LAN, office, and home router runs DHCP for address assignment.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "arp-table-manager",
+      "name": "ARP Table Manager",
+      "concept": "ARP maps IPs to MACs on a LAN: the manager answers requests, caches replies with timeouts, and detects conflicts (gratuitous ARP). Stale entries age out. It is the glue between L2 and L3 on Ethernet.",
+      "key_params": {
+        "cache_timeout": "entry aging",
+        "conflict": "duplicate-address detection",
+        "hosts": "seeded LAN hosts"
+      },
+      "data_idea": "Simulates seeded LAN traffic and verifies resolution correctness and conflict detection.",
+      "real_world_use": "Ethernet LANs resolve addresses with ARP; switches learn from it.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "icmp-ping-sweeper",
+      "name": "ICMP Ping Sweeper",
+      "concept": "Ping measures reachability and RTT with ICMP echo: the sweeper sends echo requests across a subnet, records replies, loss, and RTT stats, and reports live hosts. It is the first diagnostic for 'is it up'. Rate limiting keeps it polite.",
+      "key_params": {
+        "subnet": "swept address range",
+        "timeout": "reply timeout ms",
+        "rate": "packets per second cap"
+      },
+      "data_idea": "Sweeps seeded subnets with planted live/dead hosts and verifies the live-host report.",
+      "real_world_use": "Nmap ping sweeps and network monitoring use ICMP echo for reachability.",
+      "suggested_types": [
+        "port_scanner",
+        "monitoring_agent",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "traceroute-simulator",
+      "name": "Traceroute Simulator",
+      "concept": "Traceroute maps the path by sending probes with increasing TTLs: each hop's router returns time-exceeded, revealing the route hop by hop with per-hop RTT. The simulator models a topology and produces traceroute output including asterisks for silent hops. It is path discovery from first principles.",
+      "key_params": {
+        "topology": "seeded router topology",
+        "probes": "probes per hop",
+        "silent": "non-responding hops"
+      },
+      "data_idea": "Traces seeded paths and verifies hop listing matches the topology.",
+      "real_world_use": "Network engineers diagnose routing with traceroute/mtr daily.",
+      "suggested_types": [
+        "simulation",
+        "port_scanner",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "subnet-calculator",
+      "name": "Subnet Calculator",
+      "concept": "Subnetting divides address space: the calculator derives network/broadcast addresses, usable ranges, and CIDR masks, and checks whether an IP belongs to a subnet. It also plans subdivisions (VLSM) from requirements. It is the arithmetic under every network design.",
+      "key_params": {
+        "cidr": "prefix lengths handled",
+        "vlsm": "variable-length subdivision",
+        "ipv6": "whether IPv6 is included"
+      },
+      "data_idea": "Computes seeded subnetting problems and verifies addresses, ranges, and membership.",
+      "real_world_use": "Network engineers and cloud VPC designers subnet constantly.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "supernet-aggregator",
+      "name": "Supernet Aggregator",
+      "concept": "Route aggregation summarizes many prefixes into fewer: the aggregator finds the minimal covering supernets for a prefix set, shrinking routing tables. It must avoid over-aggregation that blackholes. It is how the global routing table stays manageable.",
+      "key_params": {
+        "prefixes": "seeded prefix set",
+        "minimal": "minimal-cover algorithm",
+        "guard": "over-aggregation checks"
+      },
+      "data_idea": "Aggregates seeded prefix sets and verifies minimal correct covering.",
+      "real_world_use": "BGP route aggregation and ISP address planning summarize prefixes.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nat-translator",
+      "name": "NAT Translator",
+      "concept": "NAT multiplexes private addresses onto public ones: the translator maps (private IP, port) to (public IP, port) with connection tracking, handling outbound setup and inbound replies. Port exhaustion bounds the scale. It is why IPv4 survived address exhaustion.",
+      "key_params": {
+        "pool": "public address pool",
+        "ports": "port range per address",
+        "timeout": "mapping idle timeout"
+      },
+      "data_idea": "Translates seeded connection flows and verifies correct multiplexing and timeout reclamation.",
+      "real_world_use": "Home routers and carrier-grade NAT translate addresses universally.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "port-forwarding-manager",
+      "name": "Port Forwarding Manager",
+      "concept": "Port forwarding exposes internal services: the manager maps external ports to internal (IP, port), validates against conflicts, and applies firewall rules alongside. It is NAT in reverse for inbound access. UPnP automates it; manual rules are explicit.",
+      "key_params": {
+        "rules": "forwarding rule set",
+        "conflicts": "overlap detection",
+        "firewall": "paired allow rules"
+      },
+      "data_idea": "Applies seeded forwarding rules and verifies conflict detection and correct mapping.",
+      "real_world_use": "Home servers, game hosting, and remote access configure port forwarding.",
+      "suggested_types": [
+        "config_manager",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "static-router",
+      "name": "Static Router",
+      "concept": "Static routing forwards by table lookup: the router holds hand-configured routes, performs longest-prefix match per packet, and handles default routes. It is simple, predictable, and the baseline dynamic protocols compare against. The demo implements the forwarding plane.",
+      "key_params": {
+        "routes": "static route table",
+        "lookup": "longest-prefix match",
+        "default": "default route handling"
+      },
+      "data_idea": "Forwards seeded packets and verifies each takes the longest-matching route.",
+      "real_world_use": "Small networks, stub links, and default gateways route statically.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "distance-vector-rip",
+      "name": "Distance Vector Routing (RIP-lite)",
+      "concept": "Distance vector protocols share 'my cost to each destination' with neighbors: the lite RIP implementation runs Bellman-Ford exchanges, demonstrates count-to-infinity, and shows split-horizon/poison-reverse fixes. It is routing by rumor, made rigorous.",
+      "key_params": {
+        "topology": "seeded network graph",
+        "infinity": "infinity metric",
+        "split_horizon": "loop-prevention techniques"
+      },
+      "data_idea": "Converges seeded topologies (including a link failure) and verifies correct tables.",
+      "real_world_use": "RIP and EIGRP heritage; the algorithm behind early internet routing.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "link-state-dijkstra",
+      "name": "Link State Routing (Dijkstra)",
+      "concept": "Link-state protocols flood the topology so every router computes shortest paths locally with Dijkstra: the demo floods LSAs, builds the LSDB, and computes forwarding tables. It converges faster and loop-free compared to distance vector. Areas bound the flooding scope.",
+      "key_params": {
+        "topology": "seeded network graph",
+        "lsa": "link-state advertisement flooding",
+        "areas": "area partitioning"
+      },
+      "data_idea": "Computes seeded topologies and verifies tables match Dijkstra ground truth.",
+      "real_world_use": "OSPF and IS-IS route enterprises and ISPs with link state.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "bgp-route-selector",
+      "name": "BGP Route Selector",
+      "concept": "BGP picks routes by policy, not just cost: the selector implements the decision process (local-pref, AS-path length, origin, MED) over seeded announcements and shows how policy overrides shortest-path. It explains internet routing's political economy. Route filtering enforces the policy.",
+      "key_params": {
+        "announcements": "seeded BGP announcements",
+        "policy": "local-pref and filters",
+        "decision": "tie-breaking order"
+      },
+      "data_idea": "Selects seeded best paths and verifies the decision process follows the configured policy.",
+      "real_world_use": "ISPs interconnect with BGP; peering policy shapes internet paths.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "config_manager"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "spanning-tree-stp",
+      "name": "Spanning Tree (STP-lite)",
+      "concept": "STP prevents L2 loops by electing a root bridge and blocking redundant ports: the lite version runs the election, computes port roles, and reconverges on link failure. It trades convergence speed for loop-freedom. The demo shows the blocked ports that save the LAN.",
+      "key_params": {
+        "topology": "seeded switch topology",
+        "priority": "bridge priorities",
+        "failure": "link-failure reconvergence"
+      },
+      "data_idea": "Converges seeded topologies and verifies a loop-free tree with correct root.",
+      "real_world_use": "Enterprise LANs run STP/RSTP to prevent broadcast storms.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "vlan-tagger",
+      "name": "VLAN Tagger",
+      "concept": "VLANs segment one switch into virtual LANs: the tagger applies 802.1Q tags on trunk ports, enforces access-port membership, and shows how tags isolate broadcast domains. It is network segmentation without extra hardware. Trunk vs access is the core distinction.",
+      "key_params": {
+        "vlans": "VLAN IDs configured",
+        "ports": "access vs trunk assignments",
+        "isolate": "broadcast-domain verification"
+      },
+      "data_idea": "Tags seeded frames and verifies isolation between VLANs.",
+      "real_world_use": "Enterprise networks segment departments and guests with VLANs.",
+      "suggested_types": [
+        "simulation",
+        "config_manager",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "firewall-rule-engine",
+      "name": "Firewall Rule Engine",
+      "concept": "Firewalls filter by ordered rules: the engine matches packets against (action, proto, src/dst, ports) rules first-match-wins, with a default-deny tail. It detects shadowed rules and validates the policy. Stateful tracking (established connections) extends it. Rule order is the entire game.",
+      "key_params": {
+        "rules": "ordered rule list",
+        "stateful": "connection tracking",
+        "audit": "shadow-rule detection"
+      },
+      "data_idea": "Filters seeded packets and verifies verdicts plus shadow-rule reports.",
+      "real_world_use": "iptables, pfSense, and cloud security groups filter with ordered rules.",
+      "suggested_types": [
+        "simulation",
+        "config_manager",
+        "port_scanner"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ids-signature-matcher",
+      "name": "IDS Signature Matcher",
+      "concept": "Signature IDS matches traffic against attack patterns: the matcher scans seeded packet payloads for signatures (with efficient multi-pattern matching), raising alerts with severity. It catches known attacks and misses novel ones, which anomaly detection complements. Tuning trades false positives against misses.",
+      "key_params": {
+        "signatures": "attack pattern set",
+        "traffic": "seeded benign + attack traffic",
+        "tune": "severity thresholds"
+      },
+      "data_idea": "Scans seeded traffic and measures detection vs false-positive rates.",
+      "real_world_use": "Snort, Suricata, and WAFs match signatures against traffic.",
+      "suggested_types": [
+        "log_analyzer",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tcp-port-scanner",
+      "name": "TCP Port Scanner",
+      "concept": "Port scanners probe which ports are open: the scanner implements connect scans (and SYN-scan concepts), handles timeouts and filtered-vs-closed distinction, and paces probes politely. It is the reconnaissance tool behind both audits and attacks. Scan types trade speed against stealth.",
+      "key_params": {
+        "ports": "scanned port range",
+        "timeout": "per-probe timeout ms",
+        "pace": "probe rate limit"
+      },
+      "data_idea": "Scans seeded hosts with known open/closed/filtered ports and verifies the report.",
+      "real_world_use": "Nmap port scanning; security audits inventory exposed services.",
+      "suggested_types": [
+        "port_scanner",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "banner-grabber",
+      "name": "Service Banner Grabber",
+      "concept": "Banners leak service identity: the grabber connects to open ports, reads greeting banners, and fingerprints services/versions against a signature list. It is step two of reconnaissance after port scanning. Defensive banner suppression is the countermeasure.",
+      "key_params": {
+        "ports": "target ports",
+        "signatures": "banner-to-service mapping",
+        "timeout": "read timeout"
+      },
+      "data_idea": "Grabs seeded banners and verifies service identification.",
+      "real_world_use": "Pen-testers fingerprint services; admins audit for version leaks.",
+      "suggested_types": [
+        "port_scanner",
+        "api_client_sim",
+        "log_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "syn-flood-detector",
+      "name": "SYN Flood Detector",
+      "concept": "SYN floods exhaust connection tables with half-open connections: the detector tracks SYN-vs-ACK ratios and half-open counts per source, alerting on anomalies, and models SYN-cookie mitigation. It distinguishes attacks from flash crowds by completion rates. Rate-based detection is the first line.",
+      "key_params": {
+        "threshold": "half-open alert threshold",
+        "window": "measurement window",
+        "mitigate": "SYN-cookie modeling"
+      },
+      "data_idea": "Analyzes seeded traffic (attack + flash crowd) and verifies correct classification.",
+      "real_world_use": "DDoS mitigation (Cloudflare, Arbor) detects SYN floods by handshake ratios.",
+      "suggested_types": [
+        "monitoring_agent",
+        "simulation",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ddos-token-bucket-shield",
+      "name": "DDoS Token-Bucket Shield",
+      "concept": "Rate-based DDoS defense throttles per source: the shield applies token buckets per IP/prefix, sheds excess with 429-style signals, and allowlists known-good sources. It degrades gracefully under flood instead of collapsing. Tuning separates legitimate bursts from attacks.",
+      "key_params": {
+        "rate": "tokens per second per source",
+        "burst": "bucket capacity",
+        "allowlist": "exempted sources"
+      },
+      "data_idea": "Shields seeded services under flood and verifies legit traffic survives.",
+      "real_world_use": "Edge DDoS protection rate-limits per source with token buckets.",
+      "suggested_types": [
+        "rate_limiter",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tls-handshake-simulator",
+      "name": "TLS Handshake Simulator",
+      "concept": "The TLS handshake negotiates securely: ClientHello offers versions and cipher suites, the server picks and presents its certificate, key exchange establishes session keys, and Finished messages authenticate the transcript. The simulator walks each message with seeded parameters, showing where each secret is born.",
+      "key_params": {
+        "version": "TLS 1.2 vs 1.3 flow",
+        "ciphers": "offered/selected suites",
+        "cert": "certificate presented"
+      },
+      "data_idea": "Simulates seeded handshakes (including downgrade attempts) and verifies negotiated outcomes.",
+      "real_world_use": "Every HTTPS connection performs the TLS handshake.",
+      "suggested_types": [
+        "simulation",
+        "encryption_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "certificate-chain-validator",
+      "name": "Certificate Chain Validator",
+      "concept": "Chain validation builds trust: the validator checks signatures up the chain to a trusted root, verifies expiry, hostname matching, and revocation status (CRL/OCSP-lite). Any break fails closed. It is the code behind the browser padlock.",
+      "key_params": {
+        "chain": "seeded certificate chains",
+        "root": "trusted root store",
+        "revoke": "revocation checking"
+      },
+      "data_idea": "Validates seeded chains (valid, expired, wrong-host, revoked) and verifies verdicts.",
+      "real_world_use": "Browsers and TLS clients validate chains on every HTTPS connection.",
+      "suggested_types": [
+        "encryption_tool",
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cipher-suite-negotiator",
+      "name": "Cipher Suite Negotiator",
+      "concept": "Cipher suites bundle key exchange, authentication, bulk cipher, and hash: the negotiator intersects client offers with server preferences, selecting the strongest mutual option and failing closed on none. It demonstrates why server preference order matters and how weak suites get excluded.",
+      "key_params": {
+        "client_offers": "suites the client proposes",
+        "server_pref": "server preference order",
+        "weak": "suites considered unacceptable"
+      },
+      "data_idea": "Negotiates seeded offer sets and verifies the selected suite is the strongest mutual choice.",
+      "real_world_use": "TLS servers configure cipher preferences; the handshake negotiates per connection.",
+      "suggested_types": [
+        "encryption_tool",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "stream-multiplexer",
+      "name": "Stream Multiplexer (HTTP/2-style)",
+      "concept": "Multiplexing runs many streams over one connection: the multiplexer assigns stream ids, interleaves frames with flow-control windows per stream and connection, and prioritizes. It kills head-of-line blocking at the HTTP layer. The demo shows parallel requests sharing one socket.",
+      "key_params": {
+        "streams": "concurrent stream count",
+        "window": "per-stream flow control",
+        "priority": "stream prioritization"
+      },
+      "data_idea": "Multiplexes seeded streams and verifies fair interleaving and flow-control compliance.",
+      "real_world_use": "HTTP/2 and HTTP/3 multiplex requests over single connections.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "head-of-line-blocking-demo",
+      "name": "Head-of-Line Blocking Demo",
+      "concept": "Head-of-line blocking stalls everything behind one slow unit: the demo contrasts HTTP/1.1 (one slow response blocks the connection), HTTP/2 (TCP-level blocking remains), and QUIC (per-stream independence). It makes the protocol evolution story tangible with timing comparisons.",
+      "key_params": {
+        "protocols": "h1 vs h2 vs quic models",
+        "loss": "packet loss causing stalls",
+        "streams": "stream count"
+      },
+      "data_idea": "Times seeded transfers per protocol model and verifies QUIC's resilience to single-stream stalls.",
+      "real_world_use": "Protocol design (HTTP/2, QUIC) is largely the history of fighting HOL blocking.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "websocket-frame-codec",
+      "name": "WebSocket Frame Codec",
+      "concept": "WebSocket frames carry opcode, masked payload, and length prefixes: the codec encodes/decodes frames including fragmentation across frames and ping/pong control frames. Masking (client-to-server) prevents cache poisoning. It is the wire format behind realtime web apps.",
+      "key_params": {
+        "fragment": "fragmented message handling",
+        "mask": "client masking",
+        "control": "ping/pong/close frames"
+      },
+      "data_idea": "Round-trips seeded messages (including fragmented) through the codec and verifies byte-exactness.",
+      "real_world_use": "Browsers and servers implement the WebSocket frame protocol (RFC 6455).",
+      "suggested_types": [
+        "simulation",
+        "chat_server",
+        "api_client_sim"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mqtt-broker-lite",
+      "name": "MQTT Broker (Lite)",
+      "concept": "MQTT is pub/sub for IoT: the lite broker handles CONNECT, SUBSCRIBE with topic filters (+/# wildcards), PUBLISH at QoS 0/1/2, and retained messages. QoS 1/2 add acknowledgment flows for reliability. It shows messaging designed for flaky, low-power links.",
+      "key_params": {
+        "qos": "0/1/2 delivery levels",
+        "topics": "topic filter matching",
+        "retain": "retained messages"
+      },
+      "data_idea": "Routes seeded IoT message flows and verifies delivery semantics per QoS.",
+      "real_world_use": "IoT platforms (AWS IoT, HiveMQ) speak MQTT to devices.",
+      "suggested_types": [
+        "chat_server",
+        "task_queue",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pubsub-message-broker",
+      "name": "Pub/Sub Message Broker",
+      "concept": "Message brokers decouple producers and consumers: the broker manages topics, subscriptions, at-least-once delivery with ACKs, and redelivery on timeout. It buffers bursts producers would otherwise drop. The demo shows the reliability contract explicitly.",
+      "key_params": {
+        "topics": "topic catalog",
+        "ack": "acknowledgment and redelivery",
+        "buffer": "per-subscription buffering"
+      },
+      "data_idea": "Routes seeded messages with consumer failures and verifies at-least-once delivery.",
+      "real_world_use": "RabbitMQ, NATS, and Google Pub/Sub broker messages between services.",
+      "suggested_types": [
+        "task_queue",
+        "simulation",
+        "chat_server"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "least-connections-lb",
+      "name": "Least-Connections Load Balancer",
+      "concept": "Least-connections routing sends each request to the backend with fewest active connections: better than round-robin when requests vary in cost. The balancer tracks active counts and handles ties. It adapts to heterogeneous backends without configuration.",
+      "key_params": {
+        "backends": "backend pool",
+        "cost": "request cost variance",
+        "ties": "tie-breaking rule"
+      },
+      "data_idea": "Balances seeded variable-cost requests and verifies load evens out by active connections.",
+      "real_world_use": "Nginx, HAProxy, and cloud LBs offer least-connections algorithms.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent",
+        "rest_api"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "consistent-hash-ring",
+      "name": "Consistent Hash Ring",
+      "concept": "Consistent hashing maps keys and nodes onto a ring: each key belongs to the next node clockwise, so node changes disturb minimal keys. Virtual nodes even out distribution. The demo visualizes the ring and rebalances on membership change.",
+      "key_params": {
+        "nodes": "ring members",
+        "vnodes": "virtual nodes each",
+        "keys": "key distribution"
+      },
+      "data_idea": "Adds/removes seeded nodes and verifies minimal key movement.",
+      "real_world_use": "Memcached clients, Cassandra, and CDNs distribute with consistent hashing.",
+      "suggested_types": [
+        "simulation",
+        "lru_cache",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "health-check-prober",
+      "name": "Health Check Prober",
+      "concept": "Load balancers need to know who is alive: the prober polls backends on HTTP/TCP checks, marks down after consecutive failures, and slowly reintroduces recovered nodes. It separates hard-down from flapping. Check design (endpoint, interval) is the operational content.",
+      "key_params": {
+        "interval": "probe period seconds",
+        "threshold": "failures to mark down",
+        "recover": "successes to reintroduce"
+      },
+      "data_idea": "Probes seeded backends with flaps and verifies membership transitions.",
+      "real_world_use": "HAProxy, ALB target groups, and Kubernetes probe backend health.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "reverse-proxy-cache",
+      "name": "Reverse Proxy Cache",
+      "concept": "Caching reverse proxies serve repeated requests without hitting backends: the cache keys on method+URL+vary headers, honors Cache-Control from origins, and revalidates stale entries. Hit ratios measure success. It is the CDN edge in miniature.",
+      "key_params": {
+        "ttl": "cache lifetimes",
+        "vary": "Vary-header keying",
+        "revalidate": "stale-while-revalidate"
+      },
+      "data_idea": "Serves seeded request streams and verifies hit ratios and freshness.",
+      "real_world_use": "Varnish, Nginx proxy_cache, and CDN edges cache reverse-proxy responses.",
+      "suggested_types": [
+        "lru_cache",
+        "rest_api",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "egress-proxy-allowlist",
+      "name": "Egress Proxy Allowlist",
+      "concept": "Egress control governs outbound traffic: the proxy allowlists destination domains/ports, logs flows, and blocks the rest, preventing data exfiltration and malware C2. It inverts the usual inbound firewall mindset. Logging feeds the SOC.",
+      "key_params": {
+        "allow": "allowed destinations",
+        "log": "flow logging",
+        "default": "default-deny policy"
+      },
+      "data_idea": "Filters seeded outbound flows and verifies allow/block decisions with logs.",
+      "real_world_use": "Corporate proxies and cloud NAT gateways control egress.",
+      "suggested_types": [
+        "simulation",
+        "log_analyzer",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "socks5-handshake-lite",
+      "name": "SOCKS5 Handshake (Lite)",
+      "concept": "SOCKS5 proxies TCP at the session layer: the lite handshake negotiates authentication methods, then CONNECT requests with address types (IPv4/IPv6/domain). The demo implements the handshake and relays bytes. It is the generic proxy applications speak.",
+      "key_params": {
+        "auth": "no-auth vs username/password",
+        "addr": "address types supported",
+        "relay": "byte relay after handshake"
+      },
+      "data_idea": "Handshakes seeded clients and verifies method negotiation and relay.",
+      "real_world_use": "SSH dynamic forwarding and proxy tools implement SOCKS5.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "encryption_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "encrypted-tunnel-sim",
+      "name": "Encrypted Tunnel Simulator",
+      "concept": "Tunnels wrap traffic in encryption: the simulator establishes session keys (Diffie-Hellman-lite), encrypts packets with an AEAD-style construction from stdlib primitives, and models replay protection with sequence windows. It shows what VPNs do per packet.",
+      "key_params": {
+        "kex": "key exchange method",
+        "replay": "anti-replay window",
+        "rekey": "rekey interval"
+      },
+      "data_idea": "Tunnels seeded traffic (with replay attacks) and verifies confidentiality and replay rejection.",
+      "real_world_use": "WireGuard, IPsec, and TLS VPNs encrypt tunneled packets per session keys.",
+      "suggested_types": [
+        "encryption_tool",
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "latency-probe-statistics",
+      "name": "Latency Probe Statistics",
+      "concept": "Latency needs statistics: the prober collects RTT samples and reports min/median/p99/jitter, distinguishing propagation delay from queueing variation. It detects diurnal patterns and route changes. Percentiles, not means, describe user experience.",
+      "key_params": {
+        "samples": "probe count",
+        "stats": "p50/p99/jitter computed",
+        "pattern": "planted diurnal variation"
+      },
+      "data_idea": "Probes seeded paths and verifies percentile math and pattern detection.",
+      "real_world_use": "ThousandEyes, RIPE Atlas, and game netcode measure latency distributions.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "jitter-buffer-simulator",
+      "name": "Jitter Buffer Simulator",
+      "concept": "VoIP smooths arrival jitter with a playout buffer: the simulator models packet arrivals with jitter, sizes the buffer adaptively, and measures late-loss vs added delay. It trades latency against smoothness. The demo finds the sweet spot per jitter profile.",
+      "key_params": {
+        "jitter": "arrival jitter distribution",
+        "adapt": "adaptive sizing algorithm",
+        "target": "late-loss budget"
+      },
+      "data_idea": "Buffers seeded VoIP streams and verifies the latency/loss trade-off curve.",
+      "real_world_use": "WebRTC, VoIP phones, and game voice chat size jitter buffers adaptively.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "gilbert-elliott-loss-model",
+      "name": "Gilbert-Elliott Loss Model",
+      "concept": "Real packet loss comes in bursts: the Gilbert-Elliott two-state Markov model (good/bad states with transition probabilities) captures burstiness that independent loss misses. The demo fits the model to traces and simulates realistic loss. Codec and FEC design depend on burst statistics.",
+      "key_params": {
+        "p": "good-to-bad transition",
+        "r": "bad-to-good transition",
+        "trace": "seeded loss trace"
+      },
+      "data_idea": "Fits seeded traces and verifies simulated burst statistics match.",
+      "real_world_use": "VoIP/video codec testing and wireless modeling use bursty loss models.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "packet-pair-bandwidth",
+      "name": "Packet-Pair Bandwidth Estimator",
+      "concept": "Packet pairs estimate bottleneck bandwidth: send two packets back-to-back; their dispersion at the receiver reveals the narrow link's rate. The demo simulates the dispersion math with cross-traffic noise. It is active measurement in its purest form.",
+      "key_params": {
+        "bottleneck": "planted bottleneck rate",
+        "cross": "cross-traffic noise",
+        "pairs": "measurement count"
+      },
+      "data_idea": "Estimates seeded bottlenecks and verifies accuracy vs noise level.",
+      "real_world_use": "Pathrate/pathload tools and research measure bandwidth with packet pairs.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "qos-priority-queue",
+      "name": "QoS Priority Queue (DiffServ-lite)",
+      "concept": "QoS prioritizes by class: the lite DiffServ model marks packets (voice, video, best-effort) and schedules with strict priority or weighted fair queueing, policing ingress rates. It shows voice surviving congestion that crushes bulk traffic. Marking without enforcement is wishful thinking.",
+      "key_params": {
+        "classes": "traffic classes",
+        "schedule": "strict vs weighted-fair",
+        "police": "ingress policing rates"
+      },
+      "data_idea": "Schedules seeded mixed traffic under congestion and verifies class protection.",
+      "real_world_use": "Enterprise VoIP and ISP traffic management implement DiffServ QoS.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "token-bucket-shaper",
+      "name": "Token Bucket Traffic Shaper",
+      "concept": "Shapers smooth bursts: the token bucket admits packets when tokens are available, queueing excess instead of dropping, which shapes output to the configured rate with bounded bursts. It differs from policing (which drops). The demo shows the smoothed output profile.",
+      "key_params": {
+        "rate": "sustained rate",
+        "burst": "bucket depth",
+        "queue": "excess queue limit"
+      },
+      "data_idea": "Shapes seeded bursty traffic and verifies output conforms to rate/burst.",
+      "real_world_use": "ISP rate limiting and cloud egress shaping use token buckets.",
+      "suggested_types": [
+        "rate_limiter",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "leaky-bucket-policer",
+      "name": "Leaky Bucket Policer",
+      "concept": "Policers enforce contracts by dropping (or marking) non-conforming traffic: the leaky bucket drains at the committed rate, and arrivals to a full bucket get dropped. It is the strict sibling of shaping. The demo contrasts policer drops vs shaper queueing on the same traffic.",
+      "key_params": {
+        "rate": "committed rate",
+        "depth": "bucket depth",
+        "action": "drop vs mark-down"
+      },
+      "data_idea": "Polices seeded traffic and verifies conformance decisions and drop rates.",
+      "real_world_use": "Carrier SLAs and API rate limits police with leaky buckets.",
+      "suggested_types": [
+        "rate_limiter",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "netflow-collector-lite",
+      "name": "NetFlow Collector (Lite)",
+      "concept": "NetFlow summarizes traffic into flows (5-tuple, bytes, packets, times): the lite collector aggregates seeded packet records into flow records, expires them by timeout, and reports top talkers. It turns packet firehoses into analyzable summaries. Sampling trades accuracy for scale.",
+      "key_params": {
+        "timeout": "flow expiry",
+        "sample": "packet sampling rate",
+        "top": "top-talker reporting"
+      },
+      "data_idea": "Collects seeded flows and verifies aggregation accuracy and top-talker lists.",
+      "real_world_use": "Network monitoring (SolarWinds, Kentik) analyzes NetFlow/IPFIX records.",
+      "suggested_types": [
+        "log_analyzer",
+        "data_pipeline",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "snmp-poller-sim",
+      "name": "SNMP Poller Simulator",
+      "concept": "SNMP polls device counters: the simulator models agents exposing OIDs (interface counters, CPU), polls on intervals, and computes rates from counter deltas handling 32-bit wraps. It shows how MRTG-style graphs get built. Community strings are the (weak) auth.",
+      "key_params": {
+        "oids": "polled counter set",
+        "interval": "poll period",
+        "wrap": "counter-wrap handling"
+      },
+      "data_idea": "Polls seeded agents and verifies rate computation across wraps.",
+      "real_world_use": "Legacy network monitoring (MRTG, Cacti) polls SNMP counters.",
+      "suggested_types": [
+        "monitoring_agent",
+        "simulation",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "syslog-aggregator",
+      "name": "Syslog Aggregator",
+      "concept": "Syslog centralizes device logs: the aggregator receives seeded syslog messages (facility/severity structured), parses them, indexes by host and severity, and alerts on critical patterns. It is the original centralized logging. Structured parsing tames vendor format chaos.",
+      "key_params": {
+        "parse": "RFC3164/5424 parsing",
+        "index": "host/severity indexing",
+        "alert": "critical-pattern alerts"
+      },
+      "data_idea": "Aggregates seeded syslog streams and verifies parsing, indexing, and alerts.",
+      "real_world_use": "SIEMs and network operations centers aggregate syslog.",
+      "suggested_types": [
+        "log_analyzer",
+        "monitoring_agent",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "network-topology-mapper",
+      "name": "Network Topology Mapper",
+      "concept": "Topology mapping discovers the network: the mapper combines seeded traceroutes, ARP tables, and LLDP-style neighbor reports into a graph, resolving aliases and drawing the map. It reconciles conflicting sources. The map underpins every other network tool.",
+      "key_params": {
+        "sources": "traceroute/ARP/LLDP inputs",
+        "merge": "conflict resolution",
+        "layout": "graph layout"
+      },
+      "data_idea": "Maps seeded networks and verifies the discovered graph matches ground truth.",
+      "real_world_use": "NMS platforms (LibreNMS, NetBox) build topology from multiple sources.",
+      "suggested_types": [
+        "simulation",
+        "port_scanner",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cdn-cache-simulator",
+      "name": "CDN Cache Simulator",
+      "concept": "CDNs cache at the edge: the simulator models edge PoPs with LRU caches, origin fetch on miss, cache hierarchies (edge to shield to origin), and purge propagation. Hit ratios and origin offload measure success. It shows why the first byte is fast and the miss is slow.",
+      "key_params": {
+        "pops": "edge location count",
+        "size": "per-PoP cache size",
+        "purge": "purge propagation time"
+      },
+      "data_idea": "Serves seeded request streams and verifies hit ratios and purge behavior.",
+      "real_world_use": "Cloudflare, Akamai, and Fastly operate edge cache hierarchies.",
+      "suggested_types": [
+        "lru_cache",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "anycast-routing-demo",
+      "name": "Anycast Routing Demo",
+      "concept": "Anycast routes to the nearest of many same-address servers: the demo announces one prefix from multiple locations and shows clients reaching the topologically closest instance, with failover on outage. It is how DNS roots and CDNs achieve global low latency with one IP.",
+      "key_params": {
+        "sites": "anycast site count",
+        "topology": "seeded network graph",
+        "failover": "site-failure rerouting"
+      },
+      "data_idea": "Routes seeded clients and verifies nearest-site selection and failover.",
+      "real_world_use": "DNS root servers and Cloudflare anycast globally with one IP per service.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "multicast-group-manager",
+      "name": "Multicast Group Manager",
+      "concept": "Multicast delivers once to many: the manager handles IGMP-lite joins/leaves, builds distribution trees, and forwards one copy per link. It beats N unicasts for live streams. The demo shows the bandwidth savings. Interdomain multicast (the hard part) is out of scope.",
+      "key_params": {
+        "groups": "multicast groups",
+        "members": "join/leave dynamics",
+        "tree": "distribution tree building"
+      },
+      "data_idea": "Manages seeded groups and verifies delivery uses minimal link traversals.",
+      "real_world_use": "IPTV and financial market-data feeds distribute via multicast.",
+      "suggested_types": [
+        "simulation",
+        "chat_server",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ipv6-address-planner",
+      "name": "IPv6 Address Planner",
+      "concept": "IPv6 planning subnets vast space: the planner allocates /64s per LAN from a /48, formats addresses (compression rules), and validates scopes. It demonstrates why NAT is unnecessary and how SLAAC fits. Address abundance changes the planning mindset.",
+      "key_params": {
+        "block": "allocated prefix (e.g., /48)",
+        "subnets": "per-site /64 allocations",
+        "format": "compression validation"
+      },
+      "data_idea": "Plans seeded allocations and verifies correct subnetting and formatting.",
+      "real_world_use": "ISPs and enterprises deploying IPv6 plan hierarchical allocations.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "tunnel-broker-6in4",
+      "name": "6in4 Tunnel Broker (Concept)",
+      "concept": "Transition tunnels carry IPv6 over IPv4: the broker sets up 6in4 encapsulation (protocol 41), assigns /64s to clients, and routes between the tunnel and native IPv6. The demo models encapsulation overhead and MTU effects. It was the practical IPv6 on-ramp for years.",
+      "key_params": {
+        "clients": "tunnel client count",
+        "mtu": "tunnel MTU handling",
+        "assign": "/64 delegation"
+      },
+      "data_idea": "Tunnels seeded IPv6 traffic and verifies encapsulation correctness and addressing.",
+      "real_world_use": "Hurricane Electric tunnel broker provided IPv6 via 6in4 for years.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "config_manager"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "chat-server-select",
+      "name": "Chat Server (select-based)",
+      "concept": "Classic concurrent servers multiplex sockets with select: the server accepts clients, relays messages to rooms, and handles disconnects in one thread via readiness notification. It teaches the event-loop pattern behind Node.js and nginx. The demo scales to hundreds of idle connections.",
+      "key_params": {
+        "rooms": "chat rooms",
+        "clients": "simulated client count",
+        "idle": "idle-connection handling"
+      },
+      "data_idea": "Runs seeded chat sessions and verifies message relay and disconnect cleanup.",
+      "real_world_use": "The pattern behind event-driven servers (nginx, Node.js) starts with select/poll.",
+      "suggested_types": [
+        "chat_server",
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tftp-file-transfer",
+      "name": "TFTP File Transfer (Lite)",
+      "concept": "TFTP is FTP's minimal cousin: lockstep stop-and-wait over UDP with tiny opcodes (RRQ/WRQ/DATA/ACK), no auth, no directory listing. The lite version transfers files with timeout/retry and block numbering. It still boots diskless machines (PXE) worldwide.",
+      "key_params": {
+        "block": "block size",
+        "timeout": "retransmit timeout",
+        "loss": "simulated loss rate"
+      },
+      "data_idea": "Transfers seeded files over lossy simulated links and verifies byte-exact delivery.",
+      "real_world_use": "PXE network boot and firmware updates use TFTP for simplicity.",
+      "suggested_types": [
+        "file_organizer",
+        "simulation",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rpc-stub-generator-lite",
+      "name": "RPC Stub Generator (Lite)",
+      "concept": "RPC stubs make remote calls look local: the generator takes a service definition, emits client stubs (marshaling args) and server skeletons (dispatching), over a framed transport. It demonstrates IDL-driven development. Versioning the IDL is the operational reality.",
+      "key_params": {
+        "idl": "service definition language subset",
+        "marshal": "argument serialization",
+        "dispatch": "server-side routing"
+      },
+      "data_idea": "Generates seeded stubs and verifies round-trip calls return correct results.",
+      "real_world_use": "gRPC, Thrift, and CORBA all generate stubs from IDLs.",
+      "suggested_types": [
+        "api_client_sim",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "grpc-framing-demo",
+      "name": "gRPC Framing Demo (HTTP/2)",
+      "concept": "gRPC frames messages in HTTP/2 DATA frames with a 5-byte prefix (compression flag + length): the demo encodes/decodes message streams, handles trailers for status, and multiplexes concurrent calls. It shows the wire format behind microservice RPC.",
+      "key_params": {
+        "calls": "concurrent RPC count",
+        "compress": "message compression",
+        "trailers": "status trailer handling"
+      },
+      "data_idea": "Frames seeded RPC streams and verifies decode correctness and call multiplexing.",
+      "real_world_use": "Microservices (Kubernetes ecosystems) communicate via gRPC over HTTP/2.",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim",
+        "monitoring_agent"
+      ],
+      "difficulty": "advanced"
+    }
+  ]
+}

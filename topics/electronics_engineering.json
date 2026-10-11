@@ -1,0 +1,2767 @@
+{
+  "domain": "electronics_engineering",
+  "subdomain": "electronics_engineering",
+  "topics": [
+    {
+      "concept": "Voltage, current, and resistance are tied together by V = I x R, and electrical power follows P = V x I. Given any two quantities the third is fixed, which makes this the entry point for sizing nearly every passive part of a circuit.",
+      "data_idea": "Seeded RNG generates random resistor values and supply voltages, hiding one quantity per problem for the learner to solve.",
+      "difficulty": "beginner",
+      "key_params": {
+        "current_ma": "branch current in milliamps",
+        "power_w": "dissipated power in watts",
+        "resistance_ohm": "resistance in ohms",
+        "voltage_v": "supply voltage in volts"
+      },
+      "name": "Ohm's Law Lab",
+      "real_world_use": "Used in electronics training labs and technician certification drills to build fluency with basic circuit math.",
+      "slug_base": "ohms-law-lab",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "An LED needs a series resistor to limit current, computed as R = (Vs - Vf) / I where Vf is the LED forward voltage. Picking the nearest standard E12 value and checking the resistor's power rating keeps the LED bright without burning it out.",
+      "data_idea": "Seeded RNG picks random LED colors with typical forward voltages and supply rails, then asks for the right resistor.",
+      "difficulty": "beginner",
+      "key_params": {
+        "current_ma": "target LED current in milliamps",
+        "e_series": "resistor E-series to snap to",
+        "forward_v": "LED forward voltage in volts",
+        "supply_v": "supply voltage in volts"
+      },
+      "name": "LED Resistor Picker",
+      "real_world_use": "Hobbyists and product engineers use this sizing step on every indicator and illumination LED in a design.",
+      "slug_base": "led-resistor-picker",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "The 555 timer in astable mode oscillates with frequency f = 1.44 / ((R1 + 2 x R2) x C), producing a square wave whose duty cycle depends on the two resistors. In monostable mode the same chip makes a one-shot pulse of width 1.1 x R x C.",
+      "data_idea": "Seeded RNG draws random R and C values from E12/E6 series and computes the resulting frequency and duty cycle as checkable answers.",
+      "difficulty": "beginner",
+      "key_params": {
+        "c_farad": "timing capacitance in farads",
+        "mode": "astable or monostable",
+        "r1_ohm": "timing resistor R1 in ohms",
+        "r2_ohm": "timing resistor R2 in ohms"
+      },
+      "name": "555 Timer Calculator",
+      "real_world_use": "Still used for clock generation, LED blinkers, debounce delays, and PWM sources in low-cost products.",
+      "slug_base": "555-timer-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Two resistors in series split a voltage as Vout = Vin x R2 / (R1 + R2), which is the cheapest way to scale a signal down for an ADC. The divider's output impedance must stay far below the load impedance, or the load itself shifts the divided voltage.",
+      "data_idea": "Seeded RNG generates target voltages and load impedances; the tool picks E12 resistor pairs and reports the loading error.",
+      "difficulty": "beginner",
+      "key_params": {
+        "load_ohm": "load impedance in ohms",
+        "r_total_ohm": "total divider resistance in ohms",
+        "vin_v": "input voltage in volts",
+        "vout_v": "desired output voltage in volts"
+      },
+      "name": "Voltage Divider Designer",
+      "real_world_use": "Used to scale battery and sensor voltages into microcontroller ADC ranges in countless embedded products.",
+      "slug_base": "voltage-divider-designer",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Through-hole resistors print their value as colored bands: digits, a multiplier, and a tolerance band. Reading brown-black-red-gold as 1-0-x100 = 1k ohm with 5 percent tolerance is a rite of passage for anyone touching hardware.",
+      "data_idea": "Seeded RNG deals random band combinations, including 4-band and 5-band parts, as decode-or-encode quiz items.",
+      "difficulty": "beginner",
+      "key_params": {
+        "bands": "list of 4 or 5 color names",
+        "tolerance_pct": "tolerance in percent",
+        "value_ohm": "decoded resistance in ohms"
+      },
+      "name": "Resistor Color Code Decoder",
+      "real_world_use": "Technicians decode color bands daily when sorting parts, debugging boards, and reading legacy schematics.",
+      "slug_base": "resistor-color-code-decoder",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine",
+        "lru_cache"
+      ]
+    },
+    {
+      "concept": "Resistors in series simply add, while parallel branches combine as reciprocals: 1/Req = 1/R1 + 1/R2. Reducing a network branch by branch until one equivalent resistance remains is the core skill behind all DC circuit analysis.",
+      "data_idea": "Seeded RNG builds random series-parallel trees of 3 to 8 resistors and asks for the equivalent resistance and total current.",
+      "difficulty": "beginner",
+      "key_params": {
+        "network": "nested series/parallel resistor network description",
+        "r_values_ohm": "resistor values in ohms",
+        "source_v": "applied voltage in volts"
+      },
+      "name": "Series-Parallel Resistor Solver",
+      "real_world_use": "The same reduction technique underlies hand analysis of bias networks, attenuators, and load circuits.",
+      "slug_base": "series-parallel-solver",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A capacitor charging through a resistor follows Vc = Vs x (1 - e^(-t/RC)), where the time constant tau = R x C sets the pace. After about five time constants the capacitor is effectively fully charged, a rule of thumb used everywhere in timing circuits.",
+      "data_idea": "Seeded RNG picks R and C values, and the simulator steps through time printing the charging voltage at each step.",
+      "difficulty": "beginner",
+      "key_params": {
+        "c_farad": "capacitance in farads",
+        "r_ohm": "series resistance in ohms",
+        "t_seconds": "elapsed time in seconds",
+        "vs_v": "supply voltage in volts"
+      },
+      "name": "Capacitor Charge Time Lab",
+      "real_world_use": "Timing delays, power-on resets, and RC filters all depend on this exact charging curve.",
+      "slug_base": "capacitor-charge-lab",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Pulse-width modulation encodes an analog level as the duty cycle of a fast square wave: average voltage equals duty cycle times the peak voltage. Drawing the waveform for different duty cycles makes the link between on-time and delivered power intuitive.",
+      "data_idea": "Seeded RNG picks duty cycles and the visualizer renders ASCII waveforms plus the computed average voltage.",
+      "difficulty": "beginner",
+      "key_params": {
+        "cycles": "number of cycles to draw",
+        "duty_pct": "duty cycle in percent",
+        "freq_hz": "PWM frequency in hertz",
+        "vpeak_v": "peak voltage in volts"
+      },
+      "name": "PWM Duty Cycle Visualizer",
+      "real_world_use": "Motor speed control, LED dimming, and heater control in appliances all run on PWM.",
+      "slug_base": "pwm-duty-visualizer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A battery's runtime is roughly its milliamp-hour rating divided by the load current, but internal resistance makes the terminal voltage sag as current rises. Modeling voltage over time shows why a battery reads full at rest yet droops under heavy load.",
+      "data_idea": "Seeded RNG generates load profiles (steady, pulsed, stepped) and the model integrates charge removed until cutoff voltage.",
+      "difficulty": "beginner",
+      "key_params": {
+        "capacity_mah": "rated capacity in milliamp-hours",
+        "cutoff_v": "cutoff voltage in volts",
+        "internal_ohm": "internal resistance in ohms",
+        "load_ma": "load current in milliamps"
+      },
+      "name": "Battery Discharge Modeler",
+      "real_world_use": "Wearables, remote sensors, and power tools are all sized with discharge models like this before battery selection.",
+      "slug_base": "battery-discharge-modeler",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "An N-bit ADC splits its reference voltage into 2^N steps, so each LSB equals Vref / 2^N and any reading carries up to half an LSB of quantization error. Doubling the bit depth halves the step size, which is why a 12-bit converter resolves signals four times finer than a 10-bit one.",
+      "data_idea": "Seeded RNG synthesizes analog waveforms and quantizes them at several bit depths to compare error and step size.",
+      "difficulty": "beginner",
+      "key_params": {
+        "bits": "ADC resolution in bits",
+        "signal_v": "input signal voltage in volts",
+        "vref_v": "reference voltage in volts"
+      },
+      "name": "ADC Resolution Explorer",
+      "real_world_use": "Sensor interfacing decisions, from thermostats to industrial DAQ, start with picking adequate ADC resolution.",
+      "slug_base": "adc-resolution-explorer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Decibels compress huge ratios into small numbers: power ratios use 10 x log10 and voltage ratios use 20 x log10. A 3 dB change means double the power, and 20 dB means ten times the voltage, which is why audio and RF engineers think in dB.",
+      "data_idea": "Seeded RNG produces random gain and attenuation ratios for conversion drills in both directions.",
+      "difficulty": "beginner",
+      "key_params": {
+        "db": "decibel value to convert back",
+        "domain": "power or voltage ratio",
+        "ratio": "linear ratio to convert"
+      },
+      "name": "Decibel Converter",
+      "real_world_use": "Amplifier gain, filter attenuation, antenna gain, and audio levels are all specified in decibels.",
+      "slug_base": "decibel-converter",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A real meter is not ideal: its voltage ranges have finite input impedance that loads the circuit, and every range carries an accuracy spec like 0.5 percent plus a few counts. Simulating those imperfections teaches why a measured value can differ from the textbook one.",
+      "data_idea": "Seeded RNG creates circuits with known values and simulates meter readings with realistic error and loading effects.",
+      "difficulty": "beginner",
+      "key_params": {
+        "accuracy_pct": "accuracy in percent",
+        "counts": "plus-or-minus digit counts",
+        "range": "meter range selected",
+        "true_value": "true circuit value"
+      },
+      "name": "Multimeter Reading Simulator",
+      "real_world_use": "Bench technicians must interpret meter accuracy specs to decide whether a reading indicates a real fault.",
+      "slug_base": "multimeter-reading-simulator",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A pull-up resistor holds an open-drain line high, but its value is a tradeoff: smaller values switch faster against line capacitance yet waste more power when the line is pulled low. Sizing it means balancing rise time against current draw.",
+      "data_idea": "Seeded RNG generates bus capacitances and speed targets, and the tool picks a standard resistor inside the valid window.",
+      "difficulty": "beginner",
+      "key_params": {
+        "c_line_pf": "line capacitance in picofarads",
+        "imax_ma": "max allowed low-state current in milliamps",
+        "rise_ns": "target rise time in nanoseconds",
+        "vdd_v": "supply voltage in volts"
+      },
+      "name": "Pull-Up Resistor Sizer",
+      "real_world_use": "I2C buses, reset lines, and button inputs on every microcontroller board need correctly sized pull-ups.",
+      "slug_base": "pullup-resistor-sizer",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Mechanical switches bounce for a few milliseconds, and an RC low-pass filter with a Schmitt-trigger input can swallow those glitches. Setting the RC time constant well above the bounce time but below the human response time gives clean edges.",
+      "data_idea": "Seeded RNG synthesizes bouncy switch waveforms and shows the filtered output for chosen RC values.",
+      "difficulty": "beginner",
+      "key_params": {
+        "bounce_ms": "switch bounce duration in milliseconds",
+        "c_farad": "filter capacitance in farads",
+        "r_ohm": "filter resistance in ohms"
+      },
+      "name": "RC Debounce Calculator",
+      "real_world_use": "Pushbuttons, keypads, and limit switches in industrial controls are debounced this way in hardware.",
+      "slug_base": "rc-debounce-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A quartz crystal needs a specified load capacitance to oscillate at its marked frequency, formed by two capacitors plus stray board capacitance: CL = (C1 x C2)/(C1 + C2) + Cstray. Wrong loading pulls the frequency off and can stop oscillation entirely.",
+      "data_idea": "Seeded RNG picks crystals with different load ratings and stray estimates, then solves for the two matching capacitors.",
+      "difficulty": "beginner",
+      "key_params": {
+        "cl_pf": "crystal rated load capacitance in picofarads",
+        "cstray_pf": "stray capacitance in picofarads"
+      },
+      "name": "Crystal Load Capacitor Calculator",
+      "real_world_use": "Every microcontroller and RTC crystal circuit on a PCB depends on this calculation for accurate clocks.",
+      "slug_base": "crystal-load-capacitor-calculator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A microcontroller pin cannot drive a relay coil directly, so an NPN transistor switches the coil current while a flyback diode clamps the inductive kickback when the coil turns off. The base resistor is chosen to drive the transistor firmly into saturation.",
+      "data_idea": "Seeded RNG selects relay coils and logic levels, then computes base resistor, transistor dissipation, and diode rating.",
+      "difficulty": "beginner",
+      "key_params": {
+        "coil_ma": "coil current in milliamps",
+        "coil_v": "coil voltage in volts",
+        "hfe": "transistor current gain",
+        "mcu_v": "microcontroller logic voltage in volts"
+      },
+      "name": "Relay Driver Circuit Designer",
+      "real_world_use": "Appliance controls, automotive modules, and industrial PLCs switch mains loads through relay drivers like this.",
+      "slug_base": "relay-driver-designer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A mains transformer's volt-amp rating must exceed the load's apparent power with margin, and rectifier-capacitor loads need extra derating because they draw current in short spikes. Picking the next standard size up with 25 to 50 percent headroom is standard practice.",
+      "data_idea": "Seeded RNG generates load profiles with crest factors, and the tool selects the smallest adequate standard VA rating.",
+      "difficulty": "beginner",
+      "key_params": {
+        "load_va": "load apparent power in volt-amps",
+        "load_w": "load power in watts",
+        "margin_pct": "design margin in percent"
+      },
+      "name": "Transformer VA Sizer",
+      "real_world_use": "Linear power supplies in audio gear, lab equipment, and industrial controls are sized this way.",
+      "slug_base": "transformer-va-sizer",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "A fuse protects wiring by melting open when I-squared-t heating exceeds its rating, with slow-blow types tolerating brief inrush and fast types guarding semiconductors. Selecting one means matching rated current, voltage, breaking capacity, and the time-current curve to the load.",
+      "data_idea": "Seeded RNG creates load and inrush scenarios, and the selector walks a decision tree to a fuse type and rating.",
+      "difficulty": "beginner",
+      "key_params": {
+        "inrush_a": "inrush current in amps",
+        "inrush_ms": "inrush duration in milliseconds",
+        "load_a": "normal load current in amps",
+        "voltage_v": "circuit voltage in volts"
+      },
+      "name": "Fuse Selector",
+      "real_world_use": "Every mains-powered product carries a correctly rated fuse as its last line of fire protection.",
+      "slug_base": "fuse-selector",
+      "suggested_types": [
+        "cli_tool",
+        "decision_tree"
+      ]
+    },
+    {
+      "concept": "Junction temperature follows Tj = Ta + P x theta_ja, where theta_ja is the total thermal resistance from silicon to air. Sizing a heat sink means picking one whose thermal resistance keeps the junction below its rated maximum at the worst-case ambient temperature.",
+      "data_idea": "Seeded RNG generates device power levels and ambient conditions, then selects a heat sink thermal resistance from a synthetic catalog.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "power_w": "dissipated power in watts",
+        "ta_c": "ambient temperature in Celsius",
+        "theta_jc": "junction-to-case thermal resistance in C/W",
+        "tj_max_c": "max junction temperature in Celsius"
+      },
+      "name": "Heat Sink Sizer",
+      "real_world_use": "Voltage regulators, power transistors, and LED drivers in enclosed products all need this thermal check.",
+      "slug_base": "heat-sink-sizer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A low-dropout regulator needs its input to stay above the output by the dropout voltage, or the output sags out of regulation. The analyzer checks headroom across battery discharge and temperature while also estimating efficiency and power loss.",
+      "data_idea": "Seeded RNG sweeps input voltage from full charge to battery cutoff and flags where the LDO drops out.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "dropout_v": "dropout voltage in volts",
+        "iload_ma": "load current in milliamps",
+        "vin_min_v": "minimum input voltage in volts",
+        "vout_v": "regulated output in volts"
+      },
+      "name": "LDO Dropout Analyzer",
+      "real_world_use": "Battery-powered devices choose LDOs versus switching regulators based on exactly this headroom analysis.",
+      "slug_base": "ldo-dropout-analyzer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "In a capacitor-filtered supply the ripple voltage is roughly I / (f x C) for full-wave rectification, because the capacitor alone feeds the load between mains half-cycles. Bigger capacitance or higher load current moves the ripple in opposite directions.",
+      "data_idea": "Seeded RNG varies load current and capacitance, and the estimator reports ripple voltage and suggests capacitor upgrades.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_farad": "filter capacitance in farads",
+        "load_a": "load current in amps",
+        "mains_hz": "mains frequency in hertz",
+        "vpeak_v": "rectified peak voltage in volts"
+      },
+      "name": "Power Supply Ripple Estimator",
+      "real_world_use": "Audio amplifiers hum audibly when ripple is too high, so designers estimate it before choosing filter capacitors.",
+      "slug_base": "power-supply-ripple-estimator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A bridge rectifier flips both mains half-cycles positive, losing about two diode drops and demanding diodes rated for the peak inverse voltage of the full secondary. The analyzer computes DC output, diode stress, and transformer utilization from the secondary voltage and load.",
+      "data_idea": "Seeded RNG picks transformer secondaries and loads, then reports DC voltage, ripple, and diode PIV margins.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_farad": "filter capacitance in farads",
+        "diode_vf": "diode forward drop in volts",
+        "load_a": "load current in amps",
+        "vsec_vrms": "secondary RMS voltage in volts"
+      },
+      "name": "Full-Wave Rectifier Analyzer",
+      "real_world_use": "Linear bench supplies and industrial control power stages are still built around bridge rectifiers.",
+      "slug_base": "full-wave-rectifier-analyzer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A voltage-divider bias network sets a BJT's Q point near the middle of its load line so the output can swing both ways without clipping. Checking the Q point against beta variation shows whether the stage stays stable across transistor samples.",
+      "data_idea": "Seeded RNG varies beta across a realistic spread and recomputes the Q point to demonstrate bias stability.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "beta": "transistor current gain",
+        "rc_ohm": "collector resistance in ohms",
+        "re_ohm": "emitter resistance in ohms",
+        "vcc_v": "supply voltage in volts"
+      },
+      "name": "Transistor Bias Point Calculator",
+      "real_world_use": "Discrete amplifier stages in audio and sensor front ends are biased with exactly this method.",
+      "slug_base": "transistor-bias-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A JFET self-biases when its source resistor lifts the source above the grounded gate, and the operating point sits where the load line crosses the transfer curve set by IDSS and Vp. Solving that intersection gives the drain current and voltage gain of the stage.",
+      "data_idea": "Seeded RNG draws JFET parameters from datasheet-style spreads and solves each bias point numerically.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "idss_ma": "zero-bias drain current in milliamps",
+        "rd_ohm": "drain resistance in ohms",
+        "rs_ohm": "source resistance in ohms",
+        "vp_v": "pinch-off voltage in volts"
+      },
+      "name": "JFET Bias Calculator",
+      "real_world_use": "High-impedance buffer stages for microphones, pH probes, and guitar pickups commonly use self-biased JFETs.",
+      "slug_base": "jfet-bias-calculator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A power MOSFET's gate looks like a capacitor that must be charged through the Miller plateau, so the driver current sets the switching speed and the switching losses. Sizing means choosing gate resistance and driver current for the target rise time without excessive ringing.",
+      "data_idea": "Seeded RNG picks MOSFET gate charges and switching frequencies, then computes required drive current and gate resistor.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "fsw_khz": "switching frequency in kilohertz",
+        "qg_nc": "total gate charge in nanocoulombs",
+        "target_ns": "target switching time in nanoseconds",
+        "vdrive_v": "gate drive voltage in volts"
+      },
+      "name": "MOSFET Gate Driver Sizer",
+      "real_world_use": "Motor drives, SMPS stages, and class-D amplifiers live or die by correct gate drive sizing.",
+      "slug_base": "mosfet-gate-driver-sizer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A Wheatstone bridge balances when R1/R2 equals R3/Rx, giving zero volts across the middle, which makes it exquisitely sensitive to tiny resistance changes. Slightly unbalancing it with a sensor produces a small differential voltage that an instrumentation amplifier can read.",
+      "data_idea": "Seeded RNG generates bridge configurations and sensor drift values, then computes the differential output voltage.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "r1_ohm": "bridge resistor R1 in ohms",
+        "r2_ohm": "bridge resistor R2 in ohms",
+        "r3_ohm": "bridge resistor R3 in ohms",
+        "rx_ohm": "unknown or sensor resistance in ohms"
+      },
+      "name": "Wheatstone Bridge Solver",
+      "real_world_use": "Strain gauges, pressure sensors, and RTDs are read through Wheatstone bridges in industrial measurement.",
+      "slug_base": "wheatstone-bridge-solver",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "An ideal op-amp in a non-inverting stage gives gain 1 + Rf/Rin, while the inverting stage gives -Rf/Rin, but the gain-bandwidth product caps how much gain survives at high frequency. The calculator also flags when the required output slew rate exceeds the op-amp's limit.",
+      "data_idea": "Seeded RNG picks target gains and signal frequencies, then selects resistor pairs and checks bandwidth headroom.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "gbw_mhz": "gain-bandwidth product in megahertz",
+        "rf_ohm": "feedback resistance in ohms",
+        "rin_ohm": "input resistance in ohms",
+        "topology": "inverting or non-inverting"
+      },
+      "name": "Op-Amp Gain Calculator",
+      "real_world_use": "Sensor signal conditioning chains are built from these exact gain stages.",
+      "slug_base": "opamp-gain-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Positive feedback around a comparator creates two switching thresholds, so noise near the trip point cannot cause chatter. Setting the upper and lower thresholds with a resistor divider defines a hysteresis band matched to the expected noise amplitude.",
+      "data_idea": "Seeded RNG generates noisy input signals and shows clean switching once the hysteresis band exceeds the noise.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "vout_v": "output swing in volts",
+        "vref_v": "reference voltage in volts",
+        "vth_high_v": "upper threshold in volts",
+        "vth_low_v": "lower threshold in volts"
+      },
+      "name": "Schmitt Trigger Designer",
+      "real_world_use": "Rotary encoders, zero-cross detectors, and slow sensor signals are squared up with Schmitt triggers.",
+      "slug_base": "schmitt-trigger-designer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Adding a feedback resistor from output to the non-inverting input moves the trip point depending on the current output state, which is what creates hysteresis. The designer computes the resistor ratio that yields a target hysteresis voltage for a given output swing.",
+      "data_idea": "Seeded RNG varies output swing and target hysteresis, solving for the feedback resistor each time.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "rin_ohm": "input resistance in ohms",
+        "vhyst_mv": "desired hysteresis in millivolts",
+        "vout_pp_v": "output peak-to-peak swing in volts"
+      },
+      "name": "Comparator Hysteresis Designer",
+      "real_world_use": "Battery monitors, thermostat inputs, and over-current flags use hysteresis to avoid relay chatter.",
+      "slug_base": "comparator-hysteresis-designer",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The classic three-op-amp instrumentation amplifier gives differential gain of 1 + 2R/Rg with very high input impedance and strong common-mode rejection. One external resistor Rg sets the gain, which is why sensor datasheets always tabulate gain versus Rg.",
+      "data_idea": "Seeded RNG picks target gains and the tool returns the nearest E96 Rg value plus the actual achieved gain.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cmrr_db": "required common-mode rejection in dB",
+        "gain": "target differential gain",
+        "r_ohm": "internal resistor R in ohms"
+      },
+      "name": "Instrumentation Amplifier Gain Setter",
+      "real_world_use": "Bridge sensors, thermocouples, and biomedical electrodes are amplified with instrumentation amplifiers.",
+      "slug_base": "instrumentation-amp-setter",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "The Sallen-Key topology builds a second-order active filter from one op-amp, two resistors, and two capacitors, with the cutoff frequency at 1/(2 x pi x R x C) and Q set by the gain. Choosing equal-R, equal-C values simplifies the math while still hitting standard Butterworth or Bessel responses.",
+      "data_idea": "Seeded RNG picks cutoff frequencies and responses, then solves for standard-value R and C pairs.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "fc_hz": "cutoff frequency in hertz",
+        "q": "filter Q factor",
+        "response": "Butterworth, Bessel, or Chebyshev",
+        "type": "low-pass or high-pass"
+      },
+      "name": "Sallen-Key Filter Designer",
+      "real_world_use": "Anti-aliasing filters before ADCs and audio tone shaping use Sallen-Key stages widely.",
+      "slug_base": "sallen-key-filter-designer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A Linkwitz-Riley crossover cascades two Butterworth stages so the acoustic sum of woofer and tweeter stays flat at the crossover frequency. Designing one means picking the crossover point and slope, then computing the filter component values for each band.",
+      "data_idea": "Seeded RNG selects crossover points and the designer outputs component values plus the summed magnitude response.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "bands": "two-way or three-way",
+        "fx_hz": "crossover frequency in hertz",
+        "slope_db_oct": "slope in dB per octave"
+      },
+      "name": "Active Crossover Designer",
+      "real_world_use": "Powered studio monitors and PA speakers split woofer and tweeter signals with active crossovers.",
+      "slug_base": "active-crossover-designer",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "An RLC circuit's step response is set by its damping ratio: underdamped rings, critically damped settles fastest without overshoot, and overdamped creeps to the final value. The analyzer plots the response for given R, L, and C so the ringing versus settling tradeoff is visible.",
+      "data_idea": "Seeded RNG draws R, L, C triples spanning all three damping regimes and classifies each response.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_farad": "capacitance in farads",
+        "l_henry": "inductance in henries",
+        "r_ohm": "resistance in ohms",
+        "vstep_v": "step amplitude in volts"
+      },
+      "name": "RC and RLC Transient Analyzer",
+      "real_world_use": "Power distribution networks and snubber circuits are tuned by inspecting exactly these transient shapes.",
+      "slug_base": "rc-rlc-transient-analyzer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A Bode plot shows a filter's magnitude in dB and phase in degrees against logarithmic frequency, revealing cutoff, slope, and resonance at a glance. Rendering it in ASCII keeps the tool dependency-free while still showing the classic -20 dB per decade rolloff.",
+      "data_idea": "Seeded RNG assembles random first- and second-order transfer functions and renders their ASCII Bode plots.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "f_end_hz": "plot end frequency in hertz",
+        "f_start_hz": "plot start frequency in hertz",
+        "poles_hz": "pole frequencies in hertz",
+        "zeros_hz": "zero frequencies in hertz"
+      },
+      "name": "Bode Plotter (ASCII)",
+      "real_world_use": "Control-loop compensation and filter verification start with Bode analysis on the bench.",
+      "slug_base": "bode-plotter-ascii",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Sampling a signal slower than twice its highest frequency folds the excess into phantom lower frequencies called aliases. The demo samples a sine wave at several rates so the moment aliasing appears is unmistakable.",
+      "data_idea": "Seeded RNG picks signal frequencies and sampling rates straddling the Nyquist limit to show clean versus aliased captures.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cycles": "number of signal cycles to show",
+        "fs_hz": "sampling rate in hertz",
+        "fsig_hz": "signal frequency in hertz"
+      },
+      "name": "Nyquist Sampling Demo",
+      "real_world_use": "Choosing ADC sample rates and anti-aliasing filters in data acquisition depends on this theorem.",
+      "slug_base": "nyquist-sampling-demo",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "A DAC holds each digital code as a constant voltage until the next update, producing the staircase waveform of zero-order-hold reconstruction. Overlaying the ideal smooth signal shows the quantization steps and the high-frequency images a reconstruction filter must remove.",
+      "data_idea": "Seeded RNG generates test waveforms and renders the DAC staircase at multiple resolutions side by side.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "bits": "DAC resolution in bits",
+        "fs_hz": "update rate in hertz",
+        "fsig_hz": "signal frequency in hertz"
+      },
+      "name": "DAC Staircase Visualizer",
+      "real_world_use": "Audio playback chains and function generators are evaluated by inspecting this reconstruction behavior.",
+      "slug_base": "dac-staircase-visualizer",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A sample-and-hold freezes the input on a capacitor during the ADC's conversion window, and two errors fight the accuracy: acquisition time to charge the capacitor and droop as it leaks during hold. The simulator shows both effects for a given clock rate and capacitor size.",
+      "data_idea": "Seeded RNG varies input slew rates and hold times, reporting acquisition error and droop per configuration.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_hold_pf": "hold capacitance in picofarads",
+        "fs_hz": "sampling rate in hertz",
+        "ileak_na": "leakage current in nanoamps",
+        "r_on_ohm": "switch on-resistance in ohms"
+      },
+      "name": "Sample-and-Hold Simulator",
+      "real_world_use": "High-speed data acquisition front ends are specified around sample-and-hold performance.",
+      "slug_base": "sample-and-hold-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "An NTC thermistor's resistance drops exponentially with temperature, and the Steinhart-Hart equation converts that resistance to temperature with three calibration coefficients. The converter also handles the simpler beta-parameter model used on many datasheets.",
+      "data_idea": "Seeded RNG synthesizes thermistor resistances across -40 to 125C and converts them back to temperature with error analysis.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "adc_bits": "ADC resolution in bits",
+        "beta": "beta parameter in kelvin",
+        "r25_ohm": "resistance at 25C in ohms",
+        "r_ohm": "measured resistance in ohms"
+      },
+      "name": "Thermistor Temperature Converter",
+      "real_world_use": "Battery packs, 3D printers, and HVAC systems read temperature through NTC thermistors.",
+      "slug_base": "thermistor-temperature-converter",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "A platinum RTD follows the nearly-linear Callendar-Van Dusen curve, but precision work needs the residual curvature corrected with a lookup table. The builder generates a temperature-to-resistance table plus interpolation helpers for firmware.",
+      "data_idea": "Seeded RNG adds realistic lead-wire offsets so the table builder can demonstrate two, three, and four-wire correction.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "r0_ohm": "resistance at 0C in ohms",
+        "step_c": "table step in Celsius",
+        "t_max_c": "table maximum in Celsius",
+        "t_min_c": "table minimum in Celsius"
+      },
+      "name": "RTD Linearization Table Builder",
+      "real_world_use": "Industrial process control and calibration labs linearize PT100 sensors with generated tables like these.",
+      "slug_base": "rtd-linearization-builder",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A thermocouple only measures the temperature difference between its hot tip and the cold junction where it meets copper, so firmware must add the cold-junction temperature back using a local sensor. The compensator applies NIST-style polynomial coefficients to convert millivolts to temperature correctly.",
+      "data_idea": "Seeded RNG produces thermocouple voltages at random hot and cold junction temperatures for conversion drills.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cj_c": "cold-junction temperature in Celsius",
+        "mv": "measured voltage in millivolts",
+        "tc_type": "thermocouple type letter"
+      },
+      "name": "Thermocouple Cold-Junction Compensator",
+      "real_world_use": "Furnaces, kilns, and engine test cells rely on cold-junction compensation for accurate readings.",
+      "slug_base": "thermocouple-cjc-compensator",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "A strain gauge changes resistance slightly when stretched, and four gauges in a Wheatstone bridge turn that microstrain into a measurable millivolt signal. The amplifier stage then scales the bridge output, with gain set by the expected strain range and the ADC input span.",
+      "data_idea": "Seeded RNG generates strain profiles and gauge factors, then computes bridge output and required amplifier gain.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "excitation_v": "bridge excitation voltage in volts",
+        "gain": "amplifier gain",
+        "gauge_factor": "strain gauge factor",
+        "microstrain": "applied strain in microstrain"
+      },
+      "name": "Strain Gauge Bridge Amplifier",
+      "real_world_use": "Weigh scales, load cells, and structural health monitors all read strain through bridge amplifiers.",
+      "slug_base": "strain-gauge-bridge-amplifier",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A tiny sense resistor in series with the load creates a small voltage proportional to current, which a current-sense amplifier boosts to a microcontroller-friendly level. Kelvin connections across the resistor keep PCB trace resistance out of the measurement.",
+      "data_idea": "Seeded RNG picks load currents and sense values, then reports output voltage and power wasted in the sense resistor.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "gain": "amplifier gain",
+        "imax_a": "maximum current in amps",
+        "rsense_mohm": "sense resistance in milliohms",
+        "vout_max_v": "max output voltage in volts"
+      },
+      "name": "Current Sense Amplifier Sizer",
+      "real_world_use": "Battery management systems and motor controllers measure current with shunt amplifiers like these.",
+      "slug_base": "current-sense-amp-sizer",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A photodiode produces a current proportional to light, and a transimpedance amplifier converts it to voltage with gain set by the feedback resistor: Vout = Iphoto x Rf. The feedback capacitor is chosen to keep the stage stable against the photodiode's capacitance.",
+      "data_idea": "Seeded RNG varies light levels and photodiode capacitance, computing output voltage and required compensation.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_feedback_pf": "feedback capacitance in picofarads",
+        "iphoto_ua": "photocurrent in microamps",
+        "rf_ohm": "feedback resistance in ohms"
+      },
+      "name": "Photodiode Transimpedance Calculator",
+      "real_world_use": "Optical receivers, pulse oximeters, and light meters use transimpedance front ends.",
+      "slug_base": "photodiode-transimpedance-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "An optocoupler's current transfer ratio (CTR) tells how much output current you get per milliamp of LED drive, and it degrades with age and temperature. The checker verifies that the worst-case CTR still saturates the output transistor across the design's lifetime.",
+      "data_idea": "Seeded RNG applies CTR degradation curves over temperature and years, flagging designs that lose saturation margin.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "ctr_min_pct": "minimum CTR in percent",
+        "degrade_pct": "lifetime CTR degradation in percent",
+        "if_ma": "LED forward current in milliamps",
+        "r_pullup_ohm": "output pull-up in ohms"
+      },
+      "name": "Optocoupler CTR Checker",
+      "real_world_use": "Isolated feedback in power supplies and PLC input modules depends on guaranteed CTR over life.",
+      "slug_base": "optocoupler-ctr-checker",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A zero-cross detector fires a pulse each time the AC mains waveform passes through zero volts, usually with a comparator or optocoupler watching a scaled-down mains signal. Firmware uses those pulses to time TRIAC firing angles and measure line frequency.",
+      "data_idea": "Seeded RNG synthesizes mains waveforms with noise and distortion, then detects zero crossings and measures timing jitter.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "mains_hz": "mains frequency in hertz",
+        "noise_mv": "noise amplitude in millivolts",
+        "threshold_mv": "detection threshold in millivolts"
+      },
+      "name": "Zero-Cross Detector Simulator",
+      "real_world_use": "Light dimmers, heater controllers, and soft starters synchronize to the mains with zero-cross detection.",
+      "slug_base": "zero-cross-detector-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A TRIAC dimmer chops each AC half-cycle, turning on at a delayed firing angle so only part of the sine wave reaches the lamp. Later firing angles mean dimmer light but also more harmonic distortion and potential LED flicker.",
+      "data_idea": "Seeded RNG sweeps firing angles and renders the chopped waveform plus RMS voltage delivered to the load.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "angle_deg": "firing angle in degrees",
+        "load_w": "lamp power in watts",
+        "mains_vrms": "mains RMS voltage in volts"
+      },
+      "name": "TRIAC Dimmer Simulator",
+      "real_world_use": "Phase-cut dimmers in homes and theaters control incandescent and dimmable LED loads this way.",
+      "slug_base": "triac-dimmer-simulator",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "When a switch opens an inductive load, the collapsing field demands a current path, and an RC snubber across the switch absorbs the energy to limit the voltage spike. Designing it means matching the snubber to the load inductance and the switch's voltage rating while keeping snubber dissipation in check.",
+      "data_idea": "Seeded RNG generates inductive loads and switch ratings, then sizes R and C and estimates peak voltage and dissipation.",
+      "difficulty": "advanced",
+      "key_params": {
+        "c_snub_nf": "snubber capacitance in nanofarads",
+        "i_load_a": "switched current in amps",
+        "l_load_mh": "load inductance in millihenries",
+        "r_snub_ohm": "snubber resistance in ohms"
+      },
+      "name": "Snubber Circuit Designer",
+      "real_world_use": "Relay contacts, TRIACs, and MOSFETs switching motors and transformers rely on snubbers for reliability.",
+      "slug_base": "snubber-circuit-designer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Bulk capacitors look like a short circuit at power-on, so an NTC thermistor or timed resistor limits the inrush surge that would otherwise weld switch contacts or trip breakers. The limiter must survive the surge energy yet drop to low resistance once warm.",
+      "data_idea": "Seeded RNG picks capacitance and source impedance, then computes peak inrush with and without limiting.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_bulk_uf": "bulk capacitance in microfarads",
+        "r_limit_ohm": "limiting resistance in ohms",
+        "v_in_v": "input voltage in volts"
+      },
+      "name": "Inrush Current Limiter Designer",
+      "real_world_use": "Audio amplifiers, SMPS units, and motor drives include inrush limiting to survive power-on.",
+      "slug_base": "inrush-current-limiter",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A soft-start ramps the output voltage over tens of milliseconds so downstream capacitors charge gently instead of demanding a huge gulp of current. The designer picks the ramp capacitor and current limit that keep the pass device inside its safe operating area.",
+      "data_idea": "Seeded RNG varies load capacitance and current limits, simulating the ramp and peak device stress.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_load_uf": "load capacitance in microfarads",
+        "ilimit_a": "current limit in amps",
+        "t_ramp_ms": "ramp time in milliseconds"
+      },
+      "name": "Soft-Start Circuit Designer",
+      "real_world_use": "Hot-swap controllers and lab supplies use soft-start to protect connectors and upstream supplies.",
+      "slug_base": "soft-start-designer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "FPGAs and processors need their rails to rise in a specific order with controlled delays, or latch-up and configuration failures can occur. The planner takes each rail's timing requirements and produces a sequenced enable schedule with margin checks.",
+      "data_idea": "Seeded RNG generates rail requirement sets and the planner outputs an ordered enable sequence with delay values.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "delay_ms": "delay between rails in milliseconds",
+        "rails": "list of rail voltage requirements",
+        "tolerance_pct": "sequencing tolerance in percent"
+      },
+      "name": "Power Sequencing Planner",
+      "real_world_use": "Complex SoC boards sequence core, IO, and memory rails with dedicated sequencer ICs.",
+      "slug_base": "power-sequencing-planner",
+      "suggested_types": [
+        "scheduler",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A watchdog timer resets the microcontroller unless firmware pets it on schedule, which recovers the system from software lockups automatically. The designer picks the timeout long enough to survive worst-case task timing but short enough to bound the outage.",
+      "data_idea": "Seeded RNG simulates task timing distributions and verifies the chosen timeout avoids false resets while catching hangs.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "pet_interval_ms": "firmware pet interval in milliseconds",
+        "timeout_ms": "watchdog timeout in milliseconds",
+        "worst_task_ms": "worst-case task time in milliseconds"
+      },
+      "name": "Watchdog Timer Designer",
+      "real_world_use": "Automotive ECUs, industrial controllers, and remote sensors use watchdogs as their last-resort recovery.",
+      "slug_base": "watchdog-timer-designer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A brownout detector holds the microcontroller in reset when the supply sags below a threshold, preventing corrupted flash writes and erratic execution during dips. The simulator replays sagging supply waveforms and shows whether the detector catches each event.",
+      "data_idea": "Seeded RNG creates supply sag and noise scenarios, and the simulator reports detection versus missed events.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "hysteresis_mv": "detector hysteresis in millivolts",
+        "sag_depth_v": "sag depth in volts",
+        "threshold_v": "brownout threshold in volts"
+      },
+      "name": "Brownout Detector Simulator",
+      "real_world_use": "Battery devices and mains-powered controllers depend on brownout reset for data integrity.",
+      "slug_base": "brownout-detector-simulator",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "A supercapacitor can hold up a microcontroller just long enough to save state and shut down cleanly when main power fails. Backup time follows from the usable voltage window and the load current: t = C x dV / I.",
+      "data_idea": "Seeded RNG varies load currents and capacitor values, reporting holdup time against a target shutdown budget.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "c_farad": "supercapacitance in farads",
+        "i_load_ma": "load current in milliamps",
+        "v_full_v": "charged voltage in volts",
+        "v_min_v": "minimum operating voltage in volts"
+      },
+      "name": "Supercapacitor Backup Time Estimator",
+      "real_world_use": "Smart meters and data loggers use supercapacitors to survive power loss without batteries.",
+      "slug_base": "supercap-backup-estimator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Lithium-ion charging follows a CC-CV profile: constant current until the cell nears full voltage, then constant voltage while current tapers to a cutoff. Simulating the profile shows charge time, heat, and why the last 20 percent always feels slow.",
+      "data_idea": "Seeded RNG picks cell capacities and charge rates, then steps through the CC-CV curve to total charge time.",
+      "difficulty": "advanced",
+      "key_params": {
+        "capacity_mah": "cell capacity in milliamp-hours",
+        "cc_rate_c": "constant-current rate in C",
+        "cutoff_ma": "termination current in milliamps",
+        "cv_v": "constant-voltage limit in volts"
+      },
+      "name": "Li-Ion Charge Profile Simulator",
+      "real_world_use": "Charger IC selection and fast-charge product claims are validated against CC-CV simulations.",
+      "slug_base": "li-ion-charge-profile-simulator",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "A coulomb counter integrates current in and out of the battery to track state of charge, but small measurement offsets accumulate into drift over time. The simulator models offset error and periodic recalibration at full charge to show realistic gauge accuracy.",
+      "data_idea": "Seeded RNG generates usage cycles with sensor offsets, and the gauge tracks estimated versus true state of charge.",
+      "difficulty": "advanced",
+      "key_params": {
+        "capacity_mah": "battery capacity in milliamp-hours",
+        "offset_ma": "current-sense offset in milliamps",
+        "recalibrate": "recalibrate at full charge, true or false"
+      },
+      "name": "Coulomb Counter Fuel Gauge",
+      "real_world_use": "Laptops, phones, and EVs estimate remaining battery with coulomb counting plus recalibration.",
+      "slug_base": "coulomb-counter-fuel-gauge",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "A solar panel delivers maximum power at one specific voltage-current point that shifts with sunlight and temperature, so an MPPT controller hunts for it continuously. The simulator replays irradiance and temperature profiles while a perturb-and-observe algorithm tracks the peak.",
+      "data_idea": "Seeded RNG creates passing-cloud irradiance profiles and the tracker logs harvested versus ideal energy.",
+      "difficulty": "advanced",
+      "key_params": {
+        "algorithm": "tracking algorithm name",
+        "panel_w": "panel rating in watts",
+        "step_v": "perturbation step in volts"
+      },
+      "name": "Solar MPPT Tracker Simulator",
+      "real_world_use": "Every grid-tie and off-grid solar inverter runs an MPPT algorithm to squeeze out panel wattage.",
+      "slug_base": "solar-mppt-tracker-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "An energy-harvesting node survives only if average harvested power exceeds average consumed power across day-night and seasonal cycles. The budgeter combines harvester output profiles with the node's sleep and transmit duty cycles to size the storage capacitor.",
+      "data_idea": "Seeded RNG generates harvest and consumption traces over simulated weeks to find the worst energy deficit.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "harvest_uw": "average harvested power in microwatts",
+        "sleep_uw": "sleep power in microwatts",
+        "storage_mj": "storage capacity in millijoules",
+        "tx_ma": "transmit current in milliamps"
+      },
+      "name": "Energy Harvesting Budgeter",
+      "real_world_use": "Battery-free IoT sensors powered by light, vibration, or heat are designed around energy budgets.",
+      "slug_base": "energy-harvesting-budgeter",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "A buck converter steps voltage down by switching an inductor between input and output, with duty cycle approximately Vout/Vin in continuous conduction. The designer picks inductance for ripple current, capacitance for ripple voltage, and checks the switch ratings.",
+      "data_idea": "Seeded RNG draws input-output combinations and the designer outputs inductor, capacitor, and duty cycle selections.",
+      "difficulty": "advanced",
+      "key_params": {
+        "fsw_khz": "switching frequency in kilohertz",
+        "iin_a": "input current in amps",
+        "vin_v": "input voltage in volts",
+        "vout_v": "output voltage in volts"
+      },
+      "name": "Buck Converter Designer",
+      "real_world_use": "Point-of-load regulators on nearly every digital board are buck converters.",
+      "slug_base": "buck-converter-designer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A flyback transformer stores energy in its core during the switch-on time and releases it to the secondary when the switch opens, providing isolated outputs from one magnetic part. The turns ratio sets the output voltage while the primary inductance sets the energy per cycle.",
+      "data_idea": "Seeded RNG picks output requirements and the tool computes turns ratio, primary inductance, and peak switch current.",
+      "difficulty": "advanced",
+      "key_params": {
+        "fsw_khz": "switching frequency in kilohertz",
+        "iout_a": "output current in amps",
+        "vin_v": "input voltage in volts",
+        "vout_v": "output voltage in volts"
+      },
+      "name": "Flyback Transformer Turns Calculator",
+      "real_world_use": "Mains-isolated adapters and auxiliary supplies are dominated by flyback topologies.",
+      "slug_base": "flyback-turns-calculator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A hot-swap controller lets a board plug into a live backplane by ramping its input current and disconnecting on faults like overcurrent or short circuits. Sizing means choosing the sense resistor, current limit, and fault timers for the board's capacitance and load.",
+      "data_idea": "Seeded RNG simulates insertion events with varying backplane stiffness and verifies the current ramp stays within limits.",
+      "difficulty": "advanced",
+      "key_params": {
+        "c_board_uf": "board capacitance in microfarads",
+        "ilimit_a": "current limit in amps",
+        "vin_v": "backplane voltage in volts"
+      },
+      "name": "Hot-Swap Controller Sizer",
+      "real_world_use": "Server blades, telecom line cards, and storage arrays hot-swap through controllers like these.",
+      "slug_base": "hot-swap-controller-sizer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Diode OR-ing joins redundant supplies so the higher one feeds the load, but ideal-diode controllers with MOSFETs cut the diode drop and its heat. The designer checks switchover behavior and reverse-current blocking during supply faults.",
+      "data_idea": "Seeded RNG injects supply failures and brownouts, verifying uninterrupted load voltage through each event.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "iload_a": "load current in amps",
+        "rdson_mohm": "MOSFET on-resistance in milliohms",
+        "vdrop_v": "allowed switchover droop in volts"
+      },
+      "name": "Redundant Power OR-ing Designer",
+      "real_world_use": "Data centers and medical devices use OR-ed redundant supplies for uninterrupted operation.",
+      "slug_base": "redundant-power-oring-designer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "USB Power Delivery negotiates voltage and current through structured messages, stepping from 5V up to contracts like 20V at 5A. The simulator plays both source and sink roles, walking through capability exchange until a power contract is agreed.",
+      "data_idea": "Seeded RNG assigns source capabilities and sink requests, then logs the negotiated contract message by message.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "sink_request": "requested voltage and current",
+        "source_pdos": "source power data objects"
+      },
+      "name": "USB-C PD Contract Negotiator Simulator",
+      "real_world_use": "Laptop chargers, docks, and phones negotiate USB-C PD contracts on every plug-in.",
+      "slug_base": "usb-pd-contract-simulator",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim"
+      ]
+    },
+    {
+      "concept": "Power over Ethernet budgets must cover the powered device plus cable losses, with the PSE class limiting total draw per port. The calculator sums device loads, applies cable loss estimates, and checks each port against its class limit.",
+      "data_idea": "Seeded RNG lays out devices with classes and cable lengths, then validates the total power budget.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cable_m": "cable length in meters",
+        "devices": "list of device power classes",
+        "pse_w": "PSE total power in watts"
+      },
+      "name": "PoE Power Budget Calculator",
+      "real_world_use": "Network installers budget PoE switch capacity for cameras, phones, and access points.",
+      "slug_base": "poe-power-budget-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "EEPROM cells wear out after roughly a hundred thousand writes, so wear leveling spreads writes across the array to stretch lifetime. The simulator replays write patterns through different leveling schemes and reports the worst-cell erase count.",
+      "data_idea": "Seeded RNG generates write workloads (logging, counters, settings) and compares naive versus leveled wear.",
+      "difficulty": "advanced",
+      "key_params": {
+        "cells": "number of EEPROM cells",
+        "endurance": "writes per cell rating",
+        "writes": "total write operations"
+      },
+      "name": "EEPROM Wear-Leveling Simulator",
+      "real_world_use": "Configuration storage in industrial controllers uses wear leveling to survive decades of updates.",
+      "slug_base": "eeprom-wear-leveling-simulator",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "NAND flash develops bad blocks over time, so a manager maintains a bad-block table and remaps them to spares transparently. The simulator ages a flash array with random block failures and tracks usable capacity and remap events.",
+      "data_idea": "Seeded RNG injects block failures over simulated years and the manager reports capacity loss and table growth.",
+      "difficulty": "advanced",
+      "key_params": {
+        "block_kb": "block size in kilobytes",
+        "blocks": "total block count",
+        "fail_rate": "annual block failure rate",
+        "spares": "spare block count"
+      },
+      "name": "Flash Bad-Block Manager",
+      "real_world_use": "SSDs, eMMC storage, and data loggers all run bad-block management in firmware.",
+      "slug_base": "flash-bad-block-manager",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ]
+    },
+    {
+      "concept": "A MEMS accelerometer is a microscopic spring-mass system whose resonant frequency and damping set its bandwidth and noise floor. The modeler computes sensitivity, bandwidth, and Brownian noise from the proof-mass and spring geometry.",
+      "data_idea": "Seeded RNG varies geometry parameters and the model reports frequency response and noise density.",
+      "difficulty": "advanced",
+      "key_params": {
+        "damping": "damping ratio",
+        "mass_ug": "proof mass in micrograms",
+        "res_hz": "resonant frequency in hertz"
+      },
+      "name": "MEMS Accelerometer Modeler",
+      "real_world_use": "Phone screen rotation, airbag triggers, and vibration monitors all start as MEMS models like this.",
+      "slug_base": "mems-accelerometer-modeler",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A sigma-delta ADC oversamples the input and shapes quantization noise up into high frequencies where a digital filter removes it. Simulating the modulator loop shows how oversampling ratio trades speed for resolution, reaching 20-plus effective bits.",
+      "data_idea": "Seeded RNG feeds test tones through first and second-order modulators and measures the resulting SNR.",
+      "difficulty": "advanced",
+      "key_params": {
+        "order": "modulator order",
+        "osr": "oversampling ratio",
+        "signal_hz": "test tone frequency in hertz"
+      },
+      "name": "Sigma-Delta ADC Simulator",
+      "real_world_use": "Audio converters and precision weigh-scale ADCs use sigma-delta modulation for high resolution.",
+      "slug_base": "sigma-delta-adc-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Field-oriented control keeps a BLDC motor's stator field 90 degrees ahead of the rotor for maximum torque per amp, using Clarke and Park transforms to work in a rotating reference frame. The visualizer steps through commutation states and shows the resulting torque ripple.",
+      "data_idea": "Seeded RNG varies load torque and speed while the visualizer renders phase currents and rotor angle.",
+      "difficulty": "advanced",
+      "key_params": {
+        "kp": "current-loop proportional gain",
+        "poles": "motor pole count",
+        "rpm": "rotor speed in RPM"
+      },
+      "name": "FOC Basics Visualizer",
+      "real_world_use": "E-bikes, drones, and power tools increasingly run sensorless field-oriented motor control.",
+      "slug_base": "foc-basics-visualizer",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Every logic gate has a truth table: AND needs all inputs high, OR needs any, XOR needs an odd count, and NOT flips its input. Chaining gates builds adders, multiplexers, and eventually whole processors from these primitives.",
+      "data_idea": "Seeded RNG generates random input vectors and gate networks, asking the learner to predict each output.",
+      "difficulty": "beginner",
+      "key_params": {
+        "gates": "list of gate types used",
+        "inputs": "input bit values",
+        "network": "gate interconnection description"
+      },
+      "name": "Logic Gate Simulator",
+      "real_world_use": "Digital design courses and interview prep use gate-level simulation to teach combinational logic.",
+      "slug_base": "logic-gate-simulator",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "A Karnaugh map arranges a truth table on a grid so adjacent cells differ by one bit, letting you circle groups of ones to read off a minimized sum-of-products expression. Larger power-of-two groupings eliminate more variables and yield simpler gate circuits.",
+      "data_idea": "Seeded RNG deals random 2, 3, and 4-variable functions and checks the learner's minimized expression.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "minterms": "list of minterm indices",
+        "variables": "number of variables, 2 to 4"
+      },
+      "name": "Karnaugh Map Solver",
+      "real_world_use": "Designers still minimize glue logic by hand with K-maps before committing to gates or PLD equations.",
+      "slug_base": "karnaugh-map-solver",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "When a clock edge races a data change through a flip-flop, setup and hold times decide whether the bit is captured cleanly or goes metastable. The lab sweeps clock skew and data timing to show the window where capture becomes unreliable.",
+      "data_idea": "Seeded RNG injects clock skew and jitter, and the lab reports setup/hold violations per trial.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "clk_skew_ps": "clock skew in picoseconds",
+        "hold_ps": "hold time in picoseconds",
+        "setup_ps": "setup time in picoseconds"
+      },
+      "name": "Flip-Flop Race Condition Lab",
+      "real_world_use": "Timing closure in FPGAs and ASICs is fundamentally about respecting setup and hold everywhere.",
+      "slug_base": "flip-flop-race-lab",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A binary counter chains flip-flops so each stage toggles on the previous stage's falling edge, counting 0000 to 1111 on four bits. The visualizer steps the clock and shows every output bit plus the decoded count.",
+      "data_idea": "Seeded RNG starts counters at random values and the visualizer animates the counting sequence.",
+      "difficulty": "beginner",
+      "key_params": {
+        "bits": "counter width in bits",
+        "start": "starting count value",
+        "steps": "number of clock steps to show"
+      },
+      "name": "Binary Counter Visualizer",
+      "real_world_use": "Frequency dividers, event counters, and PWM generators are all built from counter chains.",
+      "slug_base": "binary-counter-visualizer",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A seven-segment display lights combinations of its seven bars to form digits, with each segment driven by one output bit. The driver maps a digit or hex value to the segment pattern for common-anode or common-cathode wiring.",
+      "data_idea": "Seeded RNG deals random digits and the driver outputs the segment bit patterns for both wiring styles.",
+      "difficulty": "beginner",
+      "key_params": {
+        "digit": "digit 0-9 or hex A-F",
+        "segments": "segment bit pattern",
+        "wiring": "common-anode or common-cathode"
+      },
+      "name": "Seven-Segment Display Driver",
+      "real_world_use": "Clocks, meters, and appliance panels still drive seven-segment displays from microcontrollers.",
+      "slug_base": "seven-seg-driver",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "BCD packs each decimal digit into four bits, and a decoder translates those nibbles into seven-segment patterns or back into binary. The tool converts both directions and flags the six invalid codes that BCD never uses.",
+      "data_idea": "Seeded RNG generates BCD nibbles including invalid codes for the learner to convert or reject.",
+      "difficulty": "beginner",
+      "key_params": {
+        "bcd": "BCD nibble value",
+        "direction": "bcd-to-binary or binary-to-bcd"
+      },
+      "name": "BCD to Seven-Segment Decoder",
+      "real_world_use": "Real-time clocks and financial displays that think in decimal use BCD throughout.",
+      "slug_base": "bcd-to-seven-seg-decoder",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A multiplexer routes one of many inputs to a single output under select-line control, and a demultiplexer does the reverse. The lab wires select lines to inputs and shows which path is active, the same idea behind bus sharing in processors.",
+      "data_idea": "Seeded RNG randomizes select lines and input values, asking which input reaches the output.",
+      "difficulty": "beginner",
+      "key_params": {
+        "inputs": "list of input values",
+        "select": "select line value",
+        "width": "mux width, e.g. 4-to-1"
+      },
+      "name": "Multiplexer and Demultiplexer Lab",
+      "real_world_use": "Data selectors in ALUs, display multiplexing, and shared buses all use mux logic.",
+      "slug_base": "mux-demux-lab",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ]
+    },
+    {
+      "concept": "A 4-bit ALU performs add, subtract, AND, OR, and XOR on two nibbles, raising zero and carry flags like a real processor's arithmetic unit. The simulator executes operations step by step, showing the flag register after each one.",
+      "data_idea": "Seeded RNG deals random operand pairs and opcodes for the simulator to execute and verify.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "a": "operand A, 0-15",
+        "b": "operand B, 0-15",
+        "opcode": "operation to perform"
+      },
+      "name": "4-Bit ALU Simulator",
+      "real_world_use": "Computer architecture courses build ALUs as the first step toward a working CPU.",
+      "slug_base": "alu-4bit-simulator",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "An SR latch built from two cross-coupled NOR gates holds its state until set or reset is pulsed, which is exactly what absorbs a switch's bounce: the first contact edge flips the latch and later bounces cannot flip it back. The simulator replays bouncy edges through the latch to show the clean output.",
+      "data_idea": "Seeded RNG synthesizes contact bounce waveforms and the simulator shows the latch output staying clean.",
+      "difficulty": "beginner",
+      "key_params": {
+        "bounce_ms": "bounce duration in milliseconds",
+        "initial": "initial latch state"
+      },
+      "name": "SR Latch Debouncer",
+      "real_world_use": "Industrial pushbuttons and toggle switches are debounced with SR latches in hardware.",
+      "slug_base": "sr-latch-debouncer",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A traffic-light controller is a finite state machine cycling through green, yellow, and red with timed transitions and pedestrian requests as inputs. The simulator runs the state diagram, showing the active state, timer, and outputs at each tick.",
+      "data_idea": "Seeded RNG injects pedestrian button presses and the simulator logs state transitions and light outputs.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "green_s": "green duration in seconds",
+        "states": "list of state names",
+        "yellow_s": "yellow duration in seconds"
+      },
+      "name": "FSM Traffic Light Controller",
+      "real_world_use": "Elevator controls, vending machines, and protocol handlers are all implemented as state machines.",
+      "slug_base": "fsm-traffic-light-controller",
+      "suggested_types": [
+        "simulation",
+        "scheduler"
+      ]
+    },
+    {
+      "concept": "Morse code encodes letters as dots and dashes with strict timing: a dash is three dot-lengths, gaps between symbols are one dot, and gaps between words are seven. The trainer quizzes on characters at increasing speed while the decoder translates keyed input back to text.",
+      "data_idea": "Seeded RNG deals random words at adjustable WPM for both encoding quizzes and decoding practice.",
+      "difficulty": "beginner",
+      "key_params": {
+        "text": "text to encode or decode",
+        "wpm": "speed in words per minute"
+      },
+      "name": "Morse Code Trainer and Decoder",
+      "real_world_use": "Amateur radio licensing still tests Morse, and it remains a backup signaling mode.",
+      "slug_base": "morse-trainer-decoder",
+      "suggested_types": [
+        "quiz_engine",
+        "cli_tool",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "A hobby servo reads a 1 to 2 millisecond pulse every 20 milliseconds, mapping pulse width to shaft angle across roughly 180 degrees. The trainer generates pulse trains for target angles and shows how jitter in pulse width becomes jitter in position.",
+      "data_idea": "Seeded RNG picks target angles and the trainer computes the pulse width, then simulates position error from timing jitter.",
+      "difficulty": "beginner",
+      "key_params": {
+        "angle_deg": "target shaft angle in degrees",
+        "jitter_us": "pulse jitter in microseconds",
+        "period_ms": "frame period in milliseconds"
+      },
+      "name": "Servo Pulse Trainer",
+      "real_world_use": "RC models, robot arms, and camera gimbals are all positioned with servo pulse trains.",
+      "slug_base": "servo-pulse-trainer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A shift register clocks bits through a chain of flip-flops, turning serial input into parallel output (or the reverse) one clock at a time. The simulator loads a bit pattern and animates each clock edge moving bits down the chain.",
+      "data_idea": "Seeded RNG deals random bit patterns and clock counts, then verifies the register contents after shifting.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "bits": "register width in bits",
+        "clocks": "number of clock edges",
+        "pattern": "initial bit pattern"
+      },
+      "name": "Shift Register Simulator",
+      "real_world_use": "LED matrix drivers and serial-to-parallel expanders chain shift registers to save microcontroller pins.",
+      "slug_base": "shift-register-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A stepper motor advances one step per energized coil sequence, with wave, full-step, and half-step patterns trading torque for smoothness. The sequencer steps through the coil patterns and tracks rotor position including missed steps under overload.",
+      "data_idea": "Seeded RNG generates step commands and load torques, and the sequencer reports final position and any missed steps.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "mode": "wave, full-step, or half-step",
+        "rpm": "target speed in RPM",
+        "steps": "number of steps to take"
+      },
+      "name": "Stepper Motor Sequencer",
+      "real_world_use": "3D printers, CNC machines, and camera focus motors are driven with step sequences.",
+      "slug_base": "stepper-motor-sequencer",
+      "suggested_types": [
+        "simulation",
+        "scheduler"
+      ]
+    },
+    {
+      "concept": "An H-bridge flips motor polarity with four switches while PWM on the enable line controls speed, and shoot-through (both sides on) must be prevented with dead time. The simulator shows bridge states, motor voltage, and current direction for each command.",
+      "data_idea": "Seeded RNG issues direction and speed commands, and the simulator reports bridge state and average motor voltage.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "deadtime_ns": "dead time in nanoseconds",
+        "direction": "forward, reverse, or brake",
+        "duty_pct": "PWM duty cycle in percent"
+      },
+      "name": "H-Bridge PWM Simulator",
+      "real_world_use": "Robot wheels, power windows, and small pumps are driven by H-bridge motor drivers.",
+      "slug_base": "h-bridge-pwm-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A brushless motor's controller energizes phase pairs in a six-step sequence synchronized to rotor position from Hall sensors or back-EMF. The sequencer steps through the commutation table and shows which phases are driven at each rotor angle.",
+      "data_idea": "Seeded RNG rotates the rotor and the sequencer outputs the active phase pattern per step.",
+      "difficulty": "advanced",
+      "key_params": {
+        "poles": "motor pole count",
+        "rpm": "rotor speed in RPM",
+        "sensing": "hall sensors or sensorless"
+      },
+      "name": "BLDC Commutation Sequencer",
+      "real_world_use": "Drone motors, e-bike hubs, and HVAC blowers run six-step or FOC commutation.",
+      "slug_base": "bldc-commutation-sequencer",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A DC motor trades torque for speed along a nearly straight line from stall torque at zero speed to no-load speed at zero torque. Plotting the curve for a given motor shows the operating point where a load line crosses it.",
+      "data_idea": "Seeded RNG picks motor constants and loads, then plots the torque-speed line and marks the operating point.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "i_stall_a": "stall current in amps",
+        "rpm_noload": "no-load speed in RPM",
+        "torque_stall_nm": "stall torque in newton-meters"
+      },
+      "name": "Motor Torque-Speed Curve Plotter",
+      "real_world_use": "Selecting gear motors for robots and conveyors starts with matching load to the torque-speed curve.",
+      "slug_base": "motor-torque-speed-plotter",
+      "suggested_types": [
+        "simulation",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "Ziegler-Nichols tuning finds the ultimate gain where a loop just oscillates, then sets PID gains as fixed fractions of that gain and period. The tuner simulates the closed loop so you can watch the classic quarter-decay response emerge.",
+      "data_idea": "Seeded RNG generates first-order-plus-deadtime plant models and the tuner derives Kp, Ki, Kd from the oscillation test.",
+      "difficulty": "advanced",
+      "key_params": {
+        "ku": "ultimate gain",
+        "method": "classic or no-overshoot",
+        "tu_s": "oscillation period in seconds"
+      },
+      "name": "PID Tuner (Ziegler-Nichols)",
+      "real_world_use": "Temperature controllers, ovens, and process loops are commissioned with Ziegler-Nichols tuning.",
+      "slug_base": "pid-tuner-ziegler-nichols",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A quadrature encoder's two channels toggle 90 degrees out of phase, so the order of edges reveals direction and every edge counts as position. The tracker decodes edge sequences into position and velocity, handling the x4 counting that quadruples resolution.",
+      "data_idea": "Seeded RNG generates encoder edge streams with noise and direction changes for the tracker to decode.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cpr": "counts per revolution",
+        "edges": "edge transition sequence",
+        "mode": "x1, x2, or x4 decoding"
+      },
+      "name": "Quadrature Encoder Tracker",
+      "real_world_use": "CNC axes, robot joints, and motor shafts report position through quadrature encoders.",
+      "slug_base": "quadrature-encoder-tracker",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "An ultrasonic ranger measures the echo time of a sound burst and converts it with distance = speed of sound x time / 2. The simulator adds temperature-dependent sound speed and beam-angle effects to show realistic reading error.",
+      "data_idea": "Seeded RNG places targets at random distances and temperatures, and the simulator reports measured versus true distance.",
+      "difficulty": "beginner",
+      "key_params": {
+        "distance_cm": "true target distance in centimeters",
+        "temp_c": "air temperature in Celsius",
+        "timeout_ms": "echo timeout in milliseconds"
+      },
+      "name": "Ultrasonic Distance Simulator",
+      "real_world_use": "Parking sensors, tank level gauges, and robot obstacle avoidance use ultrasonic ranging.",
+      "slug_base": "ultrasonic-distance-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A capacitive touch slider measures the tiny capacitance change when a finger approaches each electrode, then interpolates position between the strongest electrodes. The simulator renders electrode readings and the computed touch centroid.",
+      "data_idea": "Seeded RNG places finger touches along the slider and the simulator reports per-electrode capacitance and centroid.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "electrodes": "number of electrodes",
+        "noise_ff": "noise floor in femtofarads",
+        "touch_pos": "finger position along slider"
+      },
+      "name": "Capacitive Touch Slider Simulator",
+      "real_world_use": "Appliance panels, thermostats, and laptop touchpads use capacitive position sensing.",
+      "slug_base": "capacitive-touch-slider-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A UART frame wraps each byte with a start bit, optional parity, and one or two stop bits, all at an agreed baud rate both sides must share. The visualizer draws each bit on a timeline so framing errors and baud mismatches become obvious.",
+      "data_idea": "Seeded RNG picks bytes and frame settings, then renders the bit-level waveform for inspection.",
+      "difficulty": "beginner",
+      "key_params": {
+        "baud": "baud rate",
+        "byte": "data byte value",
+        "parity": "none, even, or odd",
+        "stop_bits": "1 or 2 stop bits"
+      },
+      "name": "UART Frame Visualizer",
+      "real_world_use": "Debugging serial links between microcontrollers starts with staring at UART frames.",
+      "slug_base": "uart-frame-visualizer",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ]
+    },
+    {
+      "concept": "SPI's four modes come from the two choices of clock polarity (CPOL) and clock phase (CPHA), which decide which edge samples data and where the clock idles. The explorer draws the clock and data lines for each mode so mismatched settings are easy to spot.",
+      "data_idea": "Seeded RNG deals bytes and modes, rendering clock and MOSI waveforms for each of the four modes.",
+      "difficulty": "beginner",
+      "key_params": {
+        "byte": "data byte to clock out",
+        "cpha": "clock phase 0 or 1",
+        "cpol": "clock polarity 0 or 1"
+      },
+      "name": "SPI Clock Mode Explorer",
+      "real_world_use": "Sensor and flash datasheets specify an SPI mode that firmware must match exactly.",
+      "slug_base": "spi-mode-explorer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "I2C moves bytes over two wires with a start condition, 7-bit address, read/write bit, data bytes, and ACK/NACK bits after each byte. The simulator plays a full transaction showing SDA against SCL so address mismatches and missing ACKs stand out.",
+      "data_idea": "Seeded RNG generates transactions with random addresses and the simulator flags NACKs and arbitration.",
+      "difficulty": "beginner",
+      "key_params": {
+        "address": "7-bit device address",
+        "data": "list of data bytes",
+        "rw": "read or write transaction"
+      },
+      "name": "I2C Protocol Simulator",
+      "real_world_use": "Temperature sensors, EEPROMs, and displays on embedded boards communicate over I2C.",
+      "slug_base": "i2c-protocol-simulator",
+      "suggested_types": [
+        "simulation",
+        "log_analyzer"
+      ]
+    },
+    {
+      "concept": "A CAN data frame packs an 11 or 29-bit identifier, control bits, up to 8 data bytes, and a CRC, with dominant and recessive bits arbitrating the bus. The builder assembles frames from fields and validates the CRC and bit stuffing.",
+      "data_idea": "Seeded RNG generates arbitration scenarios with competing IDs to show which frame wins the bus.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "data": "up to 8 data bytes",
+        "id": "frame identifier",
+        "ide": "standard or extended frame"
+      },
+      "name": "CAN Bus Frame Builder",
+      "real_world_use": "Cars, trucks, and industrial machines network their ECUs over CAN bus.",
+      "slug_base": "can-bus-frame-builder",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Modbus RTU frames a slave address, function code, data, and a CRC-16 over a serial line, with silent gaps of 3.5 character times marking frame boundaries. The simulator builds requests, computes CRCs, and parses slave responses.",
+      "data_idea": "Seeded RNG creates register read/write scenarios and the simulator validates each frame's CRC and timing.",
+      "difficulty": "beginner",
+      "key_params": {
+        "address": "slave address",
+        "function": "function code",
+        "registers": "register addresses and values"
+      },
+      "name": "Modbus RTU Simulator",
+      "real_world_use": "PLCs, energy meters, and HVAC controllers speak Modbus RTU in factories and buildings.",
+      "slug_base": "modbus-rtu-simulator",
+      "suggested_types": [
+        "simulation",
+        "api_client_sim"
+      ]
+    },
+    {
+      "concept": "The 1-Wire bus finds every device by its unique 64-bit ROM code through a binary search called the enumeration algorithm. The scanner simulates the search over a set of virtual devices and lists each discovered ROM code.",
+      "data_idea": "Seeded RNG populates a virtual bus with random ROM codes for the scanner to discover.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "devices": "number of devices on bus",
+        "rom_codes": "list of 64-bit ROM codes"
+      },
+      "name": "1-Wire Device Scanner Simulator",
+      "real_world_use": "Temperature sensor networks in buildings and cold-chain loggers use 1-Wire enumeration.",
+      "slug_base": "one-wire-scanner-simulator",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "NEC infrared remotes send a leader pulse followed by 32 bits where a 560us burst plus 560us space means 0 and the same burst plus 1.69ms space means 1. The simulator encodes button presses and decodes captured timings back to address and command.",
+      "data_idea": "Seeded RNG generates button presses and noisy captures for the decoder to resolve.",
+      "difficulty": "beginner",
+      "key_params": {
+        "address": "device address byte",
+        "command": "command byte",
+        "timings_us": "captured pulse timings in microseconds"
+      },
+      "name": "NEC IR Remote Simulator",
+      "real_world_use": "TV remotes, air conditioner controllers, and IR blasters speak NEC protocol.",
+      "slug_base": "nec-ir-remote-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "DTMF dialing mixes one low-group and one high-group tone per key, and the Goertzel algorithm detects which two frequencies are present in a sample. The decoder analyzes tone bursts and reports the dialed digit even with moderate noise.",
+      "data_idea": "Seeded RNG synthesizes dialed digit sequences with noise for the decoder to recover.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "digits": "dialed digit string",
+        "noise_db": "noise level in dB",
+        "sample_rate_hz": "sample rate in hertz"
+      },
+      "name": "DTMF Tone Decoder",
+      "real_world_use": "Phone systems, intercoms, and remote control panels decode DTMF keypresses.",
+      "slug_base": "dtmf-tone-decoder",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Cheap 433 MHz links send on-off keying: carrier present means 1, absent means 0, usually with simple packet framing and checksums. The simulator encodes packets, adds noise and interference, and shows the bit error rate versus signal strength.",
+      "data_idea": "Seeded RNG transmits packets through noisy channels and the simulator measures bit errors per SNR level.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "bitrate_bps": "bit rate in bits per second",
+        "packet": "packet bytes to send",
+        "snr_db": "signal-to-noise ratio in dB"
+      },
+      "name": "433 MHz OOK Link Simulator",
+      "real_world_use": "Garage remotes, weather stations, and cheap sensor nodes use 433 MHz OOK links.",
+      "slug_base": "ook-433-link-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "The Friis transmission equation predicts received power from transmit power, antenna gains, wavelength, and distance, assuming free space. It sets the theoretical ceiling for any wireless link before obstacles and fading take their toll.",
+      "data_idea": "Seeded RNG varies distance and frequency, computing received power and link margin against receiver sensitivity.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "distance_km": "link distance in kilometers",
+        "freq_mhz": "frequency in megahertz",
+        "gain_rx_dbi": "receive antenna gain in dBi",
+        "gain_tx_dbi": "transmit antenna gain in dBi",
+        "ptx_dbm": "transmit power in dBm"
+      },
+      "name": "Friis Transmission Calculator",
+      "real_world_use": "RF engineers sanity-check Wi-Fi, LoRa, and satellite links with Friis before site surveys.",
+      "slug_base": "friis-link-calculator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "Real links lose more than free space predicts, so empirical models add terms for terrain, buildings, and frequency to estimate path loss. The calculator compares several models for a given link to show the spread of predictions.",
+      "data_idea": "Seeded RNG generates link geometries and the calculator reports path loss under multiple models.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "distance_km": "link distance in kilometers",
+        "freq_mhz": "frequency in megahertz",
+        "model": "propagation model name",
+        "terrain": "terrain category"
+      },
+      "name": "RF Path Loss Calculator",
+      "real_world_use": "Cellular and point-to-point link planning starts with path loss estimates like these.",
+      "slug_base": "rf-path-loss-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "VSWR measures how much power reflects from a mismatched antenna: 1.0 is perfect and higher values mean more reflected power, convertible to return loss in dB and mismatch loss. The converter moves fluently between all three representations.",
+      "data_idea": "Seeded RNG deals random VSWR, return loss, and reflection coefficient values for conversion drills.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "return_loss_db": "return loss in dB",
+        "vswr": "voltage standing wave ratio"
+      },
+      "name": "VSWR and Return Loss Converter",
+      "real_world_use": "Antenna installers and RF technicians verify match quality with VSWR measurements.",
+      "slug_base": "vswr-return-loss-converter",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "A half-wave dipole resonates when each leg is about a quarter wavelength long, roughly 468/f(MHz) feet for the full dipole including end effects. The calculator gives element lengths for common bands and wire types.",
+      "data_idea": "Seeded RNG picks amateur and ISM bands and the calculator returns dipole and quarter-wave element lengths.",
+      "difficulty": "beginner",
+      "key_params": {
+        "freq_mhz": "frequency in megahertz",
+        "velocity_factor": "wire velocity factor"
+      },
+      "name": "Antenna Length Calculator",
+      "real_world_use": "Ham radio operators and antenna installers cut dipoles and verticals with this formula.",
+      "slug_base": "antenna-length-calculator",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ]
+    },
+    {
+      "concept": "The Smith chart maps complex impedance onto a circular chart where moving along the chart corresponds to adding transmission line length. The ASCII plotter draws impedance points and constant-VSWR circles so matching network design stays visual without special software.",
+      "data_idea": "Seeded RNG generates load impedances and the plotter renders their Smith chart positions in ASCII.",
+      "difficulty": "advanced",
+      "key_params": {
+        "z0_ohm": "characteristic impedance in ohms",
+        "z_load_ohm": "complex load impedance in ohms"
+      },
+      "name": "Smith Chart Plotter (ASCII)",
+      "real_world_use": "RF matching network design for amplifiers and antennas is done on Smith charts.",
+      "slug_base": "smith-chart-ascii-plotter",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Coax and connectors each add decibels of loss that eat into the link budget, and loss grows with frequency and cable length. The budgeter totals every segment from radio to antenna to confirm the remaining margin.",
+      "data_idea": "Seeded RNG assembles cable runs with mixed segments and the budgeter totals loss versus allowed budget.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "freq_mhz": "frequency in megahertz",
+        "length_m": "cable length in meters",
+        "loss_db_100m": "cable loss per 100m in dB"
+      },
+      "name": "Cable Loss Budgeter",
+      "real_world_use": "Tower crews and network installers verify feedline loss before commissioning radios.",
+      "slug_base": "cable-loss-budgeter",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ]
+    },
+    {
+      "concept": "An eye diagram overlays thousands of bit periods so jitter and noise show up as a closing eye; the wider open the eye, the cleaner the link. The simulator adds random and deterministic jitter plus noise, then measures eye height and width.",
+      "data_idea": "Seeded RNG sweeps jitter and noise levels while the simulator measures eye opening at each setting.",
+      "difficulty": "advanced",
+      "key_params": {
+        "jitter_ps": "jitter in picoseconds",
+        "noise_mv": "noise in millivolts",
+        "rate_gbps": "data rate in gigabits per second"
+      },
+      "name": "Signal Integrity Eye Diagram Simulator",
+      "real_world_use": "High-speed serial links like USB, PCIe, and Ethernet are qualified with eye diagrams.",
+      "slug_base": "eye-diagram-simulator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "Jitter moves bit edges in time, and when an edge crosses the sampling point the bit is misread, so bit error rate climbs as jitter grows relative to the bit period. The estimator maps jitter distributions to BER using the Q-function relationship.",
+      "data_idea": "Seeded RNG varies jitter RMS and the estimator reports the resulting BER on a waterfall-style curve.",
+      "difficulty": "advanced",
+      "key_params": {
+        "ber_target": "target bit error rate",
+        "jitter_rms_ps": "RMS jitter in picoseconds",
+        "rate_gbps": "data rate in gigabits per second"
+      },
+      "name": "Jitter and BER Estimator",
+      "real_world_use": "SerDes and optical link designers budget jitter to hit BER targets like 1e-12.",
+      "slug_base": "jitter-ber-estimator",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "A phase-locked loop compares a VCO's divided output phase against a reference and steers the VCO until the phases lock, multiplying the reference up to the desired frequency. The simulator steps the loop filter and shows lock acquisition, overshoot, and phase noise tradeoffs.",
+      "data_idea": "Seeded RNG picks loop bandwidths and the simulator traces frequency pull-in and lock time.",
+      "difficulty": "advanced",
+      "key_params": {
+        "bw_khz": "loop bandwidth in kilohertz",
+        "fref_mhz": "reference frequency in megahertz",
+        "multiply": "frequency multiplication factor"
+      },
+      "name": "PLL Phase-Lock Simulator",
+      "real_world_use": "Clock synthesizers in processors, radios, and SerDes are PLLs tuned with this analysis.",
+      "slug_base": "pll-phase-lock-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "The FFT converts a time-domain capture into its frequency components, revealing harmonics, spurs, and noise floors that are invisible in the waveform. The analyzer windows the data, computes the spectrum, and labels the strongest peaks.",
+      "data_idea": "Seeded RNG mixes tones, harmonics, and noise into captures for the analyzer to separate and label.",
+      "difficulty": "advanced",
+      "key_params": {
+        "fs_hz": "sample rate in hertz",
+        "n_points": "FFT length",
+        "window": "window function name"
+      },
+      "name": "FFT Spectrum Analyzer",
+      "real_world_use": "EMI debugging, audio analysis, and vibration monitoring all start with an FFT spectrum.",
+      "slug_base": "fft-spectrum-analyzer",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "An FIR filter builds its output from a weighted sum of recent input samples, and the window method designs the tap weights for a target cutoff and stopband. Linear phase comes free with symmetric taps, which is why FIRs dominate applications that cannot tolerate phase distortion.",
+      "data_idea": "Seeded RNG specifies filter requirements and the designer outputs tap weights plus the achieved frequency response.",
+      "difficulty": "advanced",
+      "key_params": {
+        "cutoff_hz": "cutoff frequency in hertz",
+        "fs_hz": "sample rate in hertz",
+        "taps": "number of filter taps"
+      },
+      "name": "FIR Filter Designer (Window Method)",
+      "real_world_use": "Audio crossovers, software-defined radio, and measurement instruments use designed FIR filters.",
+      "slug_base": "fir-filter-designer",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A biquad is a second-order IIR section whose five coefficients set a low-pass, high-pass, peaking, or shelving response from the bilinear transform. Cascading biquads builds higher-order filters cheaply, which is why audio DSP runs on them.",
+      "data_idea": "Seeded RNG picks filter types and frequencies, and the tool outputs the five biquad coefficients.",
+      "difficulty": "advanced",
+      "key_params": {
+        "f0_hz": "center or cutoff frequency in hertz",
+        "fs_hz": "sample rate in hertz",
+        "q": "filter Q",
+        "type": "lowpass, highpass, peaking, or shelving"
+      },
+      "name": "IIR Biquad Coefficient Calculator",
+      "real_world_use": "Equalizers, tone controls, and crossover filters in audio products are cascaded biquads.",
+      "slug_base": "iir-biquad-calculator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A moving average smooths noise but smears fast edges, while an exponential moving average reacts faster to recent changes with the same noise reduction. Running both over the same noisy signal shows the lag-versus-smoothness tradeoff directly.",
+      "data_idea": "Seeded RNG creates step-plus-noise signals and the comparer reports lag and residual noise for each filter.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "alpha": "exponential smoothing factor",
+        "signal": "noisy test signal description",
+        "window": "moving average window length"
+      },
+      "name": "Moving Average vs Exponential Filter Comparer",
+      "real_world_use": "Sensor dashboards and control loops pick smoothing filters by exactly this comparison.",
+      "slug_base": "moving-average-filter-comparer",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ]
+    },
+    {
+      "concept": "A one-dimensional Kalman filter fuses noisy position measurements with a motion model, weighting each by its uncertainty to track better than either source alone. The predict-update loop converges quickly and the gain settles to a steady value.",
+      "data_idea": "Seeded RNG flies a target with process and measurement noise while the filter tracks it step by step.",
+      "difficulty": "advanced",
+      "key_params": {
+        "measure_var": "measurement noise variance",
+        "process_var": "process noise variance",
+        "steps": "number of tracking steps"
+      },
+      "name": "Kalman Filter 1D Tracker",
+      "real_world_use": "GPS smoothing, battery state estimation, and sensor fusion use Kalman filtering.",
+      "slug_base": "kalman-1d-tracker",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline"
+      ]
+    },
+    {
+      "concept": "A complementary filter blends a gyroscope's fast-but-drifty angle with an accelerometer's noisy-but-absolute tilt using one tuning knob: the crossover weight. It runs in a few lines of code, which is why hobby IMUs use it instead of a full Kalman filter.",
+      "data_idea": "Seeded RNG simulates IMU motion with drift and noise while the filter tracks orientation error over time.",
+      "difficulty": "advanced",
+      "key_params": {
+        "alpha": "gyro trust weight 0 to 1",
+        "dt_s": "sample period in seconds",
+        "steps": "number of samples"
+      },
+      "name": "Complementary IMU Filter Simulator",
+      "real_world_use": "Drone flight controllers and phone orientation estimate tilt with complementary filters.",
+      "slug_base": "complementary-imu-filter",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "A guitar string's fundamental frequency maps directly to its note, so an FFT of the plucked sound reveals whether the string is sharp or flat. The tuner finds the strongest peak near the expected frequency and reports the tuning error in cents.",
+      "data_idea": "Seeded RNG synthesizes plucked strings with detuning and harmonics for the tuner to measure.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "fs_hz": "sample rate in hertz",
+        "note": "target note name",
+        "tolerance_cents": "acceptable error in cents"
+      },
+      "name": "Guitar Tuner (FFT)",
+      "real_world_use": "Tuner apps and pedal tuners detect pitch with FFT peak picking like this.",
+      "slug_base": "guitar-tuner-fft",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A VU meter shows audio level with ballistic smoothing that mimics the old analog needle, rising fast and falling slowly. The simulator processes audio amplitude envelopes and renders the needle position in ASCII.",
+      "data_idea": "Seeded RNG generates audio envelopes with peaks and the simulator renders meter deflection per frame.",
+      "difficulty": "beginner",
+      "key_params": {
+        "attack_ms": "meter attack time in milliseconds",
+        "level_db": "input level in dB",
+        "release_ms": "meter release time in milliseconds"
+      },
+      "name": "Audio VU Meter Simulator",
+      "real_world_use": "Mixing consoles and broadcast chains monitor levels with VU-style metering.",
+      "slug_base": "audio-vu-meter-simulator",
+      "suggested_types": [
+        "simulation"
+      ]
+    },
+    {
+      "concept": "Class-D amplifiers switch their outputs at hundreds of kilohertz and recover audio through an LC filter, reaching efficiencies above 90 percent versus roughly 60 for class-AB. The estimator combines switching, conduction, and filter losses for a realistic efficiency number.",
+      "data_idea": "Seeded RNG sweeps output power and the estimator reports efficiency and loss breakdown per point.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "fsw_khz": "switching frequency in kilohertz",
+        "pout_w": "output power in watts",
+        "rdson_mohm": "switch on-resistance in milliohms"
+      },
+      "name": "Class-D Amplifier Efficiency Estimator",
+      "real_world_use": "Portable speakers and car audio use class-D for loud output without big heat sinks.",
+      "slug_base": "class-d-efficiency-estimator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A PCB trace carrying current heats up, and the IPC-2221 curves relate trace width, copper weight, and temperature rise. The estimator picks the minimum width for a target temperature rise on internal or external layers.",
+      "data_idea": "Seeded RNG deals current and temperature-rise targets, and the estimator returns the required trace width.",
+      "difficulty": "intermediate",
+      "key_params": {
+        "cu_oz": "copper weight in ounces",
+        "current_a": "trace current in amps",
+        "rise_c": "allowed temperature rise in Celsius"
+      },
+      "name": "PCB Trace Width Estimator",
+      "real_world_use": "Every power trace on a circuit board is width-checked against current capacity.",
+      "slug_base": "pcb-trace-width-estimator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "A microstrip trace over a ground plane has a characteristic impedance set by its width, dielectric height, and the board's dielectric constant. Hitting 50 ohms for RF or matched differential pairs starts with solving this geometry.",
+      "data_idea": "Seeded RNG picks stackups and the calculator solves for the trace width that hits the target impedance.",
+      "difficulty": "advanced",
+      "key_params": {
+        "er": "dielectric constant",
+        "h_mm": "dielectric height in millimeters",
+        "w_mm": "trace width in millimeters",
+        "z_target_ohm": "target impedance in ohms"
+      },
+      "name": "Microstrip Impedance Calculator",
+      "real_world_use": "RF boards and high-speed digital designs control impedance with microstrip geometry.",
+      "slug_base": "microstrip-impedance-calculator",
+      "suggested_types": [
+        "cli_tool"
+      ]
+    },
+    {
+      "concept": "An LED matrix scrolls text by shifting column patterns across the display faster than the eye can follow, using persistence of vision. The engine renders a font as column bitmaps and animates the scroll in the terminal.",
+      "data_idea": "Seeded RNG picks messages and scroll speeds for the engine to render as terminal animation frames.",
+      "difficulty": "beginner",
+      "key_params": {
+        "message": "text to scroll",
+        "speed_fps": "scroll speed in frames per second",
+        "width": "matrix width in columns"
+      },
+      "name": "LED Matrix Scrolling Text Engine",
+      "real_world_use": "Scoreboards, transit signs, and wearable badges scroll text on LED matrices.",
+      "slug_base": "led-matrix-scrolling-text",
+      "suggested_types": [
+        "simulation",
+        "terminal_game"
+      ]
+    },
+    {
+      "concept": "Multiplexed seven-segment displays strobe one digit at a time, and if the refresh rate is too low the digits visibly flicker. The analyzer computes the per-digit duty cycle and flags refresh rates that fall below the flicker-fusion threshold.",
+      "data_idea": "Seeded RNG varies digit counts and refresh rates while the analyzer reports brightness loss and flicker risk.",
+      "difficulty": "beginner",
+      "key_params": {
+        "digits": "number of multiplexed digits",
+        "refresh_hz": "full refresh rate in hertz"
+      },
+      "name": "Seven-Segment Flicker Analyzer",
+      "real_world_use": "Clock and meter displays are multiplexed, and refresh rates are chosen to avoid visible flicker.",
+      "slug_base": "seven-seg-flicker-analyzer",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ]
+    },
+    {
+      "slug_base": "buck-efficiency-explorer",
+      "name": "Buck Efficiency Explorer",
+      "concept": "A buck converter steps a higher DC voltage down with a switch, inductor, and diode or synchronous FET, and its efficiency is set by switching, conduction, and gate-drive losses that all move with load current.",
+      "key_params": {
+        "input_v": "input voltage in volts",
+        "output_v": "output voltage in volts",
+        "load_a": "load current in amps",
+        "switching_khz": "switching frequency in kilohertz",
+        "inductor_uh": "inductance in microhenries"
+      },
+      "data_idea": "Seeded RNG sweeps load current and switching frequency to synthesize efficiency curves from a loss model.",
+      "real_world_use": "Used by power designers to pick switching frequency and inductor value before building a prototype.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "flyback-transformer-designer",
+      "name": "Flyback Transformer Designer",
+      "concept": "A flyback stores energy in a gapped core during the switch on-time and delivers it to isolated secondaries during off-time, so turns ratio, magnetizing inductance, and core loss together set regulation and switch stress.",
+      "key_params": {
+        "input_v_min": "minimum input voltage in volts",
+        "input_v_max": "maximum input voltage in volts",
+        "output_v": "output voltage in volts",
+        "output_a": "output current in amps",
+        "switching_khz": "switching frequency in kilohertz"
+      },
+      "data_idea": "Seeded RNG draws input voltage ranges and load steps to validate the turns and inductance choices.",
+      "real_world_use": "Used when designing isolated adapters and auxiliary supplies to size the transformer before winding samples.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "ldo-thermal-analyzer",
+      "name": "LDO Thermal Analyzer",
+      "concept": "An LDO drops excess voltage as heat, so the dropout margin, load current, and package thermal resistance decide whether the junction temperature stays within limits.",
+      "key_params": {
+        "input_v": "input voltage in volts",
+        "output_v": "regulated output in volts",
+        "load_a": "load current in amps",
+        "theta_ja": "junction-to-ambient thermal resistance in C/W"
+      },
+      "data_idea": "Seeded RNG varies load current and ambient temperature to synthesize junction temperature profiles.",
+      "real_world_use": "Used to check that linear regulators will not overheat in enclosed consumer products.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "snubber-network-calculator",
+      "name": "Snubber Network Calculator",
+      "concept": "Snubbers absorb the ringing energy from parasitic inductance when a switch turns off, and the resistor-capacitor values trade peak overshoot against extra dissipation.",
+      "key_params": {
+        "switch_current_a": "switched current in amps",
+        "leakage_uh": "parasitic inductance in microhenries",
+        "switching_khz": "switching frequency in kilohertz",
+        "allowable_overshoot_v": "allowed overshoot in volts"
+      },
+      "data_idea": "Seeded RNG generates ringing waveforms with varying parasitic inductance to test snubber sizing.",
+      "real_world_use": "Used in SMPS and motor-drive design to tame voltage spikes on MOSFETs and diodes.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "crystal-oscillator-load-designer",
+      "name": "Crystal Oscillator Load Designer",
+      "concept": "A crystal oscillates at its rated frequency only when the load capacitance seen by its terminals matches the specified CL, which is set by two external capacitors plus stray capacitance.",
+      "key_params": {
+        "load_capacitance_pf": "specified load capacitance in picofarads",
+        "stray_pf": "stray capacitance in picofarads",
+        "target_ppm": "frequency tolerance target in ppm"
+      },
+      "data_idea": "Seeded RNG perturbs stray capacitance to show frequency pulling in ppm.",
+      "real_world_use": "Used in microcontroller clock design to pick load capacitors that keep UART and USB timing in spec.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pll-loop-filter-designer",
+      "name": "PLL Loop Filter Designer",
+      "concept": "A phase-locked loop compares a reference to a divided VCO and the loop filter sets bandwidth and phase margin, trading lock time against jitter rejection.",
+      "key_params": {
+        "reference_mhz": "reference frequency in megahertz",
+        "vco_mhz": "VCO frequency in megahertz",
+        "loop_bw_khz": "loop bandwidth in kilohertz",
+        "phase_margin_deg": "target phase margin in degrees"
+      },
+      "data_idea": "Seeded RNG sweeps filter component tolerances to synthesize lock-time distributions.",
+      "real_world_use": "Used in RF and clock synthesizer design to hit jitter specs for SERDES and radios.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "fir-filter-explorer",
+      "name": "FIR Filter Explorer",
+      "concept": "A finite-impulse-response filter convolves the input with a fixed tap sequence, giving linear phase and guaranteed stability at the cost of more taps than an equivalent IIR.",
+      "key_params": {
+        "taps": "number of filter taps",
+        "cutoff_hz": "cutoff frequency in hertz",
+        "sample_rate_hz": "sample rate in hertz",
+        "window": "window function name"
+      },
+      "data_idea": "Seeded RNG feeds noisy test signals to compare windowed designs by stopband attenuation.",
+      "real_world_use": "Used in audio and sensor processing where linear phase and stability matter more than tap count.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "iir-biquad-explorer",
+      "name": "IIR Biquad Explorer",
+      "concept": "A biquad is a second-order IIR section with two poles and two zeros, and cascading sections builds sharp filters whose stability depends on pole placement inside the unit circle.",
+      "key_params": {
+        "cutoff_hz": "cutoff frequency in hertz",
+        "q_factor": "resonance Q factor",
+        "sample_rate_hz": "sample rate in hertz",
+        "sections": "number of cascaded biquad sections"
+      },
+      "data_idea": "Seeded RNG perturbs coefficient quantization to show pole migration toward instability.",
+      "real_world_use": "Used in audio equalizers and sensor front ends to build sharp filters with few coefficients.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "kalman-filter-tracker",
+      "name": "Kalman Filter Tracker",
+      "concept": "A Kalman filter blends a motion model prediction with each noisy measurement, weighting by their covariances, so it tracks position and velocity through noise that would fool a plain average.",
+      "key_params": {
+        "process_noise": "process noise covariance",
+        "measurement_noise": "measurement noise covariance",
+        "initial_position": "initial position estimate",
+        "dt_s": "time step in seconds"
+      },
+      "data_idea": "Seeded RNG generates a true trajectory plus noisy position measurements for the filter to track.",
+      "real_world_use": "Used in navigation, battery gauging, and motor control to estimate states that cannot be measured directly.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "sigma-delta-noise-shaper",
+      "name": "Sigma-Delta Noise Shaper",
+      "concept": "A sigma-delta modulator oversamples and pushes quantization noise to high frequencies with a feedback loop, so a simple low-pass then yields high resolution from a 1-bit core.",
+      "key_params": {
+        "oversampling_ratio": "oversampling ratio",
+        "order": "modulator order",
+        "input_hz": "input tone frequency in hertz",
+        "sample_rate_hz": "sample rate in hertz"
+      },
+      "data_idea": "Seeded RNG feeds sine tones plus dither to synthesize shaped noise spectra.",
+      "real_world_use": "Used in audio and precision sensor ADCs where high resolution matters more than conversion speed.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "dac-inl-dnl-analyzer",
+      "name": "DAC INL DNL Analyzer",
+      "concept": "Differential nonlinearity measures each DAC code's step-size error and integral nonlinearity measures the worst deviation from the ideal line, and a DNL below -1 LSB means missing codes.",
+      "key_params": {
+        "bits": "DAC resolution in bits",
+        "codes": "number of codes swept",
+        "vref_v": "reference voltage in volts",
+        "tolerance_lsb": "allowed error in LSBs"
+      },
+      "data_idea": "Seeded RNG synthesizes a code sweep with random step errors to compute INL and DNL curves.",
+      "real_world_use": "Used in production test of precision DACs to verify linearity specs for instrumentation.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "thermistor-linearization-tool",
+      "name": "Thermistor Linearization Tool",
+      "concept": "An NTC thermistor's resistance falls exponentially with temperature, so a series resistor or lookup table linearizes the divider voltage over the range of interest.",
+      "key_params": {
+        "r25_ohm": "resistance at 25C in ohms",
+        "beta": "beta constant in kelvin",
+        "temp_min_c": "minimum temperature in Celsius",
+        "temp_max_c": "maximum temperature in Celsius"
+      },
+      "data_idea": "Seeded RNG samples temperatures across the range to compare raw versus linearized readings.",
+      "real_world_use": "Used in appliances and battery packs to get accurate temperature from cheap NTC sensors.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "rtd-bridge-calculator",
+      "name": "RTD Bridge Calculator",
+      "concept": "A platinum RTD changes resistance almost linearly with temperature, and a Wheatstone bridge with lead-wire compensation converts that small change into a measurable voltage.",
+      "key_params": {
+        "r0_ohm": "resistance at 0C in ohms",
+        "alpha": "temperature coefficient",
+        "excitation_v": "bridge excitation in volts",
+        "lead_ohm": "lead wire resistance in ohms"
+      },
+      "data_idea": "Seeded RNG varies lead resistance to show 2-wire versus 3-wire measurement error.",
+      "real_world_use": "Used in industrial process control where accurate temperature over long cable runs matters.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "strain-gauge-amplifier-sizer",
+      "name": "Strain Gauge Amplifier Sizer",
+      "concept": "A strain gauge bridge outputs only millivolts per volt of excitation, so an instrumentation amplifier must be sized for gain, offset drift, and common-mode rejection without saturating.",
+      "key_params": {
+        "gauge_factor": "strain gauge factor",
+        "excitation_v": "bridge excitation in volts",
+        "max_strain_ue": "maximum strain in microstrain",
+        "adc_vref_v": "ADC reference in volts"
+      },
+      "data_idea": "Seeded RNG generates load cycles with noise to size gain and filter bandwidth.",
+      "real_world_use": "Used in weigh scales and structural test rigs to size the signal chain before PCB layout.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "mems-accelerometer-calibrator",
+      "name": "MEMS Accelerometer Calibrator",
+      "concept": "MEMS accelerometers carry bias, scale-factor, and cross-axis errors that drift with temperature, and a six-position tumble test solves for the calibration matrix that removes them.",
+      "key_params": {
+        "bias_mg": "zero-g bias in milli-g",
+        "scale_pct": "scale factor error in percent",
+        "noise_ug_hz": "noise density in micro-g per root hertz",
+        "temp_c": "temperature in Celsius"
+      },
+      "data_idea": "Seeded RNG simulates tumble-test orientations with noise to fit the calibration matrix.",
+      "real_world_use": "Used in IMU production and drone assembly to calibrate low-cost sensors before flight.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "hall-sensor-mapper",
+      "name": "Hall Sensor Mapper",
+      "concept": "A Hall element outputs a voltage proportional to the magnetic field through it, so mapping the field of a magnet array lets a designer place sensors where the gradient is steepest.",
+      "key_params": {
+        "magnet_br_t": "magnet remanence in tesla",
+        "air_gap_mm": "air gap in millimeters",
+        "sensitivity_mv_mt": "sensor sensitivity in mV per mT",
+        "positions": "number of map grid positions"
+      },
+      "data_idea": "Seeded RNG samples magnet positions with tolerance to build a field map.",
+      "real_world_use": "Used in BLDC commutation and position sensing to place Hall latches for reliable switching.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "motor-driver-h-bridge-lab",
+      "name": "Motor Driver H-Bridge Lab",
+      "concept": "An H-bridge steers current through a motor in either direction with four switches, and shoot-through, dead time, and flyback diodes decide whether it survives PWM.",
+      "key_params": {
+        "supply_v": "supply voltage in volts",
+        "motor_ohm": "motor winding resistance in ohms",
+        "pwm_khz": "PWM frequency in kilohertz",
+        "dead_time_ns": "dead time in nanoseconds"
+      },
+      "data_idea": "Seeded RNG varies dead time and inductance to synthesize switching waveforms and losses.",
+      "real_world_use": "Used in robotics and power-tool design to validate a driver stage before hardware.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stepper-sequence-generator",
+      "name": "Stepper Sequence Generator",
+      "concept": "A stepper advances one step per energized coil pattern, and wave, full-step, and half-step sequences trade torque against smoothness and resonance.",
+      "key_params": {
+        "steps_per_rev": "steps per revolution",
+        "sequence": "drive sequence name",
+        "rpm": "speed in revolutions per minute",
+        "phases": "number of motor phases"
+      },
+      "data_idea": "Seeded RNG injects missed-step faults so the generator can be validated against expected patterns.",
+      "real_world_use": "Used to bring up 3D-printer and CNC drivers and to document coil patterns for firmware.",
+      "suggested_types": [
+        "cli_tool",
+        "terminal_game"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "bldc-commutation-visualizer",
+      "name": "BLDC Commutation Visualizer",
+      "concept": "A brushless motor commutates its three phases in six steps per electrical revolution, and Hall sensors or back-EMF decide exactly when each step switches.",
+      "key_params": {
+        "pole_pairs": "number of pole pairs",
+        "kv_rpm_v": "motor Kv in rpm per volt",
+        "bus_v": "DC bus voltage in volts",
+        "advance_deg": "timing advance in degrees"
+      },
+      "data_idea": "Seeded RNG adds Hall timing jitter to visualize commutation errors versus advance angle.",
+      "real_world_use": "Used in e-bike and drone ESC tuning to set timing advance for efficiency.",
+      "suggested_types": [
+        "simulation",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "solar-mppt-algorithm-explorer",
+      "name": "Solar MPPT Algorithm Explorer",
+      "concept": "A solar panel's power peaks at one operating voltage that shifts with light and temperature, and perturb-and-observe or incremental-conductance algorithms hunt for it continuously.",
+      "key_params": {
+        "panel_w": "panel rated power in watts",
+        "vmpp_v": "max-power voltage in volts",
+        "impp_a": "max-power current in amps",
+        "irradiance_w_m2": "irradiance in watts per square meter"
+      },
+      "data_idea": "Seeded RNG drives passing-cloud irradiance profiles to compare tracking algorithms.",
+      "real_world_use": "Used in solar charger design to pick an MPPT algorithm before firmware is written.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "li-ion-charge-profiler",
+      "name": "Li-Ion Charge Profiler",
+      "concept": "Lithium-ion charging runs constant current until the cell nears full voltage, then constant voltage while current tapers, with temperature and C-rate limits guarding safety.",
+      "key_params": {
+        "capacity_mah": "cell capacity in milliamp-hours",
+        "charge_c": "charge rate in C",
+        "v_termin_v": "termination voltage in volts",
+        "temp_c": "temperature in Celsius"
+      },
+      "data_idea": "Seeded RNG varies cell internal resistance to synthesize charge curves and taper times.",
+      "real_world_use": "Used to set charger IC parameters and estimate charge time for battery products.",
+      "suggested_types": [
+        "simulation",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "supercapacitor-bank-sizer",
+      "name": "Supercapacitor Bank Sizer",
+      "concept": "Supercapacitors deliver huge peak power but their voltage falls linearly as they discharge, so series-parallel sizing must keep the stack above the minimum usable voltage for the holdup time.",
+      "key_params": {
+        "capacitance_f": "cell capacitance in farads",
+        "esr_mohm": "cell ESR in milliohms",
+        "holdup_s": "required holdup time in seconds",
+        "load_w": "load power in watts"
+      },
+      "data_idea": "Seeded RNG varies ESR and capacitance tolerance to estimate worst-case holdup time.",
+      "real_world_use": "Used in backup-power and peak-shaving design for industrial controllers.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "emi-filter-designer",
+      "name": "EMI Filter Designer",
+      "concept": "Conducted EMI filters use common-mode chokes and X/Y capacitors to block switching noise from reaching the mains, with the corner frequency set below the first noise harmonic.",
+      "key_params": {
+        "switching_khz": "switching frequency in kilohertz",
+        "attenuation_db": "required attenuation in dB",
+        "mains_v": "mains voltage in volts",
+        "current_a": "rated current in amps"
+      },
+      "data_idea": "Seeded RNG perturbs component tolerances to synthesize insertion-loss curves.",
+      "real_world_use": "Used to pass EMC pre-compliance for power supplies and motor drives.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "crosstalk-estimator",
+      "name": "Crosstalk Estimator",
+      "concept": "Adjacent PCB traces couple through mutual capacitance and inductance, and the victim's near-end and far-end noise grow with edge rate, parallel length, and tight spacing.",
+      "key_params": {
+        "edge_rate_ns": "signal edge rate in nanoseconds",
+        "spacing_mil": "trace spacing in mils",
+        "parallel_mm": "parallel length in millimeters",
+        "trace_mil": "trace width in mils"
+      },
+      "data_idea": "Seeded RNG sweeps spacing and length to estimate coupled noise margins.",
+      "real_world_use": "Used in high-speed PCB layout review to set spacing rules before routing.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "via-stitching-planner",
+      "name": "Via Stitching Planner",
+      "concept": "Stitching vias tie ground planes together at intervals much smaller than the wavelength of interest, suppressing cavity resonances and giving return currents a short path.",
+      "key_params": {
+        "max_freq_ghz": "maximum frequency in gigahertz",
+        "board_mm": "board dimension in millimeters",
+        "dielectric": "dielectric constant",
+        "spacing_mm": "via spacing in millimeters"
+      },
+      "data_idea": "Seeded RNG places keep-outs to plan stitching grids that avoid them.",
+      "real_world_use": "Used in RF and high-speed digital layouts to keep ground impedance low.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "antenna-vswr-calculator",
+      "name": "Antenna VSWR Calculator",
+      "concept": "VSWR describes how much power reflects at an antenna feedpoint, computed from the impedance mismatch, and it converts directly to return loss and mismatch loss in dB.",
+      "key_params": {
+        "z_antenna_ohm": "antenna impedance in ohms",
+        "z_feed_ohm": "feedline impedance in ohms",
+        "frequency_mhz": "frequency in megahertz"
+      },
+      "data_idea": "Seeded RNG sweeps antenna impedance across a band to plot VSWR versus frequency.",
+      "real_world_use": "Used by RF technicians to judge antenna match from analyzer readings.",
+      "suggested_types": [
+        "cli_tool",
+        "unit_converter"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "smith-chart-impedance-matcher",
+      "name": "Smith Chart Impedance Matcher",
+      "concept": "The Smith chart maps complex reflection coefficients to impedance, so series and shunt matching elements appear as arcs that walk a mismatch to the chart center.",
+      "key_params": {
+        "z_load_ohm": "load impedance in ohms",
+        "z_source_ohm": "source impedance in ohms",
+        "frequency_mhz": "frequency in megahertz",
+        "match_type": "matching network type name"
+      },
+      "data_idea": "Seeded RNG generates random load impedances to practice L-network matching.",
+      "real_world_use": "Used in RF front-end design to design matching networks for antennas and PAs.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "rf-link-budget-planner",
+      "name": "RF Link Budget Planner",
+      "concept": "A link budget adds transmitter power and antenna gains, then subtracts path loss and margins, to show whether the received power clears the receiver sensitivity with fade margin to spare.",
+      "key_params": {
+        "tx_dbm": "transmit power in dBm",
+        "tx_gain_dbi": "transmit antenna gain in dBi",
+        "rx_gain_dbi": "receive antenna gain in dBi",
+        "distance_km": "link distance in kilometers"
+      },
+      "data_idea": "Seeded RNG varies distance and obstruction loss to synthesize coverage maps.",
+      "real_world_use": "Used to plan LoRa, Wi-Fi, and telemetry links before site surveys.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "nfc-coil-tuner",
+      "name": "NFC Coil Tuner",
+      "concept": "An NFC antenna is a tuned loop resonating at 13.56 MHz, where the coil inductance and matching capacitors set resonance and the Q factor trades read range against bandwidth.",
+      "key_params": {
+        "inductance_uh": "coil inductance in microhenries",
+        "target_mhz": "target frequency in megahertz",
+        "q_factor": "loaded Q factor",
+        "turns": "number of coil turns"
+      },
+      "data_idea": "Seeded RNG varies coil geometry tolerances to show resonance drift.",
+      "real_world_use": "Used in payment terminal and tag design to tune antennas for reliable reads.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "can-bus-load-analyzer",
+      "name": "CAN Bus Load Analyzer",
+      "concept": "CAN bus load is the fraction of bit time consumed by frames, computed from message IDs, payload lengths, and periods, and keeping it under about 70 percent leaves headroom for error frames.",
+      "key_params": {
+        "bitrate_kbps": "bus bitrate in kilobits per second",
+        "messages": "number of distinct messages",
+        "payload_bytes": "payload size in bytes",
+        "periods_ms": "message periods in milliseconds"
+      },
+      "data_idea": "Seeded RNG generates random message sets to analyze worst-case bus utilization.",
+      "real_world_use": "Used in automotive network design to validate that a CAN database fits the bitrate.",
+      "suggested_types": [
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "modbus-register-mapper",
+      "name": "Modbus Register Mapper",
+      "concept": "Modbus exposes device data as numbered holding and input registers, and a register map documents addresses, data types, and scaling so masters and slaves agree.",
+      "key_params": {
+        "start_address": "first register address",
+        "register_count": "number of registers",
+        "data_type": "register data type name",
+        "slave_id": "Modbus slave id"
+      },
+      "data_idea": "Seeded RNG generates random register values to exercise map encode and decode.",
+      "real_world_use": "Used in industrial integration to document PLC and sensor interfaces.",
+      "suggested_types": [
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "spi-timing-visualizer",
+      "name": "SPI Timing Visualizer",
+      "concept": "SPI clock polarity and phase define four modes that shift when data is sampled, and setup and hold times around the clock edge decide the maximum reliable speed.",
+      "key_params": {
+        "clock_mhz": "clock frequency in megahertz",
+        "mode": "SPI mode number",
+        "bits": "bits per transfer",
+        "cpol_cpha": "clock polarity and phase setting"
+      },
+      "data_idea": "Seeded RNG injects clock jitter to visualize setup and hold violations.",
+      "real_world_use": "Used to debug sensor and flash interfaces and to document timing for datasheets.",
+      "suggested_types": [
+        "simulation",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "i2c-address-scanner",
+      "name": "I2C Address Scanner",
+      "concept": "An I2C scanner probes all 112 usable 7-bit addresses and notes which ones acknowledge, revealing address conflicts and missing pull-ups on a new board.",
+      "key_params": {
+        "bus_mhz": "bus speed in megahertz",
+        "start_addr": "first address to probe",
+        "end_addr": "last address to probe",
+        "pullup_ohm": "pull-up resistance in ohms"
+      },
+      "data_idea": "Seeded RNG populates a virtual bus with devices at random addresses for the scan.",
+      "real_world_use": "Used during hardware bring-up to verify that every expected sensor responds.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "esd-protection-chooser",
+      "name": "ESD Protection Chooser",
+      "concept": "ESD diodes clamp transient strikes to safe levels, and the choice balances clamping voltage, capacitance for signal integrity, and the IEC 61000-4-2 rating.",
+      "key_params": {
+        "signal_v": "signal voltage in volts",
+        "data_rate_mbps": "data rate in megabits per second",
+        "clamping_v": "clamping voltage in volts",
+        "iec_kv": "IEC contact discharge rating in kilovolts"
+      },
+      "data_idea": "Seeded RNG varies strike levels to compare clamping performance of candidate parts.",
+      "real_world_use": "Used to protect USB, HDMI, and button inputs in consumer products.",
+      "suggested_types": [
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tvs-diode-picker",
+      "name": "TVS Diode Picker",
+      "concept": "A TVS diode stays off below its standoff voltage and avalanches to clamp surges, so the standoff must clear the normal signal while the clamping voltage stays under the protected pin's limit.",
+      "key_params": {
+        "standoff_v": "standoff voltage in volts",
+        "surge_a": "peak surge current in amps",
+        "clamping_v_max": "maximum clamping voltage in volts",
+        "package": "package type name"
+      },
+      "data_idea": "Seeded RNG generates surge waveforms to verify clamping stays within limits.",
+      "real_world_use": "Used in automotive and industrial inputs to survive load dump and inductive spikes.",
+      "suggested_types": [
+        "cli_tool",
+        "decision_tree"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "fuse-breaker-coordinator",
+      "name": "Fuse Breaker Coordinator",
+      "concept": "Protection coordination picks fuse and breaker curves so the device nearest a fault trips first, using time-current curves and selective let-through energy.",
+      "key_params": {
+        "load_a": "continuous load in amps",
+        "fault_ka": "available fault current in kiloamps",
+        "upstream_a": "upstream device rating in amps",
+        "curve_type": "time-current curve type name"
+      },
+      "data_idea": "Seeded RNG varies fault current to check selectivity between upstream and downstream devices.",
+      "real_world_use": "Used in panel and distribution design to keep faults from blacking out whole systems.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "relay-driver-calculator",
+      "name": "Relay Driver Calculator",
+      "concept": "A transistor or MOSFET driving a relay coil must handle the coil current and the inductive kickback, so base current, saturation, and a flyback diode are all sized together.",
+      "key_params": {
+        "coil_v": "coil voltage in volts",
+        "coil_ohm": "coil resistance in ohms",
+        "transistor_beta": "transistor current gain",
+        "switching_hz": "switching rate in hertz"
+      },
+      "data_idea": "Seeded RNG varies coil resistance with temperature to check driver saturation margin.",
+      "real_world_use": "Used in control boards to size the drive stage for contactors and relays.",
+      "suggested_types": [
+        "cli_tool",
+        "quiz_engine"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "optoisolator-ctr-checker",
+      "name": "Optoisolator CTR Checker",
+      "concept": "Current transfer ratio is the output collector current per milliamp of LED drive, and it degrades with temperature and age, so the design must still switch at end-of-life CTR.",
+      "key_params": {
+        "if_ma": "LED forward current in milliamps",
+        "ctr_min_pct": "minimum CTR in percent",
+        "ctr_max_pct": "maximum CTR in percent",
+        "temp_c": "temperature in Celsius"
+      },
+      "data_idea": "Seeded RNG ages the CTR to verify switching margin over the product lifetime.",
+      "real_world_use": "Used in isolated gate drives and PLC inputs to guarantee switching across temperature.",
+      "suggested_types": [
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "watchdog-timer-configurator",
+      "name": "Watchdog Timer Configurator",
+      "concept": "A watchdog resets the system unless firmware pets it within the timeout window, and windowed watchdogs additionally require the pet to arrive after a minimum time.",
+      "key_params": {
+        "timeout_ms": "watchdog timeout in milliseconds",
+        "window_ms": "window open time in milliseconds",
+        "clock_hz": "watchdog clock in hertz",
+        "pet_task_ms": "pet task period in milliseconds"
+      },
+      "data_idea": "Seeded RNG injects task jitter to verify the pet always lands inside the window.",
+      "real_world_use": "Used in safety-critical firmware to size watchdog windows for worst-case task timing.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "brownout-detector-analyzer",
+      "name": "Brownout Detector Analyzer",
+      "concept": "A brownout detector holds the MCU in reset while the supply sags below a threshold with hysteresis, preventing corrupt flash writes during dips.",
+      "key_params": {
+        "threshold_v": "reset threshold in volts",
+        "hysteresis_mv": "hysteresis in millivolts",
+        "dip_ms": "supply dip duration in milliseconds",
+        "supply_v": "nominal supply in volts"
+      },
+      "data_idea": "Seeded RNG generates supply dips to test reset assertion and release timing.",
+      "real_world_use": "Used in battery-powered products to pick supervisor thresholds for reliable operation.",
+      "suggested_types": [
+        "simulation",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    }
+  ]
+}

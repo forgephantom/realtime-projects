@@ -1,0 +1,1186 @@
+{
+  "domain": "computer_science",
+  "subdomain": "data_engineering",
+  "topics": [
+    {
+      "slug_base": "etl-pipeline-simulator",
+      "name": "ETL Pipeline Simulator",
+      "concept": "Extract, transform, load pipelines move data from sources through cleaning into warehouses on a schedule. The simulator models extraction, transformation rules, and loads with failure injection and retry. It teaches the batch backbone of analytics.",
+      "key_params": {
+        "sources": "databases and files ingested",
+        "transforms": "cleaning and join rules",
+        "schedule": "batch cadence",
+        "failures": "injected faults with retry"
+      },
+      "data_idea": "A seeded RNG generates source tables with dirty data needing cleaning.",
+      "real_world_use": "Used learning data warehouse ingestion.",
+      "suggested_types": [
+        "data_pipeline",
+        "scheduler",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "elt-lakehouse-loader",
+      "name": "ELT Lakehouse Loader",
+      "concept": "ELT loads raw data first and transforms it inside the warehouse, exploiting cheap scalable compute. The loader simulates raw ingestion into zones then SQL-based transformations with lineage. It contrasts the modern pattern against classic ETL.",
+      "key_params": {
+        "zones": "raw, curated, mart layers",
+        "transforms": "SQL models applied",
+        "lineage": "column-level tracking",
+        "incremental": "merge strategy"
+      },
+      "data_idea": "A seeded RNG fabricates raw events for zone promotion.",
+      "real_world_use": "Used in modern lakehouse architectures.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "simulation",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "cdc-stream-simulator",
+      "name": "CDC Stream Simulator",
+      "concept": "Change data capture streams row-level inserts, updates, and deletes from databases, keeping downstream systems fresh. The simulator emits binlog-style events with before and after images and ordering guarantees. It powers real-time replication.",
+      "key_params": {
+        "tables": "source schemas",
+        "ops": "insert, update, delete mix",
+        "ordering": "per-key guarantees",
+        "lag": "capture delay modeled"
+      },
+      "data_idea": "A seeded RNG mutates tables producing change events.",
+      "real_world_use": "Used in real-time data replication.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "tumbling-window-aggregator",
+      "name": "Tumbling Window Aggregator",
+      "concept": "Stream processors bucket events into fixed non-overlapping windows for counts and sums. The aggregator assigns events to windows handling out-of-order arrivals within lateness bounds. It is the simplest streaming aggregation.",
+      "key_params": {
+        "window_minutes": "bucket size",
+        "lateness": "allowed lateness",
+        "events": "stream volume",
+        "aggregates": "count, sum, avg"
+      },
+      "data_idea": "A seeded RNG emits timestamped events with late arrivals.",
+      "real_world_use": "Used in real-time dashboards.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "sliding-window-aggregator",
+      "name": "Sliding Window Aggregator",
+      "concept": "Sliding windows overlap, giving smooth moving averages over the last N minutes updated continuously. The aggregator maintains windows with efficient eviction of expired events. It powers rolling metrics.",
+      "key_params": {
+        "window_minutes": "lookback",
+        "slide_seconds": "update step",
+        "events": "stream volume",
+        "evict": "expiry handling"
+      },
+      "data_idea": "A seeded RNG streams events for moving computations.",
+      "real_world_use": "Used in monitoring and fraud scoring.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "session-window-tracker",
+      "name": "Session Window Tracker",
+      "concept": "Session windows group events by activity gaps, like a user's browsing session ending after 30 idle minutes. The tracker opens, extends, and closes sessions with timeout handling. It models behavior, not clock time.",
+      "key_params": {
+        "gap_minutes": "inactivity timeout",
+        "events": "user activity stream",
+        "merge": "late event handling",
+        "stats": "session metrics"
+      },
+      "data_idea": "A seeded RNG generates user sessions with idle gaps.",
+      "real_world_use": "Used in product analytics.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "watermark-late-data-handler",
+      "name": "Watermark Late Data Handler",
+      "concept": "Watermarks track event-time progress, letting streams decide when a window is complete despite late data. The handler advances watermarks with heuristics and routes too-late events to side outputs. It tames out-of-order streams.",
+      "key_params": {
+        "lateness": "expected delay",
+        "heuristic": "watermark strategy",
+        "side_output": "too-late handling",
+        "windows": "affected aggregations"
+      },
+      "data_idea": "A seeded RNG emits events with skewed lateness.",
+      "real_world_use": "Used in Flink and Beam pipelines.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "exactly-once-simulator",
+      "name": "Exactly Once Simulator",
+      "concept": "Exactly-once processing needs idempotent sinks and transactional checkpoints, since networks deliver at-least-once. The simulator replays duplicates through checkpointed operators showing dedup at the sink. It demonstrates the hardest delivery guarantee.",
+      "key_params": {
+        "checkpoints": "state snapshot interval",
+        "duplicates": "redelivery rate",
+        "sink": "idempotent write simulation",
+        "replay": "failure recovery"
+      },
+      "data_idea": "A seeded RNG injects failures causing redelivery.",
+      "real_world_use": "Used learning streaming guarantees.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "schema-evolution-checker",
+      "name": "Schema Evolution Checker",
+      "concept": "Schemas evolve: fields get added, renamed, or retyped, and compatibility rules decide what breaks consumers. The checker validates schema versions against backward, forward, and full compatibility. It governs contract changes.",
+      "key_params": {
+        "versions": "schema history",
+        "rules": "compatibility modes",
+        "changes": "field operations",
+        "consumers": "affected readers"
+      },
+      "data_idea": "A seeded RNG evolves schemas with safe and breaking changes.",
+      "real_world_use": "Used with schema registries.",
+      "suggested_types": [
+        "cli_tool",
+        "config_manager",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "data-quality-profiler",
+      "name": "Data Quality Profiler",
+      "concept": "Profilers scan datasets computing null rates, distinct counts, and distributions per column, the first step of any quality program. The profiler flags anomalies like sudden null spikes against history. You cannot fix what you do not measure.",
+      "key_params": {
+        "columns": "profiled fields",
+        "metrics": "nulls, distinct, stats",
+        "history": "trend baseline",
+        "alerts": "deviation thresholds"
+      },
+      "data_idea": "A seeded RNG fabricates tables with quality decay over time.",
+      "real_world_use": "Used by data quality teams.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "null-rate-monitor",
+      "name": "Null Rate Monitor",
+      "concept": "A sudden jump in nulls means an upstream broke, and the monitor catches it per column per day. It tracks null fractions with change detection alerting on regime shifts. Silent schema drift becomes visible.",
+      "key_params": {
+        "columns": "monitored fields",
+        "baseline_days": "learning window",
+        "shift_sigma": "alert threshold",
+        "granularity": "daily or hourly"
+      },
+      "data_idea": "A seeded RNG generates column data with null injection events.",
+      "real_world_use": "Used in data observability platforms.",
+      "suggested_types": [
+        "monitoring_agent",
+        "statistical_analyzer",
+        "data_pipeline",
+        "scheduler"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "duplicate-detector",
+      "name": "Duplicate Detector",
+      "concept": "Duplicates sneak in through retries and double ingestion, corrupting counts. The detector finds exact and fuzzy duplicates on key sets with blocking for scale. Clean data starts with dedup.",
+      "key_params": {
+        "keys": "deduplication keys",
+        "fuzzy": "similarity threshold",
+        "blocking": "partition strategy",
+        "report": "duplicate clusters"
+      },
+      "data_idea": "A seeded RNG injects duplicates with typos.",
+      "real_world_use": "Used in ETL cleansing.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool",
+        "log_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "distribution-drift-detector",
+      "name": "Distribution Drift Detector",
+      "concept": "When input distributions shift, models and reports silently degrade, so drift detection compares recent data to a reference. The detector uses statistical distance measures per feature with alert thresholds. It watches the data behind the model.",
+      "key_params": {
+        "features": "monitored columns",
+        "reference": "baseline window",
+        "metric": "PSI or KS distance",
+        "threshold": "alert level"
+      },
+      "data_idea": "A seeded RNG drifts feature distributions over time.",
+      "real_world_use": "Used in ML monitoring.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "metric-anomaly-detector",
+      "name": "Metric Anomaly Detector",
+      "concept": "Business metrics like signups or revenue deserve anomaly detection tuned to seasonality. The detector decomposes trend and weekly patterns flagging residual outliers. It pages on the real drops, not the weekend dips.",
+      "key_params": {
+        "metrics": "tracked KPIs",
+        "seasonality": "weekly patterns",
+        "method": "residual z-score",
+        "alert": "notification rules"
+      },
+      "data_idea": "A seeded RNG synthesizes KPIs with seasonal dips and true anomalies.",
+      "real_world_use": "Used by data teams watching business health.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "linear_regression",
+        "web_dashboard"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "lineage-tracker",
+      "name": "Lineage Tracker",
+      "concept": "Column-level lineage traces a dashboard number back through transforms to source tables, essential for impact analysis. The tracker builds the dependency graph from simulated pipeline definitions. It answers what breaks if this table changes.",
+      "key_params": {
+        "pipelines": "transform definitions",
+        "granularity": "table or column",
+        "impact": "downstream query",
+        "visualize": "graph rendering"
+      },
+      "data_idea": "A seeded RNG generates pipeline DAGs with column mappings.",
+      "real_world_use": "Used in data governance.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "report_generator",
+        "web_dashboard"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "dag-scheduler",
+      "name": "DAG Scheduler",
+      "concept": "Pipeline DAGs encode task dependencies, and the scheduler orders execution with retries and backfilling. The simulator runs DAGs showing parallel levels, failures, and recovery. It models Airflow-style orchestration.",
+      "key_params": {
+        "tasks": "DAG nodes",
+        "dependencies": "edges",
+        "retries": "failure policy",
+        "backfill": "historical reruns"
+      },
+      "data_idea": "A seeded RNG creates DAGs with flaky tasks.",
+      "real_world_use": "Used learning workflow orchestration.",
+      "suggested_types": [
+        "scheduler",
+        "simulation",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "backfill-runner",
+      "name": "Backfill Runner",
+      "concept": "Backfills recompute history after logic fixes, needing careful partitioning to avoid overwhelming systems. The runner schedules historical partitions with concurrency limits and validation. It repairs the past safely.",
+      "key_params": {
+        "partitions": "date ranges",
+        "concurrency": "parallel limit",
+        "validate": "output checks",
+        "idempotent": "rerun safety"
+      },
+      "data_idea": "A seeded RNG models partition workloads.",
+      "real_world_use": "Used fixing pipeline bugs retroactively.",
+      "suggested_types": [
+        "scheduler",
+        "data_pipeline",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "partition-pruner",
+      "name": "Partition Pruner",
+      "concept": "Partition pruning skips irrelevant data, and the pruner shows how filter pushdown reduces scanned bytes. It evaluates query predicates against partition metadata. Fast queries start with pruning.",
+      "key_params": {
+        "partitions": "layout",
+        "queries": "filter predicates",
+        "metadata": "min-max stats",
+        "estimate": "bytes scanned"
+      },
+      "data_idea": "A seeded RNG generates partitioned data with stats.",
+      "real_world_use": "Used teaching query optimization.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "file-format-comparator",
+      "name": "File Format Comparator",
+      "concept": "Row formats like CSV versus columnar Parquet differ hugely in scan speed and size. The comparator simulates reads and writes across formats measuring bytes and time. Format choice is architecture.",
+      "key_params": {
+        "formats": "csv, json, parquet-like",
+        "workloads": "scan and filter patterns",
+        "measure": "size and speed",
+        "columns": "projection pushdown"
+      },
+      "data_idea": "A seeded RNG generates tabular data for format tests.",
+      "real_world_use": "Used choosing storage formats.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "columnar-stats-builder",
+      "name": "Columnar Stats Builder",
+      "concept": "Columnar formats store min-max and bloom filters per row group enabling skip. The builder computes zone maps over simulated row groups showing prune rates. Metadata makes big scans small.",
+      "key_params": {
+        "row_groups": "group count",
+        "columns": "stats per column",
+        "queries": "filter workloads",
+        "prune_rate": "skipped fraction"
+      },
+      "data_idea": "A seeded RNG builds row groups with value ranges.",
+      "real_world_use": "Used in analytical database design.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "merge-compaction-simulator",
+      "name": "Merge Compaction Simulator",
+      "concept": "Lakehouse tables accumulate small files that compaction merges for read performance. The simulator models file arrivals and compaction strategies measuring read amplification. It tunes the write-read tradeoff.",
+      "key_params": {
+        "files": "arrival pattern",
+        "strategy": "size-tiered or leveled",
+        "target_mb": "ideal file size",
+        "measure": "read cost"
+      },
+      "data_idea": "A seeded RNG streams small files into tables.",
+      "real_world_use": "Used managing Delta and Iceberg tables.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "upsert-handler",
+      "name": "Upsert Handler",
+      "concept": "Upserts merge new records into existing tables by key, handling late and out-of-order arrivals. The handler simulates merge-on-read versus copy-on-write with conflict resolution. It keeps tables current.",
+      "key_params": {
+        "keys": "merge keys",
+        "arrivals": "late and duplicate mix",
+        "strategy": "merge or copy on write",
+        "conflicts": "resolution rules"
+      },
+      "data_idea": "A seeded RNG generates record versions with conflicts.",
+      "real_world_use": "Used in CDC-fed tables.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "scd-type2-builder",
+      "name": "SCD Type 2 Builder",
+      "concept": "Slowly changing dimensions track history with effective dates and current flags instead of overwriting. The builder processes dimension changes emitting versioned rows. History becomes queryable.",
+      "key_params": {
+        "dimensions": "attributes tracked",
+        "changes": "update stream",
+        "versioning": "effective dating",
+        "current": "flag logic"
+      },
+      "data_idea": "A seeded RNG mutates dimension attributes over time.",
+      "real_world_use": "Used in dimensional warehousing.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "star-schema-validator",
+      "name": "Star Schema Validator",
+      "concept": "Star schemas center facts on conformed dimensions, and the validator checks grain, keys, and referential integrity. It flags fan-out risks and degenerate dimensions. Clean modeling prevents wrong answers.",
+      "key_params": {
+        "facts": "fact tables",
+        "dimensions": "conformed dims",
+        "grain": "declared granularity",
+        "checks": "integrity rules"
+      },
+      "data_idea": "A seeded RNG builds schemas with modeling flaws.",
+      "real_world_use": "Used in warehouse design reviews.",
+      "suggested_types": [
+        "cli_tool",
+        "data_pipeline",
+        "report_generator",
+        "quiz_engine"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "data-contract-checker",
+      "name": "Data Contract Checker",
+      "concept": "Data contracts formalize producer promises: schema, freshness, and quality SLAs. The checker validates deliveries against contracts flagging breaches. Trust becomes enforceable.",
+      "key_params": {
+        "contracts": "promises per dataset",
+        "deliveries": "actual batches",
+        "slas": "freshness and quality",
+        "breach": "alerting"
+      },
+      "data_idea": "A seeded RNG produces deliveries with violations.",
+      "real_world_use": "Used in data mesh governance.",
+      "suggested_types": [
+        "cli_tool",
+        "monitoring_agent",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pii-tagger",
+      "name": "PII Tagger",
+      "concept": "Finding PII across datasets is step one of privacy compliance, so the tagger scans columns with pattern and name heuristics. It classifies direct and quasi-identifiers with confidence. Discovery precedes protection.",
+      "key_params": {
+        "patterns": "regex per PII type",
+        "columns": "name heuristics",
+        "classify": "direct versus quasi",
+        "confidence": "scoring"
+      },
+      "data_idea": "A seeded RNG fabricates tables with embedded PII.",
+      "real_world_use": "Used in privacy programs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "cli_tool",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "tokenization-engine",
+      "name": "Tokenization Engine",
+      "concept": "Tokenization replaces sensitive values with random tokens keeping a secure vault mapping for reversal. The engine tokenizes columns with format preservation and vault storage. Analytics continue without the raw secrets.",
+      "key_params": {
+        "columns": "tokenized fields",
+        "format": "preserving options",
+        "vault": "mapping store",
+        "reidentify": "authorized reversal"
+      },
+      "data_idea": "A seeded RNG generates sensitive columns.",
+      "real_world_use": "Used in PCI and healthcare analytics.",
+      "suggested_types": [
+        "encryption_tool",
+        "data_pipeline",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "masking-engine",
+      "name": "Masking Engine",
+      "concept": "Dynamic masking hides sensitive values from unauthorized roles while keeping data usable. The engine applies role-based masking rules to query results. Least privilege for data.",
+      "key_params": {
+        "rules": "mask per role per column",
+        "roles": "access tiers",
+        "methods": "redact, hash, partial",
+        "audit": "access logging"
+      },
+      "data_idea": "A seeded RNG simulates queries from different roles.",
+      "real_world_use": "Used in governed data access.",
+      "suggested_types": [
+        "encryption_tool",
+        "data_pipeline",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sampling-engine",
+      "name": "Sampling Engine",
+      "concept": "Sampling speeds exploration: random, stratified, and reservoir methods each suit different questions. The engine draws samples estimating how well they represent the full data. Fast answers with known error.",
+      "key_params": {
+        "methods": "random, stratified, reservoir",
+        "rate": "sample fraction",
+        "estimate": "representation metrics",
+        "queries": "workload"
+      },
+      "data_idea": "A seeded RNG builds skewed datasets for sampling tests.",
+      "real_world_use": "Used in interactive analytics.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "data_pipeline",
+        "cli_tool",
+        "simulation"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "data-catalog-search",
+      "name": "Data Catalog Search",
+      "concept": "Data catalogs make datasets discoverable with metadata search and ownership. The search indexes simulated dataset metadata ranking by relevance. Findability fights data swamps.",
+      "key_params": {
+        "datasets": "catalog entries",
+        "metadata": "descriptions, owners, tags",
+        "rank": "relevance scoring",
+        "facets": "filter dimensions"
+      },
+      "data_idea": "A seeded RNG creates dataset metadata.",
+      "real_world_use": "Used in data discovery.",
+      "suggested_types": [
+        "cli_tool",
+        "rest_api",
+        "web_dashboard",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "dataset-versioning-tool",
+      "name": "Dataset Versioning Tool",
+      "concept": "Versioning datasets with content hashes enables reproducible experiments and safe rollbacks. The tool snapshots simulated datasets tracking diffs between versions. Data gets git-like discipline.",
+      "key_params": {
+        "snapshots": "version history",
+        "hash": "content addressing",
+        "diff": "change summary",
+        "rollback": "restore"
+      },
+      "data_idea": "A seeded RNG evolves datasets across versions.",
+      "real_world_use": "Used in ML reproducibility.",
+      "suggested_types": [
+        "backup_tool",
+        "cli_tool",
+        "file_organizer",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "feature-store-simulator",
+      "name": "Feature Store Simulator",
+      "concept": "Feature stores serve consistent features for training and inference, killing training-serving skew. The simulator manages offline and online stores with point-in-time correctness. It operationalizes ML features.",
+      "key_params": {
+        "features": "definitions",
+        "offline": "batch store",
+        "online": "low-latency store",
+        "point_in_time": "correctness joins"
+      },
+      "data_idea": "A seeded RNG generates feature values over time.",
+      "real_world_use": "Used by ML platform teams.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool",
+        "api_client_sim"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "training-serving-skew-checker",
+      "name": "Training Serving Skew Checker",
+      "concept": "Skew between training and serving features silently degrades models, so the checker compares distributions. It flags diverged features with severity. Models stay honest.",
+      "key_params": {
+        "features": "monitored set",
+        "training": "reference distribution",
+        "serving": "live distribution",
+        "metric": "divergence measure"
+      },
+      "data_idea": "A seeded RNG drifts serving features from training.",
+      "real_world_use": "Used in MLOps monitoring.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "label-tracker",
+      "name": "Label Tracker",
+      "concept": "Labels arrive late and get revised, complicating training data assembly. The tracker manages label versions with arrival times and corrections. Ground truth gets versioned.",
+      "key_params": {
+        "labels": "annotation stream",
+        "revisions": "correction handling",
+        "maturity": "label readiness",
+        "join": "point-in-time assembly"
+      },
+      "data_idea": "A seeded RNG emits labels with delays and fixes.",
+      "real_world_use": "Used in ML data pipelines.",
+      "suggested_types": [
+        "data_pipeline",
+        "cli_tool",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "annotation-queue-manager",
+      "name": "Annotation Queue Manager",
+      "concept": "Human labeling needs queues with prioritization, agreement checks, and quality sampling. The manager assigns tasks to annotators measuring throughput and agreement. Label quality becomes managed.",
+      "key_params": {
+        "tasks": "items to label",
+        "annotators": "workforce",
+        "prioritize": "uncertainty sampling",
+        "agreement": "inter-rater checks"
+      },
+      "data_idea": "A seeded RNG simulates annotator speed and accuracy.",
+      "real_world_use": "Used building training datasets.",
+      "suggested_types": [
+        "task_queue",
+        "scheduler",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "pipeline-cost-estimator",
+      "name": "Pipeline Cost Estimator",
+      "concept": "Data pipelines cost compute and storage per run, and the estimator prices DAGs before they run. It models task resources and data volumes into dollar forecasts. Budgets meet pipelines.",
+      "key_params": {
+        "tasks": "DAG with resources",
+        "volumes": "data sizes",
+        "pricing": "compute and storage rates",
+        "schedule": "run cadence"
+      },
+      "data_idea": "A seeded RNG scales pipeline workloads.",
+      "real_world_use": "Used by data teams forecasting spend.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "scheduler",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "freshness-monitor",
+      "name": "Freshness Monitor",
+      "concept": "Stale data breaks decisions quietly, so freshness monitors track the age of the newest record per table. It alerts when pipelines miss their SLAs. Timeliness becomes a metric.",
+      "key_params": {
+        "tables": "monitored datasets",
+        "sla": "max acceptable age",
+        "check": "cadence",
+        "alert": "escalation"
+      },
+      "data_idea": "A seeded RNG ages tables with pipeline delays.",
+      "real_world_use": "Used in data observability.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "data_pipeline",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "pipeline-dead-letter-inspector",
+      "name": "Pipeline Dead Letter Inspector",
+      "concept": "Bad records that fail parsing land in dead letters awaiting triage. The inspector samples them classifying failure causes and supports replay after fixes. No record left behind.",
+      "key_params": {
+        "records": "failed items",
+        "classify": "error taxonomy",
+        "replay": "reprocess after fix",
+        "alert": "volume thresholds"
+      },
+      "data_idea": "A seeded RNG corrupts records with varied defects.",
+      "real_world_use": "Used in robust ingestion.",
+      "suggested_types": [
+        "task_queue",
+        "log_analyzer",
+        "data_pipeline",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "replay-tool",
+      "name": "Replay Tool",
+      "concept": "Replaying historical data through fixed logic validates pipeline changes. The tool reprocesses date ranges comparing outputs to baselines. Changes get evidence.",
+      "key_params": {
+        "ranges": "replay windows",
+        "logic": "pipeline version",
+        "compare": "output diff",
+        "validate": "acceptance checks"
+      },
+      "data_idea": "A seeded RNG provides historical inputs.",
+      "real_world_use": "Used testing pipeline migrations.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool",
+        "scheduler"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "idempotency-checker",
+      "name": "Idempotency Checker",
+      "concept": "Retried writes must not double-count, so the checker verifies idempotent keys and dedup logic. It replays operations asserting single effect. Exactly-once effects from at-least-once delivery.",
+      "key_params": {
+        "keys": "idempotency keys",
+        "ops": "write operations",
+        "replay": "duplicate delivery",
+        "assert": "single-effect check"
+      },
+      "data_idea": "A seeded RNG duplicates writes randomly.",
+      "real_world_use": "Used hardening ingestion.",
+      "suggested_types": [
+        "simulation",
+        "data_pipeline",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dedup-engine",
+      "name": "Dedup Engine",
+      "concept": "Dedup engines remove duplicates at scale with key-based and fuzzy matching. The engine processes streams maintaining seen-sets with memory bounds. Clean streams stay clean.",
+      "key_params": {
+        "keys": "identity definition",
+        "window": "dedup horizon",
+        "memory": "state budget",
+        "fuzzy": "similarity option"
+      },
+      "data_idea": "A seeded RNG injects duplicates into streams.",
+      "real_world_use": "Used in event ingestion.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "ordering-guarantee-tester",
+      "name": "Ordering Guarantee Tester",
+      "concept": "Ordering promises range from none to per-key to global, each with costs. The tester verifies delivered order against the promised guarantee under failures. Promises get proven.",
+      "key_params": {
+        "guarantee": "none, key, global",
+        "failures": "injected faults",
+        "verify": "order assertions",
+        "measure": "latency cost"
+      },
+      "data_idea": "A seeded RNG shuffles deliveries under faults.",
+      "real_world_use": "Used evaluating messaging systems.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "statistical_analyzer",
+        "cli_tool"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "backpressure-simulator",
+      "name": "Backpressure Simulator",
+      "concept": "Fast producers overwhelm slow consumers unless backpressure signals slow the source. The simulator models buffer limits with blocking and dropping strategies. Flow control keeps pipelines alive.",
+      "key_params": {
+        "producer_rate": "arrival speed",
+        "consumer_rate": "processing speed",
+        "buffer": "queue capacity",
+        "strategy": "block, drop, sample"
+      },
+      "data_idea": "A seeded RNG varies producer bursts.",
+      "real_world_use": "Used designing streaming systems.",
+      "suggested_types": [
+        "simulation",
+        "task_queue",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "throughput-benchmark",
+      "name": "Throughput Benchmark",
+      "concept": "Throughput benchmarks measure records per second across configurations, finding bottlenecks. The tool sweeps parallelism and batch sizes reporting throughput curves. Numbers replace guesses.",
+      "key_params": {
+        "configs": "parallelism and batch",
+        "workload": "record profile",
+        "measure": "records per second",
+        "bottleneck": "stage attribution"
+      },
+      "data_idea": "A seeded RNG models stage processing times.",
+      "real_world_use": "Used sizing pipeline clusters.",
+      "suggested_types": [
+        "simulation",
+        "statistical_analyzer",
+        "cli_tool",
+        "report_generator"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "latency-histogram-builder",
+      "name": "Latency Histogram Builder",
+      "concept": "Latency histograms reveal the distribution that averages hide. The builder buckets event latencies computing percentiles over time. Tail behavior becomes visible.",
+      "key_params": {
+        "buckets": "histogram resolution",
+        "windows": "time slices",
+        "percentiles": "p50 to p999",
+        "alert": "tail thresholds"
+      },
+      "data_idea": "A seeded RNG generates latencies with tail spikes.",
+      "real_world_use": "Used in pipeline SLOs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "monitoring_agent",
+        "data_pipeline",
+        "web_dashboard"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "sink-connector-simulator",
+      "name": "Sink Connector Simulator",
+      "concept": "Sink connectors write streams to warehouses and lakes with batching and exactly-once semantics. The simulator models flush policies and failure recovery. It bridges streaming and storage.",
+      "key_params": {
+        "batches": "flush policy",
+        "target": "warehouse or lake",
+        "failures": "write faults",
+        "recovery": "resume logic"
+      },
+      "data_idea": "A seeded RNG streams records with sink faults.",
+      "real_world_use": "Used learning Kafka Connect patterns.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "task_queue",
+        "cli_tool"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "source-connector-simulator",
+      "name": "Source Connector Simulator",
+      "concept": "Source connectors poll or tail origins into streams with offset management. The simulator models polling intervals, change capture, and offset commits. Ingestion starts here.",
+      "key_params": {
+        "poll": "interval",
+        "offsets": "progress tracking",
+        "changes": "detected deltas",
+        "failures": "source outages"
+      },
+      "data_idea": "A seeded RNG mutates source systems.",
+      "real_world_use": "Used learning ingestion patterns.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "scheduler",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "schema-registry-lite",
+      "name": "Schema Registry Lite",
+      "concept": "A lightweight registry versions event schemas with compatibility checks. It serves schemas to producers and consumers validating evolution. Contracts stay central.",
+      "key_params": {
+        "schemas": "versioned definitions",
+        "compat": "evolution rules",
+        "serve": "lookup API",
+        "validate": "producer checks"
+      },
+      "data_idea": "A seeded RNG evolves event schemas.",
+      "real_world_use": "Used in event-driven teams.",
+      "suggested_types": [
+        "rest_api",
+        "config_manager",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "avro-compat-checker",
+      "name": "Avro Compat Checker",
+      "concept": "Avro's schema resolution rules decide which evolutions are safe for readers and writers. The checker tests reader-writer pairs against the spec. Binary compatibility gets verified.",
+      "key_params": {
+        "reader": "reader schema",
+        "writer": "writer schema",
+        "rules": "resolution spec",
+        "report": "violations"
+      },
+      "data_idea": "A seeded RNG pairs evolving schemas.",
+      "real_world_use": "Used with Avro-based pipelines.",
+      "suggested_types": [
+        "cli_tool",
+        "simulation",
+        "report_generator",
+        "unit_converter"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "dead-partition-detector",
+      "name": "Dead Partition Detector",
+      "concept": "Partitions that stop receiving data signal broken upstream jobs. The detector watches arrival times per partition alerting on silence. Missing data gets noticed.",
+      "key_params": {
+        "partitions": "watched set",
+        "expected": "arrival cadence",
+        "silence": "alert threshold",
+        "seasonal": "expected gaps"
+      },
+      "data_idea": "A seeded RNG simulates partition arrivals with outages.",
+      "real_world_use": "Used in data observability.",
+      "suggested_types": [
+        "monitoring_agent",
+        "scheduler",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "skew-analyzer",
+      "name": "Skew Analyzer",
+      "concept": "Data skew, a few hot keys holding most records, cripples parallel processing. The analyzer measures key distribution recommending salting or repartitioning. Balance restores speed.",
+      "key_params": {
+        "keys": "distribution measured",
+        "metric": "skew coefficients",
+        "recommend": "mitigation",
+        "simulate": "effect of fix"
+      },
+      "data_idea": "A seeded RNG generates skewed key distributions.",
+      "real_world_use": "Used tuning Spark jobs.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "simulation",
+        "cli_tool",
+        "data_pipeline"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "small-files-compactor",
+      "name": "Small Files Compactor",
+      "concept": "Small files multiply metadata overhead and slow scans, so compaction merges them. The tool simulates file sizes and compaction policies measuring scan improvement. Fewer, bigger files win.",
+      "key_params": {
+        "files": "size distribution",
+        "policy": "compaction triggers",
+        "target_mb": "goal size",
+        "measure": "scan cost"
+      },
+      "data_idea": "A seeded RNG drips small files into partitions.",
+      "real_world_use": "Used managing lake tables.",
+      "suggested_types": [
+        "simulation",
+        "scheduler",
+        "data_pipeline",
+        "statistical_analyzer"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "retention-enforcer",
+      "name": "Retention Enforcer",
+      "concept": "Retention policies delete or archive aging data for cost and compliance. The enforcer applies rules to partitions with audit trails. Data lifetimes stay governed.",
+      "key_params": {
+        "rules": "age-based actions",
+        "partitions": "targeted data",
+        "audit": "action log",
+        "exceptions": "legal holds"
+      },
+      "data_idea": "A seeded RNG ages partitions.",
+      "real_world_use": "Used in data governance.",
+      "suggested_types": [
+        "scheduler",
+        "data_pipeline",
+        "cli_tool",
+        "config_manager"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "archive-tiering-planner",
+      "name": "Archive Tiering Planner",
+      "concept": "Cold data belongs in cheap archive tiers with retrieval tradeoffs. The planner analyzes access patterns recommending tier moves with savings. Hot data stays hot, cold data gets cheap.",
+      "key_params": {
+        "access": "read patterns",
+        "tiers": "pricing and retrieval",
+        "recommend": "move plan",
+        "savings": "projection"
+      },
+      "data_idea": "A seeded RNG cools dataset access over time.",
+      "real_world_use": "Used optimizing storage spend.",
+      "suggested_types": [
+        "statistical_analyzer",
+        "scheduler",
+        "report_generator",
+        "cli_tool"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "restore-tester",
+      "name": "Restore Tester",
+      "concept": "Archived data must actually restore within promised times, so the tester measures retrieval latency. It validates RTO for archive tiers. Promises get proven.",
+      "key_params": {
+        "archives": "tiered datasets",
+        "retrieve": "restore requests",
+        "measure": "time to data",
+        "sla": "retrieval objectives"
+      },
+      "data_idea": "A seeded RNG issues restore requests.",
+      "real_world_use": "Used validating archival SLAs.",
+      "suggested_types": [
+        "backup_tool",
+        "simulation",
+        "scheduler",
+        "report_generator"
+      ],
+      "difficulty": "beginner"
+    },
+    {
+      "slug_base": "data-mesh-domain-mapper",
+      "name": "Data Mesh Domain Mapper",
+      "concept": "Data mesh organizes data by domain with federated governance, and the mapper charts domain ownership of datasets. It visualizes dependencies across domains. Decentralization stays coherent.",
+      "key_params": {
+        "domains": "business areas",
+        "datasets": "ownership mapping",
+        "contracts": "inter-domain agreements",
+        "govern": "federated rules"
+      },
+      "data_idea": "A seeded RNG assigns datasets to domains.",
+      "real_world_use": "Used planning data mesh adoption.",
+      "suggested_types": [
+        "cli_tool",
+        "report_generator",
+        "web_dashboard",
+        "config_manager"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "stream-table-joiner",
+      "name": "Stream Table Joiner",
+      "concept": "Joining streams with tables enriches events with reference data, needing careful state management. The joiner simulates temporal joins with versioned tables. Enrichment stays correct in time.",
+      "key_params": {
+        "stream": "event flow",
+        "table": "versioned reference",
+        "temporal": "as-of semantics",
+        "state": "memory bounds"
+      },
+      "data_idea": "A seeded RNG versions reference data over time.",
+      "real_world_use": "Used in real-time enrichment.",
+      "suggested_types": [
+        "data_pipeline",
+        "simulation",
+        "cli_tool",
+        "statistical_analyzer"
+      ],
+      "difficulty": "advanced"
+    },
+    {
+      "slug_base": "change-data-quality-gate",
+      "name": "Change Data Quality Gate",
+      "concept": "Quality gates block bad batches before they poison downstream tables. The gate runs checks on each batch with quarantine for failures. Bad data stops at the door.",
+      "key_params": {
+        "checks": "completeness, validity, freshness",
+        "batches": "incoming data",
+        "quarantine": "failure handling",
+        "override": "break-glass"
+      },
+      "data_idea": "A seeded RNG delivers batches with defects.",
+      "real_world_use": "Used in governed pipelines.",
+      "suggested_types": [
+        "data_pipeline",
+        "monitoring_agent",
+        "cli_tool",
+        "task_queue"
+      ],
+      "difficulty": "intermediate"
+    },
+    {
+      "slug_base": "data-observability-scorecard",
+      "name": "Data Observability Scorecard",
+      "concept": "Scorecards roll freshness, quality, and lineage coverage into one health view per dataset. The generator computes scores with drill-downs. Data health becomes visible.",
+      "key_params": {
+        "datasets": "scored inventory",
+        "pillars": "freshness, quality, lineage",
+        "weights": "score formula",
+        "trend": "health over time"
+      },
+      "data_idea": "A seeded RNG fabricates pillar metrics.",
+      "real_world_use": "Used by data platform teams.",
+      "suggested_types": [
+        "web_dashboard",
+        "report_generator",
+        "statistical_analyzer",
+        "monitoring_agent"
+      ],
+      "difficulty": "beginner"
+    }
+  ]
+}
